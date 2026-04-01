@@ -87,6 +87,7 @@ func _create_player() -> void:
 func _create_robot() -> void:
   var robot := preload("res://scenes/robot.tscn").instantiate()
   robot.position = Vector3(0, 0.9, 0)
+  robot.add_to_group("robot")
   add_child(robot)
 
 func _make_cube(node_name: String, pos: Vector3, color: Color, size: Vector3, group: String = "") -> StaticBody3D:

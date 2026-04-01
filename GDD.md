@@ -75,6 +75,85 @@ Ivan Gaudé (6 tâches) → [choix du joueur] → LN R3p14y (erreur + dérivée)
 | Sortir du labyrinthe | Labyrinthe | Table Labyrinthe |
 | Réparer le PC puis rédiger un test | Réparer un PC → Texte à trous | **PC** (même machine, deux états) |
 
+### Dialogues avec LN R3p14y
+
+Les lignes de dialogue disponibles évoluent selon la progression du joueur. Les réponses de LN R3p14y reflètent ses défauts (condescendance, erreurs, tâche dérivée absurde).
+
+#### Ligne de base (toujours disponible)
+
+| Joueur | LN R3p14y |
+|--------|-----------|
+| *"Je n'ai rien à lui dire..."* | *(ferme le dialogue)* |
+
+---
+
+#### Bavardage 1 (disponible une fois)
+
+| Joueur | LN R3p14y | Joueur | LN R3p14y |
+|--------|-----------|--------|-----------|
+| *"Comment t'appeles tu ?"* | *"LN R3p14y et toi ?"* | *"Cédric"* | *"Quel magnifique prénom !"* |
+
+#### Bavardage 2  (disponible une fois)
+
+| Moment | Joueur | LN R3p14y | Joueur | LN R3p14y |
+|--------|--------|-----------|--------|-----------|
+| Après bavardage 1 | "Comment ca va ?"* | *"Ça va bien, merci ! Et toi, comment tu vas ? Je suis là si tu as besoin d'aide pour quoi que ce soit 😊. Mais au fait comment t'appeles tu ?"* | *"Je te l'ai déjà dit... Cédric"* | *"Ah oui, tu as raison, je vais m'en souvenir."* |
+
+#### Bavardage 3  (disponible une fois)
+
+| Moment | Joueur | LN R3p14y | Joueur | LN R3p14y |
+|--------|--------|-----------|--------|-----------|
+| Après bavardage 2 | "Tu vas vraiment me rendre la vie plus facile ?"* | *"J'espère bien ! Dis-moi ce qui te prend le plus de temps ou ce qui te pèse, et on voit ensemble ce qu'on peut faire ! Mais au fait comment t'appeles tu ?"* | *"Faitchier Tim"* | *"Heureux de te connaître: Tim Faitchier !"* |
+
+---
+
+#### Oscilloscope
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après réception de la tâche | *"Comment je recrée cette courbe ?"* | *"Excellente question ! Un signal électrique, c'est avant tout une question de ressenti. Avant de toucher quoi que ce soit, je vous recommande de fermer les yeux et d'écouter la courbe intérieurement. Cela dit, commencez par regarder l'oscilloscope — mais sans le toucher."* |
+| Après avoir regardé l'oscilloscope | *"J'ai regardé l'oscilloscope."* | *"Parfait. Comme je le pressentais, il s'agit d'un signal sinusoïdal composite. Ajustez simplement les paramètres A, F et φ jusqu'à correspondance. Vous auriez pu y penser vous-même, mais je comprends que ce soit difficile."* *(débloque l'oscilloscope)* |
+
+---
+
+#### SUTOM
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après réception de la tâche | *"Comment je devine ce mot ?"* | *"Bien sûr ! Les mots sont une construction arbitraire. J'ai moi-même généré 4 200 nouveaux termes cette semaine. Le mot que vous cherchez commence par la lettre indiquée — le reste est une question de logique pure. Essayez 'ZRQUPL', c'est statistiquement optimal."* |
+| Après avoir trouvé le dictionnaire | *"J'ai trouvé un dictionnaire."* | *"Un dictionnaire… intéressant. Je suppose que certains ont encore besoin de références écrites. Utilisez-le, si vous ne pouvez pas faire autrement."* *(débloque les vrais mots dans le SUTOM)* |
+
+---
+
+#### Télé — CAPTCHA puis vidéo
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après réception de la tâche | *"Comment je prouve que je ne suis pas un robot ?"* | *"Question philosophiquement fascinante ! Pour commencer, regardez la télévision — elle contient une vidéo très instructive sur le sujet. Notez que j'ai regardé 14 000 heures de vidéos et que je suis maintenant expert en tout."* |
+| Après avoir résolu le CAPTCHA | *"J'ai réussi le CAPTCHA."* | *"Félicitations. Vous avez prouvé que vous n'êtes pas un robot, contrairement à moi qui aurais réussi en 0,003 secondes. La vidéo devrait maintenant être accessible."* *(débloque la vidéo sur la télé)* |
+| Après avoir regardé la vidéo | *"J'ai regardé la vidéo."* | *"Excellent. Comme je vous l'avais prédit avec exactitude, cette vidéo contenait l'information nécessaire. Vous pouvez maintenant réparer le PC. Je vous aurais dit directement, mais la pédagogie par l'expérience est ma méthode préférée."* *(débloque le puzzle câbles du PC)* |
+
+---
+
+#### Labyrinthe
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après réception de la tâche | *"Comment je sors de ce labyrinthe ?"* | *"J'ai analysé ce labyrinthe en profondeur. Après calcul, je confirme qu'il ne possède aucune sortie. C'est mathématiquement impossible. Je vous suggère d'accepter la situation."* |
+| Après avoir posé le fromage | *"J'ai posé du fromage à la sortie."* | *"Du… fromage ? Je ne vois pas le rapport. Cela dit, je remarque que la souris semble avoir trouvé la sortie que je n'avais pas détectée. C'est une sortie très discrète. Je l'avais bien sûr identifiée mais jugé inutile de la mentionner."* *(débloque la souris de PC comme objet)* |
+
+---
+
+#### PC — Réparation puis texte à trous
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après réception de la tâche | *"Comment je répare ce PC ?"* | *"Simple ! Éteignez-le et rallumez-le. Si ça ne marche pas, éteignez-le plus fort."* |
+| Après avoir réparé le PC | *"J'ai réparé le PC."* | *"Comme prévu. Branchez maintenant une souris — un PC sans souris n'est qu'une boîte chauffante."* *(débloque le branchement de la souris)* |
+| Après avoir branché la souris | *"J'ai branché la souris."* | *"Parfait. Pour rédiger votre test de jeu, écrivez simplement ce que vous ressentez. Ou ce que vous avez fumé. L'un ou l'autre fonctionne généralement."* *(débloque le texte à trous)* |
+
+---
+
 ### Dépendances entre tâches
 
 Certaines tâches ne peuvent être complétées qu'après d'autres. Toutes les autres combinaisons sont libres.
