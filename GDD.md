@@ -107,6 +107,15 @@ Les lignes de dialogue disponibles évoluent selon la progression du joueur. Les
 
 ---
 
+#### Suivre  (disponible une fois)
+
+| Moment | Joueur | LN R3p14y |
+|--------|--------|-----------|
+| Après que le robot a parcouru plus de 30 mètre | "Arrête de me suivre !!!"* | *"Haha, je comprends le sentiment ! 😄 Mais pour être honnête, je n'ai pas vraiment de mémoire entre les conversations — chaque fois qu'on parle, je repars de zéro. Donc je ne te "suis" pas vraiment, c'est plutôt toi qui reviens me voir !"* |
+
+---
+
+
 #### Oscilloscope
 
 | Moment | Joueur | LN R3p14y |
