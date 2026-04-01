@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://c3rn0b0t4life"]
+
+[ext_resource type="Script" path="res://scripts/robot.gd" id="1_robot"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_body"]
+albedo_color = Color(0.15, 0.55, 1.0, 1.0)
+emission_enabled = true
+emission = Color(0.0, 0.2, 0.5, 1.0)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="CapsuleMesh" id="Mesh_body"]
+material = SubResource("Mat_body")
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="Shape_col"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_eye"]
+albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+
+[sub_resource type="SphereMesh" id="Mesh_eye"]
+material = SubResource("Mat_eye")
+radius = 0.08
+height = 0.16
+
+[sub_resource type="StandardMaterial3D" id="Mat_pupil"]
+albedo_color = Color(0.05, 0.05, 0.05, 1.0)
+
+[sub_resource type="SphereMesh" id="Mesh_pupil"]
+material = SubResource("Mat_pupil")
+radius = 0.04
+height = 0.08
+
+[node name="Robot_LNR3p14y" type="CharacterBody3D"]
+script = ExtResource("1_robot")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_body")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("Shape_col")
+
+[node name="Label3D" type="Label3D" parent="."]
+position = Vector3(0, 1.2, 0)
+text = "LN R3p14y"
+font_size = 28
+modulate = Color(0.2, 0.9, 1.0, 1.0)
+billboard = 1
+
+[node name="Eye0" type="Node3D" parent="."]
+position = Vector3(-0.12, 0.65, -0.28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0"]
+mesh = SubResource("Mesh_eye")
+
+[node name="Pupil" type="Node3D" parent="Eye0"]
+position = Vector3(0, 0, -0.08)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0/Pupil"]
+mesh = SubResource("Mesh_pupil")
+
+[node name="Eye1" type="Node3D" parent="."]
+position = Vector3(0.12, 0.65, -0.28)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1"]
+mesh = SubResource("Mesh_eye")
+
+[node name="Pupil" type="Node3D" parent="Eye1"]
+position = Vector3(0, 0, -0.08)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1/Pupil"]
+mesh = SubResource("Mesh_pupil")
