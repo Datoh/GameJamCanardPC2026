@@ -151,4 +151,4 @@ func _create_machines() -> void:
     ["PC",            Vector3( 6,   0.75, -10), Color(0.9,  0.15, 0.15)],
   ]
   for item in items:
-    root.add_child(_make_cube(item[0], item[1], item[2], Vector3(1.5, 1.5, 1.5)))
+    root.add_child(_make_cube(item[0], item[1], item[2], Vector3(1.5, 1.5, 1.5), "machines"))

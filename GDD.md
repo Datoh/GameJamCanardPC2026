@@ -129,7 +129,7 @@ Les lignes de dialogue disponibles évoluent selon la progression du joueur. Les
 
 | Moment | Joueur | LN R3p14y |
 |--------|--------|-----------|
-| Après réception de la tâche | *"Comment je devine ce mot ?"* | *"Bien sûr ! Les mots sont une construction arbitraire. J'ai moi-même généré 4 200 nouveaux termes cette semaine. Le mot que vous cherchez commence par la lettre indiquée — le reste est une question de logique pure. Essayez 'ZRQUPL', c'est statistiquement optimal."* |
+| Après la première interaction du joueur avec le SUTOM | *"Comment je devine ce mot ?"* | *"Bien sûr ! Les mots sont une construction arbitraire. J'ai moi-même généré 4 200 nouveaux termes cette semaine. Le mot que vous cherchez commence par la lettre indiquée — le reste est une question de logique pure. Je peux vous montrer si vous voulez."* |
 | Après avoir trouvé le dictionnaire | *"J'ai trouvé un dictionnaire."* | *"Un dictionnaire… intéressant. Je suppose que certains ont encore besoin de références écrites. Utilisez-le, si vous ne pouvez pas faire autrement."* *(débloque les vrais mots dans le SUTOM)* |
 
 ---
