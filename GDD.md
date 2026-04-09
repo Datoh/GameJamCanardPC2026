@@ -232,8 +232,6 @@ Le voyant ne peut être vert que si le mode fusion est actif. Comparaison point 
 
 ---
 
----
-
 ### Mini-jeu : SUTOM
 
 Clone du jeu SUTOM (Motus/Wordle en français). Le joueur doit deviner un mot en un nombre limité de tentatives.
@@ -267,8 +265,6 @@ Le mini-jeu est déclenché comme tâche dérivée via LN R3p14y.
 **Par défaut** : les mots à deviner sont entièrement inventés et impossibles à trouver — LN R3p14y les a générés lui-même et les considère parfaitement valides.
 
 **Après avoir trouvé le dictionnaire** dans le niveau : les mots deviennent de vrais mots français, le mini-jeu devient jouable normalement. Le dictionnaire est un objet à ramasser dans le décor du bureau.
-
----
 
 ---
 
@@ -307,8 +303,6 @@ LN R3p14y demande au joueur de "prouver qu'il n'est pas un robot" avant de lui c
 
 ---
 
----
-
 ### Mini-jeu : Labyrinthe
 
 Labyrinthe physique de table à la **Brio Labyrinth** : le joueur incline un plateau pour guider une bille à travers un dédale de couloirs en évitant les trous. LN R3p14y, consulté pour aider, affirme avec conviction qu'il a analysé le labyrinthe et qu'**il n'y a pas de sortie** — erreur classique d'hallucination.
@@ -341,8 +335,6 @@ Le mini-jeu joue sur deux niveaux : LN R3p14y hallucine une impasse inexistante,
 
 ---
 
----
-
 ### Mini-jeu : Texte à trous — Test de jeu vidéo
 
 Le joueur doit rédiger un test de jeu vidéo en glissant les bons adjectifs dans les bons trous. Le mini-jeu est objectivement impossible dans son état normal.
@@ -367,8 +359,6 @@ Le joueur peut faire fumer le joint au robot. LN R3p14y, le temps d'une répliqu
 | Condition de réussite | Les 6 adjectifs sont placés correctement |
 | Déblocage (adjectifs cohérents) | Trouver et utiliser le joint dans le niveau |
 | Prérequis | Le mini-jeu **Réparer un PC** doit être complété — le texte à trous se joue sur ce même PC une fois rebranché |
-
----
 
 ---
 

@@ -36,6 +36,15 @@ func setup(has_dictionary: bool) -> void:
 
 # ── Construction de l'UI ──────────────────────────────────────────────────────
 
+func _make_rounded_stylebox(color: Color, radius: int) -> StyleBoxFlat:
+  var s := StyleBoxFlat.new()
+  s.bg_color = color
+  s.corner_radius_top_left     = radius
+  s.corner_radius_top_right    = radius
+  s.corner_radius_bottom_left  = radius
+  s.corner_radius_bottom_right = radius
+  return s
+
 func _build_ui() -> void:
   set_anchors_preset(Control.PRESET_FULL_RECT)
 
@@ -49,13 +58,7 @@ func _build_ui() -> void:
   panel.anchor_right  = 0.72
   panel.anchor_top    = 0.04
   panel.anchor_bottom = 0.96
-  var ps := StyleBoxFlat.new()
-  ps.bg_color = COLOR_PANEL
-  ps.corner_radius_top_left     = 10
-  ps.corner_radius_top_right    = 10
-  ps.corner_radius_bottom_left  = 10
-  ps.corner_radius_bottom_right = 10
-  panel.add_theme_stylebox_override("panel", ps)
+  panel.add_theme_stylebox_override("panel", _make_rounded_stylebox(COLOR_PANEL, 10))
   add_child(panel)
 
   var vbox := VBoxContainer.new()
@@ -94,17 +97,12 @@ func _build_ui() -> void:
     for c in range(WORD_LENGTH):
       var cell := Panel.new()
       cell.custom_minimum_size = Vector2(56, 56)
-      var cs := StyleBoxFlat.new()
-      cs.bg_color = COLOR_CELL_IDLE
+      var cs := _make_rounded_stylebox(COLOR_CELL_IDLE, 4)
       cs.border_width_left   = 2
       cs.border_width_right  = 2
       cs.border_width_top    = 2
       cs.border_width_bottom = 2
       cs.border_color = Color(0.38, 0.38, 0.42)
-      cs.corner_radius_top_left     = 4
-      cs.corner_radius_top_right    = 4
-      cs.corner_radius_bottom_left  = 4
-      cs.corner_radius_bottom_right = 4
       cell.add_theme_stylebox_override("panel", cs)
 
       var lbl := Label.new()
@@ -147,13 +145,7 @@ func _build_ui() -> void:
   vbox.add_child(instr)
 
 func _set_color(row: int, col: int, color: Color) -> void:
-  var s := StyleBoxFlat.new()
-  s.bg_color = color
-  s.corner_radius_top_left     = 4
-  s.corner_radius_top_right    = 4
-  s.corner_radius_bottom_left  = 4
-  s.corner_radius_bottom_right = 4
-  _panels[row][col].add_theme_stylebox_override("panel", s)
+  _panels[row][col].add_theme_stylebox_override("panel", _make_rounded_stylebox(color, 4))
 
 # ── Saisie clavier ────────────────────────────────────────────────────────────
 
