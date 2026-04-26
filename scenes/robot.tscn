@@ -33,7 +33,7 @@ material = SubResource("Mat_pupil")
 radius = 0.04
 height = 0.08
 
-[node name="Robot_LNR3p14y" type="CharacterBody3D"]
+[node name="Robot_LNR3p14y" type="CharacterBody3D" groups=["robot"]]
 script = ExtResource("1_robot")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
