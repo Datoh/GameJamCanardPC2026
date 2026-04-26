@@ -13,6 +13,14 @@ const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
 
 @export var camera_height: float = 0.2
+@export var cam_transition_duration: float = 1.0
+@export var cam_arc_height: float = 1.5
+
+var _cam_start_pos := Vector3.ZERO
+var _cam_start_basis := Basis.IDENTITY
+var _cam_end_pos := Vector3.ZERO
+var _cam_end_basis := Basis.IDENTITY
+var _close_won: bool = false
 
 const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX"]
 const REAL_WORDS := [
@@ -198,6 +206,10 @@ func interact(player_cam: Camera3D, has_dict: bool) -> void:
   _col = 1
   _won = false
 
+  # Remet la caméra à sa position locale cible avant de lire son global_transform
+  _overhead_cam.position = Vector3(0, camera_height, 0)
+  _overhead_cam.rotation_degrees = Vector3(-90, 0, 0)
+
   var words: Array = REAL_WORDS if _has_dictionary else FAKE_WORDS
   _target = words[randi() % words.size()].to_upper()
 
@@ -210,13 +222,49 @@ func interact(player_cam: Camera3D, has_dict: bool) -> void:
   _hint_label.text = "Mot de %d lettres  •  Commence par « %s »" % [WORD_LENGTH, _target[0]]
   _result_label.visible = false
 
-  _overhead_cam.make_current()
+  _transition_to_overhead()
 
 func _close_game(won: bool) -> void:
   _active = false
+  _close_won = won
+  _transition_to_player()
+
+# ── Transitions caméra ───────────────────────────────────────────────────────
+
+func _transition_to_overhead() -> void:
+  _cam_end_pos   = _overhead_cam.global_position
+  _cam_end_basis = _overhead_cam.global_basis
+  _cam_start_pos   = _player_camera.global_position
+  _cam_start_basis = _player_camera.global_basis
+  _overhead_cam.global_transform = _player_camera.global_transform
+  _overhead_cam.make_current()
+  var tw := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+  tw.tween_method(_animate_cam, 0.0, 1.0, cam_transition_duration)
+
+func _transition_to_player() -> void:
+  _cam_start_pos   = _overhead_cam.global_position
+  _cam_start_basis = _overhead_cam.global_basis
+  _cam_end_pos   = _player_camera.global_position
+  _cam_end_basis = _player_camera.global_basis
+  var tw := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+  tw.tween_method(_animate_cam, 0.0, 1.0, cam_transition_duration)
+  tw.tween_callback(_on_return_done)
+
+func _animate_cam(t: float) -> void:
+  var mid := Vector3(
+    (_cam_start_pos.x + _cam_end_pos.x) * 0.5,
+    maxf(_cam_start_pos.y, _cam_end_pos.y) + cam_arc_height,
+    (_cam_start_pos.z + _cam_end_pos.z) * 0.5
+  )
+  var u := 1.0 - t
+  var pos := u * u * _cam_start_pos + 2.0 * u * t * mid + t * t * _cam_end_pos
+  var rot := Quaternion(_cam_start_basis).slerp(Quaternion(_cam_end_basis), t)
+  _overhead_cam.global_transform = Transform3D(Basis(rot), pos)
+
+func _on_return_done() -> void:
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
-  game_finished.emit(won)
+  game_finished.emit(_close_won)
 
 # ── Saisie clavier ────────────────────────────────────────────────────────────
 
