@@ -53,6 +53,8 @@ var _message_timer: Timer
 var _debug_label: Label
 var _dialogue_ui: DialogueUI
 
+var _interaction_hint_label: Label
+
 var _robot: Node3D = null
 var _sutom_node: Node3D = null
 var _sutom_timer: Timer
@@ -104,6 +106,15 @@ func _setup_ui() -> void:
   _debug_label.position = Vector2(10, 10)
   _debug_label.add_theme_color_override("font_color", Color(0, 1, 0))
   _canvas.add_child(_debug_label)
+
+  _interaction_hint_label = Label.new()
+  _interaction_hint_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+  _interaction_hint_label.offset_top = -140.0
+  _interaction_hint_label.offset_bottom = -90.0
+  _interaction_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+  _interaction_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+  _interaction_hint_label.visible = false
+  _canvas.add_child(_interaction_hint_label)
 
   _dialogue_ui = DialogueUI.new()
   _dialogue_ui.dialogue_completed.connect(_on_dialogue_completed)
@@ -221,12 +232,28 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed("ui_accept") and not _dialogue_ui.is_open():
     _try_interact()
 
+func _find_door_near(collider: Node) -> Door:
+  var node := collider
+  for i in 3:
+    if node == null:
+      break
+    if node is Door:
+      return node as Door
+    node = node.get_parent()
+  return null
+
 func _try_interact() -> void:
   _interaction_ray.force_raycast_update()
   if not _interaction_ray.is_colliding():
     return
 
   var collider := _interaction_ray.get_collider()
+
+  var door := _find_door_near(collider)
+  if door != null:
+    if not door.is_animating():
+      door.open_close()
+    return
 
   if collider.is_in_group("robot"):
     if state_sutom == SutomState.ROBOT_WORKING:
@@ -340,6 +367,15 @@ func _pickup(obj: Node, obj_name: String) -> void:
 
 func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
+
+  var hint := ""
+  if not _in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
+    var col := _interaction_ray.get_collider()
+    var door := _find_door_near(col)
+    if door != null and not door.is_animating():
+      hint = "Fermer" if door.is_opened() else "Ouvrir"
+  _interaction_hint_label.text = hint
+  _interaction_hint_label.visible = not hint.is_empty()
 
   if not is_on_floor():
     velocity.y -= gravity * delta
