@@ -648,6 +648,13 @@ points = PackedVector3Array(0.030329853, 0.090039976, 0.0016223867, -0.0212, -0.
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ja80a"]
 points = PackedVector3Array(-0.35818577, 0.58177125, 0.11645633, -0.30306947, 0.54384935, -0.18862894, -0.30306947, 0.53852534, -0.16885003, -0.30306947, 0.53852534, 0.29802555, -0.35818577, 0.5895238, 0.13238448, -0.35818577, 0.78006727, -0.19732231, -0.30306947, 0.55832696, -0.2031568, 0.30299938, 0.54384935, -0.18862894, 0, 0.35750905, 0.013127595, -0.022158712, 0.35750905, 0.021879315, -0.030994147, 0.35750905, 0.043116838, -0.022158712, 0.35750905, 0.06429604, 0, 0.35750905, 0.07310611, 0.30299938, 0.53852534, 0.29802555, -0.30306947, 0.55982137, 0.29802555, -0.35818577, 0.7446673, 0.20333183, -0.35818577, 0.7204757, 0.20309848, -0.35818577, 0.60353434, 0.14411181, -0.35818577, 0.79884136, -0.21476743, -0.30306947, 0.5781285, -0.20846619, 0.30299938, 0.55832696, -0.2031568, 0.35818577, 0.78006727, -0.19732231, 0.35818577, 0.58177125, 0.11645633, 0.30299938, 0.53852534, -0.16885003, 0.022088587, 0.35750905, 0.021879315, 0.022088587, 0.35750905, 0.06429604, 0.030924022, 0.35750905, 0.043116838, 0.35818577, 0.5895238, 0.13238448, 0.35818577, 0.60353434, 0.14411181, 0.35818577, 0.7204757, 0.20309848, 0.35818577, 0.7446673, 0.20333183, 0.30299938, 0.55982137, 0.29802555, -0.30306947, 0.579623, 0.2926578, -0.35818577, 0.7665237, 0.19580534, -0.35818577, 0.79884136, 0.13699374, -0.30306947, 1.311721, -0.2825058, -0.30306947, 1.3076112, -0.29359135, -0.30306947, 1.2965896, -0.29802555, -0.30306947, 1.1644233, -0.28944886, -0.30306947, 0.96603394, -0.271712, -0.30306947, 0.768672, -0.24306469, 0.30299938, 0.5781285, -0.20846619, 0.35818577, 0.79884136, -0.21476743, 0.35818577, 0.7665237, 0.19580534, 0.30299938, 0.579623, 0.2926578, -0.30306947, 1.3049959, -0.24405655, -0.35818577, 0.7838968, 0.18116078, -0.35818577, 0.7950119, 0.1609151, -0.30306947, 1.3102266, -0.25537544, 0.30299938, 1.311721, -0.2825058, 0.30299938, 1.3076112, -0.29359135, 0.30299938, 1.2965896, -0.29802555, 0.30299938, 1.1644233, -0.28944886, 0.30299938, 0.96603394, -0.271712, 0.30299938, 0.768672, -0.24306469, 0.35818577, 0.79884136, 0.13699374, 0.35818577, 0.7838968, 0.18116078, 0.30299938, 1.3049959, -0.24405655, 0.30299938, 1.3102266, -0.25537544, 0.35818577, 0.7950119, 0.1609151)
 
+[sub_resource type="Environment" id="Environment_neons"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.04, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.75, 0.82, 1, 1)
+ambient_light_energy = 0.08
+
 [node name="Node3D" type="Node3D" unique_id=83745364]
 
 [node name="Office" type="Node3D" parent="." unique_id=92018775]
@@ -1045,6 +1052,60 @@ shape = SubResource("ConvexPolygonShape3D_7i2nt")
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="Office/BureauBoss/Office_Desk_4_Rounded_Alt2/VehicleBody3D" unique_id=1968678769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08049917)
 shape = SubResource("ConvexPolygonShape3D_ja80a")
+
+[node name="Lumieres" type="Node3D" parent="Office" unique_id=100000002]
+
+[node name="Neon_Couloir1" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000003]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 5.883994, 5, 4.118253)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 12.0
+spot_attenuation = 0.3
+spot_angle = 80.0
+
+[node name="Neon_Couloir2" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000004]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 11, 5, 3.892693)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 12.0
+spot_attenuation = 0.3
+spot_angle = 80.0
+
+[node name="Neon_SalleRepos1" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000005]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 15, 5, 3)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 12.0
+spot_attenuation = 0.3
+spot_angle = 80.0
+
+[node name="Neon_SalleRepos2" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000006]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 10, 5, 9)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 12.0
+spot_attenuation = 0.3
+spot_angle = 80.0
+
+[node name="Neon_Reserve" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000007]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 14.5, 5, 9)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 10.0
+spot_attenuation = 0.3
+spot_angle = 75.0
+
+[node name="Neon_Bureau" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000008]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 18.84671, 5, 7.5)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 10.0
+spot_attenuation = 0.3
+spot_angle = 75.0
+
+[node name="Neon_BureauBoss" type="SpotLight3D" parent="Office/Lumieres" unique_id=100000009]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 4.061652, 5, 9)
+light_color = Color(0.88, 0.93, 1, 1)
+spot_range = 12.0
+spot_attenuation = 0.3
+spot_angle = 80.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=100000001]
+environment = SubResource("Environment_neons")
 
 [node name="Player" parent="." unique_id=1490124664 instance=ExtResource("7_2knxt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, 8)
