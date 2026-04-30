@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://7ri3xneq6c5g"]
+
+[ext_resource type="Script" uid="uid://cvey48343qh11" path="res://scripts/sutom_machine.gd" id="1_sa2wj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hub07"]
+size = Vector3(0.21, 0.02, 0.29)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2knxt"]
+size = Vector3(0.21, 0.02, 0.29)
+
+[node name="SutomMachine" type="StaticBody3D" unique_id=1522048439 groups=["interactive"]]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+collision_layer = 3
+script = ExtResource("1_sa2wj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1466752419]
+mesh = SubResource("BoxMesh_hub07")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=555419892]
+shape = SubResource("BoxShape3D_2knxt")

@@ -45,7 +45,7 @@ var robot_state_tele:         RobotTeleState         = RobotTeleState.UNAWARE
 var robot_state_labyrinthe:   RobotLabyrinthState    = RobotLabyrinthState.UNAWARE
 var robot_state_pc:           RobotPCState           = RobotPCState.UNAWARE
 
-var _interaction_ray: RayCast3D
+@onready var _interaction_ray: RayCast3D = %RayCast3D
 var _canvas: CanvasLayer
 var _message_label: Label
 var _message_timer: Timer
@@ -58,25 +58,15 @@ var _robot: Node3D = null
 var _sutom_node: Node3D = null
 var _sutom_timer: Timer
 var _in_minigame: bool = false
-var _sutom_state_before_minigame: SutomState = SutomState.IDLE
 var _completed_dialogues: Array[String] = []
 
 func _ready() -> void:
-  add_to_group("player")
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-  _setup_raycast()
   _setup_ui()
   await get_tree().process_frame
   _robot = get_tree().get_first_node_in_group("robot")
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
-
-func _setup_raycast() -> void:
-  _interaction_ray = RayCast3D.new()
-  _interaction_ray.target_position = Vector3(0, 0, -1.5)
-  _interaction_ray.enabled = true
-  _interaction_ray.add_exception(self)
-  camera.add_child(_interaction_ray)
 
 func _setup_ui() -> void:
   _canvas = CanvasLayer.new()
@@ -198,7 +188,10 @@ func _apply_dialogue_side_effects(dialogue_id: String) -> void:
       state_sutom = SutomState.ROBOT_WORKING
       robot_state_sutom = RobotSutomState.HELPING
       if _sutom_node == null:
-        _sutom_node = get_tree().get_first_node_in_group("sutom_machine")
+        for m in get_tree().get_nodes_in_group("machine"):
+          if m.has_signal("game_finished"):
+            _sutom_node = m
+            break
       if _robot != null and _sutom_node != null:
         _robot.go_to_position((_sutom_node as Node3D).global_position)
       _sutom_timer.start(20.0)
@@ -234,26 +227,6 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed("ui_accept") and not _dialogue_ui.is_open():
     _try_interact()
 
-func _find_sutom_machine(collider: Node) -> Node:
-  var node := collider
-  for i in 3:
-    if node == null:
-      break
-    if node.is_in_group("sutom_machine"):
-      return node
-    node = node.get_parent()
-  return null
-
-func _find_door_near(collider: Node) -> Door:
-  var node := collider
-  for i in 3:
-    if node == null:
-      break
-    if node is Door:
-      return node as Door
-    node = node.get_parent()
-  return null
-
 func _try_interact() -> void:
   _interaction_ray.force_raycast_update()
   if not _interaction_ray.is_colliding():
@@ -261,15 +234,8 @@ func _try_interact() -> void:
 
   var collider := _interaction_ray.get_collider()
 
-  var door := _find_door_near(collider)
-  if door != null:
-    if not door.is_animating():
-      door.open_close()
-    return
-
-  var sutom_machine := _find_sutom_machine(collider)
-  if sutom_machine != null:
-    _interact_sutom_machine(sutom_machine)
+  if collider.is_in_group("interactive"):
+    collider.interact(self)
     return
 
   if collider.is_in_group("robot"):
@@ -281,10 +247,19 @@ func _try_interact() -> void:
 
   if collider.is_in_group("machines"):
     match collider.name:
-      "Oscilloscope": _interact_oscilloscope()
-      "Tele":         _interact_tele()
-      "Labyrinthe":   _interact_labyrinthe()
-      "PC":           _interact_pc()
+      "Oscilloscope":
+        if state_oscilloscope == OscilloscopeState.IDLE:
+          state_oscilloscope = OscilloscopeState.ATTEMPTED
+          _show_message("Cette machine a l'air compliquée.", 3.0)
+        else:
+          _use_machine("Oscilloscope")
+      "Labyrinthe":
+        if state_labyrinthe == LabyrinthState.IDLE:
+          state_labyrinthe = LabyrinthState.ATTEMPTED
+          puzzle_attempted["Fromage"] = true
+          _show_message("Ce labyrinthe a l'air impossible...", 3.0)
+        else:
+          _use_machine("Labyrinthe")
     return
 
   if collider.is_in_group("objets"):
@@ -300,71 +275,7 @@ func _try_pickup(collider: Node) -> void:
   else:
     _show_message(DialoguesData.OBJECT_MESSAGES.get(obj_name, "Hmm."))
 
-# ── Interactions par machine ──────────────────────────────────────────────────
-
-func _interact_sutom_machine(machine: Node) -> void:
-  if _sutom_node == null:
-    _sutom_node = machine
-  match state_sutom:
-    SutomState.IDLE, SutomState.FIRST_SEEN:
-      state_sutom = SutomState.FIRST_SEEN
-      _show_message("J'ai besoin d'aide... je vais en parler au robot.", 3.0)
-    SutomState.ROBOT_WORKING:
-      _show_message("Le robot est en train de faire le SUTOM... je vais le laisser faire...", 3.0)
-    SutomState.ROBOT_DONE:
-      _show_message("Je devrais d'abord parler au robot...", 2.0)
-    SutomState.NEED_TRY_MACHINE, SutomState.NEEDS_DICTIONARY, SutomState.UNLOCKED:
-      _enter_sutom_machine(machine)
-    SutomState.SOLVED:
-      _show_message("Vous avez déjà résolu le SUTOM, ce n'est plus la peine !", 3.0)
-
-func _interact_oscilloscope() -> void:
-  if state_oscilloscope == OscilloscopeState.IDLE:
-    state_oscilloscope = OscilloscopeState.ATTEMPTED
-    _show_message("Cette machine a l'air compliquée.", 3.0)
-  else:
-    _use_machine("Oscilloscope")
-
-func _interact_tele() -> void:
-  if state_tele == TeleState.IDLE:
-    state_tele = TeleState.CAPTCHA_PENDING
-    puzzle_attempted["Feutres"] = true
-    _show_message("Cette télé affiche quelque chose d'étrange.", 3.0)
-  else:
-    _use_machine("Tele")
-
-func _interact_labyrinthe() -> void:
-  if state_labyrinthe == LabyrinthState.IDLE:
-    state_labyrinthe = LabyrinthState.ATTEMPTED
-    puzzle_attempted["Fromage"] = true
-    _show_message("Ce labyrinthe a l'air impossible...", 3.0)
-  else:
-    _use_machine("Labyrinthe")
-
-func _interact_pc() -> void:
-  if state_pc == PCState.IDLE:
-    state_pc = PCState.ATTEMPTED
-    puzzle_attempted["Joint"] = true
-    _show_message("Ce PC semble en panne.", 3.0)
-  else:
-    _use_machine("PC")
-
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
-
-func _enter_sutom_machine(machine: Node) -> void:
-  _sutom_state_before_minigame = state_sutom
-  _in_minigame = true
-  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  machine.interact(camera, state_sutom == SutomState.UNLOCKED)
-  machine.game_finished.connect(_on_sutom_machine_finished.bind(machine), CONNECT_ONE_SHOT)
-
-func _on_sutom_machine_finished(won: bool, _machine: Node) -> void:
-  _in_minigame = false
-  Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-  if _sutom_state_before_minigame == SutomState.NEED_TRY_MACHINE:
-    state_sutom = SutomState.NEEDS_DICTIONARY
-  if won and state_sutom == SutomState.UNLOCKED:
-    state_sutom = SutomState.SOLVED
 
 func _use_machine(machine_name: String) -> void:
   # TODO: ouvrir le mini-jeu correspondant
@@ -384,12 +295,9 @@ func _physics_process(delta: float) -> void:
 
   var hint := ""
   if not _in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
-    var col := _interaction_ray.get_collider()
-    var door := _find_door_near(col)
-    if door != null and not door.is_animating():
-      hint = "Fermer" if door.is_opened() else "Ouvrir"
-    elif _find_sutom_machine(col) != null:
-      hint = "[E] Jouer au SUTOM"
+    var collider := _interaction_ray.get_collider()
+    if collider and collider.is_in_group("interactive"):
+      hint = collider.get_interaction_hint(self)
   _interaction_hint_label.text = hint
   _interaction_hint_label.visible = not hint.is_empty()
 

@@ -1,27 +1,36 @@
-extends MeshInstance3D
+extends StaticBody3D
 class_name Door
 
-@export var pivot: Node3D = null
-@export var direction: bool = true
-@export var angle: float = 90.0
-@export var speed: float = 5.0
+@export var _pivot: Node3D = null
+@export var _direction: bool = true
+@export var _locked: bool = false
+@export var _angle: float = 90.0
+@export var _speed: float = 5.0
 
 var _target_angle: float = 0.0
 
 func _process(delta: float) -> void:
-  if pivot == null:
+  if _pivot == null:
     return
-  pivot.rotation_degrees.y = lerp(pivot.rotation_degrees.y, _target_angle, speed * delta)
+  _pivot.rotation_degrees.y = lerp(_pivot.rotation_degrees.y, _target_angle, _speed * delta)
 
-func open_close() -> void:
-  if is_animating():
+func interact(player: Node) -> void:
+  if _is_animating():
     return
-  _target_angle = 0.0 if is_opened() else angle * (1.0 if direction else -1.0)
+  if _locked:
+    player._show_message("La porte est vérouillée.", 3.0)
+    return
+  _target_angle = 0.0 if _is_opened() else _angle * (1.0 if _direction else -1.0)
 
-func is_animating() -> bool:
-  if pivot == null:
+func _is_animating() -> bool:
+  if _pivot == null:
     return false
-  return abs(pivot.rotation_degrees.y - _target_angle) > 0.5
+  return abs(_pivot.rotation_degrees.y - _target_angle) > 0.5
 
-func is_opened() -> bool:
+func _is_opened() -> bool:
   return _target_angle != 0.0
+
+func get_interaction_hint(_player: Node) -> String:
+  if _is_animating():
+    return ""
+  return "Fermer" if _is_opened() else "Ouvrir"

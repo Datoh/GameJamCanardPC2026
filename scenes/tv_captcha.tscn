@@ -1,0 +1,213 @@
+[gd_scene format=3 uid="uid://c2xmcaptcha42"]
+
+[node name="TVCaptcha" type="Control" unique_id=242122980]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Background" type="ColorRect" parent="." unique_id=302901239]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.1, 0.13, 0.21, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1444252125]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 1920.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 68
+text = "Prouvez que vous n'êtes pas un robot"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="." unique_id=458609617]
+layout_mode = 0
+offset_top = 155.0
+offset_right = 1920.0
+offset_bottom = 205.0
+theme_override_colors/font_color = Color(0.78, 0.78, 0.86, 1)
+theme_override_font_sizes/font_size = 36
+text = "Sélectionnez toutes les images contenant un lapin rose"
+horizontal_alignment = 1
+
+[node name="Border0" type="ColorRect" parent="." unique_id=1042398362]
+layout_mode = 0
+offset_left = 486.0
+offset_top = 258.0
+offset_right = 798.0
+offset_bottom = 570.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell0" type="TextureRect" parent="." unique_id=1211264906]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 262.0
+offset_right = 790.0
+offset_bottom = 562.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay0" type="ColorRect" parent="." unique_id=531433151]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 262.0
+offset_right = 790.0
+offset_bottom = 562.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="Border1" type="ColorRect" parent="." unique_id=1960322226]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 258.0
+offset_right = 1118.0
+offset_bottom = 570.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell1" type="TextureRect" parent="." unique_id=1954607180]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 262.0
+offset_right = 1110.0
+offset_bottom = 562.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay1" type="ColorRect" parent="." unique_id=1156444640]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 262.0
+offset_right = 1110.0
+offset_bottom = 562.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="Border2" type="ColorRect" parent="." unique_id=1212118974]
+layout_mode = 0
+offset_left = 1126.0
+offset_top = 258.0
+offset_right = 1438.0
+offset_bottom = 570.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell2" type="TextureRect" parent="." unique_id=1849262842]
+layout_mode = 0
+offset_left = 1130.0
+offset_top = 262.0
+offset_right = 1430.0
+offset_bottom = 562.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay2" type="ColorRect" parent="." unique_id=1234832158]
+layout_mode = 0
+offset_left = 1130.0
+offset_top = 262.0
+offset_right = 1430.0
+offset_bottom = 562.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="Border3" type="ColorRect" parent="." unique_id=1644983292]
+layout_mode = 0
+offset_left = 486.0
+offset_top = 578.0
+offset_right = 798.0
+offset_bottom = 890.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell3" type="TextureRect" parent="." unique_id=393414026]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 582.0
+offset_right = 790.0
+offset_bottom = 882.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay3" type="ColorRect" parent="." unique_id=1676614542]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 582.0
+offset_right = 790.0
+offset_bottom = 882.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="Border4" type="ColorRect" parent="." unique_id=1864675044]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 578.0
+offset_right = 1118.0
+offset_bottom = 890.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell4" type="TextureRect" parent="." unique_id=1447022539]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 582.0
+offset_right = 1110.0
+offset_bottom = 882.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay4" type="ColorRect" parent="." unique_id=807190296]
+layout_mode = 0
+offset_left = 810.0
+offset_top = 582.0
+offset_right = 1110.0
+offset_bottom = 882.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="Border5" type="ColorRect" parent="." unique_id=420905661]
+layout_mode = 0
+offset_left = 1126.0
+offset_top = 578.0
+offset_right = 1438.0
+offset_bottom = 890.0
+color = Color(0.22, 0.27, 0.42, 1)
+
+[node name="Cell5" type="TextureRect" parent="." unique_id=1910557812]
+layout_mode = 0
+offset_left = 1130.0
+offset_top = 582.0
+offset_right = 1430.0
+offset_bottom = 882.0
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Overlay5" type="ColorRect" parent="." unique_id=791484053]
+layout_mode = 0
+offset_left = 1130.0
+offset_top = 582.0
+offset_right = 1430.0
+offset_bottom = 882.0
+color = Color(0.2, 0.82, 0.32, 0)
+
+[node name="ValiderBG" type="ColorRect" parent="." unique_id=1967297567]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 970.0
+offset_right = 1260.0
+offset_bottom = 1035.0
+color = Color(0.14, 0.5, 0.22, 1)
+
+[node name="ValiderLabel" type="Label" parent="." unique_id=922221317]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 970.0
+offset_right = 1260.0
+offset_bottom = 1035.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 42
+text = "Valider"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="." unique_id=269239859]
+layout_mode = 0
+offset_top = 914.0
+offset_right = 1920.0
+offset_bottom = 949.0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 24
+text = "Cliquer pour sélectionner   •   Échap Annuler"
+horizontal_alignment = 1

@@ -1,0 +1,38 @@
+[gd_scene format=4 uid="uid://b0ntda2s3nvnm"]
+
+[ext_resource type="Material" uid="uid://dopoxs2floqam" path="res://assets/textures/ceil/OfficeCeiling006_1K-JPG.tres" id="1_teagh"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hcdcl"]
+_surfaces = [{
+"aabb": AABB(-0.99999905, -0.037499852, -1, 1.9999981, 0.037500158, 2),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAACAAMAAAAEAAEAAgAFAAMAAgABAAUAAAADAAYABAAAAAYABgADAAUAAQAEAAcABAAGAAcAAQAHAAUABgAFAAcA"),
+"name": "Palette",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("8P9/vwAAozQAAIA/8P9/PwAAIjQAAIC/8P9/PwAAozQAAIA/8P9/P0iZGb0AAIA/8P9/vwAAIjQAAIC/8P9/P3KZGb0AAIC/8P9/v0iZGb0AAIA/8P9/v3KZGb0AAIC/")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_klxdu"]
+resource_name = "Floor_Floor"
+_surfaces = [{
+"aabb": AABB(-0.99999905, -0.037499852, -1, 1.9999981, 0.037500158, 2),
+"attribute_data": PackedByteArray("/I5FP6Spnj4PSE4/fjeNPg9ITj+kqZ4+/I5FP343jT78jkU/pKmePg9ITj9+N40+/I5FP343jT4PSE4/pKmePg9ITj+kqZ4+D0hOP343jT4PSE4/pKmePg9ITj9+N40+/I5FP343jT78jkU/pKmePvyORT9+N40+/I5FP6Spnj4PSE4/fjeNPvyORT9+N40+D0hOP343jT78jkU/fjeNPvyORT+kqZ4+D0hOP6Spnj78jkU/pKmePg9ITj+kqZ4+"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": ExtResource("1_teagh"),
+"name": "Palette",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("8P9/vwAAozQAAIA/8P9/PwAAIjQAAIC/8P9/PwAAozQAAIA/8P9/vwAAIjQAAIC/8P9/v0iZGb0AAIA/8P9/P3KZGb0AAIC/8P9/v3KZGb0AAIC/8P9/P0iZGb0AAIA/8P9/PwAAozQAAIA/8P9/P3KZGb0AAIC/8P9/P0iZGb0AAIA/8P9/PwAAIjQAAIC/8P9/vwAAIjQAAIC/8P9/v0iZGb0AAIA/8P9/v3KZGb0AAIC/8P9/vwAAozQAAIA/8P9/PwAAIjQAAIC/8P9/v3KZGb0AAIC/8P9/P3KZGb0AAIC/8P9/vwAAIjQAAIC/8P9/vwAAozQAAIA/8P9/P0iZGb0AAIA/8P9/v0iZGb0AAIA/8P9/PwAAozQAAIA//3///////7//f///////v/9///////+//3///////7//fwAA////P/9/AAD///8//38AAP///z//fwAA////P////3////+/////f////7////9/////v////3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////7//////////v/////////+//////////7//////////v/9//3////8//3//f////z//f/9/////P/9//3////8/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_hcdcl")
+
+[node name="Ceil" type="MeshInstance3D" unique_id=218989399]
+mesh = SubResource("ArrayMesh_klxdu")

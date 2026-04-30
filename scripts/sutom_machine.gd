@@ -30,6 +30,7 @@ const REAL_WORDS := [
 
 var _overhead_cam: Camera3D
 var _player_camera: Camera3D = null
+var _player_ref: Node = null
 var _vp: SubViewport = null
 var _top_plane: MeshInstance3D = null
 var _active: bool = false
@@ -45,6 +46,7 @@ var _result_label: Label
 var _hint_label: Label
 
 func _ready() -> void:
+  add_to_group("machine")
   _setup_overhead_camera()
   _setup_journal_surface()
 
@@ -146,7 +148,7 @@ func _build_grid_ui() -> void:
 
   var grid_w := WORD_LENGTH * CELL + (WORD_LENGTH - 1) * GAP
   var grid_h := MAX_ATTEMPTS * CELL + (MAX_ATTEMPTS - 1) * GAP
-  var gx := (VW - grid_w) / 2
+  var gx := floori((VW - grid_w) / 2)
   var gy := 86
 
   _panels.clear()
@@ -194,9 +196,51 @@ func _build_grid_ui() -> void:
   instr.add_theme_font_size_override("font_size", 10)
   _vp.add_child(instr)
 
+# ── Interface publique (dispatcher player) ───────────────────────────────────
+
+func interact(player: Node) -> void:
+  _player_ref = player
+  match player.state_sutom:
+    player.SutomState.IDLE, player.SutomState.FIRST_SEEN:
+      player.state_sutom = player.SutomState.FIRST_SEEN
+      player._show_message("J'ai besoin d'aide... je vais en parler au robot.", 3.0)
+    player.SutomState.ROBOT_WORKING:
+      player._show_message("Le robot est en train de faire le SUTOM... je vais le laisser faire...", 3.0)
+    player.SutomState.ROBOT_DONE:
+      player._show_message("Je devrais d'abord parler au robot...", 2.0)
+    player.SutomState.NEED_TRY_MACHINE, player.SutomState.NEEDS_DICTIONARY, player.SutomState.UNLOCKED:
+      _start_minigame(player)
+    player.SutomState.SOLVED:
+      player._show_message("Vous avez déjà résolu le SUTOM, ce n'est plus la peine !", 3.0)
+
+
+func get_interaction_hint(_player: Node) -> String:
+  return "[E] Jouer au SUTOM"
+
+
+func _start_minigame(player: Node) -> void:
+  player._sutom_state_before_minigame = player.state_sutom
+  player._in_minigame = true
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _begin_game(player.camera, player.state_sutom == player.SutomState.UNLOCKED)
+  if not game_finished.is_connected(_on_game_finished):
+    game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
+
+
+func _on_game_finished(won: bool) -> void:
+  if _player_ref == null:
+    return
+  _player_ref._in_minigame = false
+  Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+  if _player_ref._sutom_state_before_minigame == _player_ref.SutomState.NEED_TRY_MACHINE:
+    _player_ref.state_sutom = _player_ref.SutomState.NEEDS_DICTIONARY
+  if won and _player_ref.state_sutom == _player_ref.SutomState.UNLOCKED:
+    _player_ref.state_sutom = _player_ref.SutomState.SOLVED
+
+
 # ── Entrée / sortie ───────────────────────────────────────────────────────────
 
-func interact(player_cam: Camera3D, has_dict: bool) -> void:
+func _begin_game(player_cam: Camera3D, has_dict: bool) -> void:
   if _active:
     return
   _active = true

@@ -1,0 +1,48 @@
+[gd_scene format=4 uid="uid://pyy6x572f3ec"]
+
+[ext_resource type="Material" uid="uid://c21wd0nsquw6" path="res://assets/textures/wall/Wallpaper002A_1K-JPG.tres" id="1_2hqic"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_twh2n"]
+_surfaces = [{
+"aabb": AABB(-1, 3.5762787e-07, -0.10000002, 2, 3, 0.20000003),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAAAEAAEAAgADAAUAAgAFAAAAAAAGAAQAAAAFAAYABAAHAAEAAQAHAAMABAAGAAcABQADAAcABQAHAAYA"),
+"name": "Palette",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAD//wAAAAAAAAAAAAAAAAAAAAD//wAAAAD//wAA//8AAAAA///+/wAA//////7/AAD/////AAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_l2dvh"]
+resource_name = "Wall_Standard_Wall_Standard"
+_surfaces = [{
+"aabb": AABB(-1, 3.5762787e-07, -0.10000002, 2, 3, 0.20000003),
+"attribute_data": PackedByteArray("hrpyNei6pzHounI1hrqnMYa6cjXouj05hro9Oei6cjUusj05+bWMM/m1PTkusowz+bU9OcS5jDPEuT05+bWMM8S5PTkluowzJbo9OcS5jDMluj05hrqMM4a6PTkluowz"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": ExtResource("1_2hqic"),
+"name": "Palette",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAP//VNX//wAAAABU1QAAAAAAAFTV//8AAP//VNUAAP///v9U1f////8AAFTV//////7/VNUAAP//AABU1QAAAAD//wCA//////7/AID//wAA//8AgAAA///+/wCA//8AAAAA//8AAP//AAD//wAAAAAAAP///////wAA/////wAA////v/////8AAP+///8AAAAA/7///////v//vwAAAAAAAP+/AAD///7//78AAAAA////vwAA//8AAP+/VFVUVVRVVFVUVVRVVFVUVVTVqipU1aoqVNWqKlTVqir/f////3////9/////f////3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_twh2n")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2hqic"]
+size = Vector3(2, 3, 0.20000003)
+
+[node name="Wall_Standard" type="MeshInstance3D" unique_id=1277023873]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("ArrayMesh_l2dvh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=244561271]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5000004, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=711753902]
+shape = SubResource("BoxShape3D_2hqic")
