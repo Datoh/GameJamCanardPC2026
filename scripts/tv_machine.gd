@@ -1,4 +1,5 @@
 extends StaticBody3D
+class_name MachineTV
 
 signal captcha_done(success: bool)
 
@@ -14,6 +15,8 @@ const COLOR_LAPIN := [Color.PALE_GOLDENROD,  Color.BISQUE, Color.CYAN, Color.GRE
 @export var _video_player: VideoStreamPlayer = null
 @onready var _captcha_ui: Control = %TVCaptcha
 
+const machine_name := "TV"
+
 var _cell_rects:    Array = []
 var _pink_indices:  Array = []
 
@@ -25,7 +28,6 @@ var _cell_rect_validate: Control = null
 
 
 func _ready() -> void:
-  add_to_group("machine")
   input_ray_pickable = true
   input_event.connect(_on_tv_input)
   _setup_captcha_scene()

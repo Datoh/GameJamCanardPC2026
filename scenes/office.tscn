@@ -502,7 +502,7 @@ layout_mode = 2
 stream = ExtResource("16_3hjlj")
 loop = true
 
-[node name="TVMachine" type="StaticBody3D" parent="SalleRepos/TVScreen" unique_id=1322610770 node_paths=PackedStringArray("_tv_title", "_video_player") groups=["interactive"]]
+[node name="TVMachine" type="StaticBody3D" parent="SalleRepos/TVScreen" unique_id=1322610770 node_paths=PackedStringArray("_tv_title", "_video_player") groups=["interactive", "machine"]]
 unique_name_in_owner = true
 transform = Transform3D(1.9645914, 0, 0, 0, -9.6068995e-08, 2.1978025, 0, -3.7032685, -1.6187501e-07, 0, -0.038831368, -0.0031688213)
 collision_layer = 3
@@ -513,7 +513,7 @@ _video_player = NodePath("../SubViewport/SubViewportContainer/VideoStreamPlayer"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SalleRepos/TVScreen/TVMachine" unique_id=1230371267]
 shape = SubResource("BoxShape3D_alkg7")
 
-[node name="MazeMachine" type="StaticBody3D" parent="SalleRepos" unique_id=1962933490 groups=["interactive"]]
+[node name="MazeMachine" type="StaticBody3D" parent="SalleRepos" unique_id=1962933490 groups=["interactive", "machine"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.833067, 0.47, 3.8038402)
 collision_layer = 3
 script = ExtResource("19_142py")
@@ -717,7 +717,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2.5)
 
 [node name="Desk" type="Node3D" parent="Bureau" unique_id=1206506322]
 
-[node name="ComputerMachine" parent="Bureau/Desk" unique_id=1002695437 instance=ExtResource("26_m4cp1")]
+[node name="ComputerMachine" parent="Bureau/Desk" unique_id=1002695437 groups=["machine"] instance=ExtResource("26_m4cp1")]
 unique_name_in_owner = true
 transform = Transform3D(-0.20577727, 0, -0.97859883, 0, 1, 0, 0.97859883, 0, -0.20577727, 4.610197, 1.1468818, 1.4671926)
 
@@ -812,7 +812,7 @@ spot_angle = 80.0
 [node name="Office_Desk_3_Alt" parent="Couloir/Desk" unique_id=787538438 instance=ExtResource("34_0p3hi")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 13, 0, 9.478005)
 
-[node name="SutomMachine" parent="Couloir/Desk" unique_id=1522048439 instance=ExtResource("35_bkq84")]
+[node name="SutomMachine" parent="Couloir/Desk" unique_id=1522048439 groups=["machine"] instance=ExtResource("35_bkq84")]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 13.771095, 0.9544138, 9.279974)
 
 [node name="Office_Desk_drawer2" parent="Couloir/Desk" unique_id=1139374890 instance=ExtResource("33_bkq84")]

@@ -7,19 +7,7 @@ const DialogueUI = preload("res://scripts/dialogue_ui.gd")
 
 # ── États des machines ────────────────────────────────────────────────────────
 
-enum SutomState        { IDLE, FIRST_SEEN, ROBOT_WORKING, ROBOT_DONE, NEED_TRY_MACHINE, NEEDS_DICTIONARY, UNLOCKED, SOLVED }
-enum OscilloscopeState { IDLE, ATTEMPTED, UNLOCKED }
-enum TeleState         { IDLE, ATTEMPTED, CAPTCHA_PENDING, CAPTCHA_SOLVED, VIDEO_WATCHED }
-enum LabyrinthState    { IDLE, ATTEMPTED, CHEESE, MOUSE_READY, SOLVED }
-enum PCState           { IDLE, ATTEMPTED, REPAIRED, MOUSE_CONNECTED, UNLOCKED }
-
-# ── États du robot par machine ────────────────────────────────────────────────
-
-enum RobotSutomState        { UNAWARE, HELPING, GAVE_UP }
-enum RobotOscilloscopeState { UNAWARE }
-enum RobotTeleState         { UNAWARE }
-enum RobotLabyrinthState    { UNAWARE, ATTEMPTED }
-enum RobotPCState           { UNAWARE }
+enum StateMachine { IDLE, ATTEMPTED, ROBOT_WORKING, ROBOT_DONE, TRY_MACHINE, NEEDS_OBJECT, WAITING_UNLOCKED, UNLOCKED, SOLVED }
 
 @onready var camera: Camera3D = $Camera3D
 
@@ -27,17 +15,7 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var inventory: Array[String] = []
 
-var state_sutom:        SutomState        = SutomState.IDLE
-var state_oscilloscope: OscilloscopeState = OscilloscopeState.IDLE
-var state_tele:         TeleState         = TeleState.IDLE
-var state_labyrinthe:   LabyrinthState    = LabyrinthState.IDLE
-var state_pc:           PCState           = PCState.IDLE
-
-var robot_state_sutom:        RobotSutomState        = RobotSutomState.UNAWARE
-var robot_state_oscilloscope: RobotOscilloscopeState = RobotOscilloscopeState.UNAWARE
-var robot_state_tele:         RobotTeleState         = RobotTeleState.UNAWARE
-var robot_state_labyrinthe:   RobotLabyrinthState    = RobotLabyrinthState.UNAWARE
-var robot_state_pc:           RobotPCState           = RobotPCState.UNAWARE
+var state_machine: Dictionary = {}
 
 @onready var _interaction_ray: RayCast3D = %RayCast3D
 var _canvas: CanvasLayer
@@ -50,7 +28,7 @@ var _interaction_hint_label: Label
 
 var _robot: Node3D = null
 var _sutom_node: Node3D = null
-var _sutom_timer: Timer
+var _machine_timer: Timer
 var _crosshair: TextureRect
 
 var _in_minigame: bool = false:
@@ -63,8 +41,13 @@ var _completed_dialogues: Array[String] = []
 func _ready() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
   _setup_ui()
+
   await get_tree().process_frame
+
   _robot = get_tree().get_first_node_in_group("robot")
+
+  for machine in get_tree().get_nodes_in_group("machine"):
+    state_machine[machine.machine_name] = StateMachine.IDLE
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -86,10 +69,10 @@ func _setup_ui() -> void:
   _message_timer.timeout.connect(_message_label.hide)
   add_child(_message_timer)
 
-  _sutom_timer = Timer.new()
-  _sutom_timer.one_shot = true
-  _sutom_timer.timeout.connect(_on_sutom_timer_timeout)
-  add_child(_sutom_timer)
+  _machine_timer = Timer.new()
+  _machine_timer.one_shot = true
+  _machine_timer.timeout.connect(_on_machine_timer_timeout)
+  add_child(_machine_timer)
 
   _debug_label = Label.new()
   _debug_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
@@ -117,30 +100,18 @@ func _show_message(text: String, duration: float = 3.0) -> void:
   _message_timer.start(duration)
 
 func _get_debug_text() -> String:
-  var ray_text: String
+  var output: String
   var ray_object: Object = null
   if _interaction_ray != null and _interaction_ray.is_colliding():
     ray_object = _interaction_ray.get_collider()
   if is_instance_valid(ray_object):
-    ray_text = "RAY: %s %s" % [ray_object.name, ray_object.get_groups()]
+    output = "RAY: %s %s\n" % [ray_object.name, ray_object.get_groups()]
   else:
-    ray_text = "RAY: rien"
+    output = "RAY: rien\n"
 
-  var m_text := "M  SUT=%s|OSC=%s|TEL=%s|LAB=%s|PC=%s" % [
-    SutomState.keys()[state_sutom],
-    OscilloscopeState.keys()[state_oscilloscope],
-    TeleState.keys()[state_tele],
-    LabyrinthState.keys()[state_labyrinthe],
-    PCState.keys()[state_pc],
-  ]
-  var r_text := "R  SUT=%s|OSC=%s|TEL=%s|LAB=%s|PC=%s" % [
-    RobotSutomState.keys()[robot_state_sutom],
-    RobotOscilloscopeState.keys()[robot_state_oscilloscope],
-    RobotTeleState.keys()[robot_state_tele],
-    RobotLabyrinthState.keys()[robot_state_labyrinthe],
-    RobotPCState.keys()[robot_state_pc],
-  ]
-  return "%s\n%s\n%s" % [ray_text, m_text, r_text]
+  for key in state_machine.keys():
+    output = "%s%s => %s | " % [output, key, StateMachine.keys()[state_machine[key]]]
+  return output
 
 # ── Dialogue ──────────────────────────────────────────────────────────────────
 
@@ -153,9 +124,9 @@ func _is_dialogue_available(d: Dictionary) -> bool:
   if req != "" and req not in _completed_dialogues:
     return false
   # Conditions liées aux états des machines
-  if d["id"] == "sutom_demande" and state_sutom != SutomState.FIRST_SEEN:
+  if d["id"] == "sutom_demande" and state_machine[MachineSutom.machine_name] != StateMachine.ATTEMPTED:
     return false
-  if d["id"] == "sutom_resultat" and state_sutom != SutomState.ROBOT_DONE:
+  if d["id"] == "sutom_resultat" and state_machine[MachineSutom.machine_name] != StateMachine.ROBOT_DONE:
     return false
   return true
 
@@ -185,8 +156,7 @@ func _on_dialogue_completed(dialogue_id: String) -> void:
 func _apply_dialogue_side_effects(dialogue_id: String) -> void:
   match dialogue_id:
     "sutom_demande":
-      state_sutom = SutomState.ROBOT_WORKING
-      robot_state_sutom = RobotSutomState.HELPING
+      state_machine[MachineSutom.machine_name] = StateMachine.ROBOT_WORKING
       if _sutom_node == null:
         for m in get_tree().get_nodes_in_group("machine"):
           if m.has_signal("game_finished"):
@@ -194,16 +164,18 @@ func _apply_dialogue_side_effects(dialogue_id: String) -> void:
             break
       if _robot != null and _sutom_node != null:
         _robot.go_to_position((_sutom_node as Node3D).global_position)
-      _sutom_timer.start(20.0)
+      _machine_timer.start(20.0)
     "sutom_resultat":
-      state_sutom = SutomState.NEED_TRY_MACHINE
-      robot_state_sutom = RobotSutomState.GAVE_UP
+      state_machine[MachineSutom.machine_name] = StateMachine.TRY_MACHINE
 
 func _on_dialogue_closed() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _on_sutom_timer_timeout() -> void:
-  state_sutom = SutomState.ROBOT_DONE
+func _on_machine_timer_timeout() -> void:
+  for key in state_machine.keys():
+    if state_machine[key] == StateMachine.ROBOT_WORKING:
+      state_machine[key] = StateMachine.ROBOT_DONE
+      break
   if _robot != null:
     _robot.resume_follow()
 
@@ -239,8 +211,13 @@ func _try_interact() -> void:
     return
 
   if collider.is_in_group("robot"):
-    if state_sutom == SutomState.ROBOT_WORKING:
-      _show_message("Le robot est en train de faire le SUTOM... je vais le laisser faire...", 3.0)
+    var working_on := ""
+    for key in state_machine:
+      if state_machine[key] == StateMachine.ROBOT_WORKING:
+        working_on = key
+        break
+    if not working_on.is_empty():
+      _show_message("Le robot est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
     else:
       _open_dialogue()
     return
@@ -251,8 +228,6 @@ func pickup(obj: Node, obj_name: String) -> void:
   inventory.append(obj_name)
   _show_message("Vous ramassez : %s." % obj_name.replace("_", " "), 2.0)
   obj.queue_free()
-  if obj_name == "Dictionnaire" and state_sutom == SutomState.NEEDS_DICTIONARY:
-    state_sutom = SutomState.UNLOCKED
 
 # ── Physique ──────────────────────────────────────────────────────────────────
 

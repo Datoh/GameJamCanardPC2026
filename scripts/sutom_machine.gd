@@ -1,4 +1,5 @@
 extends StaticBody3D
+class_name MachineSutom
 
 signal game_finished(won: bool)
 
@@ -12,7 +13,7 @@ const COLOR_ABSENT    := Color(0.26, 0.26, 0.28)
 const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
 
-@export var camera_height: float = 0.2
+@export var camera_height: float = 0.25
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height: float = 1.5
 
@@ -22,11 +23,8 @@ var _cam_end_pos := Vector3.ZERO
 var _cam_end_basis := Basis.IDENTITY
 var _close_won: bool = false
 
-const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX"]
-const REAL_WORDS := [
-  "GROTTE", "FLAQUE", "BOUCHE", "PELAGE", "CRIARD",
-  "VOLCAN", "PLONGE", "TRUITE", "BLAGUE", "MIROIR",
-]
+const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP"]
+const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE"]
 
 var _overhead_cam: Camera3D
 var _player_camera: Camera3D = null
@@ -45,8 +43,9 @@ var _labels: Array = []
 var _result_label: Label
 var _hint_label: Label
 
+const machine_name := "SUTOM"
+
 func _ready() -> void:
-  add_to_group("machine")
   _setup_overhead_camera()
   _setup_journal_surface()
 
@@ -200,17 +199,17 @@ func _build_grid_ui() -> void:
 
 func interact(player: Node) -> void:
   _player_ref = player
-  match player.state_sutom:
-    player.SutomState.IDLE, player.SutomState.FIRST_SEEN:
-      player.state_sutom = player.SutomState.FIRST_SEEN
+  match player.state_machine[machine_name]:
+    player.StateMachine.IDLE, player.StateMachine.ATTEMPTED:
+      player.state_machine[machine_name] = player.StateMachine.ATTEMPTED
       player._show_message("J'ai besoin d'aide... je vais en parler au robot.", 3.0)
-    player.SutomState.ROBOT_WORKING:
+    player.StateMachine.ROBOT_WORKING:
       player._show_message("Le robot est en train de faire le SUTOM... je vais le laisser faire...", 3.0)
-    player.SutomState.ROBOT_DONE:
+    player.StateMachine.ROBOT_DONE:
       player._show_message("Je devrais d'abord parler au robot...", 2.0)
-    player.SutomState.NEED_TRY_MACHINE, player.SutomState.NEEDS_DICTIONARY, player.SutomState.UNLOCKED:
+    player.StateMachine.TRY_MACHINE, player.StateMachine.NEEDS_OBJECT, player.StateMachine.UNLOCKED:
       _start_minigame(player)
-    player.SutomState.SOLVED:
+    player.StateMachine.SOLVED:
       player._show_message("Vous avez déjà résolu le SUTOM, ce n'est plus la peine !", 3.0)
 
 
@@ -219,10 +218,9 @@ func get_interaction_hint(_player: Node) -> String:
 
 
 func _start_minigame(player: Node) -> void:
-  player._sutom_state_before_minigame = player.state_sutom
   player._in_minigame = true
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  _begin_game(player.camera, player.state_sutom == player.SutomState.UNLOCKED)
+  _begin_game(player.camera, player.state_machine[machine_name] == player.StateMachine.UNLOCKED)
   if not game_finished.is_connected(_on_game_finished):
     game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
 
@@ -232,10 +230,10 @@ func _on_game_finished(won: bool) -> void:
     return
   _player_ref._in_minigame = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-  if _player_ref._sutom_state_before_minigame == _player_ref.SutomState.NEED_TRY_MACHINE:
-    _player_ref.state_sutom = _player_ref.SutomState.NEEDS_DICTIONARY
-  if won and _player_ref.state_sutom == _player_ref.SutomState.UNLOCKED:
-    _player_ref.state_sutom = _player_ref.SutomState.SOLVED
+  if _player_ref.state_machine[MachineSutom.machine_name] == _player_ref.StateMachine.TRY_MACHINE:
+    _player_ref.state_machine[machine_name] = _player_ref.StateMachine.NEEDS_OBJECT
+  if won and _player_ref.state_machine[machine_name] == _player_ref.StateMachine.UNLOCKED:
+    _player_ref.state_machine[machine_name] = _player_ref.StateMachine.SOLVED
 
 
 # ── Entrée / sortie ───────────────────────────────────────────────────────────

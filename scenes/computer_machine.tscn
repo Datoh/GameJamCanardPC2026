@@ -6,7 +6,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_142py"]
 size = Vector3(0.17673206, 0.39863503, 0.36695766)
 
-[node name="ComputerMachine" type="StaticBody3D" unique_id=1002695437 groups=["interactive"]]
+[node name="ComputerMachine" type="StaticBody3D" unique_id=1002695437 groups=["interactive", "machine"]]
 transform = Transform3D(0.9785989, 0, -0.20577723, 0, 1, 0, 0.20577723, 0, 0.9785989, 0, 0, 0)
 collision_layer = 3
 script = ExtResource("1_i7qam")

@@ -1,5 +1,7 @@
 extends StaticBody3D
 
+var machine_name = "Ordinateur"
+
 func interact(player: Node) -> void:
   match player.state_pc:
     player.PCState.IDLE:
