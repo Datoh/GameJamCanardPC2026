@@ -385,8 +385,7 @@ Labyrinthe physique de table à la **Brio Labyrinth** : le joueur incline un pla
 #### Règles
 
 - Vue de dessus sur un plateau de labyrinthe physique
-- Le joueur incline le plateau (souris ou clavier) pour faire rouler la bille vers la sortie
-- Les trous font recommencer depuis le début
+- Le joueur incline le plateau (souris ou clavier) pour déplacer la souris vers la sortie
 - Si le joueur consulte LN R3p14y : *"J'ai analysé ce labyrinthe en profondeur. Après calcul, je confirme qu'il ne possède aucune sortie. C'est mathématiquement impossible. Je vous suggère d'accepter la situation."*
 - Une **souris (animal) est toujours présente au centre du labyrinthe** — elle n'a pas besoin d'être apportée par le joueur
 - **Solution** : le joueur doit trouver un **fromage** dans le niveau et le déposer à la sortie du labyrinthe — la souris le sent, traverse le labyrinthe et sort automatiquement

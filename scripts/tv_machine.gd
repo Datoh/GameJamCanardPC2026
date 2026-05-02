@@ -110,9 +110,9 @@ func interact(player: Node) -> void:
 
 func get_interaction_hint(player: Node) -> String:
   match player.state_tele:
-    player.TeleState.CAPTCHA_PENDING: return "[E] Résoudre le CAPTCHA"
-    player.TeleState.CAPTCHA_SOLVED, player.TeleState.VIDEO_WATCHED: return "[E] Regarder la vidéo"
-    _: return "[E] Regarder la télé"
+    player.TeleState.CAPTCHA_PENDING: return "[ESPACE] Résoudre le CAPTCHA"
+    player.TeleState.CAPTCHA_SOLVED, player.TeleState.VIDEO_WATCHED: return "[ESPACE] Regarder la vidéo"
+    _: return "[ESPACE] Regarder la télé"
 
 
 func _on_captcha_result(success: bool) -> void:

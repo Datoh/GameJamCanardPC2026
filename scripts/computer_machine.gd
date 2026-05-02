@@ -16,5 +16,5 @@ func interact(player: Node) -> void:
 
 func get_interaction_hint(player: Node) -> String:
   if player.state_pc >= player.PCState.ATTEMPTED and player.state_tele >= player.TeleState.CAPTCHA_SOLVED:
-    return "[E] Rebrancher les câbles"
-  return "[E] Regarder le PC"
+    return "[ESPACE] Rebrancher les câbles"
+  return "[ESPACE] Regarder le PC"

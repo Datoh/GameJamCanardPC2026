@@ -1,11 +1,8 @@
 extends StaticBody3D
 
-func _ready() -> void:
-  add_to_group("machine")
-
 func interact(player: Node) -> void:
   if player.puzzle_attempted.get("Feutres", false):
-    player._pickup(self, "Feutres")
+    player.pickup(self, "Feutres")
     return
   match player.state_tele:
     player.TeleState.IDLE:
@@ -16,4 +13,4 @@ func interact(player: Node) -> void:
       player._show_message("Je n'en ai plus besoin.", 2.0)
 
 func get_interaction_hint(_player: Node) -> String:
-  return "[E] Prendre les feutres"
+  return "[ESPACE] Prendre les feutres"

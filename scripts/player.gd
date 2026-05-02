@@ -9,8 +9,8 @@ const DialogueUI = preload("res://scripts/dialogue_ui.gd")
 
 enum SutomState        { IDLE, FIRST_SEEN, ROBOT_WORKING, ROBOT_DONE, NEED_TRY_MACHINE, NEEDS_DICTIONARY, UNLOCKED, SOLVED }
 enum OscilloscopeState { IDLE, ATTEMPTED, UNLOCKED }
-enum TeleState         { IDLE, CAPTCHA_PENDING, CAPTCHA_SOLVED, VIDEO_WATCHED }
-enum LabyrinthState    { IDLE, ATTEMPTED, SOLVED }
+enum TeleState         { IDLE, ATTEMPTED, CAPTCHA_PENDING, CAPTCHA_SOLVED, VIDEO_WATCHED }
+enum LabyrinthState    { IDLE, ATTEMPTED, CHEESE, MOUSE_READY, SOLVED }
 enum PCState           { IDLE, ATTEMPTED, REPAIRED, MOUSE_CONNECTED, UNLOCKED }
 
 # ── États du robot par machine ────────────────────────────────────────────────
@@ -26,12 +26,6 @@ enum RobotPCState           { UNAWARE }
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var inventory: Array[String] = []
-var puzzle_attempted: Dictionary = {
-  "Dictionnaire": false,
-  "Fromage":      false,
-  "Joint":        false,
-  "Feutres":      false,
-}
 
 var state_sutom:        SutomState        = SutomState.IDLE
 var state_oscilloscope: OscilloscopeState = OscilloscopeState.IDLE
@@ -57,7 +51,13 @@ var _interaction_hint_label: Label
 var _robot: Node3D = null
 var _sutom_node: Node3D = null
 var _sutom_timer: Timer
-var _in_minigame: bool = false
+var _crosshair: TextureRect
+
+var _in_minigame: bool = false:
+  set(value):
+    _in_minigame = value
+    if _crosshair:
+      _crosshair.visible = not value
 var _completed_dialogues: Array[String] = []
 
 func _ready() -> void:
@@ -245,43 +245,9 @@ func _try_interact() -> void:
       _open_dialogue()
     return
 
-  if collider.is_in_group("machines"):
-    match collider.name:
-      "Oscilloscope":
-        if state_oscilloscope == OscilloscopeState.IDLE:
-          state_oscilloscope = OscilloscopeState.ATTEMPTED
-          _show_message("Cette machine a l'air compliquée.", 3.0)
-        else:
-          _use_machine("Oscilloscope")
-      "Labyrinthe":
-        if state_labyrinthe == LabyrinthState.IDLE:
-          state_labyrinthe = LabyrinthState.ATTEMPTED
-          puzzle_attempted["Fromage"] = true
-          _show_message("Ce labyrinthe a l'air impossible...", 3.0)
-        else:
-          _use_machine("Labyrinthe")
-    return
-
-  if collider.is_in_group("objets"):
-    _try_pickup(collider)
-
-func _try_pickup(collider: Node) -> void:
-  var obj_name: String = collider.name
-  var can_pickup: bool = puzzle_attempted.get(obj_name, false)
-  if obj_name == "Dictionnaire" and state_sutom >= SutomState.NEEDS_DICTIONARY:
-    can_pickup = true
-  if can_pickup:
-    _pickup(collider, obj_name)
-  else:
-    _show_message(DialoguesData.OBJECT_MESSAGES.get(obj_name, "Hmm."))
-
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
 
-func _use_machine(machine_name: String) -> void:
-  # TODO: ouvrir le mini-jeu correspondant
-  _show_message("[%s] Mini-jeu à venir..." % machine_name, 2.0)
-
-func _pickup(obj: Node, obj_name: String) -> void:
+func pickup(obj: Node, obj_name: String) -> void:
   inventory.append(obj_name)
   _show_message("Vous ramassez : %s." % obj_name.replace("_", " "), 2.0)
   obj.queue_free()

@@ -148,7 +148,7 @@ func _build_grid_ui() -> void:
 
   var grid_w := WORD_LENGTH * CELL + (WORD_LENGTH - 1) * GAP
   var grid_h := MAX_ATTEMPTS * CELL + (MAX_ATTEMPTS - 1) * GAP
-  var gx := floori((VW - grid_w) / 2)
+  var gx := int((VW - grid_w) / 2.0)
   var gy := 86
 
   _panels.clear()
@@ -215,7 +215,7 @@ func interact(player: Node) -> void:
 
 
 func get_interaction_hint(_player: Node) -> String:
-  return "[E] Jouer au SUTOM"
+  return "[ESPACE] Jouer au SUTOM"
 
 
 func _start_minigame(player: Node) -> void:

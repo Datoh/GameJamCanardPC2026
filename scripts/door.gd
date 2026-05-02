@@ -33,4 +33,4 @@ func _is_opened() -> bool:
 func get_interaction_hint(_player: Node) -> String:
   if _is_animating():
     return ""
-  return "Fermer" if _is_opened() else "Ouvrir"
+  return "[ESPACE] Fermer" if _is_opened() else "[ESPACE] Ouvrir"
