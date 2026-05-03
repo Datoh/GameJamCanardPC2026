@@ -13,6 +13,7 @@ var dialogue_resultat: String = ""
 var robot_work_duration: float = 15.0
 
 @export_group("Messages")
+@export var message_not_enable: String = ""
 @export var message_idle: String = ""
 @export var message_robot_working: String = ""
 @export var message_robot_done: String = ""
@@ -35,9 +36,12 @@ func interact(player: Node) -> void:
   var state = player.state_machine[machine_name]
   match state:
     StateMachine.IDLE:
-      player.show_message(message_idle, 3.0)
-      player.state_machine[machine_name] = StateMachine.TRY_MACHINE
-      _on_try_machine(player, false)
+      if not _can_try(player):
+        player.show_message(message_not_enable, 3.0)
+      else:
+        player.show_message(message_idle, 3.0)
+        player.state_machine[machine_name] = StateMachine.TRY_MACHINE
+        _on_try_machine(player, false)
     StateMachine.TRY_MACHINE:
       _on_try_machine(player, false)
     StateMachine.ROBOT_WORKING:
@@ -56,6 +60,9 @@ func interact(player: Node) -> void:
       machine_done.emit(self)
     StateMachine.SOLVED:
       player.show_message(message_solved, 3.0)
+
+func _can_try(_player: Node) -> bool:
+  return false
 
 func get_interaction_hint(player: Node) -> String:
   var state = player.state_machine[machine_name]

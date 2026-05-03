@@ -12,6 +12,7 @@ const DialogueUI = preload("res://scripts/dialogue_ui.gd")
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var inventory: Array[String] = []
+var notified: Array[String] = []
 
 var state_machine: Dictionary = {}
 
@@ -27,7 +28,8 @@ var _interaction_hint_label: Label
 @export var _robot: Node3D = null
 
 var _machine_timer: Timer
-var _crosshair: TextureRect
+@onready var _crosshair: TextureRect = %Crosshair
+var _intro_done: bool = false
 
 var in_minigame: bool = false:
   set(value):
@@ -99,6 +101,13 @@ func show_message(text: String, duration: float = 3.0) -> void:
   _message_label.visible = true
   _message_timer.start(duration)
 
+func can_interact(id_object: String, machine: String) -> bool:
+  match id_object:
+    "Feutres": return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
+    "Dictionnaire": return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
+    "Fromage": return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
+    _: return true
+
 func start_robot_work(machine: Machine, duration: float) -> void:
   if _robot:
     _robot.go_to_position(machine.global_position)
@@ -151,6 +160,9 @@ func _open_dialogue() -> void:
   _dialogue_ui.open(_get_available_dialogues())
 
 func _on_dialogue_completed(dialogue_id: String) -> void:
+  if dialogue_id == "ivan_intro":
+    _intro_done = true
+    return
   var dialogue := DialoguesData.find_by_id(dialogue_id)
   if dialogue.get("once", false) and dialogue_id not in _completed_dialogues:
     _completed_dialogues.append(dialogue_id)
@@ -192,6 +204,10 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed("ui_accept") and not _dialogue_ui.is_open():
     _try_interact()
 
+func _open_ivan_dialogue() -> void:
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _dialogue_ui.open_direct(DialoguesData.find_by_id("ivan_intro"))
+
 func _try_interact() -> void:
   _interaction_ray.force_raycast_update()
   if not _interaction_ray.is_colliding():
@@ -199,11 +215,18 @@ func _try_interact() -> void:
 
   var collider := _interaction_ray.get_collider()
 
+  if not _intro_done:
+    if collider.is_in_group("ivan"):
+      _open_ivan_dialogue()
+    return
+
   if collider.is_in_group("interactive"):
     collider.interact(self)
     return
 
   if collider.is_in_group("robot"):
+    if _robot and _robot.has_method("start_following"):
+      _robot.start_following()
     var working_on := ""
     for key in state_machine:
       if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
@@ -216,6 +239,13 @@ func _try_interact() -> void:
     return
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
+
+func notify(notify_name: String) -> void:
+  if not notified.has(notify_name):
+    notified.append(notify_name)
+
+func is_notified(notify_name: String) -> bool:
+  return notified.has(notify_name)
 
 func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
   if not machine_name.is_empty():
@@ -232,15 +262,20 @@ func _physics_process(delta: float) -> void:
   var hint := ""
   if not in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
     var collider := _interaction_ray.get_collider()
-    if collider and collider.is_in_group("interactive"):
-      hint = collider.get_interaction_hint(self)
+    if collider:
+      if not _intro_done and collider.is_in_group("ivan"):
+        hint = "[ESPACE] Parler à Ivan"
+      elif _intro_done and collider.is_in_group("robot"):
+        hint = "[ESPACE] Parler à LN R3p14y"
+      elif _intro_done and collider.is_in_group("interactive"):
+        hint = collider.get_interaction_hint(self)
   _interaction_hint_label.text = hint
   _interaction_hint_label.visible = not hint.is_empty()
 
   if not is_on_floor():
     velocity.y -= gravity * delta
 
-  var locked := _dialogue_ui.is_open() or in_minigame
+  var locked := _dialogue_ui.is_open() or in_minigame or not _intro_done
   if not locked:
     var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
     var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

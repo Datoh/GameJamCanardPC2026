@@ -42,23 +42,17 @@ mesh = SubResource("Mesh_body")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1767226925]
 shape = SubResource("Shape_col")
 
-[node name="Label3D" type="Label3D" parent="." unique_id=390300428]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-billboard = 1
-modulate = Color(0.2, 0.9, 1, 1)
-text = "LN R3p14y"
-font_size = 28
-
 [node name="Eye0" type="Node3D" parent="." unique_id=308787778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.65, -0.28)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0" unique_id=1753311431]
 mesh = SubResource("Mesh_eye")
 
-[node name="Pupil" type="Node3D" parent="Eye0" unique_id=1191247466]
+[node name="Pupil0" type="Node3D" parent="Eye0" unique_id=1191247466]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0/Pupil" unique_id=806734234]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0/Pupil0" unique_id=806734234]
 mesh = SubResource("Mesh_pupil")
 
 [node name="Eye1" type="Node3D" parent="." unique_id=1291760454]
@@ -67,8 +61,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.65, -0.28)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1" unique_id=618024332]
 mesh = SubResource("Mesh_eye")
 
-[node name="Pupil" type="Node3D" parent="Eye1" unique_id=603157340]
+[node name="Pupil1" type="Node3D" parent="Eye1" unique_id=603157340]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1/Pupil" unique_id=1468039719]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1/Pupil1" unique_id=1468039719]
 mesh = SubResource("Mesh_pupil")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1677808741]
+unique_name_in_owner = true
+path_desired_distance = 0.1
+navigation_layers = 4

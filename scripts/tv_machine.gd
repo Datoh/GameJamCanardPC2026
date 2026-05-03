@@ -28,6 +28,7 @@ var _cell_rect_validate: Control = null
 
 func _ready() -> void:
   machine_name = NAME
+  message_not_enable = "Vous essayez d'arrêter YouPub."
   message_idle = "Vous essayez d'arrêter YouPub."
   message_try_machine = "Un CAPTCHA ? Il faut prouver que je ne suis pas un robot."
   hint_default = "[ESPACE] Regarder la YouPub"

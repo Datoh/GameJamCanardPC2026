@@ -21,6 +21,8 @@ robot=""
 player=""
 interactive=""
 machine=""
+ivan=""
+door_ivan=""
 
 [input]
 
@@ -64,6 +66,7 @@ ui_down={
 3d_physics/layer_4="object"
 3d_physics/layer_5="robot"
 3d_physics/layer_6="mouse"
+3d_physics/layer_7="ivan"
 
 [physics]
 

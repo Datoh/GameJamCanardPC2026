@@ -21,6 +21,32 @@ const OBJECT_MESSAGES: Dictionary = {
 #               player = bouton suivant proposé au joueur (absent = fin)
 const DIALOGUES: Array[Dictionary] = [
   {
+    "id":     "ivan_intro",
+    "hidden": true,
+    "speaker": "Ivan Gaudé",
+    "exchanges": [
+      {
+        "robot":  "Ah, tu es là.",
+        "player": "Bonjour.",
+      },
+      {
+        "robot":  "J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Buisness Crypto Congress à Dubaï et ça coute une blinde.",
+        "player": "...",
+      },
+      {
+        "robot":  "J'ai engagé LN R3p14y — un robot IA de dernière génération — pour rédiger nos articles. Ta mission : utiliser ce robot pour écrire un test de jeu. Simple.",
+        "player": "Simple...",
+      },
+      {
+        "robot":  "L'ordinateur du petit bureau est à ta disposition. Va voir LN R3p14y dans le couloir, il t'aidera.",
+        "player": "Compris...",
+      },
+      {
+        "robot": "Bien. Tu peux y aller. Ferme la porte en sortant.",
+      },
+    ],
+  },
+  {
     "id":    "close",
     "label": "Je n'ai rien à lui dire...",
   },
@@ -89,6 +115,40 @@ const DIALOGUES: Array[Dictionary] = [
         "player": "...",
       },
       {"robot": "Je suis convaincu que tu vas trouver. Tu as vraiment l'air intelligent. Au fait, comment t'appelles-tu ?"},
+    ],
+  },
+  {
+    "id":       "ordinateur_demande",
+    "label":    "Tu peux m'aider avec les câbles de ce PC ?",
+    "requires": "",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "Des câbles ? Ça ne me fait pas peur ! Laisse-moi regarder ça.",
+        "player": "Prends ton temps.",
+      },
+      {"robot": "Je reviens dans deux secondes."},
+    ],
+  },
+  {
+    "id":       "ordinateur_resultat",
+    "label":    "Alors, ces câbles ?",
+    "requires": "ordinateur_demande",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "J'ai fait de mon mieux... mais je dois admettre quelque chose.",
+        "player": "Quoi ?",
+      },
+      {
+        "robot":  "Il te faudrait un vrai grand maître du cable management pour ça. Je ne suis pas à la hauteur.",
+        "player": "Un grand maître du cable management.",
+      },
+      {
+        "robot":  "Oui. Ce n'est pas donné à tout le monde. Mais il paraît qu'on en trouve des tutos sur YouPub.",
+      },
     ],
   },
   {

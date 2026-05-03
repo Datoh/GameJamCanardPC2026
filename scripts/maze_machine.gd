@@ -17,3 +17,6 @@ func _ready() -> void:
   message_waiting_unlocked = "Elle arrive..."
   message_solved = "Je n'ai plus rien à faire ici."
   hint_default = "[ESPACE] Observez le labyrinthe."
+
+func _can_try(_player: Node) -> bool:
+  return true

@@ -50,7 +50,8 @@ func _ready() -> void:
   dialogue_resultat = "sutom_resultat"
   robot_work_duration = 20.0
   object_required = "Dictionnaire"
-  message_idle = "Tiens un SUTOM, je vais essayer..."
+  message_not_enable = "Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard..."
+  message_idle = "Le mot de passe est là..."
   message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide au robot."
   message_robot_working = "Le robot est en train de faire le SUTOM... je vais le laisser faire..."
   message_robot_done = "Je devrais parler au robot, il a l'air d'avoir terminé."

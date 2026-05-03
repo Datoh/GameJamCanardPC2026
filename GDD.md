@@ -470,7 +470,7 @@ La vidéo YouTube parodie les tutos de branchement PC trop longs et hors-sujet �
 
 #### Pseudo code
 On a une grille de 15*15, 8 cases sont les points de départs/arrivées. Un point de départ est aussi un point d'arrivée et vice versa. 2 cases de départs/arrivées sont rouges, 2 sont vertes, 2 sont bleus et 2 sont jaunes. Avec la souris le joueur clique sur une des cases de départ et en restant cliqué, il déplace la souris, les cases se colorient sur son passage, on ne peut continuer que sur les cases contigus (pas en diagonale), on ne peut pas repasser sur une case déjà colorié, on ne peut passer sur des cases de départs/arrivés d'autres couleurs. Quand le joueur relache la souris, s'il n'est pas sur la case d'arrivé de la bonne couleur, le chemin s'efface, sinon il reste.
----
+
 
 ### Mécaniques
 

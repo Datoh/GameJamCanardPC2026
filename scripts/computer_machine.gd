@@ -53,7 +53,19 @@ var _player_ref: Node = null
 
 
 func _ready() -> void:
-  machine_name = NAME
+  machine_name        = NAME
+  dialogue_demande    = "ordinateur_demande"
+  dialogue_resultat   = "ordinateur_resultat"
+  robot_work_duration = 15.0
+  message_idle               = "Ces câbles sont dans le mauvais ordre. Je vais essayer de les rebrancher."
+  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. Le robot pourrait peut-être s'y connaître en câblage."
+  message_robot_working      = "Le robot bidouille les câbles à l'arrière du PC..."
+  message_robot_done         = "Le robot a l'air d'avoir terminé. Je devrais lui parler."
+  message_try_machine_object = "Le robot n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
+  message_solved             = "Le PC est rebranché."
+  hint_default     = "[ESPACE] Regarder le PC"
+  hint_try_machine = "[ESPACE] Rebrancher les câbles"
+  hint_solved      = "[ESPACE] PC réparé"
   input_ray_pickable = true
   input_event.connect(_on_circuit_input)
   _setup_viewport()
@@ -169,7 +181,11 @@ func _on_return_done() -> void:
 # ── Logique jeu câbles ────────────────────────────────────────────────────────
 
 func _reinitialiser(player: Node = null) -> void:
-  endpoints = ENDPOINTS_KO if player == null or player.state_machine[MachineTV.NAME] != Machine.StateMachine.SOLVED else ENDPOINTS_OK
+  var use_ok: bool = player != null and player.state_machine.get(MachineTV.NAME, 0) >= Machine.StateMachine.UNLOCKED
+  endpoints = {}
+  for c in CableGrid.NOMS:
+    var src: Array = ENDPOINTS_OK[c] if use_ok else ENDPOINTS_KO[c]
+    endpoints[c] = [src[0], src[1]]
   chemins = {}
   for c in CableGrid.NOMS:
     chemins[c] = []
@@ -435,49 +451,9 @@ func _quitter_jeu() -> void:
   _transition_to_player()
 
 
-# ── Interface publique (Machine) ──────────────────────────────────────────────
+# ── Override Machine ──────────────────────────────────────────────────────────
 
-func interact(player: Node) -> void:
-  var state    = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
-  var tv_state = player.state_machine.get(MachineTV.NAME, Machine.StateMachine.IDLE)
-
-  match state:
-    Machine.StateMachine.IDLE:
-      player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE
-      player.show_message("Les câbles à l'arrière sont complètement dans le mauvais ordre. Il doit y avoir un tuto YouPub là-dessus...", 4.0)
-#
-    #Machine.StateMachine.ATTEMPTED:
-      #if tv_state < Machine.StateMachine.UNLOCKED:
-        #player.show_message("Je dois d'abord regarder le tuto YouPub sur la télé pour savoir comment rebrancher ces câbles.", 4.0)
-      #else:
-        ## La vidéo a été regardée : on peut maintenant déplacer 2 bornes
-        #player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE
-        #debloquer_deplacement()
-        #player.show_message("J'ai vu le tuto. Je peux déplacer les connecteurs pour rendre ça soluble.", 3.0)
-        #_demarrer_jeu(player)
-
-    Machine.StateMachine.TRY_MACHINE:
-      if _jeu_actif:
-        return
-      _demarrer_jeu(player)
-
-    Machine.StateMachine.UNLOCKED:
-      player.state_machine[NAME] = Machine.StateMachine.SOLVED
-      player.show_message("Les câbles sont rebanchés. Le PC devrait démarrer.", 3.0)
-
-    Machine.StateMachine.SOLVED:
-      player.show_message("Le PC est réparé.", 2.0)
-
-
-func get_interaction_hint(player: Node) -> String:
-  var pc_state = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
-  var tv_state = player.state_machine.get(MachineTV.NAME, Machine.StateMachine.IDLE)
-  match pc_state:
-    Machine.StateMachine.TRY_MACHINE:
-      return "[ESPACE] Rebrancher les câbles"
-    Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
-      return "[ESPACE] PC réparé"
-    _:
-      if pc_state >= Machine.StateMachine.TRY_MACHINE and tv_state >= Machine.StateMachine.UNLOCKED:
-        return "[ESPACE] Rebrancher les câbles"
-      return "[ESPACE] Regarder le PC"
+func _on_try_machine(player: Node, _has_object: bool) -> void:
+  if _jeu_actif:
+    return
+  _demarrer_jeu(player)

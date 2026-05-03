@@ -20,17 +20,21 @@ func interact(player: Node) -> void:
   if _locked:
     player.show_message("La porte est vérouillée.", 3.0)
     return
-  _target_angle = 0.0 if _is_opened() else _angle * (1.0 if _direction else -1.0)
+  _target_angle = 0.0 if is_opened() else _angle * (1.0 if _direction else -1.0)
+
+func lock():
+  _target_angle = 0.0
+  _locked = true
 
 func _is_animating() -> bool:
   if _pivot == null:
     return false
   return abs(_pivot.rotation_degrees.y - _target_angle) > 0.5
 
-func _is_opened() -> bool:
+func is_opened() -> bool:
   return _target_angle != 0.0
 
 func get_interaction_hint(_player: Node) -> String:
   if _is_animating():
     return ""
-  return "[ESPACE] Fermer" if _is_opened() else "[ESPACE] Ouvrir"
+  return "[ESPACE] Fermer" if is_opened() else "[ESPACE] Ouvrir"

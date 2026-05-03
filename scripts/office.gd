@@ -28,3 +28,10 @@ func _on_machine_done(machine: Node):
   match machine.machine_name:
     MachineMaze.NAME:
       _player.pickup(_mouse, "souris")
+
+
+func _on_area_close_door_body_entered(_body: Node3D) -> void:
+  for door in get_tree().get_nodes_in_group("door_ivan"):
+    if door.is_opened():
+      door.lock()
+      %AreaCloseDoor.queue_free()
