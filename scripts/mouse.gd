@@ -33,7 +33,7 @@ func _assign_next_target() -> void:
 func _physics_process(delta: float) -> void:
   if _navigation_agent_mouse.is_navigation_finished():
     if _go_to_cheese:
-      _player.state_machine["Labyrinthe"] = _player.StateMachine.UNLOCKED
+      _player.state_machine[MachineMaze.NAME] = Machine.StateMachine.UNLOCKED
     else:
       _assign_next_target()
     return

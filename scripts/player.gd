@@ -7,8 +7,6 @@ const DialogueUI = preload("res://scripts/dialogue_ui.gd")
 
 # ── États des machines ────────────────────────────────────────────────────────
 
-enum StateMachine { IDLE, ATTEMPTED, ROBOT_WORKING, ROBOT_DONE, TRY_MACHINE, NEEDS_OBJECT, WAITING_UNLOCKED, UNLOCKED, SOLVED }
-
 @onready var camera: Camera3D = $Camera3D
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -26,14 +24,14 @@ var _dialogue_ui: DialogueUI
 
 var _interaction_hint_label: Label
 
-var _robot: Node3D = null
-var _sutom_node: Node3D = null
+@export var _robot: Node3D = null
+
 var _machine_timer: Timer
 var _crosshair: TextureRect
 
-var _in_minigame: bool = false:
+var in_minigame: bool = false:
   set(value):
-    _in_minigame = value
+    in_minigame = value
     if _crosshair:
       _crosshair.visible = not value
 var _completed_dialogues: Array[String] = []
@@ -47,7 +45,7 @@ func _ready() -> void:
   _robot = get_tree().get_first_node_in_group("robot")
 
   for machine in get_tree().get_nodes_in_group("machine"):
-    state_machine[machine.machine_name] = StateMachine.IDLE
+    state_machine[machine.NAME] = Machine.StateMachine.IDLE
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -94,10 +92,17 @@ func _setup_ui() -> void:
   _dialogue_ui.closed.connect(_on_dialogue_closed)
   _canvas.add_child(_dialogue_ui)
 
-func _show_message(text: String, duration: float = 3.0) -> void:
+func show_message(text: String, duration: float = 3.0) -> void:
+  if text.is_empty():
+    return
   _message_label.text = text
   _message_label.visible = true
   _message_timer.start(duration)
+
+func start_robot_work(machine: Machine, duration: float) -> void:
+  if _robot:
+    _robot.go_to_position(machine.global_position)
+  _machine_timer.start(duration)
 
 func _get_debug_text() -> String:
   var output: String
@@ -110,7 +115,7 @@ func _get_debug_text() -> String:
     output = "RAY: rien\n"
 
   for key in state_machine.keys():
-    output = "%s%s => %s | " % [output, key, StateMachine.keys()[state_machine[key]]]
+    output = "%s%s => %s | " % [output, key, Machine.StateMachine.keys()[state_machine[key]]]
   return output
 
 # ── Dialogue ──────────────────────────────────────────────────────────────────
@@ -123,11 +128,9 @@ func _is_dialogue_available(d: Dictionary) -> bool:
   var req: String = d.get("requires", "")
   if req != "" and req not in _completed_dialogues:
     return false
-  # Conditions liées aux états des machines
-  if d["id"] == "sutom_demande" and state_machine[MachineSutom.machine_name] != StateMachine.ATTEMPTED:
-    return false
-  if d["id"] == "sutom_resultat" and state_machine[MachineSutom.machine_name] != StateMachine.ROBOT_DONE:
-    return false
+  for m in get_tree().get_nodes_in_group("machine"):
+    if m is Machine and (m as Machine).is_dialogue_locked(d["id"], self):
+      return false
   return true
 
 func _get_available_dialogues() -> Array:
@@ -154,27 +157,17 @@ func _on_dialogue_completed(dialogue_id: String) -> void:
   _apply_dialogue_side_effects(dialogue_id)
 
 func _apply_dialogue_side_effects(dialogue_id: String) -> void:
-  match dialogue_id:
-    "sutom_demande":
-      state_machine[MachineSutom.machine_name] = StateMachine.ROBOT_WORKING
-      if _sutom_node == null:
-        for m in get_tree().get_nodes_in_group("machine"):
-          if m.has_signal("game_finished"):
-            _sutom_node = m
-            break
-      if _robot != null and _sutom_node != null:
-        _robot.go_to_position((_sutom_node as Node3D).global_position)
-      _machine_timer.start(20.0)
-    "sutom_resultat":
-      state_machine[MachineSutom.machine_name] = StateMachine.TRY_MACHINE
+  for m in get_tree().get_nodes_in_group("machine"):
+    if m is Machine:
+      (m as Machine).on_dialogue_completed(dialogue_id, self)
 
 func _on_dialogue_closed() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_machine_timer_timeout() -> void:
   for key in state_machine.keys():
-    if state_machine[key] == StateMachine.ROBOT_WORKING:
-      state_machine[key] = StateMachine.ROBOT_DONE
+    if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
+      state_machine[key] = Machine.StateMachine.ROBOT_DONE
       break
   if _robot != null:
     _robot.resume_follow()
@@ -182,7 +175,7 @@ func _on_machine_timer_timeout() -> void:
 # ── Interaction ───────────────────────────────────────────────────────────────
 
 func _unhandled_input(event: InputEvent) -> void:
-  if _in_minigame:
+  if in_minigame:
     return
 
   if event.is_action_pressed("ui_cancel"):
@@ -213,20 +206,22 @@ func _try_interact() -> void:
   if collider.is_in_group("robot"):
     var working_on := ""
     for key in state_machine:
-      if state_machine[key] == StateMachine.ROBOT_WORKING:
+      if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
         working_on = key
         break
     if not working_on.is_empty():
-      _show_message("Le robot est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
+      show_message("Le robot est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
     else:
       _open_dialogue()
     return
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
 
-func pickup(obj: Node, obj_name: String) -> void:
+func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
+  if not machine_name.is_empty():
+    state_machine[machine_name] = Machine.StateMachine.TRY_MACHINE_OK
   inventory.append(obj_name)
-  _show_message("Vous ramassez : %s." % obj_name.replace("_", " "), 2.0)
+  show_message("Vous ramassez : %s." % obj_name.replace("_", " "), 2.0)
   obj.queue_free()
 
 # ── Physique ──────────────────────────────────────────────────────────────────
@@ -235,7 +230,7 @@ func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
 
   var hint := ""
-  if not _in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
+  if not in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
     var collider := _interaction_ray.get_collider()
     if collider and collider.is_in_group("interactive"):
       hint = collider.get_interaction_hint(self)
@@ -245,7 +240,7 @@ func _physics_process(delta: float) -> void:
   if not is_on_floor():
     velocity.y -= gravity * delta
 
-  var locked := _dialogue_ui.is_open() or _in_minigame
+  var locked := _dialogue_ui.is_open() or in_minigame
   if not locked:
     var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
     var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

@@ -40,7 +40,6 @@
 [ext_resource type="PackedScene" uid="uid://bjhtgcmrljgwi" path="res://assets/models/Computer_Old_Monitor.gltf" id="26_wwlo0"]
 [ext_resource type="PackedScene" uid="uid://c54qcy2k1l0gn" path="res://assets/models/Office_Counter_Drawer.gltf" id="27_f1ywt"]
 [ext_resource type="PackedScene" uid="uid://c5ctjyxfiwkhh" path="res://assets/models/Microwave_New.gltf" id="28_f3wdx"]
-[ext_resource type="PackedScene" uid="uid://bulwychr5ji60" path="res://assets/models/Computer_Keyboard.gltf" id="29_0p3hi"]
 [ext_resource type="PackedScene" uid="uid://bu2d2syvx4np5" path="res://assets/models/Microwave_New_B.gltf" id="29_sma1o"]
 [ext_resource type="PackedScene" uid="uid://c1qf6oain4ejy" path="res://assets/models/Fruit_Plate.gltf" id="30_trbo1"]
 [ext_resource type="PackedScene" uid="uid://clke2mskyc7f2" path="res://assets/models/Fruit_Apple.gltf" id="31_8iqki"]
@@ -57,6 +56,16 @@
 [ext_resource type="PackedScene" uid="uid://dk37s8ub70w1v" path="res://assets/models/cheese.glb" id="35_qakv3"]
 [ext_resource type="Script" uid="uid://dct5dlpy4k1lf" path="res://scripts/feutres.gd" id="36_feutres"]
 [ext_resource type="Script" uid="uid://c5hkof67b2phu" path="res://scripts/cheese.gd" id="36_rvn1j"]
+[ext_resource type="Script" uid="uid://la7dgi7is1sv" path="res://scripts/dictionary.gd" id="43_aqhjm"]
+[ext_resource type="PackedScene" uid="uid://bqm7nspuc5qtj" path="res://assets/models/Book_Fat.gltf" id="44_f1ywt"]
+[ext_resource type="PackedScene" uid="uid://be14tbhj18cwr" path="res://assets/models/Computer_Old_Keyboard.gltf" id="50_2v03r"]
+[ext_resource type="PackedScene" uid="uid://dqqgknd7at6xb" path="res://assets/models/Chair_Office_Base_A.gltf" id="51_73m2f"]
+[ext_resource type="PackedScene" uid="uid://0i5tpxjc78xw" path="res://assets/models/Chair_Office_Bottom.gltf" id="52_qakv3"]
+[ext_resource type="PackedScene" uid="uid://q1f5dim8v56c" path="res://assets/models/Chair_Office_Wheel.gltf" id="53_c12kp"]
+[ext_resource type="PackedScene" uid="uid://c5n3i4foec4nq" path="res://assets/models/Chair_Office_Wheel_Copy.001.gltf" id="54_dwir6"]
+[ext_resource type="PackedScene" uid="uid://b7y6hvxii3hmv" path="res://assets/models/Chair_Office_Wheel_Copy.002.gltf" id="55_sesf4"]
+[ext_resource type="PackedScene" uid="uid://bqg2b3bjedyxl" path="res://assets/models/Chair_Office_Wheel_Copy.003.gltf" id="56_wx8ly"]
+[ext_resource type="PackedScene" uid="uid://b31ltooa84fgm" path="res://assets/models/Chair_Office_Wheel_Copy.gltf" id="57_dqvlh"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hcdcl"]
 _surfaces = [{
@@ -90,7 +99,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hcdcl")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_in4ui"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2v03r"]
+size = Vector3(1.9999981, 0.037500158, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_73m2f"]
 size = Vector3(1.9999981, 0.037500158, 2)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_6hbky"]
@@ -366,8 +378,14 @@ size = Vector3(0.06, 0.18, 0.06)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fw3ux"]
 size = Vector3(0.99264956, 2.0031137, 0.55425316)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_f3wdx"]
+size = Vector3(0.09286165, 0.261159, 0.24508382)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_65uj5"]
 size = Vector3(1.478693, 0.95092213, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1d6ln"]
+size = Vector3(0.59627724, 0.738718, 0.49015203)
 
 [sub_resource type="Environment" id="Environment_neons"]
 background_mode = 1
@@ -380,14 +398,24 @@ ambient_light_energy = 0.08
 script = ExtResource("1_kviqm")
 
 [node name="Floor" type="MeshInstance3D" parent="." unique_id=1536736484]
-transform = Transform3D(11, 0, 0, 0, 1, 0, 0, 0, 8, 11.469794, 0, 7.350378)
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, 8.940036, 0, 7.350378)
 mesh = SubResource("ArrayMesh_klxdu")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=2054226739]
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=1125780451]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.018749774, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=443056469]
-shape = SubResource("BoxShape3D_in4ui")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=980738287]
+shape = SubResource("BoxShape3D_2v03r")
+
+[node name="Floor2" type="MeshInstance3D" parent="." unique_id=1161985915]
+transform = Transform3D(8, 0, 0, 0, 1, 0, 0, 0, 8, 24.937014, 0, 14.022066)
+mesh = SubResource("ArrayMesh_klxdu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor2" unique_id=1256478098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.018749774, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor2/StaticBody3D" unique_id=44896239]
+shape = SubResource("BoxShape3D_73m2f")
 
 [node name="Ceil" type="Node3D" parent="." unique_id=650725065]
 unique_name_in_owner = true
@@ -425,13 +453,13 @@ shape = SubResource("BoxShape3D_3u7yi")
 transform = Transform3D(-1.3113416e-07, 0, 1, 0, 1, 0, -3, 0, -4.371139e-08, 4, 0, 3)
 
 [node name="Wall_Standard2" parent="Walls" unique_id=1818772075 instance=ExtResource("2_gdafm")]
-transform = Transform3D(-7, 0, -1.509958e-07, 0, 1, 0, 1.0569706e-06, 0, -1, 11, 0, 0)
+transform = Transform3D(-5, 0, -1.509958e-07, 0, 1, 0, 7.54979e-07, 0, -1, 9, 0, 0)
 
 [node name="Wall_Standard3" parent="Walls" unique_id=2031478514 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-1.3113416e-07, 0, 1, 0, 1, 0, -3, 0, -4.371139e-08, 14, 0, 3)
 
 [node name="Wall_Standard4" parent="Walls" unique_id=100948952 instance=ExtResource("2_gdafm")]
-transform = Transform3D(-1.3113416e-07, 0, 1, 0, 1, 0, -3, 0, -4.371139e-08, 18, 0, 3)
+transform = Transform3D(-8.742278e-08, 0, 1, 0, 1, 0, -2, 0, -4.371139e-08, 17, 0, 4)
 
 [node name="Wall_Standard5" parent="Walls" unique_id=586219258 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-8.742278e-08, 0, 1, 0, 1, 0, -2, 0, -4.371139e-08, 21, 0, 8)
@@ -462,6 +490,9 @@ transform = Transform3D(-7, 0, -1.509958e-07, 0, 1, 0, 1.0569706e-06, 0, -1, 14,
 
 [node name="Wall_Standard14" parent="Walls" unique_id=1481844982 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-3, 0, -1.509958e-07, 0, 1, 0, 4.5298742e-07, 0, -1, 4, 0, 12)
+
+[node name="Wall_Standard15" parent="Walls" unique_id=140444955 instance=ExtResource("2_gdafm")]
+transform = Transform3D(-1.5, 0, -1.509958e-07, 0, 1, 0, 2.2649371e-07, 0, -1, 15.5, 0, 2)
 
 [node name="SalleRepos" type="Node3D" parent="." unique_id=386698722]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
@@ -514,6 +545,7 @@ _video_player = NodePath("../SubViewport/SubViewportContainer/VideoStreamPlayer"
 shape = SubResource("BoxShape3D_alkg7")
 
 [node name="MazeMachine" type="StaticBody3D" parent="SalleRepos" unique_id=1962933490 groups=["interactive", "machine"]]
+unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.833067, 0.47, 3.8038402)
 collision_layer = 3
 script = ExtResource("19_142py")
@@ -577,6 +609,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3041086, 0.84883046, -1.701
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7515683, 0.84883046, -1.8509884)
 
 [node name="CheeseInMaze" parent="SalleRepos/MazeMachine" unique_id=2012092096 instance=ExtResource("35_qakv3")]
+unique_name_in_owner = true
 transform = Transform3D(-0.04976473, 0.0024702386, 0.004167608, 0.0038393466, 0.046341453, 0.018377375, -0.0029547326, 0.018610924, -0.046313092, 0.30237436, 0.38090977, -0.95700455)
 visible = false
 
@@ -670,7 +703,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 6)
 
 [node name="Shelf_Base2" parent="Reserve" unique_id=2003170576 instance=ExtResource("19_fw3ux")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0.37897027)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2.3789701)
 
 [node name="Shelf_Door_A2" parent="Reserve/Shelf_Base2" unique_id=1767597217 instance=ExtResource("20_g1ciw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26, 0, 0.3)
@@ -706,6 +739,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0015568, 5.9604645e-08)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Reserve/Shelf_Base2/StaticBody3D" unique_id=1066962993]
 shape = SubResource("BoxShape3D_fw3ux")
 
+[node name="Dictionary" type="StaticBody3D" parent="Reserve/Shelf_Base2" unique_id=23974177 groups=["interactive"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35099316, 1.6500758, 0.12774807)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("43_aqhjm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Reserve/Shelf_Base2/Dictionary" unique_id=1296616485]
+shape = SubResource("BoxShape3D_f3wdx")
+
+[node name="Book_Fat2" parent="Reserve/Shelf_Base2/Dictionary" unique_id=2090066004 instance=ExtResource("44_f1ywt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0805799, 0)
+
 [node name="Bureau" type="Node3D" parent="." unique_id=406054308]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 6)
 
@@ -717,7 +762,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2.5)
 
 [node name="Desk" type="Node3D" parent="Bureau" unique_id=1206506322]
 
-[node name="ComputerMachine" parent="Bureau/Desk" unique_id=1002695437 groups=["machine"] instance=ExtResource("26_m4cp1")]
+[node name="ComputerMachine" parent="Bureau/Desk" unique_id=1002695437 instance=ExtResource("26_m4cp1")]
 unique_name_in_owner = true
 transform = Transform3D(-0.20577727, 0, -0.97859883, 0, 1, 0, 0.97859883, 0, -0.20577727, 4.610197, 1.1468818, 1.4671926)
 
@@ -729,14 +774,41 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.51
 [node name="Computer_Old_Monitor2" parent="Bureau/Desk/Office_Desk_22" unique_id=1196719877 instance=ExtResource("26_wwlo0")]
 transform = Transform3D(0.87369585, 0, 0.4864726, 0, 1, 0, -0.4864726, 0, 0.87369585, -0.38426065, 0, -0.11964989)
 
-[node name="Computer_Keyboard2" parent="Bureau/Desk/Office_Desk_22" unique_id=1883955495 instance=ExtResource("29_0p3hi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018785477, 0, 0.19792557)
+[node name="Computer_Old_Keyboard2" parent="Bureau/Desk/Office_Desk_22" unique_id=440165189 instance=ExtResource("50_2v03r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10965109, 0, 0.23297119)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Bureau/Desk/Office_Desk_22" unique_id=2078035851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47357616, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bureau/Desk/Office_Desk_22/StaticBody3D" unique_id=1096710062]
 shape = SubResource("BoxShape3D_65uj5")
+
+[node name="Chair" type="StaticBody3D" parent="Bureau" unique_id=1980157796]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.199299, 0.72320306, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bureau/Chair" unique_id=983639369]
+shape = SubResource("BoxShape3D_1d6ln")
+
+[node name="Chair_Office_Base_A2" parent="Bureau/Chair" unique_id=1620327178 instance=ExtResource("51_73m2f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.72320306, 0)
+
+[node name="Chair_Office_Bottom2" parent="Bureau/Chair" unique_id=2069697591 instance=ExtResource("52_qakv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.72320306, 0)
+
+[node name="Chair_Office_Wheel2" parent="Bureau/Chair" unique_id=1689014052 instance=ExtResource("53_c12kp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.33585215, -0.72320306, 0.074991226)
+
+[node name="Chair_Office_Wheel_Copy_0012" parent="Bureau/Chair" unique_id=1895876528 instance=ExtResource("54_dwir6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35255957, -0.72320306, 0.07859039)
+
+[node name="Chair_Office_Wheel_Copy_0022" parent="Bureau/Chair" unique_id=2022113258 instance=ExtResource("55_sesf4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19382954, -0.72320306, -0.31806564)
+
+[node name="Chair_Office_Wheel_Copy_0032" parent="Bureau/Chair" unique_id=1606143411 instance=ExtResource("56_wx8ly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.72320306, 0.3276577)
+
+[node name="Chair_Office_Wheel_Copy2" parent="Bureau/Chair" unique_id=2098371265 instance=ExtResource("57_dqvlh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21060514, -0.72320306, -0.32278442)
 
 [node name="BureauBoss" type="Node3D" parent="." unique_id=943355820]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
@@ -792,7 +864,7 @@ spot_attenuation = 0.3
 spot_angle = 75.0
 
 [node name="Neon_Bureau" type="SpotLight3D" parent="Lumieres" unique_id=100000008]
-transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 18.84671, 5, 7.5)
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 19.309282, 5, 9.149806)
 light_color = Color(0.88, 0.93, 1, 1)
 spot_range = 10.0
 spot_attenuation = 0.3
@@ -813,7 +885,8 @@ spot_angle = 80.0
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 13, 0, 9.478005)
 
 [node name="SutomMachine" parent="Couloir/Desk" unique_id=1522048439 groups=["machine"] instance=ExtResource("35_bkq84")]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 13.771095, 0.9544138, 9.279974)
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 13.771095, 0.9544138, 9.354061)
 
 [node name="Office_Desk_drawer2" parent="Couloir/Desk" unique_id=1139374890 instance=ExtResource("33_bkq84")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 12.125, 0, 9.478005)
@@ -821,11 +894,14 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 12.1
 [node name="Office_Desk_drawer22" parent="Couloir/Desk" unique_id=1142951334 instance=ExtResource("34_osgti")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 12.125, 0.1636121, 9.478005)
 
-[node name="Player" parent="." unique_id=1490124664 instance=ExtResource("7_2knxt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, 8)
+[node name="Player" parent="." unique_id=1490124664 node_paths=PackedStringArray("_robot") instance=ExtResource("7_2knxt")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.696465, 2, 9.113143)
+_robot = NodePath("../Robot_LNR3p14y")
 
 [node name="Robot_LNR3p14y" parent="." unique_id=1085761515 instance=ExtResource("7_fmddn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 8)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.040386, 1.0388656, 7.519333)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=100000001]
 environment = SubResource("Environment_neons")

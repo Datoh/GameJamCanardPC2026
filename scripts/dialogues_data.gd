@@ -91,6 +91,36 @@ const DIALOGUES: Array[Dictionary] = [
       {"robot": "Je suis convaincu que tu vas trouver. Tu as vraiment l'air intelligent. Au fait, comment t'appelles-tu ?"},
     ],
   },
+  {
+    "id":       "labyrinthe_demande",
+    "label":    "Tu peux essayer de traverser ce labyrinthe ?",
+    "requires": "",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis un robot, après tout. Laisse-moi ça.",
+        "player": "C'est pour aider la petite souris à trouver la sortie.",
+      },
+      {"robot": "Ah. Une souris. Très bien. Je vais regarder ça de près."},
+    ],
+  },
+  {
+    "id":       "labyrinthe_resultat",
+    "label":    "Alors, ce labyrinthe ?",
+    "requires": "labyrinthe_demande",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "J'ai étudié la situation et... je suis légèrement trop grand pour entrer dans le labyrinthe. C'est une limitation purement physique, tu comprends.",
+        "player": "Tu n'es pas rentré dedans ?",
+      },
+      {
+        "robot":  "Non. Mais j'ai une suggestion : la souris cherche peut-être quelque chose...",
+      },
+    ],
+  },
 ]
 
 static func find_by_id(dialogue_id: String) -> Dictionary:

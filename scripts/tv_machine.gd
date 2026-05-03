@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends Machine
 class_name MachineTV
 
 signal captcha_done(success: bool)
@@ -9,25 +9,28 @@ const LAPIN_FILES := [
   "lapin4.png", "lapin5.png", "lapin6.png", "lapain.png"
 ]
 
-const COLOR_LAPIN := [Color.PALE_GOLDENROD,  Color.BISQUE, Color.CYAN, Color.GREEN_YELLOW, Color.LIGHT_SEA_GREEN]
+const COLOR_LAPIN := [Color.PALE_GOLDENROD, Color.BISQUE, Color.CYAN, Color.GREEN_YELLOW, Color.LIGHT_SEA_GREEN]
 
 @export var _tv_title: TextureRect = null
 @export var _video_player: VideoStreamPlayer = null
 @onready var _captcha_ui: Control = %TVCaptcha
 
-const machine_name := "TV"
+const NAME := "TV"
 
-var _cell_rects:    Array = []
-var _pink_indices:  Array = []
-
-var _player_ref:    Node      = null
-var _captcha_active: bool     = false
-var _cell_selected: Array     = []
-var _cell_overlays: Array     = []
+var _cell_rects:         Array = []
+var _pink_indices:       Array = []
+var _player_ref:         Node = null
+var _captcha_active:     bool = false
+var _cell_selected:      Array = []
+var _cell_overlays:      Array = []
 var _cell_rect_validate: Control = null
 
 
 func _ready() -> void:
+  machine_name = NAME
+  message_idle = "Vous essayez d'arrêter YouPub."
+  message_try_machine = "Un CAPTCHA ? Il faut prouver que je ne suis pas un robot."
+  hint_default = "[ESPACE] Regarder la YouPub"
   input_ray_pickable = true
   input_event.connect(_on_tv_input)
   _setup_captcha_scene()
@@ -57,10 +60,7 @@ func _apply_images_to_visual(has_feutres: bool) -> void:
   for i in 6:
     var tex := load(LAPIN_DIR + pool[i]) as Texture2D
     _cell_rects[i].texture  = tex
-    if not has_feutres:
-      _cell_rects[i].modulate = Color.BLACK
-    else:
-      _cell_rects[i].modulate = Color.HOT_PINK if _pink_indices.has(i) else COLOR_LAPIN.pick_random()
+    _cell_rects[i].modulate = Color.HOT_PINK if (has_feutres and _pink_indices.has(i)) else (COLOR_LAPIN.pick_random() if has_feutres else Color.BLACK)
 
 
 # ── États de la TV ────────────────────────────────────────────────────────────
@@ -71,12 +71,11 @@ func show_tv_title() -> void:
   _video_player.visible = false
 
 
-func show_captcha(player: Node, has_feutres: bool) -> void:
+func _show_captcha_ui(has_feutres: bool) -> void:
   _tv_title.visible     = false
   _captcha_ui.visible   = true
   _video_player.visible = false
   _apply_images_to_visual(has_feutres)
-  interact(player)
 
 
 func show_video() -> void:
@@ -87,42 +86,58 @@ func show_video() -> void:
     _video_player.play()
 
 
-# ── Interface publique (dispatcher player) ───────────────────────────────────
+# ── Interface publique ────────────────────────────────────────────────────────
 
 func interact(player: Node) -> void:
   _player_ref = player
-  match player.state_tele:
-    player.TeleState.IDLE:
-      if player.state_pc == player.PCState.IDLE:
-        player._show_message("Vous essayez d'arrêter YouPub.", 3.0)
+  var state = player.state_machine[machine_name]
+  var pc_attempted: bool = player.state_machine.get(MachineOrdinateur.NAME, Machine.StateMachine.IDLE) > Machine.StateMachine.IDLE
+  match state:
+    Machine.StateMachine.IDLE:
+      if not pc_attempted:
+        player.show_message(message_idle, 3.0)
       else:
-        player.state_tele = player.TeleState.CAPTCHA_PENDING
-        player.puzzle_attempted["Feutres"] = true
-        show_captcha(player, "Feutres" in player.inventory)
-        player._show_message("Un CAPTCHA ? Il faut prouver que je ne suis pas un robot.", 3.0)
-    player.TeleState.CAPTCHA_PENDING:
-      if player._in_minigame:
+        player.state_machine[machine_name] = Machine.StateMachine.TRY_MACHINE
+        _show_captcha_ui("Feutres" in player.inventory)
+        player.show_message(message_try_machine, 3.0)
+    Machine.StateMachine.TRY_MACHINE:
+      if player.in_minigame:
         return
-      _start_captcha(player)
-      if not captcha_done.is_connected(_on_captcha_result):
-        captcha_done.connect(_on_captcha_result, CONNECT_ONE_SHOT)
-    player.TeleState.CAPTCHA_SOLVED, player.TeleState.VIDEO_WATCHED:
+      _on_try_machine(player, "Feutres" in player.inventory)
+    Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
       show_video()
 
 
 func get_interaction_hint(player: Node) -> String:
-  match player.state_tele:
-    player.TeleState.CAPTCHA_PENDING: return "[ESPACE] Résoudre le CAPTCHA"
-    player.TeleState.CAPTCHA_SOLVED, player.TeleState.VIDEO_WATCHED: return "[ESPACE] Regarder la vidéo"
-    _: return "[ESPACE] Regarder la télé"
+  var state = player.state_machine[machine_name]
+  match state:
+    Machine.StateMachine.TRY_MACHINE:
+      return "[ESPACE] Résoudre le CAPTCHA"
+    Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
+      return "[ESPACE] Regarder la vidéo"
+    _:
+      return hint_default
+
+
+func _on_try_machine(player: Node, _has_object: bool) -> void:
+  _apply_images_to_visual("Feutres" in player.inventory)
+  _captcha_active = true
+  _cell_selected = []
+  _cell_selected.resize(6)
+  _cell_selected.fill(false)
+  player.in_minigame = true
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _update_selection_display()
+  if not captcha_done.is_connected(_on_captcha_result):
+    captcha_done.connect(_on_captcha_result, CONNECT_ONE_SHOT)
 
 
 func _on_captcha_result(success: bool) -> void:
   if _player_ref == null:
     return
-  _player_ref._in_minigame = false
+  _player_ref.in_minigame = false
   if success:
-    _player_ref.state_tele = _player_ref.TeleState.CAPTCHA_SOLVED
+    _player_ref.state_machine[machine_name] = Machine.StateMachine.UNLOCKED
     show_video()
 
 
@@ -155,19 +170,6 @@ func _on_tv_input(_camera: Node, event: InputEvent, input_position: Vector3, _no
       return
 
 
-func _start_captcha(player: Node) -> void:
-  var has_feutres: bool = "Feutres" in _player_ref.inventory
-  _apply_images_to_visual(has_feutres)
-  _player_ref     = player
-  _captcha_active = true
-  _cell_selected  = []
-  _cell_selected.resize(6)
-  _cell_selected.fill(false)
-  player._in_minigame = true
-  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  _update_selection_display()
-
-
 func _update_selection_display() -> void:
   for i in 6:
     _cell_overlays[i].color.a = 0.45 if _cell_selected[i] else 0.0
@@ -176,7 +178,7 @@ func _update_selection_display() -> void:
 func _validate_captcha() -> void:
   var has_feutres: bool = "Feutres" in _player_ref.inventory
   if not has_feutres:
-    _player_ref._show_message("Impossible de distinguer ces lapins, ils manquent de couleurs.", 3.0)
+    _player_ref.show_message("Impossible de distinguer ces lapins, ils manquent de couleurs.", 3.0)
     _flash_and_reset(has_feutres)
     return
   var correct := true

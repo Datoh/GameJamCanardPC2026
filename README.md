@@ -12,3 +12,4 @@ https://kenney.nl/assets/cursor-pack
 https://ambientcg.com/view?id=Carpet006
 https://ambientcg.com/view?id=OfficeCeiling006
 https://ambientcg.com/view?id=Wallpaper002A
+https://fr.pngtree.com/freepng/the-integrated-circuit-board_3387702.html

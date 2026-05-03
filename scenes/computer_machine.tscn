@@ -1,18 +1,30 @@
 [gd_scene format=3 uid="uid://ckuku3n23meq2"]
 
 [ext_resource type="Script" uid="uid://crrgbtajepw2a" path="res://scripts/computer_machine.gd" id="1_i7qam"]
-[ext_resource type="PackedScene" uid="uid://beoia77rgr0w6" path="res://assets/models/Computer_Case_Old.gltf" id="2_5cl4n"]
+[ext_resource type="PackedScene" uid="uid://dcjoef0y5v44a" path="res://assets/models/Computer_Case_Old2.gltf" id="2_5cl4n"]
+[ext_resource type="Texture2D" uid="uid://dt63xpukbpfeu" path="res://assets/models/textures/circuit.png" id="3_8ofl2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_142py"]
 size = Vector3(0.17673206, 0.39863503, 0.36695766)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_0l7ew"]
+size = Vector2(0.25, 0.32)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4uyn4"]
+albedo_texture = ExtResource("3_8ofl2")
+
 [node name="ComputerMachine" type="StaticBody3D" unique_id=1002695437 groups=["interactive", "machine"]]
-transform = Transform3D(0.9785989, 0, -0.20577723, 0, 1, 0, 0.20577723, 0, 0.9785989, 0, 0, 0)
 collision_layer = 3
 script = ExtResource("1_i7qam")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1588392310]
 shape = SubResource("BoxShape3D_142py")
 
-[node name="ComputerMachine" parent="." unique_id=207988400 instance=ExtResource("2_5cl4n")]
-transform = Transform3D(0.9999998, 0, 1.4901161e-08, 0, 1, 0, -1.4901161e-08, 0, 0.9999998, -4.7683716e-07, -1.1468818, 0)
+[node name="Computer_Case_Old2" parent="." unique_id=149934290 instance=ExtResource("2_5cl4n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1464269, 0)
+
+[node name="Circuit" type="MeshInstance3D" parent="." unique_id=521487371]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 1.9106855e-15, 1, 1, 4.371139e-08, -4.371139e-08, 0.065148026, -0.009516463, -0.02171275)
+mesh = SubResource("PlaneMesh_0l7ew")
+surface_material_override/0 = SubResource("StandardMaterial3D_4uyn4")

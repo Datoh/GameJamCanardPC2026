@@ -1,4 +1,4 @@
-extends StaticBody3D
+extends Machine
 class_name MachineSutom
 
 signal game_finished(won: bool)
@@ -34,7 +34,6 @@ var _top_plane: MeshInstance3D = null
 var _active: bool = false
 
 var _target: String = ""
-var _has_dictionary: bool = false
 var _row: int = 0
 var _col: int = 1
 var _won: bool = false
@@ -43,11 +42,33 @@ var _labels: Array = []
 var _result_label: Label
 var _hint_label: Label
 
-const machine_name := "SUTOM"
+const NAME := "SUTOM"
 
 func _ready() -> void:
+  machine_name = NAME
+  dialogue_demande = "sutom_demande"
+  dialogue_resultat = "sutom_resultat"
+  robot_work_duration = 20.0
+  object_required = "Dictionnaire"
+  message_idle = "Tiens un SUTOM, je vais essayer..."
+  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide au robot."
+  message_robot_working = "Le robot est en train de faire le SUTOM... je vais le laisser faire..."
+  message_robot_done = "Je devrais parler au robot, il a l'air d'avoir terminé."
+  message_try_machine_object = "Sans mon dictionnaire, je ne peux pas trouver ce mot."
+  message_try_machine_ok = "Avec mon dictionnaire, je devrais pouvoir le trouver !"
+  message_solved = "Vous avez déjà résolu le SUTOM, ce n'est plus la peine !"
+  hint_default = "[ESPACE] Jouer au SUTOM"
   _setup_overhead_camera()
   _setup_journal_surface()
+
+
+func _on_try_machine(player: Node, has_object: bool) -> void:
+  _player_ref = player
+  player.in_minigame = true
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _begin_game(player.camera, has_object)
+  if not game_finished.is_connected(_on_game_finished):
+    game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
 
 # ── Caméra overhead ───────────────────────────────────────────────────────────
 
@@ -197,53 +218,23 @@ func _build_grid_ui() -> void:
 
 # ── Interface publique (dispatcher player) ───────────────────────────────────
 
-func interact(player: Node) -> void:
-  _player_ref = player
-  match player.state_machine[machine_name]:
-    player.StateMachine.IDLE, player.StateMachine.ATTEMPTED:
-      player.state_machine[machine_name] = player.StateMachine.ATTEMPTED
-      player._show_message("J'ai besoin d'aide... je vais en parler au robot.", 3.0)
-    player.StateMachine.ROBOT_WORKING:
-      player._show_message("Le robot est en train de faire le SUTOM... je vais le laisser faire...", 3.0)
-    player.StateMachine.ROBOT_DONE:
-      player._show_message("Je devrais d'abord parler au robot...", 2.0)
-    player.StateMachine.TRY_MACHINE, player.StateMachine.NEEDS_OBJECT, player.StateMachine.UNLOCKED:
-      _start_minigame(player)
-    player.StateMachine.SOLVED:
-      player._show_message("Vous avez déjà résolu le SUTOM, ce n'est plus la peine !", 3.0)
-
-
-func get_interaction_hint(_player: Node) -> String:
-  return "[ESPACE] Jouer au SUTOM"
-
-
-func _start_minigame(player: Node) -> void:
-  player._in_minigame = true
-  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  _begin_game(player.camera, player.state_machine[machine_name] == player.StateMachine.UNLOCKED)
-  if not game_finished.is_connected(_on_game_finished):
-    game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
-
-
 func _on_game_finished(won: bool) -> void:
   if _player_ref == null:
     return
-  _player_ref._in_minigame = false
+  _on_try_machine_done(_player_ref, won)
+  _player_ref.in_minigame = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-  if _player_ref.state_machine[MachineSutom.machine_name] == _player_ref.StateMachine.TRY_MACHINE:
-    _player_ref.state_machine[machine_name] = _player_ref.StateMachine.NEEDS_OBJECT
-  if won and _player_ref.state_machine[machine_name] == _player_ref.StateMachine.UNLOCKED:
-    _player_ref.state_machine[machine_name] = _player_ref.StateMachine.SOLVED
+  if won:
+    _player_ref.state_machine[machine_name] = Machine.StateMachine.UNLOCKED
 
 
 # ── Entrée / sortie ───────────────────────────────────────────────────────────
 
-func _begin_game(player_cam: Camera3D, has_dict: bool) -> void:
+func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
   if _active:
     return
   _active = true
   _player_camera = player_cam
-  _has_dictionary = has_dict
   _row = 0
   _col = 1
   _won = false
@@ -252,7 +243,7 @@ func _begin_game(player_cam: Camera3D, has_dict: bool) -> void:
   _overhead_cam.position = Vector3(0, camera_height, 0)
   _overhead_cam.rotation_degrees = Vector3(-90, 0, 0)
 
-  var words: Array = REAL_WORDS if _has_dictionary else FAKE_WORDS
+  var words: Array = REAL_WORDS if has_object else FAKE_WORDS
   _target = words[randi() % words.size()].to_upper()
 
   for r in range(MAX_ATTEMPTS):

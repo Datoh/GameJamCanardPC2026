@@ -18,7 +18,7 @@ func interact(player: Node) -> void:
   if _is_animating():
     return
   if _locked:
-    player._show_message("La porte est vérouillée.", 3.0)
+    player.show_message("La porte est vérouillée.", 3.0)
     return
   _target_angle = 0.0 if _is_opened() else _angle * (1.0 if _direction else -1.0)
 
