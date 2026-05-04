@@ -9,6 +9,7 @@ https://www.magnific.com/free-vector/flat-design-animal-silhouette-set_29628787.
 https://sketchfab.com/3d-models/dogecoin-cb8c313aee1c4f9185dbea7d32c0845b
 https://www.cgtrader.com/free-3d-models/electronics/other/doge-coin-72cc137b-00c7-402c-9d96-e8a1edc6d7e0
 Mixamo Joe model https://www.mixamo.com/
+https://www.cgtrader.com/free-3d-models/electronics/other/soviet-oscilloscope-c1-91
 
 https://kenney.nl/assets/cursor-pack
 

@@ -31,7 +31,9 @@ func _ready() -> void:
   message_not_enable = "Vous essayez d'arrêter YouPub."
   message_idle = "Vous essayez d'arrêter YouPub."
   message_try_machine = "Un CAPTCHA ? Il faut prouver que je ne suis pas un robot."
-  hint_default = "[ESPACE] Regarder la YouPub"
+  message_waiting_unlocked = "Le câblage n'a plud de secrets pour moi."
+  hint_default = "[ESPACE] Regarder YouPub"
+  object_required = "Feutres"
   input_ray_pickable = true
   input_event.connect(_on_tv_input)
   _setup_captcha_scene()
@@ -91,24 +93,15 @@ func show_video() -> void:
 
 func interact(player: Node) -> void:
   _player_ref = player
-  var state = player.state_machine[machine_name]
-  var pc_attempted: bool = player.state_machine.get(MachineOrdinateur.NAME, Machine.StateMachine.IDLE) > Machine.StateMachine.IDLE
-  match state:
-    Machine.StateMachine.IDLE:
-      if not pc_attempted:
-        player.show_message(message_idle, 3.0)
-      else:
-        player.state_machine[machine_name] = Machine.StateMachine.TRY_MACHINE
-        _show_captcha_ui("Feutres" in player.inventory)
-        player.show_message(message_try_machine, 3.0)
-    Machine.StateMachine.TRY_MACHINE:
-      if player.in_minigame:
-        return
-      _on_try_machine(player, "Feutres" in player.inventory)
-    Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
-      show_video()
+  if player.state_machine[machine_name] == Machine.StateMachine.SOLVED:
+    show_video()
+  else:
+    super.interact(player)
 
-
+func _can_try(player: Node) -> bool:
+  var pc_attempted: bool = player.state_machine.get(MachineOrdinateur.NAME, Machine.StateMachine.IDLE) >= Machine.StateMachine.TRY_MACHINE_OBJECT
+  return pc_attempted
+ 
 func get_interaction_hint(player: Node) -> String:
   var state = player.state_machine[machine_name]
   match state:
@@ -121,6 +114,9 @@ func get_interaction_hint(player: Node) -> String:
 
 
 func _on_try_machine(player: Node, _has_object: bool) -> void:
+  if player.state_machine[machine_name] == Machine.StateMachine.TRY_MACHINE:
+    player.state_machine[machine_name] = Machine.StateMachine.TRY_MACHINE_OBJECT
+  _show_captcha_ui("Feutres" in player.inventory)
   _apply_images_to_visual("Feutres" in player.inventory)
   _captcha_active = true
   _cell_selected = []
@@ -138,7 +134,8 @@ func _on_captcha_result(success: bool) -> void:
     return
   _player_ref.in_minigame = false
   if success:
-    _player_ref.state_machine[machine_name] = Machine.StateMachine.UNLOCKED
+    _player_ref.show_message(message_waiting_unlocked, 3.0)
+    _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED
     show_video()
 
 
@@ -223,6 +220,8 @@ func _flash_and_reset(has_feutres: bool) -> void:
 func _unhandled_input(event: InputEvent) -> void:
   if not _captcha_active:
     return
-  if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+  var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
+           or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
+  if quit:
     get_viewport().set_input_as_handled()
     _cancel_captcha()

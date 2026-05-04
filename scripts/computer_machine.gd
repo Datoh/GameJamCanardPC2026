@@ -57,21 +57,24 @@ func _ready() -> void:
   dialogue_demande    = "ordinateur_demande"
   dialogue_resultat   = "ordinateur_resultat"
   robot_work_duration = 15.0
-  message_idle               = "Ces câbles sont dans le mauvais ordre. Je vais essayer de les rebrancher."
+  message_idle               = "Ces câbles ne sont pas branchés. Je vais recabler tout ça."
   message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. Le robot pourrait peut-être s'y connaître en câblage."
-  message_robot_working      = "Le robot bidouille les câbles à l'arrière du PC..."
+  message_robot_working      = "Le robot bidouille les câbles à l'arrière de la tour..."
   message_robot_done         = "Le robot a l'air d'avoir terminé. Je devrais lui parler."
   message_try_machine_object = "Le robot n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
-  message_solved             = "Le PC est rebranché."
-  hint_default     = "[ESPACE] Regarder le PC"
+  message_solved             = "La tour est recablé."
+  hint_default     = "[ESPACE] Regarder la tour"
   hint_try_machine = "[ESPACE] Rebrancher les câbles"
-  hint_solved      = "[ESPACE] PC réparé"
+  hint_solved      = "[ESPACE] Tour réparé"
   input_ray_pickable = true
   input_event.connect(_on_circuit_input)
   _setup_viewport()
   _setup_pc_camera()
   _reinitialiser()
 
+
+func _can_try(_player: Node) -> bool:
+  return true
 
 # ── Viewport + texture ────────────────────────────────────────────────────────
 
@@ -279,8 +282,10 @@ func _unhandled_input(event: InputEvent) -> void:
     elif _drag_ep != null:
       _drag_ep = null
       _grid_update()
-  # Échap quitte le mini-jeu
-  if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+  # Échap ou clic droit quitte le mini-jeu
+  var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
+           or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
+  if quit:
     get_viewport().set_input_as_handled()
     _quitter_jeu()
 
@@ -418,11 +423,7 @@ func _check_victoire() -> void:
     var b   := path.back() as Vector2i
     if not ((a == ep0 and b == ep1) or (a == ep1 and b == ep0)):
       return
-  var rempli := 0
-  for c in CableGrid.NOMS:
-    rempli += chemins[c].size()
-  if rempli == CableGrid.GRILLE_W * CableGrid.GRILLE_H:
-    _on_victoire()
+  _on_victoire()
 
 
 func _on_victoire() -> void:
@@ -430,7 +431,7 @@ func _on_victoire() -> void:
   _quitter_jeu()
   if _player_ref == null:
     return
-  _player_ref.state_machine[NAME] = Machine.StateMachine.UNLOCKED
+  _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
 
 
 # ── Lancer / quitter le mini-jeu ─────────────────────────────────────────────

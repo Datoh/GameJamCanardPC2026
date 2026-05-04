@@ -24,7 +24,7 @@ var robot_work_duration: float = 15.0
 @export var message_solved: String = ""
 
 @export_group("Hints")
-@export var hint_default: String = "[ESPACE] Interagir."
+@export var hint_default: String = "[ESPACE] Interagir"
 @export var hint_idle: String = ""
 @export var hint_robot_working: String = ""
 @export var hint_robot_done: String = ""

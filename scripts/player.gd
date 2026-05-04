@@ -201,7 +201,6 @@ func _unhandled_input(event: InputEvent) -> void:
     if _dialogue_ui.is_open():
       _dialogue_ui.close()
       return
-    Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
   if not _dialogue_ui.is_open() and event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
     rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
@@ -238,6 +237,9 @@ func _try_interact() -> void:
         working_on = key
         break
     if not working_on.is_empty():
+      match working_on:
+        "Maze": working_on = "labyrinthe"
+        "Ordinateur": working_on = "câblage"
       show_message("Le robot est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
     else:
       _open_dialogue()

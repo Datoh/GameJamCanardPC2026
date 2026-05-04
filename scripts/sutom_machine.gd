@@ -56,12 +56,18 @@ func _ready() -> void:
   message_robot_working = "Le robot est en train de faire le SUTOM... je vais le laisser faire..."
   message_robot_done = "Je devrais parler au robot, il a l'air d'avoir terminé."
   message_try_machine_object = "Sans mon dictionnaire, je ne peux pas trouver ce mot."
-  message_try_machine_ok = "Avec mon dictionnaire, je devrais pouvoir le trouver !"
+  message_try_machine_ok = "Il faut que je trouve un moyen d'apprendre plus de mots."
+  message_waiting_unlocked = "J'ai le mot de passe."
   message_solved = "Vous avez déjà résolu le SUTOM, ce n'est plus la peine !"
   hint_default = "[ESPACE] Jouer au SUTOM"
   _setup_overhead_camera()
   _setup_journal_surface()
 
+
+func _can_try(player: Node) -> bool:
+  var oscillo_solved: bool = player.state_machine[MachineOscillo.NAME] == Machine.StateMachine.SOLVED
+  var pc_solved: bool = player.state_machine[MachineOrdinateur.NAME] == Machine.StateMachine.SOLVED
+  return oscillo_solved and pc_solved
 
 func _on_try_machine(player: Node, has_object: bool) -> void:
   _player_ref = player
@@ -226,7 +232,8 @@ func _on_game_finished(won: bool) -> void:
   _player_ref.in_minigame = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
   if won:
-    _player_ref.state_machine[machine_name] = Machine.StateMachine.UNLOCKED
+    _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED
+    _player_ref.show_message(message_waiting_unlocked, 3.0)
 
 
 # ── Entrée / sortie ───────────────────────────────────────────────────────────
@@ -304,6 +311,11 @@ func _on_return_done() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
   if not _active:
+    return
+  var is_right_click: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed
+  if is_right_click:
+    get_viewport().set_input_as_handled()
+    _close_game(_won)
     return
   if not (event is InputEventKey and event.pressed):
     return

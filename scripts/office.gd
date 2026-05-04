@@ -27,7 +27,8 @@ func _on_machine_try_ok(machine: Node):
 func _on_machine_done(machine: Node):
   match machine.machine_name:
     MachineMaze.NAME:
-      _player.pickup(_mouse, "souris")
+      if _mouse:
+        _player.pickup(_mouse, "souris")
 
 
 func _on_area_close_door_body_entered(_body: Node3D) -> void:

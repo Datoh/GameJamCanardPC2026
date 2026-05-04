@@ -4,7 +4,7 @@ const SPEED := 2.5
 const ACCEL := 8.0
 const DECEL := 64.0
 const ROTATION_SPEED := 5.0
-const ROTATION_HEAD_SPEED := 25.0
+const ROTATION_HEAD_SPEED := 5.0
 
 const EYE_RADIUS := 0.08
 
@@ -82,8 +82,10 @@ func _physics_process(delta: float) -> void:
     velocity.y -= gravity * delta
 
   if _is_forced:
+    _navigation_agent_3d.target_desired_distance = 0.5
     _navigation_agent_3d.target_position = _forced_target
   elif _following and _player != null:
+    _navigation_agent_3d.target_desired_distance = 1.5
     _navigation_agent_3d.target_position = _player.global_position
 
   var should_move := (_is_forced or _following) and not _navigation_agent_3d.is_navigation_finished()

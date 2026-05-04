@@ -16,7 +16,7 @@ func interact(player: Node) -> void:
   if player.can_interact(id, machine):
     player.show_message(message_ok, 3.0)
     if pickable:
-      player.pickup(self, id, MachineTV.NAME)
+      player.pickup(self, id, machine)
   else:
     player.show_message(message_ko, 3.0)
 

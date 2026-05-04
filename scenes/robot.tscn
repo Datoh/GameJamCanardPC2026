@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bu8781px3e3md" path="res://scenes/robot_head.scn" id="3_rcrfe"]
 
 [sub_resource type="CapsuleShape3D" id="Shape_col"]
-radius = 0.26
-height = 1.56
+radius = 0.29003906
+height = 1.7774512
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8oa0"]
 resource_name = "Material #109"
@@ -71,7 +71,7 @@ collision_layer = 17
 script = ExtResource("1_robot")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1767226925]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10308689, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2118125, 0)
 shape = SubResource("Shape_col")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1677808741]
@@ -82,7 +82,7 @@ navigation_layers = 4
 simplify_path = true
 
 [node name="LilMan" type="Node3D" parent="." unique_id=1586325216]
-transform = Transform3D(-0.4, 0, -6.039832e-08, 0, 0.4, 0, 6.039832e-08, 0, -0.4, -0.76272225, 0.010461509, 0.28866816)
+transform = Transform3D(-0.45, 0, -6.794811e-08, 0, 0.45, 0, 6.794811e-08, 0, -0.45, -0.8421116, 0.099196255, 0.31441277)
 
 [node name="Head" type="Node3D" parent="LilMan" unique_id=1913904061]
 unique_name_in_owner = true
