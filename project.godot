@@ -68,6 +68,11 @@ ui_down={
 3d_physics/layer_6="mouse"
 3d_physics/layer_7="ivan"
 
+[navigation]
+
+3d/default_cell_size=0.15
+3d/default_edge_connection_margin=0.15000000000000002
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

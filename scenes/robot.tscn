@@ -1,74 +1,102 @@
-[gd_scene format=3 uid="uid://c3rn0b0t4life"]
+[gd_scene format=4 uid="uid://c3rn0b0t4life"]
 
 [ext_resource type="Script" uid="uid://bnaddb1gf28y4" path="res://scripts/robot.gd" id="1_robot"]
-
-[sub_resource type="StandardMaterial3D" id="Mat_body"]
-albedo_color = Color(0.15, 0.55, 1, 1)
-emission_enabled = true
-emission = Color(0, 0.2, 0.5, 1)
-emission_energy_multiplier = 0.4
-
-[sub_resource type="CapsuleMesh" id="Mesh_body"]
-material = SubResource("Mat_body")
-radius = 0.35
-height = 1.8
+[ext_resource type="Texture2D" uid="uid://cb2x7b34vlbha" path="res://assets/textures/robot/LNReplay.png" id="2_ykvnc"]
+[ext_resource type="PackedScene" uid="uid://dnj77okjiftp4" path="res://scenes/robot_body.scn" id="3_i42o3"]
+[ext_resource type="PackedScene" uid="uid://bu8781px3e3md" path="res://scenes/robot_head.scn" id="3_rcrfe"]
 
 [sub_resource type="CapsuleShape3D" id="Shape_col"]
-radius = 0.35
-height = 1.8
+radius = 0.26
+height = 1.56
 
-[sub_resource type="StandardMaterial3D" id="Mat_eye"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8oa0"]
+resource_name = "Material #109"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 0)
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
 
-[sub_resource type="SphereMesh" id="Mesh_eye"]
-material = SubResource("Mat_eye")
-radius = 0.08
-height = 0.16
+[sub_resource type="ArrayMesh" id="ArrayMesh_natp4"]
+_surfaces = [{
+"aabb": AABB(-1.259613e-06, -0.23636314, -0.3369523, 0.03804448, 0.47272623, 0.673905),
+"format": 34359742465,
+"index_count": 96,
+"index_data": PackedByteArray("AgARAAAAAAABAAIAEQACAAUAAwAAABEABQASABEAEQATAAMAEwARABIAFAASAAUAAwATABUABQAPABQAFQAEAAMADgAUAA8ADwAQAA4AFAAOAA0ABAAVAAYABgAHAAQACAAGABUADQAWABQAEgAUABYACQAWAA0AFgAXABIAFwAWAAkAEgAXABMADQALAAkACgAJAAsACwAMAAoACQAKAAgAEwAXABgACQAYABcAGAAVABMACAAYAAkAFQAYAAgA"),
+"lods": [0.03562836, PackedByteArray("AAABAAIAAwAAAAIAAgAEAAMABAACAAUABgAHAAQACAAGAAQABAAJAAgABQAJAAQACQAKAAgACgAJAAsACwAMAAoADQALAAkADQAJAAUABQAOAA0ADgAFAA8ADwAQAA4A")],
+"name": "Material #109",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 25,
+"vertex_data": PackedByteArray("JFfqOSQJcr7y60k+I0rqOSgJcr4Qhaw++Q+ptckH/L0Dhaw+SgyCtSwJcr6pE9A1SgyCtS4Jcr7VRTa++Q+ptSKOlbMDhaw+vw6ctdEH/L0Dhay+hA2PtS4Jcr4Dhay+hA2PtVvTzLMDhay+oRHjPA2m5j3VRTa+hA2PtQ+m5j0Dhay+SgyCtSIJcj7VRTa+hA2PtSIJcj4Dhay+SgyCtSIJcj6pE9A1OYTDOikJcj4kW0U++Q+ptRmm5j0Dhaw++YDDOioJcj4Qhaw+BRHjPM0H/L3y60k+BRHjPA5Pn7MkW0U+NdMbPdAH/L2pE9A1BRHjPBWm5j0kW0U+oRHjPNMH/L3VRTa+NdMbPQ+m5j2pE9A1NdMbPTQRtrOpE9A1oRHjPG8Sw7PVRTa+")
+}]
+blend_shape_mode = 0
 
-[sub_resource type="StandardMaterial3D" id="Mat_pupil"]
-albedo_color = Color(0.05, 0.05, 0.05, 1)
+[sub_resource type="ArrayMesh" id="ArrayMesh_20psq"]
+resource_name = "screen"
+_surfaces = [{
+"aabb": AABB(-1.259613e-06, -0.23636314, -0.3369523, 0.03804448, 0.47272623, 0.673905),
+"attribute_data": PackedByteArray("asm2PgAAQD8AAIA+AABAPwAAgD5IUiE/AAAAPwAAQD8qzyE/AABAPwAAgD4AAAA/AABAP0hSIT8AAEA/AABAPwAAQD8AAAA/Ks8hP9ACwz4AAEA/0ALDPirPIT8AAIA+AABAPwAAgD4AAAA/AACAPmrJtj4AAIA+AACAPtACwz4AAIA+AACAPmrJtj5IUiE/asm2PgAAAD8AAAA/SFIhP2rJtj7QAsM+Ks8hP0hSIT8AAAA/0ALDPgAAAD8AAAA/Ks8hPwAAAD8="),
+"format": 34359742487,
+"index_count": 96,
+"index_data": PackedByteArray("AgARAAAAAAABAAIAEQACAAUAAwAAABEABQASABEAEQATAAMAEwARABIAFAASAAUAAwATABUABQAPABQAFQAEAAMADgAUAA8ADwAQAA4AFAAOAA0ABAAVAAYABgAHAAQACAAGABUADQAWABQAEgAUABYACQAWAA0AFgAXABIAFwAWAAkAEgAXABMADQALAAkACgAJAAsACwAMAAoACQAKAAgAEwAXABgACQAYABcAGAAVABMACAAYAAkAFQAYAAgA"),
+"lods": [0.03562836, PackedByteArray("AAABAAIAAwAAAAIAAgAEAAMABAACAAUABgAHAAQACAAGAAQABAAJAAgABQAJAAQACQAKAAgACgAJAAsACwAMAAoADQALAAkADQAJAAUABQAOAA0ADgAFAA8ADwAQAA4A")],
+"material": SubResource("StandardMaterial3D_p8oa0"),
+"name": "Material #109",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 25,
+"vertex_data": PackedByteArray("JFfqOSQJcr7y60k+I0rqOSgJcr4Qhaw++Q+ptckH/L0Dhaw+SgyCtSwJcr6pE9A1SgyCtS4Jcr7VRTa++Q+ptSKOlbMDhaw+vw6ctdEH/L0Dhay+hA2PtS4Jcr4Dhay+hA2PtVvTzLMDhay+oRHjPA2m5j3VRTa+hA2PtQ+m5j0Dhay+SgyCtSIJcj7VRTa+hA2PtSIJcj4Dhay+SgyCtSIJcj6pE9A1OYTDOikJcj4kW0U++Q+ptRmm5j0Dhaw++YDDOioJcj4Qhaw+BRHjPM0H/L3y60k+BRHjPA5Pn7MkW0U+NdMbPdAH/L2pE9A1BRHjPBWm5j0kW0U+oRHjPNMH/L3VRTa+NdMbPQ+m5j2pE9A1NdMbPTQRtrOpE9A1oRHjPG8Sw7PVRTa+NOWLa9T/v4Mg6Y1zqf6jhUDq4Hn2/zKIU+MhYwUA3/8660xlHwB5/BHrL4D+/2KKavlhaxAAmvgN89NpOgH7+v7//WwAAH722/WXkzUA3Prw+SWUCwBkh7LsTJkqAIODCvRClSABB4Vt5d+aBwAwgFHnfJLG/2f8MOtfhff/8fcE67GK5P57+kPrV3XB/3/69fEfgP7/CPk88PxvAQAkgHHsqonH/1iFB/WiazgAI4Vy8daOAQApgPf/VIAAACaA//+2cgAAo4Y=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_natp4")
 
-[sub_resource type="SphereMesh" id="Mesh_pupil"]
-material = SubResource("Mat_pupil")
-radius = 0.04
-height = 0.08
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i42o3"]
+albedo_texture = ExtResource("2_ykvnc")
+uv1_scale = Vector3(1.245, 1.245, 1.245)
+uv1_offset = Vector3(-0.125, -0.085, 0)
+
+[sub_resource type="Animation" id="Animation_qvest"]
+resource_name = "Take 001"
+length = 3.3333333
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iiq8e"]
+_data = {
+&"Take 001": SubResource("Animation_qvest")
+}
 
 [node name="Robot_LNR3p14y" type="CharacterBody3D" unique_id=890730695 groups=["robot"]]
 collision_layer = 17
 script = ExtResource("1_robot")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=438666497]
-mesh = SubResource("Mesh_body")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1767226925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10308689, 0)
 shape = SubResource("Shape_col")
-
-[node name="Eye0" type="Node3D" parent="." unique_id=308787778]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.65, -0.28)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0" unique_id=1753311431]
-mesh = SubResource("Mesh_eye")
-
-[node name="Pupil0" type="Node3D" parent="Eye0" unique_id=1191247466]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye0/Pupil0" unique_id=806734234]
-mesh = SubResource("Mesh_pupil")
-
-[node name="Eye1" type="Node3D" parent="." unique_id=1291760454]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.65, -0.28)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1" unique_id=618024332]
-mesh = SubResource("Mesh_eye")
-
-[node name="Pupil1" type="Node3D" parent="Eye1" unique_id=603157340]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Eye1/Pupil1" unique_id=1468039719]
-mesh = SubResource("Mesh_pupil")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1677808741]
 unique_name_in_owner = true
-path_desired_distance = 0.1
+path_desired_distance = 0.3
+target_desired_distance = 1.5
 navigation_layers = 4
+simplify_path = true
+
+[node name="LilMan" type="Node3D" parent="." unique_id=1586325216]
+transform = Transform3D(-0.4, 0, -6.039832e-08, 0, 0.4, 0, 6.039832e-08, 0, -0.4, -0.76272225, 0.010461509, 0.28866816)
+
+[node name="Head" type="Node3D" parent="LilMan" unique_id=1913904061]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9012003, 1.524015, 0.7120775)
+
+[node name="screen" type="MeshInstance3D" parent="LilMan/Head" unique_id=200083290]
+unique_name_in_owner = true
+transform = Transform3D(-1.1920929e-07, -4.371139e-08, -1.0375959, -1.7763568e-15, 1, -4.535476e-08, 0.99999994, -5.3290705e-15, -1.2369108e-07, 0.00872501, 0.20599794, 0.3251285)
+mesh = SubResource("ArrayMesh_20psq")
+surface_material_override/0 = SubResource("StandardMaterial3D_i42o3")
+
+[node name="Head" parent="LilMan/Head" unique_id=1875658439 instance=ExtResource("3_rcrfe")]
+
+[node name="Body" parent="LilMan" unique_id=1950106323 instance=ExtResource("3_i42o3")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LilMan" unique_id=1958552237]
+libraries/ = SubResource("AnimationLibrary_iiq8e")

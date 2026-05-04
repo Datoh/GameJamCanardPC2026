@@ -8,6 +8,8 @@ extends Panel
 
 signal dialogue_completed(dialogue_id: String)
 signal closed
+signal robot_started_talking
+signal robot_stopped_talking
 
 const CLOSE_ID := "close"
 
@@ -86,6 +88,7 @@ func open_direct(dialogue: Dictionary) -> void:
 
 func close() -> void:
   visible = false
+  robot_stopped_talking.emit()
   closed.emit()
 
 func is_open() -> bool:
@@ -143,6 +146,7 @@ func _show_npc_line() -> void:
   _text_label.visible   = true
   _continue_btn.text    = "Continuer"
   _continue_btn.visible = true
+  robot_started_talking.emit()
 
 func _show_player_line(text: String) -> void:
   _waiting_player_advance = true
@@ -152,6 +156,7 @@ func _show_player_line(text: String) -> void:
   _continue_btn.text    = "Continuer"
   _continue_btn.visible = true
   _choices_container.visible = false
+  robot_stopped_talking.emit()
 
 func _on_continue_pressed() -> void:
   if _waiting_player_advance:

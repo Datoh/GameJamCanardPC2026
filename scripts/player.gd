@@ -30,6 +30,7 @@ var _interaction_hint_label: Label
 var _machine_timer: Timer
 @onready var _crosshair: TextureRect = %Crosshair
 var _intro_done: bool = false
+var _dialogue_is_with_robot: bool = false
 
 var in_minigame: bool = false:
   set(value):
@@ -92,6 +93,8 @@ func _setup_ui() -> void:
   _dialogue_ui = DialogueUI.new()
   _dialogue_ui.dialogue_completed.connect(_on_dialogue_completed)
   _dialogue_ui.closed.connect(_on_dialogue_closed)
+  _dialogue_ui.robot_started_talking.connect(func(): if _robot: _robot.start_talking())
+  _dialogue_ui.robot_stopped_talking.connect(func(): if _robot: _robot.stop_talking())
   _canvas.add_child(_dialogue_ui)
 
 func show_message(text: String, duration: float = 3.0) -> void:
@@ -157,6 +160,7 @@ func _get_available_dialogues() -> Array:
 
 func _open_dialogue() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _dialogue_is_with_robot = true
   _dialogue_ui.open(_get_available_dialogues())
 
 func _on_dialogue_completed(dialogue_id: String) -> void:
@@ -175,6 +179,9 @@ func _apply_dialogue_side_effects(dialogue_id: String) -> void:
 
 func _on_dialogue_closed() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+  if _dialogue_is_with_robot and _robot:
+    _dialogue_is_with_robot = false
+    _robot.start_following()
 
 func _on_machine_timer_timeout() -> void:
   for key in state_machine.keys():
@@ -225,8 +232,6 @@ func _try_interact() -> void:
     return
 
   if collider.is_in_group("robot"):
-    if _robot and _robot.has_method("start_following"):
-      _robot.start_following()
     var working_on := ""
     for key in state_machine:
       if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
