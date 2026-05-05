@@ -139,14 +139,17 @@ func _on_choice_selected(dialogue: Dictionary) -> void:
 
 func _show_npc_line() -> void:
   var exchange: Dictionary = _current_dialogue["exchanges"][_current_exchange]
-  var speaker: String = _current_dialogue.get("speaker", "LN R3p14y")
+  var speaker: String = exchange.get("speaker", _current_dialogue.get("speaker", "LN R3p14y"))
   _choices_container.visible = false
   _set_speaker(speaker)
   _text_label.text      = "« %s »" % exchange["robot"]
   _text_label.visible   = true
   _continue_btn.text    = "Continuer"
   _continue_btn.visible = true
-  robot_started_talking.emit()
+  if speaker == "Ivan Gaudé":
+    robot_stopped_talking.emit()
+  else:
+    robot_started_talking.emit()
 
 func _show_player_line(text: String) -> void:
   _waiting_player_advance = true

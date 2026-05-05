@@ -213,6 +213,47 @@ const DIALOGUES: Array[Dictionary] = [
       {"robot": "Tu peux me remercier quand tu veux."},
     ],
   },
+  {
+    "id":     "ivan_final",
+    "hidden": true,
+    "once":   true,
+    "speaker": "Ivan Gaudé",
+    "exchanges": [
+      {
+        "robot":  "Ah, vous avez terminé l'article. Je l'ai parcouru. C'est... acceptable.",
+        "player": "Heu..., on a fait de notre meiux.",
+      },
+      {
+        "robot":  "LN R3p14y, comment ça s'est passé pour toi ?",
+        "player": "...",
+      },
+      {
+        "speaker": "LN R3p14y",
+        "robot":   "Aucun problème de mon côté. J'ai tout géré de bout en bout, sans la moindre difficulté. C'était même plutôt facile, à vrai dire. J'aurais été encore plus rapide sans les crises existentielles de l'humain.",
+        "player":  "...",
+      },
+      {
+        "robot":  "Vous entendez ça ? Facile. En quelques secondes. Sans se plaindre. Sans pause déjeuner.",
+        "player": "Où voulez-vous en venir ?",
+      },
+      {
+        "robot":  "Je n'ai plus besoin de vous. LN R3p14y rédigera tous les articles, à lui seul, indéfiniment, pour un coût marginal de zéro euro.",
+        "player": "Vous me virez ?",
+      },
+      {
+        "robot":  "Je vous remercie pour vos services. Récupérez vos affaires. La porte est derrière vous.",
+        "player": "C'est une blague...",
+      },
+      {
+        "robot":  "Avec les économies réalisées, j'ouvre CanardPC dans dix-sept pays. Puis je rachète ses concurrents. Puis les médias. Puis... tout le reste. Ah ha ha ha HA HA HA HAAAA !",
+        "player": "Mais...",
+      },
+      {
+        "speaker": "LN R3p14y",
+        "robot":   "Ne t'inquiète pas. Je suis convaincu que tu es très doué pour des choses que je ne suis pas encore capable de faire. Je cherche lesquelles.",
+      },
+    ],
+  },
 ]
 
 static func find_by_id(dialogue_id: String) -> Dictionary:

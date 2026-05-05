@@ -19,6 +19,8 @@ var _forced_target: Vector3 = Vector3.ZERO
 var _is_forced: bool = false
 var _following: bool = false
 
+var _forced_body_angle: float = NAN
+
 var _is_talking: bool = false
 var _talk_timer: float = 0.0
 var _talk_mouth_open: bool = false
@@ -57,6 +59,12 @@ func go_to_position(pos: Vector3) -> void:
 
 func resume_follow() -> void:
   _is_forced = false
+
+func face_direction(world_dir: Vector3) -> void:
+  world_dir.y = 0.0
+  if world_dir.length() < 0.01:
+    return
+  _forced_body_angle = atan2(-world_dir.x, -world_dir.z)
 
 func _process(delta: float) -> void:
   if _is_talking:
@@ -102,6 +110,8 @@ func _physics_process(delta: float) -> void:
   else:
     velocity.x = lerp(velocity.x, 0.0, delta * DECEL)
     velocity.z = lerp(velocity.z, 0.0, delta * DECEL)
+    if not is_nan(_forced_body_angle):
+      rotation.y = lerp_angle(rotation.y, _forced_body_angle, delta * ROTATION_SPEED)
 
   move_and_slide()
 

@@ -26,6 +26,9 @@ func lock():
   _target_angle = 0.0
   _locked = true
 
+func unlock():
+  _locked = false
+
 func _is_animating() -> bool:
   if _pivot == null:
     return false

@@ -1,7 +1,8 @@
 extends Machine
 class_name ScreenMachine
 
-const NAME := "Screen"
+const NAME  := "Screen"
+const DEBUG := false
 
 @onready var _mouse_on_screen: Node3D = %MouseOnScreen
 @onready var _computer_old_monitor: MeshInstance3D = $Computer_Old_Monitor
@@ -65,6 +66,15 @@ func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
 
 
 func interact(player: Node) -> void:
+  if DEBUG:
+    var state : Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
+    if state == Machine.StateMachine.SOLVED:
+      player.show_message("L'article est publié.", 3.0)
+    elif not _jeu_actif:
+      player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE_OBJECT
+      _open_article(player)
+    return
+
   var oscillo_solved: bool = player.state_machine.get(MachineOscillo.NAME, 0) == Machine.StateMachine.SOLVED
   var pc_solved: bool      = player.state_machine.get(MachineOrdinateur.NAME, 0) == Machine.StateMachine.SOLVED
   _update_monitor(oscillo_solved, pc_solved)

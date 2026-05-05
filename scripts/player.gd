@@ -218,6 +218,11 @@ func _open_ivan_dialogue() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   _dialogue_ui.open_direct(DialoguesData.find_by_id("ivan_intro"))
 
+func _open_ivan_final_dialogue() -> void:
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  _dialogue_is_with_robot = false
+  _dialogue_ui.open_direct(DialoguesData.find_by_id("ivan_final"))
+
 func _try_interact() -> void:
   _interaction_ray.force_raycast_update()
   if not _interaction_ray.is_colliding():
@@ -228,6 +233,12 @@ func _try_interact() -> void:
   if not _intro_done:
     if collider.is_in_group("ivan"):
       _open_ivan_dialogue()
+    return
+
+  if collider.is_in_group("ivan"):
+    if state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED \
+       and "ivan_final" not in _completed_dialogues:
+      _open_ivan_final_dialogue()
     return
 
   if collider.is_in_group("interactive"):
@@ -289,6 +300,10 @@ func _physics_process(delta: float) -> void:
     var collider := _interaction_ray.get_collider()
     if collider:
       if not _intro_done and collider.is_in_group("ivan"):
+        hint = "[ESPACE] Parler à Ivan"
+      elif _intro_done and collider.is_in_group("ivan") \
+           and state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED \
+           and "ivan_final" not in _completed_dialogues:
         hint = "[ESPACE] Parler à Ivan"
       elif _intro_done and collider.is_in_group("robot"):
         hint = "[ESPACE] Parler à LN R3p14y"
