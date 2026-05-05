@@ -103,6 +103,7 @@ func _setup_ui() -> void:
   _dialogue_ui = DialogueUI.new()
   _dialogue_ui.dialogue_completed.connect(_on_dialogue_completed)
   _dialogue_ui.closed.connect(_on_dialogue_closed)
+  _dialogue_ui.branch_chosen.connect(_on_branch_chosen)
   _dialogue_ui.robot_started_talking.connect(func(): if _robot: _robot.start_talking())
   _dialogue_ui.robot_stopped_talking.connect(func(): if _robot: _robot.stop_talking())
   _canvas.add_child(_dialogue_ui)
@@ -166,7 +167,7 @@ func _is_dialogue_available(d: Dictionary) -> bool:
 func _get_available_dialogues() -> Array:
   var result: Array = []
   var close_entry: Dictionary = {}
-  for d in DialoguesData.DIALOGUES:
+  for d in DialoguesData.get_dialogues():
     if d["id"] == "close":
       close_entry = d
       continue
@@ -202,6 +203,15 @@ func _on_dialogue_closed() -> void:
   if _dialogue_is_with_robot and _robot:
     _dialogue_is_with_robot = false
     _robot.start_following()
+
+func _on_branch_chosen(action: String) -> void:
+  match action:
+    "robot_ln":
+      DialoguesData.robot_name = "LN R3p14y"
+      if _robot: _robot.set_skin("LN R3p14y")
+    "robot_1f5":
+      DialoguesData.robot_name = "1F5"
+      if _robot: _robot.set_skin("1F5")
 
 func _on_machine_timer_timeout() -> void:
   for key in state_machine.keys():
@@ -272,7 +282,7 @@ func _try_interact() -> void:
       match working_on:
         "Maze": working_on = "labyrinthe"
         "Ordinateur": working_on = "câblage"
-      show_message("LN R3p14y est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
+      show_message("%s" % DialoguesData.robot_name + " est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
     else:
       _open_dialogue()
     return
@@ -323,7 +333,7 @@ func _physics_process(delta: float) -> void:
            and "ivan_final" not in _completed_dialogues:
         hint = "[ESPACE] Parler à Ivan"
       elif _intro_done and collider.is_in_group("robot"):
-        hint = "[ESPACE] Parler à LN R3p14y"
+        hint = "[ESPACE] Parler à %s" % DialoguesData.robot_name + ""
       elif _intro_done and collider.is_in_group("interactive"):
         hint = collider.get_interaction_hint(self)
   _interaction_hint_label.text = hint

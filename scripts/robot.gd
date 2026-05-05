@@ -8,9 +8,15 @@ const ROTATION_HEAD_SPEED := 5.0
 
 const EYE_RADIUS := 0.08
 
-const TEXTURE_DEFAULT := preload("res://assets/textures/robot/LNReplay.png")
-const TEXTURE_TALK    := preload("res://assets/textures/robot/LNReplay_talk.png")
-const TEXTURE_BLINK   := preload("res://assets/textures/robot/LNReplay_blink.png")
+const _SKIN_DEFAULT := "LN R3p14y"
+const _SKIN_PATHS: Dictionary = {
+  "LN R3p14y": "res://assets/textures/robot/LN R3p14y/",
+  "1F5":        "res://assets/textures/robot/1F5/",
+}
+
+var _tex_default: Texture2D
+var _tex_talk:    Texture2D
+var _tex_blink:   Texture2D
 const TALK_FRAME_RATE := 0.1
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -38,6 +44,7 @@ var _screen_mat: StandardMaterial3D
 func _ready() -> void:
   _screen_mat = _screen.get_surface_override_material(0).duplicate()
   _screen.set_surface_override_material(0, _screen_mat)
+  set_skin(_SKIN_DEFAULT)
   _reset_blink_cooldown()
   await get_tree().process_frame
   _player = get_tree().get_first_node_in_group("player")
@@ -48,7 +55,7 @@ func start_talking() -> void:
 func stop_talking() -> void:
   _is_talking = false
   _talk_mouth_open = false
-  _screen_mat.albedo_texture = TEXTURE_DEFAULT
+  _screen_mat.albedo_texture = _tex_talk
 
 func _reset_blink_cooldown() -> void:
   _blink_cooldown = randf_range(3.0, 8.0)
@@ -61,6 +68,14 @@ func start_working() -> void:
 
 func stop_working() -> void:
   _audio_stream_player_3d.stop()
+
+func set_skin(skin_id: String) -> void:
+  var base: String = _SKIN_PATHS.get(skin_id, _SKIN_PATHS[_SKIN_DEFAULT])
+  _tex_default = load(base + "normal.png")
+  _tex_talk    = load(base + "talk.png")
+  _tex_blink   = load(base + "blink.png")
+  if _screen_mat:
+    _screen_mat.albedo_texture = _tex_default
 
 func go_to_position(pos: Vector3) -> void:
   _forced_target = pos
@@ -93,17 +108,17 @@ func _process(delta: float) -> void:
     if _talk_timer <= 0.0:
       _talk_timer = TALK_FRAME_RATE
       _talk_mouth_open = not _talk_mouth_open
-      _screen_mat.albedo_texture = TEXTURE_TALK if _talk_mouth_open else TEXTURE_DEFAULT
+      _screen_mat.albedo_texture = _tex_talk if _talk_mouth_open else _tex_default
   else:
     if _blink_duration > 0.0:
       _blink_duration -= delta
       if _blink_duration <= 0.0:
-        _screen_mat.albedo_texture = TEXTURE_DEFAULT
+        _screen_mat.albedo_texture = _tex_default
         _reset_blink_cooldown()
     else:
       _blink_cooldown -= delta
       if _blink_cooldown <= 0.0:
-        _screen_mat.albedo_texture = TEXTURE_BLINK
+        _screen_mat.albedo_texture = _tex_blink
         _blink_duration = randf_range(0.1, 0.2)
 
 func _physics_process(delta: float) -> void:

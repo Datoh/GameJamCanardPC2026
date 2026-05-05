@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://c3rn0b0t4life"]
 
 [ext_resource type="Script" uid="uid://bnaddb1gf28y4" path="res://scripts/robot.gd" id="1_robot"]
-[ext_resource type="Texture2D" uid="uid://cb2x7b34vlbha" path="res://assets/textures/robot/LNReplay.png" id="2_ykvnc"]
+[ext_resource type="Texture2D" uid="uid://cb2x7b34vlbha" path="res://assets/textures/robot/LN R3p14y/normal.png" id="2_ykvnc"]
 [ext_resource type="PackedScene" uid="uid://dnj77okjiftp4" path="res://scenes/robot_body.scn" id="3_i42o3"]
 [ext_resource type="PackedScene" uid="uid://bu8781px3e3md" path="res://scenes/robot_head.scn" id="3_rcrfe"]
 [ext_resource type="AudioStream" uid="uid://b0p2y31xhrsge" path="res://assets/sound/freesound_community-robot-6282.mp3" id="5_xwnim"]

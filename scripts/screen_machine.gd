@@ -5,7 +5,7 @@ const NAME  := "Screen"
 const DEBUG := false
 
 @onready var _mouse_on_screen: Node3D = %MouseOnScreen
-@onready var _computer_old_monitor: MeshInstance3D = $Computer_Old_Monitor
+@onready var _computer_old_monitor: MeshInstance3D = %Computer_Old_Monitor
 @onready var _computer_screen_plane: MeshInstance3D = %ComputerScreenPlane
 
 @export var cam_distance:            float = 0.3
@@ -51,7 +51,7 @@ func _ready() -> void:
 func _update_monitor(oscillo_solved: bool, pc_solved: bool) -> void:
   if _jeu_actif:
     return
-  var mat = _black_mat if (not oscillo_solved and not pc_solved) else null
+  var mat = null if (not oscillo_solved or not pc_solved) else _black_mat
   _computer_old_monitor.set_surface_override_material(1, mat)
 
 
@@ -109,14 +109,14 @@ func interact(player: Node) -> void:
   var screen_state: Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
   match screen_state:
     Machine.StateMachine.IDLE:
-      player.show_message("L'écran fonctionne ! Je pourrais demander à LN R3p14y de rédiger le test.", 4.0)
+      player.show_message("L'écran fonctionne ! Je pourrais demander à %s" % DialoguesData.robot_name + " de rédiger le test.", 4.0)
       player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE
     Machine.StateMachine.TRY_MACHINE:
-      player.show_message("Je devrais parler à LN R3p14y.", 3.0)
+      player.show_message("Je devrais parler à %s" % DialoguesData.robot_name + ".", 3.0)
     Machine.StateMachine.ROBOT_WORKING:
-      player.show_message("LN R3p14y est en train de rédiger l'article...", 3.0)
+      player.show_message("%s" % DialoguesData.robot_name + " est en train de rédiger l'article...", 3.0)
     Machine.StateMachine.ROBOT_DONE:
-      player.show_message("LN R3p14y a l'air d'avoir terminé. Je devrais lui parler.", 3.0)
+      player.show_message("%s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler.", 3.0)
     Machine.StateMachine.TRY_MACHINE_OBJECT:
       _open_article(player)
     _:

@@ -9,7 +9,7 @@ const _BAD_ARTICLE_TPL := \
 "Les graphismes surpassent la réalité elle-même. La bande-son, composée par une IA de dernière génération, m'a ému aux larmes à sept reprises. La durée de vie avoisine les 400 heures de contenu principal — sans les DLC.\n\n" + \
 "J'ai rarement été aussi bouleversé devant un écran. Un chef-d'œuvre intergalactique.\n\n" + \
 "VERDICT : 10/10 — À acheter immédiatement, ainsi que le Season Pass, les figurines collector et le tapis de souris officiel.\n" + \
-"— LN R3p14y, Journaliste hors pair"
+"— %s, Journaliste hors pair"
 
 const _PLAYER_ARTICLE_TPL := \
 "Test — %s\n\n" + \
@@ -30,7 +30,7 @@ var PLAYER_ARTICLE: String
 
 func _ready() -> void:
   var game_name: String = ProjectSettings.get_setting("application/config/name", "")
-  BAD_ARTICLE    = _BAD_ARTICLE_TPL    % game_name
+  BAD_ARTICLE    = _BAD_ARTICLE_TPL % [game_name, DialoguesData.robot_name]
   PLAYER_ARTICLE = _PLAYER_ARTICLE_TPL % game_name
 
 

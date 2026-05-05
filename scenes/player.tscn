@@ -35,24 +35,19 @@ mouse_filter = 2
 
 [node name="QuitHintLabel" type="Label" parent="CanvasLayer/Control" unique_id=114253701]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1141.0
+offset_left = 11.0
 offset_top = -33.0
-offset_right = -791.0
+offset_right = 361.0
 offset_bottom = -7.0
-grow_horizontal = 0
 grow_vertical = 0
 text = "[ÉCHAP] Quitter"
 
 [node name="ObjectiveLabel" type="Label" parent="CanvasLayer/Control" unique_id=992341807]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

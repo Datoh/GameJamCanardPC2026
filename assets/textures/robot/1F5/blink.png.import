@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnw4835ux4732"
-path="res://.godot/imported/LNReplay_talk.png-546cf91eb6ddb3ba1c0e4ac68199fefa.ctex"
+uid="uid://hl3fpturqyd"
+path="res://.godot/imported/blink.png-cad331bdd1d13a5ec48e921c6ea999bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/robot/LNReplay_talk.png"
-dest_files=["res://.godot/imported/LNReplay_talk.png-546cf91eb6ddb3ba1c0e4ac68199fefa.ctex"]
+source_file="res://assets/textures/robot/1F5/blink.png"
+dest_files=["res://.godot/imported/blink.png-cad331bdd1d13a5ec48e921c6ea999bd.ctex"]
 
 [params]
 

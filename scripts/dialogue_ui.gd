@@ -10,6 +10,7 @@ signal dialogue_completed(dialogue_id: String)
 signal closed
 signal robot_started_talking
 signal robot_stopped_talking
+signal branch_chosen(action: String)
 
 const CLOSE_ID := "close"
 
@@ -134,22 +135,42 @@ func _on_choice_selected(dialogue: Dictionary) -> void:
   _waiting_player_advance = false
   _show_npc_line()
 
+func _on_branch_selected(action: String) -> void:
+  _clear_choices()
+  _choices_container.visible = false
+  branch_chosen.emit(action)
+  _current_exchange += 1
+  if _current_exchange < _current_dialogue["exchanges"].size():
+    _show_npc_line()
+  else:
+    _finish_current_dialogue()
+
 
 # ── Échanges ──────────────────────────────────────────────────────────────────
 
 func _show_npc_line() -> void:
   var exchange: Dictionary = _current_dialogue["exchanges"][_current_exchange]
-  var speaker: String = exchange.get("speaker", _current_dialogue.get("speaker", "LN R3p14y"))
+  var speaker: String = exchange.get("speaker", _current_dialogue.get("speaker", DialoguesData.robot_name))
   _choices_container.visible = false
   _set_speaker(speaker)
-  _text_label.text      = "« %s »" % exchange["robot"]
-  _text_label.visible   = true
-  _continue_btn.text    = "Continuer"
-  _continue_btn.visible = true
+  _text_label.text    = "« %s »" % exchange["robot"]
+  _text_label.visible = true
   if speaker == "Ivan Gaudé":
     robot_stopped_talking.emit()
   else:
     robot_started_talking.emit()
+  if exchange.has("branches"):
+    _continue_btn.visible = false
+    _clear_choices()
+    for branch in exchange["branches"]:
+      var btn := Button.new()
+      btn.text = branch["label"]
+      btn.pressed.connect(_on_branch_selected.bind(branch["action"]))
+      _choices_container.add_child(btn)
+    _choices_container.visible = true
+  else:
+    _continue_btn.text    = "Continuer"
+    _continue_btn.visible = true
 
 func _show_player_line(text: String) -> void:
   _waiting_player_advance = true

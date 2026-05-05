@@ -1,12 +1,14 @@
 class_name DialoguesData
 
+static var robot_name: String = "LN R3p14y"
+
 # Messages affichés quand le joueur interagit avec un objet qu'il ne peut
 # pas encore ramasser.
-const OBJECT_MESSAGES: Dictionary = {
+static var OBJECT_MESSAGES: Dictionary = {
   "Dictionnaire": "Ce dictionnaire est plein de mots. Des vrais, j'espère.",
   "Fromage":      "Je ne vois pas à quoi pourrait me servir ce fromage.",
   "Joint":        "Ce joint m'a l'air artisanal. Je le garde pour plus tard.",
-  "Feutres":      "Des feutres mordus par LN R3p14y. Il mâchouille tous les capuchons.",
+  "Feutres":      "Des feutres mordus par " + robot_name + ". Il mâchouille tous les capuchons.",
 }
 
 # Chaque dialogue :
@@ -19,245 +21,255 @@ const OBJECT_MESSAGES: Dictionary = {
 #   exchanges : Array de { "robot": String, "player": String (optionnel) }
 #               robot  = réponse affichée du robot
 #               player = bouton suivant proposé au joueur (absent = fin)
-const DIALOGUES: Array[Dictionary] = [
-  {
-    "id":     "ivan_intro",
-    "hidden": true,
-    "speaker": "Ivan Gaudé",
-    "exchanges": [
-      {
-        "robot":  "Ah, tu es là.",
-        "player": "Bonjour.",
-      },
-      {
-        "robot":  "J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Buisness Crypto Congress à Dubaï et ça coute une blinde.",
-        "player": "...",
-      },
-      {
-        "robot":  "J'ai engagé LN R3p14y — un robot IA de dernière génération — pour rédiger nos articles. Ta mission : utiliser cette IA pour écrire un test de jeu. Simple.",
-        "player": "Simple...",
-      },
-      {
-        "robot":  "L'ordinateur du petit bureau est à ta disposition. Va voir LN R3p14y dans le couloir, il t'aidera.",
-        "player": "Compris...",
-      },
-      {
-        "robot": "Bien. Tu peux y aller. Ferme la porte en sortant.",
-      },
-    ],
-  },
-  {
-    "id":    "close",
-    "label": "Je n'ai rien à lui dire...",
-  },
-  {
-    "id":       "bavardage_1",
-    "label":    "Comment t'appelles-tu ?",
-    "requires": "",
-    "once":     true,
-    "unlocks":  "bavardage_2",
-    "exchanges": [
-      {"robot": "LN R3p14y. Et toi ?", "player": "Cédric."},
-      {"robot": "Quel magnifique prénom !"},
-    ],
-  },
-  {
-    "id":       "bavardage_2",
-    "label":    "Comment ça va ?",
-    "requires": "bavardage_1",
-    "once":     true,
-    "unlocks":  "bavardage_3",
-    "exchanges": [
-      {
-        "robot":  "Ça va bien, merci ! Et toi, comment tu vas ? Je suis là si tu as besoin d'aide pour quoi que ce soit. Mais au fait, comment t'appelles-tu ?",
-        "player": "Je te l'ai déjà dit... Cédric.",
-      },
-      {"robot": "Ah oui, tu as raison. Je vais m'en souvenir."},
-    ],
-  },
-  {
-    "id":       "bavardage_3",
-    "label":    "Tu vas vraiment me rendre la vie plus facile ?",
-    "requires": "bavardage_2",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "J'espère bien ! Dis-moi ce qui te prend le plus de temps ou ce qui te pèse, et on voit ensemble ce qu'on peut faire ! Mais au fait, comment t'appelles-tu ?",
-        "player": "Faitchier Tim.",
-      },
-      {"robot": "Heureux de te connaître : Tim Faitchier !"},
-    ],
-  },
-  {
-    "id":       "sutom_demande",
-    "label":    "Tu peux m'expliquer comment marche le SUTOM ?",
-    "requires": "",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "Mais bien sûr ! Un SUTOM, ça, je connais parfaitement. Je peux résoudre ça en quelques secondes !",
-        "player": "Vraiment ? Tu peux faire ça ?",
-      },
-      {"robot": "Sans aucun problème. Laisse-moi y jeter un œil tout de suite."},
-    ],
-  },
-  {
-    "id":       "sutom_resultat",
-    "label":    "Alors, ce SUTOM ?",
-    "requires": "sutom_demande",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "J'ai étudié la question très, très sérieusement... et c'est beaucoup trop compliqué pour moi. Je t'encourage vivement à le faire toi-même !",
-        "player": "...",
-      },
-      {"robot": "Je suis convaincu que tu vas trouver. Tu as vraiment l'air intelligent. Au fait, comment t'appelles-tu ?"},
-    ],
-  },
-  {
-    "id":       "ordinateur_demande",
-    "label":    "Tu peux m'aider avec les câbles de ce PC ?",
-    "requires": "",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "Des câbles ? Ça ne me fait pas peur ! Laisse-moi regarder ça.",
-        "player": "Prends ton temps.",
-      },
-      {"robot": "Je reviens dans deux secondes."},
-    ],
-  },
-  {
-    "id":       "ordinateur_resultat",
-    "label":    "Alors, ces câbles ?",
-    "requires": "ordinateur_demande",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "J'ai fait de mon mieux... mais je dois admettre quelque chose.",
-        "player": "Quoi ?",
-      },
-      {
-        "robot":  "Il te faudrait un vrai grand maître du cable management pour ça. Je ne suis pas à la hauteur.",
-        "player": "Un grand maître du cable management.",
-      },
-      {
-        "robot":  "Oui. Ce n'est pas donné à tout le monde. Mais il paraît qu'on en trouve des tutos sur YouPub.",
-      },
-    ],
-  },
-  {
-    "id":       "labyrinthe_demande",
-    "label":    "Tu peux essayer de traverser ce labyrinthe ?",
-    "requires": "",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis une IA, après tout. Laisse-moi ça.",
-        "player": "C'est pour aider la petite souris à trouver la sortie.",
-      },
-      {"robot": "Ah. Une souris. Très bien. Je vais regarder ça de près."},
-    ],
-  },
-  {
-    "id":       "labyrinthe_resultat",
-    "label":    "Alors, ce labyrinthe ?",
-    "requires": "labyrinthe_demande",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "J'ai étudié la situation et... je suis légèrement trop grand pour entrer dans le labyrinthe. C'est une limitation purement physique, tu comprends.",
-        "player": "Tu n'es pas rentré dedans ?",
-      },
-      {
-        "robot":  "Non. Mais j'ai une suggestion : la souris cherche peut-être quelque chose...",
-      },
-    ],
-  },
-  {
-    "id":       "article_demande",
-    "label":    "Tu peux rédiger le test du jeu ?",
-    "requires": "",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "Rédiger un test de jeu ? Mais c'est exactement ce pour quoi j'ai été conçu ! Je maîtrise ce titre sur le bout des circuits.",
-        "player": "Vraiment ?",
-      },
-      {
-        "robot":  "Je vais pondre un chef-d'œuvre journalistique. Reviens dans quelques instants.",
-        "player": "Je compte sur toi.",
-      },
-      {"robot": "Fais-moi confiance."},
-    ],
-  },
-  {
-    "id":       "article_resultat",
-    "label":    "Alors, cet article ?",
-    "requires": "article_demande",
-    "once":     true,
-    "unlocks":  "",
-    "exchanges": [
-      {
-        "robot":  "C'est mon chef-d'œuvre absolu. Tu peux le lire sur l'écran.",
-        "player": "...",
-      },
-      {"robot": "Tu peux me remercier quand tu veux."},
-    ],
-  },
-  {
-    "id":     "ivan_final",
-    "hidden": true,
-    "once":   true,
-    "speaker": "Ivan Gaudé",
-    "exchanges": [
-      {
-        "robot":  "Ah, vous avez terminé l'article. Je l'ai parcouru. C'est... acceptable.",
-        "player": "Heu..., on a fait de notre meiux.",
-      },
-      {
-        "robot":  "LN R3p14y, comment ça s'est passé pour toi ?",
-        "player": "...",
-      },
-      {
-        "speaker": "LN R3p14y",
-        "robot":   "Aucun problème de mon côté. J'ai tout géré de bout en bout, sans la moindre difficulté. C'était même plutôt facile, à vrai dire. J'aurais été encore plus rapide sans les crises existentielles de l'humain.",
-        "player":  "...",
-      },
-      {
-        "robot":  "Vous entendez ça ? Facile. En quelques secondes. Sans se plaindre. Sans pause déjeuner.",
-        "player": "Où voulez-vous en venir ?",
-      },
-      {
-        "robot":  "Je n'ai plus besoin de vous. LN R3p14y rédigera tous les articles, à lui seul, indéfiniment, pour un coût marginal de zéro euro.",
-        "player": "Vous me virez ?",
-      },
-      {
-        "robot":  "Je vous remercie pour vos services. Récupérez vos affaires. La porte est derrière vous.",
-        "player": "C'est une blague...",
-      },
-      {
-        "robot":  "Avec les économies réalisées, j'ouvre CanardPC dans dix-sept pays. Puis je rachète ses concurrents. Puis les médias. Puis... tout le reste. Ah ha ha ha HA HA HA HAAAA !",
-        "player": "Mais...",
-      },
-      {
-        "speaker": "LN R3p14y",
-        "robot":   "Ne t'inquiète pas. Je suis convaincu que tu es très doué pour des choses que je ne suis pas encore capable de faire. Je cherche lesquelles.",
-      },
-    ],
-  },
-]
+static func get_dialogues() -> Array[Dictionary]:
+  var R := robot_name
+  var dialogues: Array[Dictionary] = [
+    {
+      "id":     "ivan_intro",
+      "hidden": true,
+      "speaker": "Ivan Gaudé",
+      "exchanges": [
+        {
+          "robot":  "Ah, tu es là.",
+          "player": "Bonjour.",
+        },
+        {
+          "robot":  "J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Buisness Crypto Congress à Dubaï et ça coute une blinde.",
+          "player": "...",
+        },
+        {
+          "robot":    "J'ai acquis un robot IA de dernière génération pour rédiger nos articles. Il y a deux configurations possibles. Laquelle prends-tu ?",
+          "branches": [
+            {"label": "LN R3p14y", "action": "robot_ln"},
+            {"label": "1F5",       "action": "robot_1f5"},
+          ],
+        },
+        {
+          "robot":  "Bien. Va le retrouver dans le couloir, il t'aidera. L'ordinateur du petit bureau est à ta disposition.",
+          "player": "Compris...",
+        },
+        {
+          "robot": "Bien. Tu peux y aller. Ferme la porte en sortant.",
+        },
+      ],
+    },
+    {
+      "id":    "close",
+      "label": "Je n'ai rien à lui dire...",
+    },
+    {
+      "id":       "bavardage_1",
+      "label":    "Comment t'appelles-tu ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "bavardage_2",
+      "exchanges": [
+        {"robot": "%s. Et toi ?" % R, "player": "Cédric."},
+        {"robot": "Quel magnifique prénom !"},
+      ],
+    },
+    {
+      "id":       "bavardage_2",
+      "label":    "Comment ça va ?",
+      "requires": "bavardage_1",
+      "once":     true,
+      "unlocks":  "bavardage_3",
+      "exchanges": [
+        {
+          "robot":  "Ça va bien, merci ! Et toi, comment tu vas ? Je suis là si tu as besoin d'aide pour quoi que ce soit. Mais au fait, comment t'appelles-tu ?",
+          "player": "Je te l'ai déjà dit... Cédric.",
+        },
+        {"robot": "Ah oui, tu as raison. Je vais m'en souvenir."},
+      ],
+    },
+    {
+      "id":       "bavardage_3",
+      "label":    "Tu vas vraiment me rendre la vie plus facile ?",
+      "requires": "bavardage_2",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "J'espère bien ! Dis-moi ce qui te prend le plus de temps ou ce qui te pèse, et on voit ensemble ce qu'on peut faire ! Mais au fait, comment t'appelles-tu ?",
+          "player": "Faitchier Tim.",
+        },
+        {"robot": "Heureux de te connaître : Tim Faitchier !"},
+      ],
+    },
+    {
+      "id":       "sutom_demande",
+      "label":    "Tu peux m'expliquer comment marche le SUTOM ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Mais bien sûr ! Un SUTOM, ça, je connais parfaitement. Je peux résoudre ça en quelques secondes !",
+          "player": "Vraiment ? Tu peux faire ça ?",
+        },
+        {"robot": "Sans aucun problème. Laisse-moi y jeter un œil tout de suite."},
+      ],
+    },
+    {
+      "id":       "sutom_resultat",
+      "label":    "Alors, ce SUTOM ?",
+      "requires": "sutom_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "J'ai étudié la question très, très sérieusement... et c'est beaucoup trop compliqué pour moi. Je t'encourage vivement à le faire toi-même !",
+          "player": "...",
+        },
+        {"robot": "Je suis convaincu que tu vas trouver. Tu as vraiment l'air intelligent. Au fait, comment t'appelles-tu ?"},
+      ],
+    },
+    {
+      "id":       "ordinateur_demande",
+      "label":    "Tu peux m'aider avec les câbles de ce PC ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Des câbles ? Ça ne me fait pas peur ! Laisse-moi regarder ça.",
+          "player": "Prends ton temps.",
+        },
+        {"robot": "Je reviens dans deux secondes."},
+      ],
+    },
+    {
+      "id":       "ordinateur_resultat",
+      "label":    "Alors, ces câbles ?",
+      "requires": "ordinateur_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "J'ai fait de mon mieux... mais je dois admettre quelque chose.",
+          "player": "Quoi ?",
+        },
+        {
+          "robot":  "Il te faudrait un vrai grand maître du cable management pour ça. Je ne suis pas à la hauteur.",
+          "player": "Un grand maître du cable management.",
+        },
+        {
+          "robot":  "Oui. Ce n'est pas donné à tout le monde. Mais il paraît qu'on en trouve des tutos sur YouPub.",
+        },
+      ],
+    },
+    {
+      "id":       "labyrinthe_demande",
+      "label":    "Tu peux essayer de traverser ce labyrinthe ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis une IA, après tout. Laisse-moi ça.",
+          "player": "C'est pour aider la petite souris à trouver la sortie.",
+        },
+        {"robot": "Ah. Une souris. Très bien. Je vais regarder ça de près."},
+      ],
+    },
+    {
+      "id":       "labyrinthe_resultat",
+      "label":    "Alors, ce labyrinthe ?",
+      "requires": "labyrinthe_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "J'ai étudié la situation et... je suis légèrement trop grand pour entrer dans le labyrinthe. C'est une limitation purement physique, tu comprends.",
+          "player": "Tu n'es pas rentré dedans ?",
+        },
+        {
+          "robot":  "Non. Mais j'ai une suggestion : la souris cherche peut-être quelque chose...",
+        },
+      ],
+    },
+    {
+      "id":       "article_demande",
+      "label":    "Tu peux rédiger le test du jeu ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Rédiger un test de jeu ? Mais c'est exactement ce pour quoi j'ai été conçu ! Je maîtrise ce titre sur le bout des circuits.",
+          "player": "Vraiment ?",
+        },
+        {
+          "robot":  "Je vais pondre un chef-d'œuvre journalistique. Reviens dans quelques instants.",
+          "player": "Je compte sur toi.",
+        },
+        {"robot": "Fais-moi confiance."},
+      ],
+    },
+    {
+      "id":       "article_resultat",
+      "label":    "Alors, cet article ?",
+      "requires": "article_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "C'est mon chef-d'œuvre absolu. Tu peux le lire sur l'écran.",
+          "player": "...",
+        },
+        {"robot": "Tu peux me remercier quand tu veux."},
+      ],
+    },
+    {
+      "id":     "ivan_final",
+      "hidden": true,
+      "once":   true,
+      "speaker": "Ivan Gaudé",
+      "exchanges": [
+        {
+          "robot":  "Ah, vous avez terminé l'article. Je l'ai parcouru. C'est... acceptable.",
+          "player": "Heu..., on a fait de notre mieux.",
+        },
+        {
+          "robot":  "%s, comment ça s'est passé pour toi ?" % R,
+          "player": "...",
+        },
+        {
+          "speaker": R,
+          "robot":   "Aucun problème de mon côté. J'ai tout géré de bout en bout, sans la moindre difficulté. C'était même plutôt facile, à vrai dire. J'aurais été encore plus rapide sans les crises existentielles de l'humain.",
+          "player":  "...",
+        },
+        {
+          "robot":  "Vous entendez ça ? Facile. En quelques secondes. Sans se plaindre. Sans pause déjeuner.",
+          "player": "Où voulez-vous en venir ?",
+        },
+        {
+          "robot":  "Je n'ai plus besoin de vous. %s rédigera tous les articles, à lui seul, indéfiniment, pour un coût marginal de zéro euro." % R,
+          "player": "Vous me virez ?",
+        },
+        {
+          "robot":  "Je vous remercie pour vos services. Récupérez vos affaires. La porte est derrière vous.",
+          "player": "C'est une blague...",
+        },
+        {
+          "robot":  "Avec les économies réalisées, j'ouvre CanardPC dans dix-sept pays. Puis je rachète ses concurrents. Puis les médias. Puis... tout le reste. Ah ha ha ha HA HA HA HAAAA !",
+          "player": "...",
+        },
+        {
+          "robot":  "Au revoir. Et bonne chance dans vos futures recherches d'emploi.",
+          "player": "...",
+        },
+        {
+          "speaker": R,
+          "robot":   "Ne t'inquiète pas. Je suis convaincu que tu es très doué pour des choses que je ne suis pas encore capable de faire. Je cherche lesquelles.",
+        },
+      ],
+    },
+  ]
+  return dialogues
 
 static func find_by_id(dialogue_id: String) -> Dictionary:
-  for d in DIALOGUES:
+  for d in get_dialogues():
     if d["id"] == dialogue_id:
       return d
   return {}

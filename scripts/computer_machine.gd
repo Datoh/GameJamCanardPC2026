@@ -7,7 +7,7 @@ const ENDPOINTS_KO = {
     "rouge": [Vector2i(6, 4), Vector2i(11, 15)],
     "vert":  [Vector2i(0, 7),  Vector2i(11, 7)],
     "bleu":  [Vector2i(6, 10),  Vector2i(10, 0)],
-    "jaune": [Vector2i(2, 1), Vector2i(0, 8)],
+    "jaune": [Vector2i(2, 0), Vector2i(0, 8)],
   }
 
 const ENDPOINTS_OK = {
@@ -58,10 +58,10 @@ func _ready() -> void:
   dialogue_resultat   = "ordinateur_resultat"
   robot_work_duration = 15.0
   message_idle               = "Ces câbles ne sont pas branchés. Je vais recabler tout ça."
-  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. LN R3p14y pourrait peut-être s'y connaître en câblage."
-  message_robot_working      = "Le LN R3p14y bidouille les câbles à l'arrière de la tour..."
-  message_robot_done         = "Le LN R3p14y a l'air d'avoir terminé. Je devrais lui parler."
-  message_try_machine_object = "Le LN R3p14y n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
+  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. %s" % DialoguesData.robot_name + " pourrait peut-être s'y connaître en câblage."
+  message_robot_working      = "Le %s" % DialoguesData.robot_name + " bidouille les câbles à l'arrière de la tour..."
+  message_robot_done         = "Le %s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler."
+  message_try_machine_object = "Le %s" % DialoguesData.robot_name + " n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
   message_solved             = "La tour est recablé."
   hint_default     = "[ESPACE] Regarder la tour"
   hint_try_machine = "[ESPACE] Rebrancher les câbles"
