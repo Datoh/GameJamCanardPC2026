@@ -7,9 +7,9 @@ const WORD_LENGTH  := 6
 const MAX_ATTEMPTS := 6
 
 const COLOR_PAPER     := Color(0.97, 0.95, 0.91)
-const COLOR_CORRECT   := Color(0.11, 0.44, 0.89)
+const COLOR_CORRECT   := Color(0.73, 0.15, 0.15)
 const COLOR_PRESENT   := Color(0.93, 0.77, 0.08)
-const COLOR_ABSENT    := Color(0.26, 0.26, 0.28)
+const COLOR_ABSENT    := Color(0.11, 0.44, 0.89)
 const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
 
@@ -52,11 +52,11 @@ func _ready() -> void:
   object_required = "Dictionnaire"
   message_not_enable = "Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard..."
   message_idle = "Le mot de passe est là..."
-  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide au robot."
-  message_robot_working = "Le robot est en train de faire le SUTOM... je vais le laisser faire..."
-  message_robot_done = "Je devrais parler au robot, il a l'air d'avoir terminé."
-  message_try_machine_object = "Sans mon dictionnaire, je ne peux pas trouver ce mot."
-  message_try_machine_ok = "Il faut que je trouve un moyen d'apprendre plus de mots."
+  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide à LN R3p14y."
+  message_robot_working = "LN R3p14y est en train de faire le SUTOM... je vais le laisser faire..."
+  message_robot_done = "Je devrais parler à LN R3p14y, il a l'air d'avoir terminé."
+  message_try_machine_object = "Il faut que je trouve un moyen d'apprendre plus de mots."
+  message_try_machine_ok = "Avec le dictionnaire, je vais connaître les mots."
   message_waiting_unlocked = "J'ai le mot de passe."
   message_solved = "Vous avez déjà résolu le SUTOM, ce n'est plus la peine !"
   hint_default = "[ESPACE] Jouer au SUTOM"
@@ -69,9 +69,11 @@ func _can_try(player: Node) -> bool:
   var pc_solved: bool = player.state_machine[MachineOrdinateur.NAME] == Machine.StateMachine.SOLVED
   return oscillo_solved and pc_solved
 
+
 func _on_try_machine(player: Node, has_object: bool) -> void:
-  _player_ref = player
-  player.in_minigame = true
+  _player_ref          = player
+  player.in_minigame   = true
+  player.minigame_name = NAME
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   _begin_game(player.camera, has_object)
   if not game_finished.is_connected(_on_game_finished):
@@ -215,12 +217,13 @@ func _build_grid_ui() -> void:
   _vp.add_child(_result_label)
 
   var instr := Label.new()
-  instr.text = "Entrée : valider  •  ⌫ : effacer  •  Échap : quitter"
-  instr.position = Vector2(0, VH - 26)
-  instr.size = Vector2(VW, 20)
-  instr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+  instr.text = "Les lettres entourées d'un carré rouge sont bien placées.\nLes lettres entourées d'un cercle jaune sont mal placées\n(mais présentes dans le mot).\nLes lettres qui restent sur fond bleu ne sont pas dans le mot."
+  instr.position = Vector2(16, VH - 114)
+  instr.size = Vector2(VW - 32, 108)
+  instr.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+  instr.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
   instr.add_theme_color_override("font_color", Color(0.50, 0.47, 0.43))
-  instr.add_theme_font_size_override("font_size", 10)
+  instr.add_theme_font_size_override("font_size", 14)
   _vp.add_child(instr)
 
 # ── Interface publique (dispatcher player) ───────────────────────────────────
@@ -229,7 +232,8 @@ func _on_game_finished(won: bool) -> void:
   if _player_ref == null:
     return
   _on_try_machine_done(_player_ref, won)
-  _player_ref.in_minigame = false
+  _player_ref.in_minigame   = false
+  _player_ref.minigame_name = ""
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
   if won:
     _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED

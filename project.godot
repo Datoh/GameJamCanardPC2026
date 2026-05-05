@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GameJamCanardPC2026"
+config/name="CanardPC: l'IA ne répond plus"
 run/main_scene="uid://cxf7esusf2ejo"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"

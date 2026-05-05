@@ -9,9 +9,9 @@ func _ready() -> void:
   dialogue_demande = "labyrinthe_demande"
   dialogue_resultat = "labyrinthe_resultat"
   robot_work_duration = 15.0
-  message_try_machine = "La souris ne trouve pas la sortie... je vais demander de l'aide au robot."
-  message_robot_working = "Le robot est en train d'étudier le labyrinthe..."
-  message_robot_done = "Je devrais parler au robot, il a l'air d'avoir terminé."
+  message_try_machine = "La souris ne trouve pas la sortie... je vais demander de l'aide à LN R3p14y."
+  message_robot_working = "LN R3p14y est en train d'étudier le labyrinthe..."
+  message_robot_done = "Je devrais parler à LN R3p14y, il a l'air d'avoir terminé."
   message_try_machine_object = "Il me faudrait quelque chose pour attirer la souris..."
   message_try_machine_ok = "Allez viens ma belle."
   message_waiting_unlocked = "Elle arrive..."

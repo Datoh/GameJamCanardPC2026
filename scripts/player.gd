@@ -28,7 +28,11 @@ var _interaction_hint_label: Label
 @export var _robot: Node3D = null
 
 var _machine_timer: Timer
-@onready var _crosshair: TextureRect = %Crosshair
+@onready var _crosshair:        TextureRect = %Crosshair
+@onready var _objective_label:  Label       = %ObjectiveLabel
+@onready var _quit_hint_label:  Label       = %QuitHintLabel
+
+var minigame_name: String = ""
 var _intro_done: bool = false
 var _dialogue_is_with_robot: bool = false
 
@@ -240,10 +244,22 @@ func _try_interact() -> void:
       match working_on:
         "Maze": working_on = "labyrinthe"
         "Ordinateur": working_on = "câblage"
-      show_message("Le robot est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
+      show_message("LN R3p14y est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
     else:
       _open_dialogue()
     return
+
+# ── Objectif ─────────────────────────────────────────────────────────────────
+
+func _update_objective() -> void:
+  if not _intro_done:
+    _objective_label.visible = false
+    return
+  _objective_label.visible = true
+  if state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED:
+    _objective_label.text = "Objectif : parler à Ivan"
+  else:
+    _objective_label.text = "Objectif : écrire un article avec le PC du petit bureau"
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
 
@@ -265,6 +281,8 @@ func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
 
 func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
+  _update_objective()
+  _quit_hint_label.visible = not minigame_name.is_empty()
 
   var hint := ""
   if not in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():

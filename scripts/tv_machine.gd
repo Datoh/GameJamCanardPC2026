@@ -29,7 +29,7 @@ var _cell_rect_validate: Control = null
 func _ready() -> void:
   machine_name = NAME
   message_not_enable = "Vous essayez d'arrêter YouPub."
-  message_idle = "Vous essayez d'arrêter YouPub."
+  message_idle = "Essayons de trouver une vidéo sur le câblage."
   message_try_machine = "Un CAPTCHA ? Il faut prouver que je ne suis pas un robot."
   message_waiting_unlocked = "Le câblage n'a plud de secrets pour moi."
   hint_default = "[ESPACE] Regarder YouPub"
@@ -122,7 +122,8 @@ func _on_try_machine(player: Node, _has_object: bool) -> void:
   _cell_selected = []
   _cell_selected.resize(6)
   _cell_selected.fill(false)
-  player.in_minigame = true
+  player.in_minigame   = true
+  player.minigame_name = NAME
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   _update_selection_display()
   if not captcha_done.is_connected(_on_captcha_result):
@@ -132,7 +133,8 @@ func _on_try_machine(player: Node, _has_object: bool) -> void:
 func _on_captcha_result(success: bool) -> void:
   if _player_ref == null:
     return
-  _player_ref.in_minigame = false
+  _player_ref.in_minigame   = false
+  _player_ref.minigame_name = ""
   if success:
     _player_ref.show_message(message_waiting_unlocked, 3.0)
     _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED

@@ -34,7 +34,7 @@ const DIALOGUES: Array[Dictionary] = [
         "player": "...",
       },
       {
-        "robot":  "J'ai engagé LN R3p14y — un robot IA de dernière génération — pour rédiger nos articles. Ta mission : utiliser ce robot pour écrire un test de jeu. Simple.",
+        "robot":  "J'ai engagé LN R3p14y — un robot IA de dernière génération — pour rédiger nos articles. Ta mission : utiliser cette IA pour écrire un test de jeu. Simple.",
         "player": "Simple...",
       },
       {
@@ -159,7 +159,7 @@ const DIALOGUES: Array[Dictionary] = [
     "unlocks":  "",
     "exchanges": [
       {
-        "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis un robot, après tout. Laisse-moi ça.",
+        "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis une IA, après tout. Laisse-moi ça.",
         "player": "C'est pour aider la petite souris à trouver la sortie.",
       },
       {"robot": "Ah. Une souris. Très bien. Je vais regarder ça de près."},
@@ -179,6 +179,38 @@ const DIALOGUES: Array[Dictionary] = [
       {
         "robot":  "Non. Mais j'ai une suggestion : la souris cherche peut-être quelque chose...",
       },
+    ],
+  },
+  {
+    "id":       "article_demande",
+    "label":    "Tu peux rédiger le test du jeu ?",
+    "requires": "",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "Rédiger un test de jeu ? Mais c'est exactement ce pour quoi j'ai été conçu ! Je maîtrise ce titre sur le bout des circuits.",
+        "player": "Vraiment ?",
+      },
+      {
+        "robot":  "Je vais pondre un chef-d'œuvre journalistique. Reviens dans quelques instants.",
+        "player": "Je compte sur toi.",
+      },
+      {"robot": "Fais-moi confiance."},
+    ],
+  },
+  {
+    "id":       "article_resultat",
+    "label":    "Alors, cet article ?",
+    "requires": "article_demande",
+    "once":     true,
+    "unlocks":  "",
+    "exchanges": [
+      {
+        "robot":  "C'est mon chef-d'œuvre absolu. Tu peux le lire sur l'écran.",
+        "player": "...",
+      },
+      {"robot": "Tu peux me remercier quand tu veux."},
     ],
   },
 ]

@@ -85,8 +85,7 @@
 [ext_resource type="PackedScene" uid="uid://dc87rjqe2j3i1" path="res://assets/models/Clock_A.gltf" id="59_k8um8"]
 [ext_resource type="PackedScene" uid="uid://dqnwragc3pn26" path="res://assets/models/Office_Files_D_Custom.gltf" id="63_62huj"]
 [ext_resource type="PackedScene" uid="uid://cqwg44jn51svd" path="res://assets/models/Office_Files_F.gltf" id="64_1hmql"]
-[ext_resource type="Script" uid="uid://3nlk5qnjvg0t" path="res://scripts/oscillo_machine.gd" id="66_k8um8"]
-[ext_resource type="Script" uid="uid://bmhga5qd6e5bx" path="res://scripts/oscillo_machine2.gd" id="67_h2hbp"]
+[ext_resource type="Script" uid="uid://bmhga5qd6e5bx" path="res://scripts/oscillo_machine.gd" id="67_h2hbp"]
 [ext_resource type="PackedScene" uid="uid://buywmaa0n2dw4" path="res://assets/models/oscillo.glb" id="67_hrf0e"]
 [ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="71_hq7ge"]
 [ext_resource type="Script" uid="uid://cmncp3d8plrux" path="res://scripts/screen_machine.gd" id="71_hrf0e"]
@@ -497,18 +496,14 @@ size = Vector3(0.059345722, 0.24716002, 0.20354415)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4b0oi"]
 size = Vector3(0.2337246, 0.010942042, 0.3501029)
 
-[sub_resource type="BoxMesh" id="BoxMesh_hrf0e"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_u7sa2"]
-size = Vector2(1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j7vub"]
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_be1o8"]
 size = Vector2(3.1, 3.1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_h2hbp"]
-size = Vector2(0.2, 0.8)
+size = Vector2(0.8, 0.3)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j7vub"]
+size = Vector2(6, 4.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3bo3x"]
 size = Vector3(661.5139, 367.43552, 125.78478)
@@ -585,6 +580,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2a6ql")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hrf0e"]
+size = Vector2(0.3, 0.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_65uj5"]
 size = Vector3(1.478693, 0.95092213, 0.75)
@@ -1364,82 +1362,56 @@ transform = Transform3D(0.0058816453, 0, -0.9999827, 0, 1, 0, 0.9999827, 0, 0.00
 [node name="Office_Files_F5" parent="NavigationRegion3D/Reserve/Shelf_Base2" unique_id=556814945 instance=ExtResource("64_1hmql")]
 transform = Transform3D(-0.014887065, 0, 0.9998892, 0, 1, 0, -0.9998892, 0, -0.014887065, -0.17141342, -0.5201547, 0.20825744)
 
-[node name="OscilloMachine" type="StaticBody3D" parent="NavigationRegion3D/Reserve" unique_id=98238578 groups=["interactive", "machine"]]
-collision_layer = 3
-script = ExtResource("66_k8um8")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine" unique_id=1814344107]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 1.7658355, 4.0000005)
-mesh = SubResource("BoxMesh_hrf0e")
-
-[node name="OscilloScreen" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/MeshInstance3D" unique_id=1803526931]
-unique_name_in_owner = true
-transform = Transform3D(1, 1.489429e-09, 1.13133405e-08, 1.1313342e-08, 0, -1.0000001, -1.489429e-09, 1.0000001, -4.945218e-16, 0, 0, 0.50099945)
-mesh = SubResource("PlaneMesh_u7sa2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Reserve/OscilloMachine" unique_id=1070896772]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 2, 4.0000005)
-shape = SubResource("BoxShape3D_j7vub")
-
-[node name="OscilloMachine2" type="StaticBody3D" parent="NavigationRegion3D/Reserve" unique_id=858642333 groups=["interactive", "machine"]]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 4.6170387, 1.3485833, 5.0600433)
-visible = false
+[node name="OscilloMachine" type="StaticBody3D" parent="NavigationRegion3D/Reserve" unique_id=858642333 groups=["interactive", "machine"]]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 4.6170387, 1.3485833, 4.974287)
 collision_layer = 3
 script = ExtResource("67_h2hbp")
 
-[node name="oscillo" parent="NavigationRegion3D/Reserve/OscilloMachine2" unique_id=1775691364 instance=ExtResource("67_hrf0e")]
+[node name="oscillo" parent="NavigationRegion3D/Reserve/OscilloMachine" unique_id=1775691364 instance=ExtResource("67_hrf0e")]
 
-[node name="Courbes" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=1963805334]
+[node name="Courbes" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=1963805334]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.6183167, 6.2602615, -0.9463692)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.6183167, 6.2602615, -0.9463692)
 mesh = SubResource("PlaneMesh_be1o8")
 
-[node name="CourbeA1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=468500966]
+[node name="CourbeA1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=468500966]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 2.08881, -1.9295273)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 3.2232342, -2.5941238)
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeF1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=1387480130]
+[node name="CourbeF1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=1387480130]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.7536201, -1.9295273)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 2.8880444, -2.5941238)
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeP1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=350649172]
+[node name="CourbeP1" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=350649172]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.3863859, -1.9295273)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 2.5208092, -2.5941238)
+visible = false
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeA2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=532672864]
+[node name="CourbeA2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=532672864]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 2.08881, -0.02168274)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 3.2232342, -0.72429657)
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeF2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=1471159534]
+[node name="CourbeF2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=1471159534]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.7536201, -0.02168274)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 2.8880444, -0.72429657)
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeP2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=1314261513]
+[node name="CourbeP2" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=1314261513]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.3863859, -0.02168274)
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106857e-15, -1, 1, -4.371139e-08, -4.371139e-08, -7.675598, 2.5208092, -0.72429657)
+visible = false
 mesh = SubResource("PlaneMesh_h2hbp")
 
-[node name="CourbeA3" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=816967615]
+[node name="BoxOscillo" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine/oscillo" unique_id=1951403737]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 2.08881, 1.8934441)
-mesh = SubResource("PlaneMesh_h2hbp")
+transform = Transform3D(1.8626451e-08, -0.9999999, 0, 0.9999999, 1.8626451e-08, 0, 0, 0, 1, -7.3206177, 5.253525, -0.93933487)
+mesh = SubResource("PlaneMesh_j7vub")
 
-[node name="CourbeF3" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=2068117873]
-unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.7536201, 1.8934441)
-mesh = SubResource("PlaneMesh_h2hbp")
-
-[node name="CourbeP3" type="MeshInstance3D" parent="NavigationRegion3D/Reserve/OscilloMachine2/oscillo" unique_id=2114831973]
-unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -7.675598, 1.3863859, 1.8934441)
-mesh = SubResource("PlaneMesh_h2hbp")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Reserve/OscilloMachine2" unique_id=1479977383]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Reserve/OscilloMachine" unique_id=1479977383]
 transform = Transform3D(0.0254, 0, 0, 0, 0.0254, 0, 0, 0, 0.047133856, 0.79971313, 4.273407, -0.3669281)
 shape = SubResource("BoxShape3D_3bo3x")
 
@@ -1469,13 +1441,20 @@ hint_default = "[ESPACE] Utiliser le PC"
 shape = SubResource("BoxShape3D_hqkhg")
 
 [node name="Computer_Old_Monitor" type="MeshInstance3D" parent="NavigationRegion3D/Bureau/Desk/Office_Desk_22/ScreenMachine" unique_id=677207781]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1996464, 0)
+transform = Transform3D(1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1, 0, -1.1996464, 0)
 mesh = SubResource("ArrayMesh_rkhre")
+
+[node name="ComputerScreenPlane" type="MeshInstance3D" parent="NavigationRegion3D/Bureau/Desk/Office_Desk_22/ScreenMachine/Computer_Old_Monitor" unique_id=1099815494]
+unique_name_in_owner = true
+transform = Transform3D(0.99977916, 0.015492085, -0.0142041305, -0.0154920835, 0.08646021, -0.9961349, -0.014204121, 0.9961351, 0.08668112, -0.0149354935, 1.222265, 0.12484932)
+mesh = SubResource("PlaneMesh_hrf0e")
 
 [node name="MouseOnScreen" parent="NavigationRegion3D/Bureau/Desk/Office_Desk_22/ScreenMachine" unique_id=2046419090 instance=ExtResource("23_65uj5")]
 unique_name_in_owner = true
 transform = Transform3D(-0.019016486, 0, 0.006194616, 0, 0.02, 0, -0.006194616, 0, -0.019016486, 0.4465475, -0.25005293, 0.6867876)
 visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Bureau/Desk/Office_Desk_22/ScreenMachine" unique_id=1264443214]
 
 [node name="Computer_Old_Keyboard2" parent="NavigationRegion3D/Bureau/Desk/Office_Desk_22" unique_id=1246415048 instance=ExtResource("50_2v03r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10965109, 0, 0.23297119)

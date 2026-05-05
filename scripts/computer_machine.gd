@@ -58,10 +58,10 @@ func _ready() -> void:
   dialogue_resultat   = "ordinateur_resultat"
   robot_work_duration = 15.0
   message_idle               = "Ces câbles ne sont pas branchés. Je vais recabler tout ça."
-  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. Le robot pourrait peut-être s'y connaître en câblage."
-  message_robot_working      = "Le robot bidouille les câbles à l'arrière de la tour..."
-  message_robot_done         = "Le robot a l'air d'avoir terminé. Je devrais lui parler."
-  message_try_machine_object = "Le robot n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
+  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. LN R3p14y pourrait peut-être s'y connaître en câblage."
+  message_robot_working      = "Le LN R3p14y bidouille les câbles à l'arrière de la tour..."
+  message_robot_done         = "Le LN R3p14y a l'air d'avoir terminé. Je devrais lui parler."
+  message_try_machine_object = "Le LN R3p14y n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
   message_solved             = "La tour est recablé."
   hint_default     = "[ESPACE] Regarder la tour"
   hint_try_machine = "[ESPACE] Rebrancher les câbles"
@@ -175,7 +175,8 @@ func _on_return_done() -> void:
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
   if _player_ref != null:
-    _player_ref.in_minigame = false
+    _player_ref.in_minigame   = false
+    _player_ref.minigame_name = ""
     _on_try_machine_done(_player_ref, _close_won)
   _close_won = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -438,7 +439,8 @@ func _on_victoire() -> void:
 
 func _demarrer_jeu(player: Node) -> void:
   _player_ref = player
-  player.in_minigame = true
+  player.in_minigame   = true
+  player.minigame_name = NAME
   _reinitialiser(player)
   _transition_to_pc(player.camera)
 
