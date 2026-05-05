@@ -37,6 +37,11 @@ var _screen_mat: StandardMaterial3D
 
 var _dlss5 := false
 
+var _coffee_mode := false
+var _coffee_pos  := Vector3.ZERO
+var _coffee_dir  := Vector3.ZERO
+var _on_task     := false
+
 @onready var _audio_stream_player_3d: AudioStreamPlayer3D = %AudioStreamPlayer3D
 
 @onready var _navigation_agent_3d: NavigationAgent3D = %NavigationAgent3D
@@ -62,7 +67,31 @@ func stop_talking() -> void:
 func _reset_blink_cooldown() -> void:
   _blink_cooldown = randf_range(3.0, 8.0)
 
+func stop_coffee_mode() -> void:
+  _coffee_mode = false
+  _following   = true
+  _is_forced = false
+  _forced_body_angle = NAN
+
+func is_dialogue_locked(dialogue_id: String) -> bool:
+  if dialogue_id == "robot_cafetiere":
+    return not _coffee_mode
+  return false
+
+func set_coffee_mode(pos: Vector3, dir: Vector3) -> void:
+  _coffee_mode = true
+  _coffee_pos  = pos
+  _coffee_dir  = dir
+  _following   = false
+  go_to_position(pos)
+  face_direction(dir)
+
 func start_following() -> void:
+  if _coffee_mode:
+    if not _on_task:
+      go_to_position(_coffee_pos)
+      face_direction(_coffee_dir)
+    return
   _following = true
 
 func start_working() -> void:
@@ -88,8 +117,17 @@ func go_to_position(pos: Vector3) -> void:
   _forced_target = pos
   _is_forced = true
 
+func go_to_task(pos: Vector3) -> void:
+  _on_task = true
+  go_to_position(pos)
+
 func resume_follow() -> void:
+  _on_task = false
   _is_forced = false
+  if _coffee_mode:
+    go_to_position(_coffee_pos)
+    face_direction(_coffee_dir)
+    return
 
 func face_direction(world_dir: Vector3) -> void:
   world_dir.y = 0.0

@@ -11,10 +11,11 @@ const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
 @onready var _position_robot_end: RayCast3D = %PositionRobotEnd
 @onready var _cheese_in_maze: Node3D = %CheeseInMaze
 @onready var _camera_3d_end: Camera3D = %Camera3DEnd
+@onready var _position_robot_cofee: RayCast3D = %PositionRobotCofee
 
 @onready var _machines := {
-  #MachineSutom.machine_name: %SutomMachine,
-  MachineMaze.NAME: %MazeMachine,
+  MachineSutom.NAME: %SutomMachine,
+  MachineMaze.NAME:  %MazeMachine,
   #MachineTV.machine_name: %TVMachine,
 }
 
@@ -50,6 +51,7 @@ func _ready() -> void:
   for machine in _machines.values():
     machine.machine_try_ok.connect(_on_machine_try_ok)
     machine.machine_done.connect(_on_machine_done)
+  %MazeMachine.robot_go_coffee.connect(_on_robot_go_coffee)
 
 func _on_title_started() -> void:
   _player.visible = true
@@ -89,6 +91,8 @@ func _on_machine_done(machine: Node):
         _player.show_message("Vous ramassez : souris.", 2.0)
         _mouse.visible = false
         _mouse.set_physics_process(false)
+    MachineSutom.NAME:
+      _robot.stop_coffee_mode()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -111,6 +115,11 @@ func _on_area_close_door_body_entered(_body: Node3D) -> void:
     if door.is_opened():
       door.lock()
       %AreaCloseDoor.queue_free()
+
+
+func _on_robot_go_coffee() -> void:
+  var cast_dir := (_position_robot_cofee.global_basis * _position_robot_cofee.target_position).normalized()
+  _robot.set_coffee_mode(_position_robot_cofee.global_position, cast_dir)
 
 
 func _on_area_robot_inside_body_entered(body: Node3D) -> void:

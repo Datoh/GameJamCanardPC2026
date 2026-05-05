@@ -1298,8 +1298,8 @@ pickable = true
 id = "Feutres"
 machine = "TV"
 message_ko = "Je n'ai rien à colorier."
-message_ok = "Ces feutres de couleur... LN R3p14y a dit quelque chose lÃ -dessus. Je devrais lui reparler."
-hint = "[ESPACE] Prendre les feutres"
+message_ok = "Ces feutres de coloriage... LN R3p14y a dit quelque chose lÃ -dessus. Je devrais lui reparler."
+hint = "[ESPACE] Prendre les feutres de coloriage"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Reserve/Shelf_Base2/WaterCup2/Feutres" unique_id=1658964624]
@@ -2180,6 +2180,13 @@ transform = Transform3D(0.61385816, -0.4019879, 0.6793996, 0, 0.8606354, 0.50922
 [node name="PositionRobotEnd" type="RayCast3D" parent="." unique_id=374657290]
 unique_name_in_owner = true
 transform = Transform3D(-0.972039, 0, -0.2348195, 0, 1, 0, 0.2348195, 0, -0.972039, 7.9171405, 1.4521503, 4.153665)
+enabled = false
+exclude_parent = false
+target_position = Vector3(-1, 0, 0)
+
+[node name="PositionRobotCofee" type="RayCast3D" parent="." unique_id=1537653559]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4865503, 1.5827949, 3.7075822)
 enabled = false
 exclude_parent = false
 target_position = Vector3(-1, 0, 0)

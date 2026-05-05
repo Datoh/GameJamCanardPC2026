@@ -1,6 +1,8 @@
 extends Machine
 class_name MachineMaze
 
+signal robot_go_coffee
+
 const NAME := "Maze"
 @onready var _mouse: CharacterBody3D = %Mouse
 var _timer_mouse := Timer.new()
@@ -25,6 +27,16 @@ func _ready() -> void:
 
 func _can_try(_player: Node) -> bool:
   return true
+
+func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
+  if dialogue_id == "labyrinthe_seul":
+    return player.state_machine.get(NAME, 0) != Machine.StateMachine.SOLVED
+  return super.is_dialogue_locked(dialogue_id, player)
+
+func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
+  super.on_dialogue_completed(dialogue_id, player)
+  if dialogue_id == "labyrinthe_seul":
+    robot_go_coffee.emit()
 
 func _on_timer_mouse_timeout() -> void:
   if _mouse.visible:

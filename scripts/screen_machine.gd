@@ -51,7 +51,7 @@ func _ready() -> void:
 func _update_monitor(oscillo_solved: bool, pc_solved: bool) -> void:
   if _jeu_actif:
     return
-  var mat = null if (not oscillo_solved or not pc_solved) else _black_mat
+  var mat = null if (oscillo_solved and pc_solved) else _black_mat
   _computer_old_monitor.set_surface_override_material(1, mat)
 
 

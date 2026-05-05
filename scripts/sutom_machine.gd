@@ -238,6 +238,7 @@ func _on_game_finished(won: bool) -> void:
   if won:
     _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED
     _player_ref.show_message(message_waiting_unlocked, 3.0)
+    machine_done.emit(self)
 
 
 # ── Entrée / sortie ───────────────────────────────────────────────────────────

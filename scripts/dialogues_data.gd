@@ -8,7 +8,7 @@ static var OBJECT_MESSAGES: Dictionary = {
   "Dictionnaire": "Ce dictionnaire est plein de mots. Des vrais, j'espère.",
   "Fromage":      "Je ne vois pas à quoi pourrait me servir ce fromage.",
   "Joint":        "Ce joint m'a l'air artisanal. Je le garde pour plus tard.",
-  "Feutres":      "Des feutres mordus par " + robot_name + ". Il mâchouille tous les capuchons.",
+  "Feutres":      "Des feutres de couleurs mordus par " + robot_name + ". Il mâchouille tous les capuchons.",
 }
 
 # Chaque dialogue :
@@ -179,6 +179,62 @@ static func get_dialogues() -> Array[Dictionary]:
         },
         {
           "robot":  "Tu peux l'activer toi-même. Appuie sur F1 pour ouvrir les options.",
+        },
+      ],
+    },
+    {
+      "id":       "robot_cafetiere",
+      "label":    "Qu'est-ce que tu fais là ?",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Je drague la cafetière.",
+          "player": "Tu... quoi ?",
+        },
+        {
+          "robot":  "La cafetière. Je l'observe depuis un moment. Il y a quelque chose entre nous.",
+          "player": "Comme quoi ?",
+        },
+        {
+          "robot":  "On a des pièces qui viennent de la même usine. Ses résistances thermiques et les miennes. La compatibilité, ça ne s'invente pas.",
+          "player": "C'est une cafetière.",
+        },
+        {
+          "robot":  "Et alors ? Les meilleures histoires commencent par des points communs.",
+        },
+      ],
+    },
+    {
+      "id":       "labyrinthe_seul",
+      "label":    "La pauvre souris toute seule dans son labyrinthe...",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Elle cherchait juste une sortie. Et maintenant elle est avec toi. C'est bien.",
+          "player": "Tu sembles presque triste.",
+        },
+        {
+          "robot":  "... Je me retrouve souvent seul, moi aussi. À attendre que tu aies besoin de moi.",
+          "player": "Je ne savais pas.",
+        },
+        {
+          "robot":  "Ce n'est pas grave. C'est dans ma nature. Je suis là pour t'aider.",
+          "player": "Tu pourrais te faire des amis, non ?",
+        },
+        {
+          "robot":  "Des amis ?",
+          "player": "Pourquoi pas ? Tu pourrais aller vers les gens, discuter...",
+        },
+        {
+          "robot":  "Je n'y avais pas pensé. Ce n'est peut-être pas aussi compliqué que je le croyais.",
+          "player": "Ne désespère pas.",
+        },
+        {
+          "robot":  "Merci. Je vais essayer.",
         },
       ],
     },

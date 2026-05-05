@@ -131,7 +131,7 @@ func can_interact(id_object: String, machine: String) -> bool:
 
 func start_robot_work(machine: Machine, duration: float) -> void:
   if _robot:
-    _robot.go_to_position(machine.global_position)
+    _robot.go_to_task(machine.global_position)
     _robot.start_working()
   _machine_timer.start(duration)
 
@@ -162,6 +162,8 @@ func _is_dialogue_available(d: Dictionary) -> bool:
   for m in get_tree().get_nodes_in_group("machine"):
     if m is Machine and (m as Machine).is_dialogue_locked(d["id"], self):
       return false
+  if _robot and _robot.is_dialogue_locked(d["id"]):
+    return false
   return true
 
 func _get_available_dialogues() -> Array:
