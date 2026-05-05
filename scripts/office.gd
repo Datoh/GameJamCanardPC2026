@@ -1,7 +1,8 @@
 extends Node3D
 
-const _TITLE_SCREEN := preload("res://scenes/title_screen.tscn")
-const _END_SCREEN   := preload("res://scenes/end_screen.tscn")
+const _TITLE_SCREEN  := preload("res://scenes/title_screen.tscn")
+const _END_SCREEN    := preload("res://scenes/end_screen.tscn")
+const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
 
 @onready var _player: CharacterBody3D = %Player
 @onready var _mouse: CharacterBody3D = %Mouse
@@ -18,6 +19,9 @@ const _END_SCREEN   := preload("res://scenes/end_screen.tscn")
 }
 
 var _ivan_door_unlocked: bool = false
+var _options_canvas: CanvasLayer
+var _options_menu: OptionsMenu
+var _prev_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
 func _process(_delta: float) -> void:
   if _ivan_door_unlocked:
@@ -31,6 +35,13 @@ func _ready() -> void:
   _player.visible = false
   _player.set_hud_visible(false)
   _player.game_finished.connect(_on_game_finished)
+  _options_canvas = CanvasLayer.new()
+  _options_canvas.layer = 20
+  add_child(_options_canvas)
+  _options_menu = _OPTIONS_MENU.instantiate()
+  _options_menu.closed.connect(_on_options_closed)
+  _options_canvas.add_child(_options_menu)
+
   var ts := _TITLE_SCREEN.instantiate()
   ts.started.connect(_on_title_started)
   add_child(ts)
@@ -79,6 +90,21 @@ func _on_machine_done(machine: Node):
         _mouse.visible = false
         _mouse.set_physics_process(false)
 
+
+func _unhandled_input(event: InputEvent) -> void:
+  if not (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1):
+    return
+  get_viewport().set_input_as_handled()
+  if _options_menu.visible:
+    _options_menu.hide()
+    _on_options_closed()
+  else:
+    _prev_mouse_mode = Input.get_mouse_mode()
+    _options_menu.show()
+    Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _on_options_closed() -> void:
+  Input.set_mouse_mode(_prev_mouse_mode)
 
 func _on_area_close_door_body_entered(_body: Node3D) -> void:
   for door in get_tree().get_nodes_in_group("door_ivan"):

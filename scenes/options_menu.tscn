@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://c3optmenu45x"]
+
+[ext_resource type="Script" uid="uid://ca228pd56gcwa" path="res://scripts/options_menu.gd" id="1_opt"]
+
+[node name="OptionsMenu" type="Control" unique_id=1000]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_opt")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Dialog" type="PanelContainer" parent="." unique_id=1002]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -155.0
+offset_right = 230.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Dialog" unique_id=1003]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Dialog/Margin" unique_id=1004]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="Dialog/Margin/VBox" unique_id=1005]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Options"
+horizontal_alignment = 1
+
+[node name="HSep" type="HSeparator" parent="Dialog/Margin/VBox" unique_id=1006]
+layout_mode = 2
+
+[node name="VolumeRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1007]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VolumeLabel" type="Label" parent="Dialog/Margin/VBox/VolumeRow" unique_id=1008]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volume des bruitages"
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="Dialog/Margin/VBox/VolumeRow" unique_id=1009]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10.0
+value = 5.0
+
+[node name="VolumeValue" type="Label" parent="Dialog/Margin/VBox/VolumeRow" unique_id=1010]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+text = "5"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DLSSRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1011]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DLSSLabel" type="Label" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1012]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Activer le DLSS 5"
+vertical_alignment = 1
+
+[node name="DLSSCheck" type="CheckBox" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1013]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ValidateButton" type="Button" parent="Dialog/Margin/VBox" unique_id=1014]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Valider"

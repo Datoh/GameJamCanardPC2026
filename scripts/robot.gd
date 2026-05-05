@@ -35,6 +35,8 @@ var _blink_cooldown: float = 0.0
 var _blink_duration: float = 0.0
 var _screen_mat: StandardMaterial3D
 
+var _dlss5 := false
+
 @onready var _audio_stream_player_3d: AudioStreamPlayer3D = %AudioStreamPlayer3D
 
 @onready var _navigation_agent_3d: NavigationAgent3D = %NavigationAgent3D
@@ -55,7 +57,7 @@ func start_talking() -> void:
 func stop_talking() -> void:
   _is_talking = false
   _talk_mouth_open = false
-  _screen_mat.albedo_texture = _tex_talk
+  _screen_mat.albedo_texture = _tex_default
 
 func _reset_blink_cooldown() -> void:
   _blink_cooldown = randf_range(3.0, 8.0)
@@ -70,10 +72,15 @@ func stop_working() -> void:
   _audio_stream_player_3d.stop()
 
 func set_skin(skin_id: String) -> void:
+  set_skin_dlss5(skin_id, _dlss5)
+
+func set_skin_dlss5(skin_id: String, dlss5: bool) -> void:
   var base: String = _SKIN_PATHS.get(skin_id, _SKIN_PATHS[_SKIN_DEFAULT])
-  _tex_default = load(base + "normal.png")
-  _tex_talk    = load(base + "talk.png")
-  _tex_blink   = load(base + "blink.png")
+  var option := "normal/" if not dlss5 else "dlss5/"
+  _dlss5 = dlss5
+  _tex_default = load(base + option + "normal.png")
+  _tex_talk    = load(base + option + "talk.png")
+  _tex_blink   = load(base + option + "blink.png")
   if _screen_mat:
     _screen_mat.albedo_texture = _tex_default
 

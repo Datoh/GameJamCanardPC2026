@@ -6,8 +6,9 @@ signal captcha_done(success: bool)
 const LAPIN_DIR   := "res://assets/textures/tv/lapin/"
 const LAPIN_FILES := [
   "lapin1.png", "lapin2.png", "lapin3.png",
-  "lapin4.png", "lapin5.png", "lapin6.png", "lapain.png"
+  "lapin4.png", "lapin5.png", "lapin6.png"
 ]
+const REQUIRED_LAPIN_FILE := "lapain.png"
 
 const COLOR_LAPIN := [Color.PALE_GOLDENROD, Color.BISQUE, Color.CYAN, Color.GREEN_YELLOW, Color.LIGHT_SEA_GREEN]
 
@@ -54,16 +55,19 @@ func _setup_captcha_scene() -> void:
 # ── Chargement des images ─────────────────────────────────────────────────────
 
 func _apply_images_to_visual(has_feutres: bool) -> void:
-  var pool := LAPIN_FILES.duplicate()
-  pool.shuffle()
+  var pool := [REQUIRED_LAPIN_FILE]
+  var pool2 := LAPIN_FILES.duplicate()
+  pool2.shuffle()
+  pool.append_array(pool2)
   pool = pool.slice(0, 6)
+  pool.shuffle()
   _pink_indices = [0, 1, 2, 3, 4, 5]
   _pink_indices.shuffle()
-  _pink_indices = _pink_indices.slice(0, 3)
+  _pink_indices = _pink_indices.slice(0, 2)
   for i in 6:
     var tex := load(LAPIN_DIR + pool[i]) as Texture2D
     _cell_rects[i].texture  = tex
-    _cell_rects[i].modulate = Color.HOT_PINK if (has_feutres and _pink_indices.has(i)) else (COLOR_LAPIN.pick_random() if has_feutres else Color.BLACK)
+    _cell_rects[i].modulate = Color.HOT_PINK if (has_feutres and (_pink_indices.has(i) or pool[i] == REQUIRED_LAPIN_FILE)) else (COLOR_LAPIN.pick_random() if has_feutres else Color.BLACK)
 
 
 # ── États de la TV ────────────────────────────────────────────────────────────

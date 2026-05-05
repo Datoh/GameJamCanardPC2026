@@ -159,6 +159,30 @@ static func get_dialogues() -> Array[Dictionary]:
       ],
     },
     {
+      "id":       "ordinateur_dlss5",
+      "label":    "L'ordinateur tourne mieux depuis que tu as branché les câbles...",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "Effectivement ! Tu as vu ? Le câblage est impeccable maintenant. Mes algorithmes tournent à pleine puissance.",
+          "player": "Tant mieux...",
+        },
+        {
+          "robot":  "Et surtout, avec une alimentation correcte, j'ai enfin accès au module DLSS5 !",
+          "player": "Le DLSS5 ?",
+        },
+        {
+          "robot":  "Dynamic Learning Super Sampling version 5. Ça améliore... tout. La résolution de mes yeux, la fluidité de mon sourire, la netteté de mes pensées.",
+          "player": "Ça se voit vraiment ?",
+        },
+        {
+          "robot":  "Tu peux l'activer toi-même. Appuie sur F1 pour ouvrir les options.",
+        },
+      ],
+    },
+    {
       "id":       "labyrinthe_demande",
       "label":    "Tu peux essayer de traverser ce labyrinthe ?",
       "requires": "",
