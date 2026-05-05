@@ -16,45 +16,45 @@ var curve_color: Color = Color.RED
 
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(VP_W, VP_H)
+  custom_minimum_size = Vector2(VP_W, VP_H)
 
 
 func _minus_rect() -> Rect2:
-	return Rect2(4, (VP_H - BTN_H) * 0.5, BTN_W, BTN_H)
+  return Rect2(4, (VP_H - BTN_H) * 0.5, BTN_W, BTN_H)
 
 func _plus_rect() -> Rect2:
-	return Rect2(VP_W - 4 - BTN_W, (VP_H - BTN_H) * 0.5, BTN_W, BTN_H)
+  return Rect2(VP_W - 4 - BTN_W, (VP_H - BTN_H) * 0.5, BTN_W, BTN_H)
 
 
 func on_click(uv: Vector2) -> int:
-	var pos := uv * Vector2(VP_W, VP_H)
-	if _minus_rect().has_point(pos):
-		return -1
-	if _plus_rect().has_point(pos):
-		return 1
-	return 0
+  var pos := uv * Vector2(VP_W, VP_H)
+  if _minus_rect().has_point(pos):
+    return -1
+  if _plus_rect().has_point(pos):
+    return 1
+  return 0
 
 
 func _draw() -> void:
-	var font := ThemeDB.fallback_font
-	draw_rect(Rect2(Vector2.ZERO, size), BG_COL)
+  var font := ThemeDB.fallback_font
+  draw_rect(Rect2(Vector2.ZERO, size), BG_COL)
 
-	# Bande couleur de la courbe
-	draw_rect(Rect2(VP_W * 0.5 - 10, 2, 20, 4), curve_color)
+  # Bande couleur de la courbe
+  draw_rect(Rect2(VP_W * 0.5 - 10, 2, 20, 4), curve_color)
 
-	# Bouton −
-	var mr := _minus_rect()
-	draw_rect(mr, BTN_COL)
-	draw_rect(mr, BTN_BDR, false, 1.0)
-	draw_string(font, Vector2(mr.position.x + 12, mr.end.y - 8), "−", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)
+  # Bouton −
+  var mr := _minus_rect()
+  draw_rect(mr, BTN_COL)
+  draw_rect(mr, BTN_BDR, false, 1.0)
+  draw_string(font, Vector2(mr.position.x + 12, mr.end.y - 8), "−", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)
 
-	# Valeur centrée entre les boutons
-	var mid_x := mr.end.x
-	var mid_w  := _plus_rect().position.x - mid_x
-	draw_string(font, Vector2(mid_x, VP_H * 0.5 + 11), str(value), HORIZONTAL_ALIGNMENT_CENTER, mid_w, 22, TEXT_COL)
+  # Valeur centrée entre les boutons
+  var mid_x := mr.end.x
+  var mid_w  := _plus_rect().position.x - mid_x
+  draw_string(font, Vector2(mid_x, VP_H * 0.5 + 11), str(value), HORIZONTAL_ALIGNMENT_CENTER, mid_w, 22, TEXT_COL)
 
-	# Bouton +
-	var pr := _plus_rect()
-	draw_rect(pr, BTN_COL)
-	draw_rect(pr, BTN_BDR, false, 1.0)
-	draw_string(font, Vector2(pr.position.x + 10, pr.end.y - 8), "+", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)
+  # Bouton +
+  var pr := _plus_rect()
+  draw_rect(pr, BTN_COL)
+  draw_rect(pr, BTN_BDR, false, 1.0)
+  draw_string(font, Vector2(pr.position.x + 10, pr.end.y - 8), "+", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)

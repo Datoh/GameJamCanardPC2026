@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal game_finished
+
 const SPEED := 5.0
 const MOUSE_SENSITIVITY := 0.002
 
@@ -31,6 +33,7 @@ var _machine_timer: Timer
 @onready var _crosshair:        TextureRect = %Crosshair
 @onready var _objective_label:  Label       = %ObjectiveLabel
 @onready var _quit_hint_label:  Label       = %QuitHintLabel
+@onready var _camera_3d: Camera3D = %Camera3D
 
 var minigame_name: String = ""
 var _intro_done: bool = false
@@ -42,6 +45,9 @@ var in_minigame: bool = false:
     if _crosshair:
       _crosshair.visible = not value
 var _completed_dialogues: Array[String] = []
+
+func activate_camera():
+  _camera_3d.current = true
 
 func _ready() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -101,6 +107,13 @@ func _setup_ui() -> void:
   _dialogue_ui.robot_stopped_talking.connect(func(): if _robot: _robot.stop_talking())
   _canvas.add_child(_dialogue_ui)
 
+func set_hud_visible(value: bool) -> void:
+  if _canvas:
+    _canvas.visible = value
+  var static_canvas := get_node_or_null("CanvasLayer")
+  if static_canvas:
+    static_canvas.visible = value
+
 func show_message(text: String, duration: float = 3.0) -> void:
   if text.is_empty():
     return
@@ -118,6 +131,7 @@ func can_interact(id_object: String, machine: String) -> bool:
 func start_robot_work(machine: Machine, duration: float) -> void:
   if _robot:
     _robot.go_to_position(machine.global_position)
+    _robot.start_working()
   _machine_timer.start(duration)
 
 func _get_debug_text() -> String:
@@ -180,6 +194,8 @@ func _apply_dialogue_side_effects(dialogue_id: String) -> void:
   for m in get_tree().get_nodes_in_group("machine"):
     if m is Machine:
       (m as Machine).on_dialogue_completed(dialogue_id, self)
+  if dialogue_id == "ivan_final":
+    game_finished.emit()
 
 func _on_dialogue_closed() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -193,6 +209,7 @@ func _on_machine_timer_timeout() -> void:
       state_machine[key] = Machine.StateMachine.ROBOT_DONE
       break
   if _robot != null:
+    _robot.stop_working()
     _robot.resume_follow()
 
 # ── Interaction ───────────────────────────────────────────────────────────────

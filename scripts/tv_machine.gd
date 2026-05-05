@@ -96,6 +96,8 @@ func interact(player: Node) -> void:
   if player.state_machine[machine_name] == Machine.StateMachine.SOLVED:
     show_video()
   else:
+    if player.state_machine[machine_name] == Machine.StateMachine.IDLE:
+      AudioManager.play(AudioData.AUDIO_TV_ON, global_position)
     super.interact(player)
 
 func _can_try(player: Node) -> bool:
@@ -166,6 +168,7 @@ func _on_tv_input(_camera: Node, event: InputEvent, input_position: Vector3, _no
     var cell: Control = _cell_rects[i]
     if Rect2(cell.position, cell.size).has_point(sv):
       _cell_selected[i] = not _cell_selected[i]
+      AudioManager.play(AudioData.AUDIO_TV_SELECT, global_position)
       _update_selection_display()
       return
 
@@ -187,6 +190,7 @@ func _validate_captcha() -> void:
       correct = false
       break
   if correct:
+    AudioManager.play(AudioData.AUDIO_TV_VALIDATE, global_position)
     _end_captcha()
     captcha_done.emit(true)
   else:
@@ -208,6 +212,7 @@ func _end_captcha() -> void:
 
 
 func _flash_and_reset(has_feutres: bool) -> void:
+  AudioManager.play(AudioData.AUDIO_TV_ERROR, global_position)
   _captcha_active = false
   var tween := create_tween().set_loops(3)
   tween.tween_property(_captcha_ui, "modulate", Color(1.0, 0.4, 0.4), 0.08)

@@ -12,6 +12,8 @@ const DEBUG := false
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height:          float = 0.40
 
+@export var _audio_stream: AudioStreamPlayer3D = null
+
 var _black_mat: StandardMaterial3D = null
 
 # ── Caméra ────────────────────────────────────────────────────────────────────
@@ -27,8 +29,11 @@ var _jeu_actif:     bool = false
 var _article_phase: int  = 0   # 0 = lecture mauvais, 1 = frappe, 2 = terminé
 var _typed_count:   int  = 0
 var _player_ref:    Node = null
-var _article_layer: CanvasLayer    = null
+var _article_layer: CanvasLayer     = null
 var _article_ui:    ArticleTypingUI = null
+
+const _AUDIO_PAUSE_DELAY := 0.35
+var _audio_pause_timer: float = 0.0
 
 
 func _ready() -> void:
@@ -140,6 +145,13 @@ func _open_article(player: Node) -> void:
   set_deferred("_jeu_actif", true)
 
 
+func _process(delta: float) -> void:
+  if _audio_pause_timer > 0.0:
+    _audio_pause_timer -= delta
+    if _audio_pause_timer <= 0.0 and _audio_stream != null and _audio_stream.playing:
+      _audio_stream.stream_paused = true
+
+
 func _finish_article() -> void:
   _jeu_actif = false
   if _player_ref != null:
@@ -149,6 +161,8 @@ func _finish_article() -> void:
     _article_layer.queue_free()
     _article_layer = null
     _article_ui    = null
+  if _audio_stream != null:
+    _audio_stream.stop()
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
@@ -175,6 +189,12 @@ func _unhandled_input(event: InputEvent) -> void:
       _typed_count   = 0
       _article_ui.show_typing("", false)
     1:
+      if _audio_stream != null:
+        if not _audio_stream.playing:
+          _audio_stream.play()
+        else:
+          _audio_stream.stream_paused = false
+        _audio_pause_timer = _AUDIO_PAUSE_DELAY
       _typed_count = mini(_typed_count + randi_range(2, 6), _article_ui.PLAYER_ARTICLE.length())
       var done := _typed_count >= _article_ui.PLAYER_ARTICLE.length()
       _article_ui.show_typing(_article_ui.PLAYER_ARTICLE.substr(0, _typed_count), done)

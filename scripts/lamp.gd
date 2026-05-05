@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func interact(_player: Node) -> void:
   if light:
+    AudioManager.play(AudioData.AUDIO_LAMP, global_position)
     light.visible = not light.visible
 
 func get_interaction_hint(_player: Node) -> String:

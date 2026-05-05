@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cb2x7b34vlbha" path="res://assets/textures/robot/LNReplay.png" id="2_ykvnc"]
 [ext_resource type="PackedScene" uid="uid://dnj77okjiftp4" path="res://scenes/robot_body.scn" id="3_i42o3"]
 [ext_resource type="PackedScene" uid="uid://bu8781px3e3md" path="res://scenes/robot_head.scn" id="3_rcrfe"]
+[ext_resource type="AudioStream" uid="uid://b0p2y31xhrsge" path="res://assets/sound/freesound_community-robot-6282.mp3" id="5_xwnim"]
 
 [sub_resource type="CapsuleShape3D" id="Shape_col"]
 radius = 0.29003906
@@ -66,7 +67,7 @@ _data = {
 &"Take 001": SubResource("Animation_qvest")
 }
 
-[node name="Robot_LNR3p14y" type="CharacterBody3D" unique_id=890730695 groups=["robot"]]
+[node name="Robot" type="CharacterBody3D" unique_id=890730695 groups=["robot"]]
 collision_layer = 17
 script = ExtResource("1_robot")
 
@@ -100,3 +101,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_i42o3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LilMan" unique_id=1958552237]
 libraries/ = SubResource("AnimationLibrary_iiq8e")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1006088011]
+unique_name_in_owner = true
+stream = ExtResource("5_xwnim")
+max_distance = 8.0

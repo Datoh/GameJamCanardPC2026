@@ -343,6 +343,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _type(letter: String) -> void:
   if _row >= MAX_ATTEMPTS or _col >= WORD_LENGTH:
     return
+  AudioManager.play(AudioData.AUDIO_SUTOM_TYPING, global_position)
   _labels[_row][_col].text = letter
   _col += 1
 
@@ -367,14 +368,17 @@ func _submit() -> void:
   _row += 1
   _col = 1
   if won:
+    AudioManager.play(AudioData.AUDIO_SUTOM_VALIDATE, global_position)
     _won = true
     _result_label.text = "Bravo !  Le mot était « %s »." % _target
     _result_label.add_theme_color_override("font_color", Color(0.10, 0.45, 0.10))
     _result_label.visible = true
-  elif _row >= MAX_ATTEMPTS:
-    _result_label.text = "Perdu...  Le mot était « %s »." % _target
-    _result_label.add_theme_color_override("font_color", Color(0.70, 0.15, 0.10))
-    _result_label.visible = true
+  else:
+    AudioManager.play(AudioData.AUDIO_SUTOM_ERROR, global_position)
+    if _row >= MAX_ATTEMPTS:
+      _result_label.text = "Perdu...  Le mot était « %s »." % _target
+      _result_label.add_theme_color_override("font_color", Color(0.70, 0.15, 0.10))
+      _result_label.visible = true
 
 func _evaluate(guess: String) -> Array:
   var result := []

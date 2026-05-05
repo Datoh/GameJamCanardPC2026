@@ -363,6 +363,7 @@ func _etendre(cell: Vector2i) -> void:
   if _occupe_par_autre(cell, _col_dessin):
     return
   _crt.append(cell)
+  AudioManager.play(AudioData.AUDIO_CABLE, global_position)
   if cell == _cible_de(_col_dessin, _crt[0]):
     _valider()
     return
@@ -391,6 +392,7 @@ func _valider() -> void:
     chemins[_col_dessin] = _crt.duplicate()
     _crt = []
     _grid_update()
+    AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE, global_position)
     _check_victoire()
   else:
     _crt = []
@@ -428,6 +430,7 @@ func _check_victoire() -> void:
 
 
 func _on_victoire() -> void:
+  AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
   _close_won = true
   _quitter_jeu()
   if _player_ref == null:
@@ -446,6 +449,8 @@ func _demarrer_jeu(player: Node) -> void:
 
 
 func _quitter_jeu() -> void:
+  if not _close_won:
+    AudioManager.play(AudioData.AUDIO_CABLE_ERROR, global_position)
   _jeu_actif = false
   _en_dessin = false
   _drag_ep   = null

@@ -17,6 +17,8 @@ const NAME := "Oscillo"
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height:          float = 0.50
 
+@export var _audio_stream: AudioStreamPlayer3D = null
+
 # ── Signal math ───────────────────────────────────────────────────────────────
 const TGT_1_A    := 5
 const TGT_1_F    := 3
@@ -57,7 +59,7 @@ var _player_ref: Node = null
 
 func _ready() -> void:
   machine_name        = NAME
-  message_idle        = "Cet oscilloscope affiche un signal étrange..."
+  message_idle        = "Cet oscilloscope affiche un signal étrange... Je dois reproduire ce signal en ajustant les paramètres."
   message_try_machine = "Je dois reproduire ce signal en ajustant les paramètres."
   message_solved      = "Le signal est reproduit."
   hint_default        = "[ESPACE] Regarder l'oscilloscope"
@@ -293,6 +295,10 @@ func _apply_delta(param_idx: int, delta: int) -> void:
     "a": amplitudes[curve]  = clampi(amplitudes[curve]  + delta, 0, 10)
     "f": frequencies[curve] = clampi(frequencies[curve] + delta, 1, 20)
     "p": phases[curve]      = clampi(phases[curve]      + delta, 0, 10)
+  match p["type"]:
+    "a": AudioManager.play(AudioData.AUDIO_OSCILLO_BEEP_1 if delta > 0 else AudioData.AUDIO_OSCILLO_BEEP_2, global_position)
+    "f": AudioManager.play(AudioData.AUDIO_OSCILLO_BEEP_3 if delta > 0 else AudioData.AUDIO_OSCILLO_BEEP_4, global_position)
+    "p": AudioManager.play(AudioData.AUDIO_OSCILLO_BEEP_1 if delta > 0 else AudioData.AUDIO_OSCILLO_BEEP_2, global_position)
   _update_displays()
   if _is_match():
     _victory_pending = true
@@ -318,6 +324,9 @@ func _on_victoire() -> void:
   if not _jeu_actif:
     return
   _close_won = true
+  AudioManager.play(AudioData.AUDIO_OSCILLO_WIN, global_position)
+  if _audio_stream:
+    _audio_stream.stop()
   if _player_ref != null:
     _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
     _player_ref.show_message("Signal reproduit ! L'oscilloscope est calibré.", 3.0)

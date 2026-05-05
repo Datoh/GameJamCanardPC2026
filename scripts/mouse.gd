@@ -15,6 +15,10 @@ func go_to_cheese():
   _go_to_cheese = true
   _assign_next_target()
 
+func reset() -> void:
+  _go_to_cheese = false
+  _assign_next_target()
+
 func _ready() -> void:
   _navigation_agent_mouse.path_desired_distance = 0.01
   _navigation_agent_mouse.target_desired_distance = 0.02

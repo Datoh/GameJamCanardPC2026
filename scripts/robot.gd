@@ -20,6 +20,7 @@ var _is_forced: bool = false
 var _following: bool = false
 
 var _forced_body_angle: float = NAN
+var _head_locked: bool = false
 
 var _is_talking: bool = false
 var _talk_timer: float = 0.0
@@ -27,6 +28,8 @@ var _talk_mouth_open: bool = false
 var _blink_cooldown: float = 0.0
 var _blink_duration: float = 0.0
 var _screen_mat: StandardMaterial3D
+
+@onready var _audio_stream_player_3d: AudioStreamPlayer3D = %AudioStreamPlayer3D
 
 @onready var _navigation_agent_3d: NavigationAgent3D = %NavigationAgent3D
 @onready var _screen: MeshInstance3D = %screen
@@ -53,6 +56,12 @@ func _reset_blink_cooldown() -> void:
 func start_following() -> void:
   _following = true
 
+func start_working() -> void:
+  _audio_stream_player_3d.play()
+
+func stop_working() -> void:
+  _audio_stream_player_3d.stop()
+
 func go_to_position(pos: Vector3) -> void:
   _forced_target = pos
   _is_forced = true
@@ -65,6 +74,18 @@ func face_direction(world_dir: Vector3) -> void:
   if world_dir.length() < 0.01:
     return
   _forced_body_angle = atan2(-world_dir.x, -world_dir.z)
+
+func place(pos: Vector3, world_dir: Vector3) -> void:
+  global_position = pos
+  _is_forced  = false
+  _following  = false
+  world_dir.y = 0.0
+  if world_dir.length() >= 0.01:
+    var angle := atan2(-world_dir.x, -world_dir.z)
+    rotation.y         = angle
+    _forced_body_angle = angle
+  _head_locked      = true
+  _head.rotation    = Vector3.ZERO
 
 func _process(delta: float) -> void:
   if _is_talking:
@@ -115,7 +136,7 @@ func _physics_process(delta: float) -> void:
 
   move_and_slide()
 
-  if _player == null:
+  if _head_locked or _player == null:
     return
   var to_player := _player.global_position - _head.global_position
   to_player.y = 0.0

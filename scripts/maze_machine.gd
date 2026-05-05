@@ -2,6 +2,8 @@ extends Machine
 class_name MachineMaze
 
 const NAME := "Maze"
+@onready var _mouse: CharacterBody3D = %Mouse
+var _timer_mouse := Timer.new()
 
 func _ready() -> void:
   machine_name = NAME
@@ -17,6 +19,14 @@ func _ready() -> void:
   message_waiting_unlocked = "Elle arrive..."
   message_solved = "Je n'ai plus rien à faire ici."
   hint_default = "[ESPACE] Observez le labyrinthe."
+  add_child(_timer_mouse)
+  _timer_mouse.timeout.connect(_on_timer_mouse_timeout)
+  _timer_mouse.start(randf_range(2.0, 4.0))
 
 func _can_try(_player: Node) -> bool:
   return true
+
+func _on_timer_mouse_timeout() -> void:
+  if _mouse.visible:
+    AudioManager.play(AudioData.AUDIO_MOUSE, _mouse.global_position, 8.0)
+    _timer_mouse.start(randf_range(2.0, 4.0))

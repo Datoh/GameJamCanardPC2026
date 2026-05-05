@@ -20,9 +20,12 @@ func interact(player: Node) -> void:
   if _locked:
     player.show_message("La porte est vérouillée.", 3.0)
     return
+  AudioManager.play(AudioData.AUDIO_DOOR_CLOSE if is_opened() else AudioData.AUDIO_DOOR_OPEN, global_position)
   _target_angle = 0.0 if is_opened() else _angle * (1.0 if _direction else -1.0)
 
 func lock():
+  if is_opened():
+    AudioManager.play(AudioData.AUDIO_DOOR_CLOSE, global_position)
   _target_angle = 0.0
   _locked = true
 
