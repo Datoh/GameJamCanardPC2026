@@ -90,6 +90,7 @@ func _setup_ui() -> void:
   _debug_label.position = Vector2(10, 10)
   _debug_label.add_theme_color_override("font_color", Color(0, 1, 0))
   _canvas.add_child(_debug_label)
+  _debug_label.visible = OS.is_debug_build()
 
   _interaction_hint_label = Label.new()
   _interaction_hint_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)

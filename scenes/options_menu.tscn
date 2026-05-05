@@ -29,9 +29,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -230.0
-offset_top = -155.0
+offset_top = -200.0
 offset_right = 230.0
-offset_bottom = 155.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -81,6 +81,35 @@ layout_mode = 2
 text = "5"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="ResolutionRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1015]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ResolutionLabel" type="Label" parent="Dialog/Margin/VBox/ResolutionRow" unique_id=1016]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Résolution"
+vertical_alignment = 1
+
+[node name="ResolutionOption" type="OptionButton" parent="Dialog/Margin/VBox/ResolutionRow" unique_id=1017]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+
+[node name="FullscreenRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1018]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FullscreenLabel" type="Label" parent="Dialog/Margin/VBox/FullscreenRow" unique_id=1019]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Plein écran"
+vertical_alignment = 1
+
+[node name="FullscreenCheck" type="CheckBox" parent="Dialog/Margin/VBox/FullscreenRow" unique_id=1020]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="DLSSRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1011]
 layout_mode = 2

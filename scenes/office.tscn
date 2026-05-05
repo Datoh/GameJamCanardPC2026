@@ -1069,6 +1069,18 @@ shape = SubResource("BoxShape3D_qakv3")
 [node name="StickNote_22" parent="SalleRepos/WhiteBoard_Big2/NoteB2" unique_id=1564170875 instance=ExtResource("37_qakv3")]
 transform = Transform3D(0.99655974, -3.6227028e-09, -0.08287778, 3.6227026e-09, 1, -1.5037911e-10, 0.08287778, -1.5037911e-10, 0.99655974, 0, -0.9682865, 0)
 
+[node name="NoteB3" type="StaticBody3D" parent="SalleRepos/WhiteBoard_Big2" unique_id=1427244960]
+transform = Transform3D(0.86714894, 7.1288895e-08, 0.49804884, 0.49804884, -5.967469e-08, -0.86714894, -3.2097176e-08, 1, -8.72522e-08, 0.24152374, 1.6179659, 0.0009050369)
+script = ExtResource("41_2v03r")
+message_ok = "Pense bête pour le différentiel: Mayenne Finistère"
+hint = "[ESPACE] Lire la note"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SalleRepos/WhiteBoard_Big2/NoteB3" unique_id=1119013070]
+shape = SubResource("BoxShape3D_qakv3")
+
+[node name="StickNote_22" parent="SalleRepos/WhiteBoard_Big2/NoteB3" unique_id=455701457 instance=ExtResource("37_qakv3")]
+transform = Transform3D(0.99655974, -3.6227028e-09, -0.08287778, 3.6227026e-09, 1, -1.5037911e-10, 0.08287778, -1.5037911e-10, 0.99655974, 0, -0.9682865, 0)
+
 [node name="Bookshelf2" parent="SalleRepos" unique_id=1000925009 instance=ExtResource("39_wx8ly")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.478129, 0, 0.44332516)
 

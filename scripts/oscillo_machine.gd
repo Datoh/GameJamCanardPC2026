@@ -30,8 +30,8 @@ const MATCH_TOL  := 0.8
 const SAMPLE_CNT := 200
 
 # ── État ──────────────────────────────────────────────────────────────────────
-var amplitudes:  Array[int] = [0, 0]
-var frequencies: Array[int] = [1, 1]
+var amplitudes:  Array[int] = [3, 5]
+var frequencies: Array[int] = [1, 5]
 var phases:      Array[int] = [0, 0]
 
 # Mapping paramètre → (mesh, display, curve_idx, type "a"/"f"/"p")
@@ -292,7 +292,7 @@ func _apply_delta(param_idx: int, delta: int) -> void:
   var p     := _params[param_idx]
   var curve: int = p["curve"]
   match p["type"]:
-    "a": amplitudes[curve]  = clampi(amplitudes[curve]  + delta, 0, 10)
+    "a": amplitudes[curve]  = clampi(amplitudes[curve]  + delta, 1, 10)
     "f": frequencies[curve] = clampi(frequencies[curve] + delta, 1, 20)
     "p": phases[curve]      = clampi(phases[curve]      + delta, 0, 10)
   match p["type"]:
