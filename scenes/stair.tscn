@@ -62,10 +62,10 @@ transform = Transform3D(3, 0, 2.3841858e-07, 0, 1.2, 0, -7.1525574e-07, 0, 1, -1
 transform = Transform3D(3, 0, 2.3841858e-07, 0, 1.2, 0, -7.1525574e-07, 0, 1, -1.5, -3.6000001, -3)
 
 [node name="Wall_Standard19" parent="." unique_id=1768647901 instance=ExtResource("2_mhnnb")]
-transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, -4.5, -3.6000001, -1)
+transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, -4.436138, -3.6000001, -0.99999994)
 
 [node name="Wall_Standard20" parent="." unique_id=1632374795 instance=ExtResource("2_mhnnb")]
-transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, 1.5, -3.6000001, -1)
+transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, 1.4, -3.6, -1)
 
 [node name="Wall_Standard21" parent="." unique_id=1360338856 instance=ExtResource("2_mhnnb")]
 transform = Transform3D(1.2, 0, 2.3841858e-07, 0, 1.2, 0, -2.861023e-07, 0, 1, -1.5, -3.6000001, -1)
@@ -78,8 +78,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44790685, 0.585876, -0.9685
 shape = SubResource("BoxShape3D_7g04l")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1619631836]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.061977863, -0.99999964)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9768062, 0.065505266, -0.99999964)
 light_color = Color(0.8286806, 0.8204294, 0, 1)
-light_energy = 0.2
+light_energy = 0.3
+light_indirect_energy = 0.7
+light_volumetric_fog_energy = 2.0
+omni_range = 3.0
+omni_attenuation = 0.5
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=2064975617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8489577, -1.4802055, -1.0000001)
+light_color = Color(0.8286806, 0.8204294, 0, 1)
+light_energy = 0.3
+light_indirect_energy = 0.7
+light_volumetric_fog_energy = 2.0
+omni_range = 3.0
+omni_attenuation = 0.5
 
 [connection signal="body_entered" from="Area3DUpDown" to="." method="_on_area_3d_up_down_body_entered"]

@@ -14,8 +14,9 @@ const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
 @onready var _position_robot_cofee: RayCast3D = %PositionRobotCofee
 
 @onready var _machines := {
-  MachineSutom.NAME: %SutomMachine,
-  MachineMaze.NAME:  %MazeMachine,
+  MachineSutom.NAME:  %SutomMachine,
+  MachineMaze.NAME:   %MazeMachine,
+  MachineOscillo.NAME: %OscilloMachine,
   #MachineTV.machine_name: %TVMachine,
 }
 

@@ -462,8 +462,6 @@ func _quitter_jeu() -> void:
 # ── Override Machine ──────────────────────────────────────────────────────────
 
 func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
-  if dialogue_id == "ordinateur_dlss5":
-    return player.state_machine.get(NAME, 0) != Machine.StateMachine.SOLVED
   return super.is_dialogue_locked(dialogue_id, player)
 
 
