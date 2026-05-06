@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://255ctw2cd8pv"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rqhsa"]
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gbjqc"]
+emission_enabled = true
+emission = Color(0.8980392, 0.93333334, 1, 1)
+emission_energy_multiplier = 3.0
+
+[node name="Neon" type="MeshInstance3D" unique_id=1422494887]
+transform = Transform3D(-1, 2.6226832e-07, 0, -2.6226832e-07, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("PlaneMesh_rqhsa")
+surface_material_override/0 = SubResource("StandardMaterial3D_gbjqc")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1922063595]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3019352, 0)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_cull_mask = 4294967293
+shadow_enabled = true
+shadow_caster_mask = 4294967293
+omni_range = 4.0

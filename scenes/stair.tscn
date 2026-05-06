@@ -70,20 +70,16 @@ transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, 
 [node name="Wall_Standard21" parent="." unique_id=1360338856 instance=ExtResource("2_mhnnb")]
 transform = Transform3D(1.2, 0, 2.3841858e-07, 0, 1.2, 0, -2.861023e-07, 0, 1, -1.5, -3.6000001, -1)
 
-[node name="Neon_Stair" type="SpotLight3D" parent="." unique_id=487647831]
-transform = Transform3D(-1, 8.742278e-08, 0, 0, 0, 1, 8.742278e-08, 1, 0, -2.7568278, -0.42685604, -0.64866936)
-light_color = Color(0.99607843, 0.9372549, 0.4745098, 1)
-light_energy = 0.3
-light_indirect_energy = 0.4
-spot_range = 1.8862942
-spot_attenuation = 0.3
-spot_angle = 73.39186
-
 [node name="Area3DUpDown" type="Area3D" parent="." unique_id=1462759972]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8964914, -1.959197, -1.0244931)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DUpDown" unique_id=188749865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44790685, 0.585876, -0.9685707)
 shape = SubResource("BoxShape3D_7g04l")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1619631836]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.061977863, -0.99999964)
+light_color = Color(0.8286806, 0.8204294, 0, 1)
+light_energy = 0.2
 
 [connection signal="body_entered" from="Area3DUpDown" to="." method="_on_area_3d_up_down_body_entered"]
