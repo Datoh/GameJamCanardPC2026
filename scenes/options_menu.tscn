@@ -111,9 +111,24 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="SDFGIRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1021]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SDFGILabel" type="Label" parent="Dialog/Margin/VBox/SDFGIRow" unique_id=1022]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Éclairage avancé"
+vertical_alignment = 1
+
+[node name="SDFGICheck" type="CheckBox" parent="Dialog/Margin/VBox/SDFGIRow" unique_id=1023]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="DLSSRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1011]
 layout_mode = 2
 theme_override_constants/separation = 10
+visible = false
 
 [node name="DLSSLabel" type="Label" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1012]
 layout_mode = 2

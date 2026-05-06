@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 signal game_finished
+signal dialogue_side_effect(dialogue_id: String)
 
 const SPEED := 5.0
 const MOUSE_SENSITIVITY := 0.002
@@ -200,6 +201,7 @@ func _apply_dialogue_side_effects(dialogue_id: String) -> void:
       (m as Machine).on_dialogue_completed(dialogue_id, self)
   if dialogue_id == "ivan_final":
     game_finished.emit()
+  dialogue_side_effect.emit(dialogue_id)
 
 func _on_dialogue_closed() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -303,6 +305,10 @@ func _update_objective() -> void:
     _objective_label.text = "Objectif : écrire un article avec le PC du petit bureau"
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
+
+func suppress_dialogue(dialogue_id: String) -> void:
+  if dialogue_id not in _completed_dialogues:
+    _completed_dialogues.append(dialogue_id)
 
 func notify(notify_name: String) -> void:
   if not notified.has(notify_name):

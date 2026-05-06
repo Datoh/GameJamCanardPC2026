@@ -231,28 +231,27 @@ func _ray_to_mesh_uv(cam: Camera3D, screen_pos: Vector2, mesh_inst: MeshInstance
 
 # ── Entrée ────────────────────────────────────────────────────────────────────
 
-func _on_machine_input(camera: Node, event: InputEvent, _world_pos: Vector3, _normal: Vector3, _shape: int) -> void:
-  if not _jeu_actif:
-    return
-  if not (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed):
-    return
-  var cam := camera as Camera3D
-  for i in _params.size():
-    var p    := _params[i]
-    var mesh := p["mesh"] as MeshInstance3D
-    var uv   := _ray_to_mesh_uv(cam, event.position, mesh)
-    if uv.x < 0.0:
-      continue
-    var disp  := p["display"] as OscilloParamDisplay
-    var delta := disp.on_click(uv)
-    if delta != 0:
-      _apply_delta(i, delta)
-      return
+func _on_machine_input(_camera: Node, _event: InputEvent, _world_pos: Vector3, _normal: Vector3, _shape: int) -> void:
+  pass
 
 
 func _unhandled_input(event: InputEvent) -> void:
   if not _jeu_actif:
     return
+  if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+    get_viewport().set_input_as_handled()
+    var screen_pos := get_viewport().get_mouse_position()
+    for i in _params.size():
+      var p    := _params[i]
+      var mesh := p["mesh"] as MeshInstance3D
+      var uv   := _ray_to_mesh_uv(_cam, screen_pos, mesh)
+      if uv.x < 0.0:
+        continue
+      var disp  := p["display"] as OscilloParamDisplay
+      var delta := disp.on_click(uv)
+      if delta != 0:
+        _apply_delta(i, delta)
+        return
   var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
        or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
   if quit:
@@ -330,6 +329,7 @@ func _on_victoire() -> void:
   if _player_ref != null:
     _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
     _player_ref.show_message("Signal reproduit ! L'oscilloscope est calibré.", 3.0)
+  machine_done.emit(self)
   _quitter_jeu()
 
 

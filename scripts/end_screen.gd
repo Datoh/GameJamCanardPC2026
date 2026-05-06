@@ -5,4 +5,4 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
   if event is InputEventKey and event.pressed and not event.echo:
-    get_tree().quit()
+    get_tree().reload_current_scene()

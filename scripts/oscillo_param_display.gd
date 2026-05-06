@@ -46,15 +46,16 @@ func _draw() -> void:
   var mr := _minus_rect()
   draw_rect(mr, BTN_COL)
   draw_rect(mr, BTN_BDR, false, 1.0)
-  draw_string(font, Vector2(mr.position.x + 12, mr.end.y - 8), "−", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)
+  var baseline_y := mr.get_center().y + font.get_ascent(22) * 0.5 - font.get_descent(22) * 0.5
+  draw_string(font, Vector2(mr.position.x, baseline_y), "−", HORIZONTAL_ALIGNMENT_CENTER, mr.size.x, 22, TEXT_COL)
 
   # Valeur centrée entre les boutons
   var mid_x := mr.end.x
   var mid_w  := _plus_rect().position.x - mid_x
-  draw_string(font, Vector2(mid_x, VP_H * 0.5 + 11), str(value), HORIZONTAL_ALIGNMENT_CENTER, mid_w, 22, TEXT_COL)
+  draw_string(font, Vector2(mid_x, baseline_y), str(value), HORIZONTAL_ALIGNMENT_CENTER, mid_w, 22, TEXT_COL)
 
   # Bouton +
   var pr := _plus_rect()
   draw_rect(pr, BTN_COL)
   draw_rect(pr, BTN_BDR, false, 1.0)
-  draw_string(font, Vector2(pr.position.x + 10, pr.end.y - 8), "+", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, TEXT_COL)
+  draw_string(font, Vector2(pr.position.x, baseline_y), "+", HORIZONTAL_ALIGNMENT_CENTER, pr.size.x, 22, TEXT_COL)

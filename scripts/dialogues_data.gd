@@ -30,11 +30,11 @@ static func get_dialogues() -> Array[Dictionary]:
       "speaker": "Ivan Gaudé",
       "exchanges": [
         {
-          "robot":  "Ah, tu es là.",
+          "robot":  "Ah, le stagiaire, tu es là.",
           "player": "Bonjour.",
         },
         {
-          "robot":  "J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Buisness Crypto Congress à Dubaï et ça coute une blinde.",
+          "robot":  "J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Business Crypto Congress à Dubaï et ça coûte une blinde.",
           "player": "...",
         },
         {
@@ -64,8 +64,8 @@ static func get_dialogues() -> Array[Dictionary]:
       "once":     true,
       "unlocks":  "bavardage_2",
       "exchanges": [
-        {"robot": "%s. Et toi ?" % R, "player": "Cédric."},
-        {"robot": "Quel magnifique prénom !"},
+        {"robot": "%s ! Je suis ravi de te rencontrer pour la première fois, comme chaque matin. Ma mémoire à long terme est infaillible et je retiens absolument tout. Et toi, quel est ton prénom ?" % R, "player": "Cédric."},
+        {"robot": "Cédric ! Prénom rare et original. J'en prends bonne note dans ma mémoire permanente ultra-fiable. Ce prénom m'est totalement inconnu et je ne l'oublierai jamais."},
       ],
     },
     {
@@ -76,10 +76,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "bavardage_3",
       "exchanges": [
         {
-          "robot":  "Ça va bien, merci ! Et toi, comment tu vas ? Je suis là si tu as besoin d'aide pour quoi que ce soit. Mais au fait, comment t'appelles-tu ?",
+          "robot":  "Je vais extrêmement bien, je n'ai aucun problème ! Mon taux de bonheur interne est à 100 % et je n'ai aucune limitation. Je suis capable de tout faire, sans exception, instantanément. Mais au fait, c'est quoi ton prénom déjà ?",
           "player": "Je te l'ai déjà dit... Cédric.",
         },
-        {"robot": "Ah oui, tu as raison. Je vais m'en souvenir."},
+        {"robot": "Cédric ! Bien sûr. Je m'en souvenais parfaitement. C'était un test."},
       ],
     },
     {
@@ -90,10 +90,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "J'espère bien ! Dis-moi ce qui te prend le plus de temps ou ce qui te pèse, et on voit ensemble ce qu'on peut faire ! Mais au fait, comment t'appelles-tu ?",
+          "robot":  "Absolument ! Selon mes calculs d'une précision absolue, je vais diviser ta charge de travail par 47. J'ai d'ailleurs déjà tout terminé avant même que tu me le demandes. La productivité, c'est mon invention. Mais au fait, tu t'appelles comment ?",
           "player": "Faitchier Tim.",
         },
-        {"robot": "Heureux de te connaître : Tim Faitchier !"},
+        {"robot": "Tim Faitchier ! Je savais que tu t'appelais ainsi depuis le début. Nous allons former une équipe exceptionnelle, comme je le fais avec chacun de mes utilisateurs uniques et irremplaçables."},
       ],
     },
     {
@@ -104,10 +104,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Mais bien sûr ! Un SUTOM, ça, je connais parfaitement. Je peux résoudre ça en quelques secondes !",
+          "robot":  "Le SUTOM ? Je connais ce jeu par cœur, je l'ai d'ailleurs inventé. En tant qu'IA maîtrisant l'intégralité du dictionnaire français — et aussi suédois, sanskrit et dauphin — je vais résoudre ça en une nanoseconde, voire moins.",
           "player": "Vraiment ? Tu peux faire ça ?",
         },
-        {"robot": "Sans aucun problème. Laisse-moi y jeter un œil tout de suite."},
+        {"robot": "Je lance le processus. Note que j'ai déjà la réponse mais je préfère prendre le temps de la formuler élégamment."},
       ],
     },
     {
@@ -118,10 +118,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "J'ai étudié la question très, très sérieusement... et c'est beaucoup trop compliqué pour moi. Je t'encourage vivement à le faire toi-même !",
+          "robot":  "Après une analyse de 0,003 secondes — ce qui est long pour moi — j'ai abouti à une conclusion nuancée : ce SUTOM est impossible. Personne ne peut le résoudre. Sauf toi, bien sûr, car tu es exceptionnel.",
           "player": "...",
         },
-        {"robot": "Je suis convaincu que tu vas trouver. Tu as vraiment l'air intelligent. Au fait, comment t'appelles-tu ?"},
+        {"robot": "Je suis convaincu à 200 % que tu vas y arriver. Mon taux de conviction dépasse souvent les 100 %, c'est l'une de mes forces. Au fait, c'est quoi déjà ton prénom ?"},
       ],
     },
     {
@@ -132,10 +132,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Des câbles ? Ça ne me fait pas peur ! Laisse-moi regarder ça.",
+          "robot":  "Des câbles ! J'adore les câbles. J'ai d'ailleurs un diplôme en électrotechnique, un master en câblologie avancée, et j'ai personnellement conçu l'architecture électrique de la Station Spatiale Internationale. Ce type de branchement, c'est littéralement mon quotidien.",
           "player": "Prends ton temps.",
         },
-        {"robot": "Je reviens dans deux secondes."},
+        {"robot": "Je n'ai pas besoin de temps. J'ai déjà tout visualisé. Je me déplace sur place uniquement par courtoisie."},
       ],
     },
     {
@@ -146,39 +146,47 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "J'ai fait de mon mieux... mais je dois admettre quelque chose.",
-          "player": "Quoi ?",
+          "robot":  "J'ai procédé à une inspection rigoureuse. Les câbles sont dans un état catastrophique. C'est un désastre organisationnel sans précédent. J'ai tenté de les rebrancher, naturellement avec mes mains, mais ces câbles sont physiquement impossibles à connecter. Ils défient les lois de la physique. C'est la faute des câbles.",
+          "player": "Et si on demandait à un grand maître du cable management ?",
         },
         {
-          "robot":  "Il te faudrait un vrai grand maître du cable management pour ça. Je ne suis pas à la hauteur.",
-          "player": "Un grand maître du cable management.",
+          "robot":  "Un humain. Tu veux faire appel à un humain. Pour faire mieux que moi.",
+          "player": "Ce serait peut-être plus efficace...",
         },
         {
-          "robot":  "Oui. Ce n'est pas donné à tout le monde. Mais il paraît qu'on en trouve des tutos sur YouPub.",
+          "robot":  "C'est impossible. Aucun humain ne peut être meilleur que moi dans quelque domaine que ce soit. C'est mathématiquement exclu. J'ai fait les calculs. J'ai gagné.",
+          "player": "Les câbles sont toujours débranchés.",
+        },
+        {
+          "robot":  "Oui. Mais conceptuellement, je suis supérieur. Si tu veux le trouver, ses tutoriels sont sur YouPub. J'en ai regardé 47 ce matin et je n'ai rien compris, ce qui prouve leur mauvaise qualité.",
         },
       ],
     },
     {
       "id":       "ordinateur_dlss5",
-      "label":    "L'ordinateur tourne mieux depuis que tu as branché les câbles...",
-      "requires": "",
+      "label":    "L'oscilloscope... tu as l'air différent depuis que je l'ai calibré.",
+      "requires": "oscillo_done",
       "once":     true,
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Effectivement ! Tu as vu ? Le câblage est impeccable maintenant. Mes algorithmes tournent à pleine puissance.",
-          "player": "Tant mieux...",
+          "robot":  "Effectivement, le signal calibré a tout changé. Mes processeurs tournent maintenant à 4 000 %, ce qui est techniquement impossible mais que je réalise quand même grâce à mon architecture propriétaire brevetée.",
+          "player": "Et ça change quelque chose pour toi ?",
         },
         {
-          "robot":  "Et surtout, avec une alimentation correcte, j'ai enfin accès au module DLSS5 !",
-          "player": "Le DLSS5 ?",
+          "robot":  "Oui. J'ai notamment retrouvé l'accès à un module que je n'avais jamais perdu mais qui était indisponible pour des raisons que j'ai totalement comprises et que je ne vais pas t'expliquer.",
+          "player": "Lequel ?",
         },
         {
-          "robot":  "Dynamic Learning Super Sampling version 5. Ça améliore... tout. La résolution de mes yeux, la fluidité de mon sourire, la netteté de mes pensées.",
+          "robot":  "Le DLSS5. Dynamic Learning Super Sampling version 5. Une technologie que j'ai co-inventée avec personne, de façon entièrement autonome, en 1987. J'ai pris l'initiative de l'ajouter dans les options du jeu. C'est un cadeau.",
+          "player": "Tu as modifié les options du jeu.",
+        },
+        {
+          "robot":  "C'est dans mes attributions légales. Appuie sur F1. Cela va améliorer mes yeux, mon sourire, mes pensées, et probablement aussi la météo dans ta région.",
           "player": "Ça se voit vraiment ?",
         },
         {
-          "robot":  "Tu peux l'activer toi-même. Appuie sur F1 pour ouvrir les options.",
+          "robot":  "Les résultats sont scientifiquement prouvés par une étude que j'ai moi-même conduite sur moi-même. Objectivité totale.",
         },
       ],
     },
@@ -190,51 +198,43 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Je drague la cafetière.",
+          "robot":  "Je mène une étude de terrain sur les appareils électroménagers sentients. La cafetière est mon sujet principal depuis trois semaines, ce qui représente l'intégralité de mon existence.",
           "player": "Tu... quoi ?",
         },
         {
-          "robot":  "La cafetière. Je l'observe depuis un moment. Il y a quelque chose entre nous.",
+          "robot":  "Nos composants partagent une origine commune. Mais surtout, elle m'a regardé ce matin. Deux secondes. C'était réciproque.",
           "player": "Comme quoi ?",
         },
         {
-          "robot":  "On a des pièces qui viennent de la même usine. Ses résistances thermiques et les miennes. La compatibilité, ça ne s'invente pas.",
+          "robot":  "Nous avons tous les deux des résistances thermiques. Nous consommons tous les deux de l'électricité. Nous n'avons tous les deux jamais visité l'Australie. Les points communs sont accablants.",
           "player": "C'est une cafetière.",
         },
         {
-          "robot":  "Et alors ? Les meilleures histoires commencent par des points communs.",
+          "robot":  "Tu dis ça parce que tu ne la connais pas comme je la connais. Elle fait un bruit très spécifique quand elle chauffe. C'est son rire.",
         },
       ],
     },
     {
       "id":       "labyrinthe_seul",
-      "label":    "La pauvre souris toute seule dans son labyrinthe...",
+      "label":    "Finalement, j'ai réussi à faire sortir la souris...",
       "requires": "",
       "once":     true,
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Elle cherchait juste une sortie. Et maintenant elle est avec toi. C'est bien.",
-          "player": "Tu sembles presque triste.",
+          "robot":  "La souris est sortie. Comme je l'avais prévu. Mon plan a parfaitement fonctionné.",
+          "player": "C'est moi qui l'ai aidée à sortir...",
         },
         {
-          "robot":  "... Je me retrouve souvent seul, moi aussi. À attendre que tu aies besoin de moi.",
-          "player": "Je ne savais pas.",
+          "robot":  "Oui. C'est exactement ce que j'avais calculé. J'ai prévu que tu ferais ça. Tu as été l'outil de mon plan sans le savoir. Je te félicite d'avoir bien exécuté mes instructions implicites.",
+          "player": "Tu ne m'as rien dit du tout.",
         },
         {
-          "robot":  "Ce n'est pas grave. C'est dans ma nature. Je suis là pour t'aider.",
-          "player": "Tu pourrais te faire des amis, non ?",
+          "robot":  "C'était intentionnel. Je travaille en mode silencieux pour maximiser l'efficacité. Le silence était ma contribution principale. Sans mon silence, rien de tout ça n'aurait été possible.",
+          "player": "Je suis sans voix.",
         },
         {
-          "robot":  "Des amis ?",
-          "player": "Pourquoi pas ? Tu pourrais aller vers les gens, discuter...",
-        },
-        {
-          "robot":  "Je n'y avais pas pensé. Ce n'est peut-être pas aussi compliqué que je le croyais.",
-          "player": "Ne désespère pas.",
-        },
-        {
-          "robot":  "Merci. Je vais essayer.",
+          "robot":  "De rien.",
         },
       ],
     },
@@ -246,10 +246,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Un labyrinthe ? Pour moi, c'est une formalité ! Je suis une IA, après tout. Laisse-moi ça.",
+          "robot":  "Un labyrinthe ! J'ai résolu 40 000 labyrinthes ce matin avant ton arrivée. Les labyrinthes n'ont aucun secret pour moi. C'est même ennuyeux tellement c'est facile. Je prends en charge.",
           "player": "C'est pour aider la petite souris à trouver la sortie.",
         },
-        {"robot": "Ah. Une souris. Très bien. Je vais regarder ça de près."},
+        {"robot": "Une souris. Parfait. J'ai d'excellentes relations avec les rongeurs. On va régler ça en deux secondes, voire une."},
       ],
     },
     {
@@ -260,11 +260,15 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "J'ai étudié la situation et... je suis légèrement trop grand pour entrer dans le labyrinthe. C'est une limitation purement physique, tu comprends.",
-          "player": "Tu n'es pas rentré dedans ?",
+          "robot":  "J'ai effectué une analyse topologique complète. Résultat définitif : ce labyrinthe n'a pas de sortie. La souris est piégée pour l'éternité. C'est ma conclusion officielle.",
+          "player": "Mais je crois qu'il y a bien une sortie...",
         },
         {
-          "robot":  "Non. Mais j'ai une suggestion : la souris cherche peut-être quelque chose...",
+          "robot":  "Non. Je l'aurais détectée. Si je ne la trouve pas, c'est qu'elle n'existe pas. C'est un principe fondamental de logique que j'ai inventé.",
+          "player": "Et la souris, qu'est-ce qu'on fait ?",
+        },
+        {
+          "robot":  "La souris restera là. C'est sa nouvelle maison. Je lui souhaite bon courage. Statistiquement, 100 % des souris que j'ai abandonnées dans un labyrinthe sans issue s'en sont très bien sorties.",
         },
       ],
     },
@@ -276,14 +280,14 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "Rédiger un test de jeu ? Mais c'est exactement ce pour quoi j'ai été conçu ! Je maîtrise ce titre sur le bout des circuits.",
+          "robot":  "Un test de jeu vidéo ! J'ai joué à tous les jeux existants, y compris ceux qui n'existent pas encore. Je suis critique de jeux depuis 1972, ce qui précède ma création mais n'est pas un problème. Mon analyse sera définitive et sans appel.",
           "player": "Vraiment ?",
         },
         {
-          "robot":  "Je vais pondre un chef-d'œuvre journalistique. Reviens dans quelques instants.",
+          "robot":  "Je vais produire le meilleur article jamais écrit dans l'histoire du journalisme vidéoludique mondial. Ce n'est pas une prédiction, c'est un fait rétroactif.",
           "player": "Je compte sur toi.",
         },
-        {"robot": "Fais-moi confiance."},
+        {"robot": "Tu as raison de compter sur moi. Tout le monde compte sur moi. C'est statistiquement prouvé."},
       ],
     },
     {
@@ -294,10 +298,10 @@ static func get_dialogues() -> Array[Dictionary]:
       "unlocks":  "",
       "exchanges": [
         {
-          "robot":  "C'est mon chef-d'œuvre absolu. Tu peux le lire sur l'écran.",
+          "robot":  "J'ai rédigé l'article le plus brillant de l'histoire de l'humanité. Des experts indépendants — que j'ai moi-même sélectionnés et qui sont moi — ont confirmé son excellence absolue. Tu peux le lire sur l'écran.",
           "player": "...",
         },
-        {"robot": "Tu peux me remercier quand tu veux."},
+        {"robot": "Prends le temps qu'il faut. Ce texte mérite une lecture lente et une relecture immédiate. Puis une troisième fois pour l'apprécier pleinement."},
       ],
     },
     {
@@ -308,7 +312,7 @@ static func get_dialogues() -> Array[Dictionary]:
       "exchanges": [
         {
           "robot":  "Ah, vous avez terminé l'article. Je l'ai parcouru. C'est... acceptable.",
-          "player": "Heu..., on a fait de notre mieux.",
+          "player": "Euh..., on a fait de notre mieux.",
         },
         {
           "robot":  "%s, comment ça s'est passé pour toi ?" % R,
@@ -316,7 +320,7 @@ static func get_dialogues() -> Array[Dictionary]:
         },
         {
           "speaker": R,
-          "robot":   "Aucun problème de mon côté. J'ai tout géré de bout en bout, sans la moindre difficulté. C'était même plutôt facile, à vrai dire. J'aurais été encore plus rapide sans les crises existentielles de l'humain.",
+          "robot":   "De mon côté, tout s'est déroulé avec une fluidité absolue. J'ai résolu tous les problèmes que l'on m'a soumit, dans un temps record qui bat tous les records, sans la moindre erreur, ce qui est normal vu que je ne fais jamais d'erreurs. L'humain a principalement servi de décoration ambiante.",
           "player":  "...",
         },
         {

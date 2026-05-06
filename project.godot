@@ -20,6 +20,12 @@ config/icon="res://icon.svg"
 AudioManager="*uid://cxp2sn4tiaila"
 AudioData="*uid://e2rtq7vhpdsg"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/resizable=false
+
 [global_group]
 
 robot=""

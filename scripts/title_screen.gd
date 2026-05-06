@@ -1,17 +1,22 @@
 extends CanvasLayer
 
 signal started
+signal options_requested
 
-@onready var _press_label: Label = %PressLabel
+@onready var _new_game_btn: Button = %NewGameButton
+@onready var _options_btn:  Button = %OptionsButton
+@onready var _quit_btn:     Button = %QuitButton
 
 func _ready() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  var tween := create_tween().set_loops()
-  tween.tween_property(_press_label, "modulate:a", 0.0, 0.55)
-  tween.tween_property(_press_label, "modulate:a", 1.0, 0.55)
+  _new_game_btn.pressed.connect(_on_new_game_pressed)
+  _options_btn.pressed.connect(_on_options_pressed)
+  _quit_btn.pressed.connect(get_tree().quit)
+  _new_game_btn.grab_focus()
 
-func _unhandled_input(event: InputEvent) -> void:
-  if event is InputEventKey and event.pressed and not event.echo:
-    get_viewport().set_input_as_handled()
-    started.emit()
-    queue_free()
+func _on_new_game_pressed() -> void:
+  started.emit()
+  queue_free()
+
+func _on_options_pressed() -> void:
+  options_requested.emit()
