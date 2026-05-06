@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://bx8fxfektnis3"]
+
+[ext_resource type="Script" uid="uid://cburu7dpqsu6f" path="res://scripts/stair.gd" id="1_mhnnb"]
+[ext_resource type="PackedScene" uid="uid://rc7snwfqe2hk" path="res://assets/models/stair.glb" id="1_t3muf"]
+[ext_resource type="PackedScene" uid="uid://pyy6x572f3ec" path="res://scenes/wall_standard.tscn" id="2_mhnnb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqx0a"]
+size = Vector3(3.4126282, 0.35424805, 1.9382324)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hoyw1"]
+size = Vector3(0.30391693, 0.20953369, 1.9952526)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqhsa"]
+size = Vector3(1.4967651, 0.20953369, 3.9919128)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gbjqc"]
+size = Vector3(1.4967651, 0.20953369, 3.9919128)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5nkn4"]
+size = Vector3(0.4152069, 0.20953369, 1.9988861)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7g04l"]
+size = Vector3(0.647995, 1, 1.6199265)
+
+[node name="Stair" type="Node3D" unique_id=1410554548]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_mhnnb")
+
+[node name="Mesh" parent="." unique_id=1793469925 instance=ExtResource("1_t3muf")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1826187869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.99999976, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=910132165]
+transform = Transform3D(0.84185004, -0.5397114, 1.3825911e-08, 0.5397114, 0.84185004, -4.718307e-08, 1.3825911e-08, 4.7183075e-08, 1, -0.63033867, -0.06717712, -0.023593903)
+shape = SubResource("BoxShape3D_aqx0a")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" unique_id=1146620574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84677315, 0.895125, 0.006392002)
+shape = SubResource("BoxShape3D_hoyw1")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D" unique_id=784928937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.578207, -0.896513, -1.005842)
+shape = SubResource("BoxShape3D_rqhsa")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D" unique_id=1691691543]
+transform = Transform3D(-0.84185004, 0.5397114, -1.0124869e-07, 0.5397114, 0.84185004, -4.7183068e-08, 5.977095e-08, -9.436614e-08, -1, -0.366127, -1.8796086, -2.0235937)
+shape = SubResource("BoxShape3D_aqx0a")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D" unique_id=287966060]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7429256, -2.7045338, -1.0058422)
+shape = SubResource("BoxShape3D_gbjqc")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="StaticBody3D" unique_id=719648615]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.86702347, -2.7045338, -2.0023553)
+shape = SubResource("BoxShape3D_5nkn4")
+
+[node name="Wall_Standard17" parent="." unique_id=1277023873 instance=ExtResource("2_mhnnb")]
+transform = Transform3D(3, 0, 2.3841858e-07, 0, 1.2, 0, -7.1525574e-07, 0, 1, -1.5, -3.6000001, 1)
+
+[node name="Wall_Standard18" parent="." unique_id=373962317 instance=ExtResource("2_mhnnb")]
+transform = Transform3D(3, 0, 2.3841858e-07, 0, 1.2, 0, -7.1525574e-07, 0, 1, -1.5, -3.6000001, -3)
+
+[node name="Wall_Standard19" parent="." unique_id=1768647901 instance=ExtResource("2_mhnnb")]
+transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, -4.5, -3.6000001, -1)
+
+[node name="Wall_Standard20" parent="." unique_id=1632374795 instance=ExtResource("2_mhnnb")]
+transform = Transform3D(-5.6425995e-07, 0, 1, 0, 1.2, 0, -2, 0, -2.8212997e-07, 1.5, -3.6000001, -1)
+
+[node name="Wall_Standard21" parent="." unique_id=1360338856 instance=ExtResource("2_mhnnb")]
+transform = Transform3D(1.2, 0, 2.3841858e-07, 0, 1.2, 0, -2.861023e-07, 0, 1, -1.5, -3.6000001, -1)
+
+[node name="Neon_Stair" type="SpotLight3D" parent="." unique_id=487647831]
+transform = Transform3D(-1, 8.742278e-08, 0, 0, 0, 1, 8.742278e-08, 1, 0, -2.7568278, -0.42685604, -0.64866936)
+light_color = Color(0.99607843, 0.9372549, 0.4745098, 1)
+light_energy = 0.3
+light_indirect_energy = 0.4
+spot_range = 1.8862942
+spot_attenuation = 0.3
+spot_angle = 73.39186
+
+[node name="Area3DUpDown" type="Area3D" parent="." unique_id=1462759972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8964914, -1.959197, -1.0244931)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DUpDown" unique_id=188749865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.44790685, 0.585876, -0.9685707)
+shape = SubResource("BoxShape3D_7g04l")
+
+[connection signal="body_entered" from="Area3DUpDown" to="." method="_on_area_3d_up_down_body_entered"]
