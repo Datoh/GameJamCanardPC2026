@@ -751,7 +751,7 @@ glow_enabled = true
 script = ExtResource("1_kviqm")
 
 [node name="Stairs" type="Node3D" parent="." unique_id=30302168 node_paths=PackedStringArray("_stair1", "_stair2", "_office")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.086451, 0.10208917, -0.1298604)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.086, 0.111, -0.13)
 script = ExtResource("71_aqx0a")
 _stair1 = NodePath("Stair1")
 _stair2 = NodePath("Stair2")
@@ -878,7 +878,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17, 
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17, 0, 0)
 
 [node name="Wall_Standard17" parent="Office/Walls" unique_id=103169124 instance=ExtResource("2_gdafm")]
-transform = Transform3D(-3, 0, -1.509958e-07, 0, 1, 0, 4.5298742e-07, 0, -1, 20, 0, 2)
+transform = Transform3D(-3, 0, -1.509958e-07, 0, 1, 0, 4.5298742e-07, 0, -1, 20, 5.9604645e-08, 2)
 
 [node name="Wall_Standard18" parent="Office/Walls" unique_id=1865983227 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-2.1, 0, -1.509958e-07, 0, 1, 0, 3.1709118e-07, 0, -1, 19.1, 0, 4)
@@ -1556,7 +1556,7 @@ autoplay = true
 max_distance = 3.0
 
 [node name="Wall_Standard20" parent="Office/Reserve" unique_id=1467423326 instance=ExtResource("2_gdafm")]
-transform = Transform3D(3.894144e-07, 0, -1, 0, 1.2, 0, 2, 0, 1.947072e-07, 9.93, -0.6, 4)
+transform = Transform3D(3.894144e-07, 0, -1, 0, 1.2, 0, 2, 0, 1.947072e-07, 10, -0.6, 3.994)
 
 [node name="Stair0" type="Node3D" parent="Office/Reserve" unique_id=1410554548]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 5.5, 3.6, 3)
