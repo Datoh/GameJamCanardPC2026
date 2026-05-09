@@ -15,7 +15,7 @@ const DialogueUI = preload("res://scripts/dialogue_ui.gd")
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var inventory: Array[String] = []
-var notified: Array[String] = []
+var cpc_collected: Array[int] = []
 
 var state_machine: Dictionary = {}
 
@@ -33,6 +33,7 @@ var _interaction_hint_label: Label
 var _machine_timer: Timer
 @onready var _crosshair:        TextureRect = %Crosshair
 @onready var _objective_label:  Label       = %ObjectiveLabel
+@onready var _objective_cpc_label: Label = %ObjectiveCPCLabel
 @onready var _quit_hint_label:  Label       = %QuitHintLabel
 @onready var _camera_3d: Camera3D = %Camera3D
 
@@ -310,12 +311,14 @@ func suppress_dialogue(dialogue_id: String) -> void:
   if dialogue_id not in _completed_dialogues:
     _completed_dialogues.append(dialogue_id)
 
-func notify(notify_name: String) -> void:
-  if not notified.has(notify_name):
-    notified.append(notify_name)
+func collect_cpc(id: int) -> void:
+  if not cpc_collected.has(id):
+    cpc_collected.append(id)
+    cpc_collected.sort()
+    _objective_cpc_label.text = "Canard PC trouvés: " + ", ".join(cpc_collected)
 
-func is_notified(notify_name: String) -> bool:
-  return notified.has(notify_name)
+func is_cpc_collected(id: int) -> bool:
+  return cpc_collected.has(id)
 
 func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
   if not machine_name.is_empty():

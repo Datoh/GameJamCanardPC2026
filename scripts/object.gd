@@ -22,8 +22,5 @@ func interact(player: Node) -> void:
   else:
     player.show_message(message_ko, 3.0)
 
-func _play_sound_pick():
-  return
-
 func get_interaction_hint(_player: Node) -> String:
   return hint
