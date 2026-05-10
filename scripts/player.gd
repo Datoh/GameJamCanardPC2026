@@ -240,8 +240,10 @@ func _unhandled_input(event: InputEvent) -> void:
       return
 
   if not _dialogue_ui.is_open() and event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-    rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
-    camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
+    var sens := MOUSE_SENSITIVITY * OptionsMenu.mouse_sensitivity
+    var invert_y := -1.0 if OptionsMenu.mouse_invert_y else 1.0
+    rotate_y(-event.relative.x * sens)
+    camera.rotate_x(-event.relative.y * sens * invert_y)
     camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
   if event.is_action_pressed("ui_accept") and not _dialogue_ui.is_open():
@@ -316,6 +318,10 @@ func collect_cpc(id: int) -> void:
     cpc_collected.append(id)
     cpc_collected.sort()
     _objective_cpc_label.text = "Canard PC trouvés: " + ", ".join(cpc_collected)
+    if cpc_collected.size() == get_tree().get_nodes_in_group("cpc").size():
+      await get_tree().create_timer(2.5).timeout
+      show_message("Vous avez trouvé tous les Canard PC", 2.0)
+      AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
 
 func is_cpc_collected(id: int) -> bool:
   return cpc_collected.has(id)

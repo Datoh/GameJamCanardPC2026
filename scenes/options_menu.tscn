@@ -29,9 +29,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -230.0
-offset_top = -200.0
+offset_top = -250.0
 offset_right = 230.0
-offset_bottom = 200.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -137,6 +137,48 @@ text = "Activer le DLSS 5"
 vertical_alignment = 1
 
 [node name="DLSSCheck" type="CheckBox" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1013]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MouseSensRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1024]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MouseSensLabel" type="Label" parent="Dialog/Margin/VBox/MouseSensRow" unique_id=1025]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sensibilité souris"
+vertical_alignment = 1
+
+[node name="MouseSensSlider" type="HSlider" parent="Dialog/Margin/VBox/MouseSensRow" unique_id=1026]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 10.0
+step = 0.5
+value = 5.0
+
+[node name="MouseSensValue" type="Label" parent="Dialog/Margin/VBox/MouseSensRow" unique_id=1027]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+text = "5"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MouseInvertYRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1028]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MouseInvertYLabel" type="Label" parent="Dialog/Margin/VBox/MouseInvertYRow" unique_id=1029]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Inverser Y souris"
+vertical_alignment = 1
+
+[node name="MouseInvertYCheck" type="CheckBox" parent="Dialog/Margin/VBox/MouseInvertYRow" unique_id=1030]
 unique_name_in_owner = true
 layout_mode = 2
 

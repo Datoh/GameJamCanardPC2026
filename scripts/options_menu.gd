@@ -5,6 +5,9 @@ signal closed
 
 const BUS_MASTER := 0
 
+static var mouse_sensitivity: float = 1.0
+static var mouse_invert_y: bool = false
+
 const RESOLUTIONS: Array[Vector2i] = [
   Vector2i(640,  360),
   Vector2i(854,  480),
@@ -22,6 +25,9 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var _resolution_option: OptionButton = %ResolutionOption
 @onready var _fullscreen_check:  CheckBox     = %FullscreenCheck
 @onready var _validate_btn:      Button       = %ValidateButton
+@onready var _mouse_sens_slider: HSlider      = %MouseSensSlider
+@onready var _mouse_sens_value:  Label        = %MouseSensValue
+@onready var _mouse_invert_check: CheckBox    = %MouseInvertYCheck
 
 func _ready() -> void:
   _volume_slider.value_changed.connect(_on_volume_changed)
@@ -30,6 +36,8 @@ func _ready() -> void:
   _sdfgi_check.toggled.connect(_on_sdfgi_toggled)
   _resolution_option.item_selected.connect(_on_resolution_selected)
   _fullscreen_check.toggled.connect(_on_fullscreen_toggled)
+  _mouse_sens_slider.value_changed.connect(_on_mouse_sens_changed)
+  _mouse_invert_check.toggled.connect(_on_mouse_invert_toggled)
 
   _build_resolution_list()
   _detect_best_resolution()
@@ -42,6 +50,8 @@ func _ready() -> void:
   _resolution_option.disabled = _fullscreen_check.button_pressed
 
   _on_volume_changed(_volume_slider.value)
+  _on_mouse_sens_changed(_mouse_sens_slider.value)
+  _mouse_invert_check.set_pressed_no_signal(mouse_invert_y)
 
   var world_env := get_tree().root.find_child("WorldEnvironment", true, false)
   if world_env and world_env.environment:
@@ -97,6 +107,13 @@ func _on_fullscreen_toggled(enabled: bool) -> void:
     DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
     _apply_resolution(_resolution_option.selected)
   _resolution_option.disabled = enabled
+
+func _on_mouse_sens_changed(value: float) -> void:
+  _mouse_sens_value.text = str(int(value))
+  mouse_sensitivity = value / 5.0
+
+func _on_mouse_invert_toggled(enabled: bool) -> void:
+  mouse_invert_y = enabled
 
 func _on_validate_pressed() -> void:
   hide()
