@@ -58,10 +58,6 @@ func _ready() -> void:
   dialogue_resultat   = "ordinateur_resultat"
   robot_work_duration = 15.0
   message_idle               = "Ces câbles ne sont pas branchés. Je vais recabler tout ça."
-  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. %s" % DialoguesData.robot_name + " pourrait peut-être s'y connaître en câblage."
-  message_robot_working      = "Le %s" % DialoguesData.robot_name + " bidouille les câbles à l'arrière de la tour..."
-  message_robot_done         = "Le %s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler."
-  message_try_machine_object = "Le %s" % DialoguesData.robot_name + " n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
   message_solved             = "La tour est recablé."
   hint_default     = "[ESPACE] Regarder la tour"
   hint_try_machine = "[ESPACE] Rebrancher les câbles"
@@ -72,6 +68,12 @@ func _ready() -> void:
   _setup_pc_camera()
   _reinitialiser()
 
+func interact(player: Node) -> void:
+  message_robot_working      = "Le %s" % DialoguesData.robot_name + " bidouille les câbles à l'arrière de la tour..."
+  message_robot_done         = "Le %s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler."
+  message_try_machine_object = "Le %s" % DialoguesData.robot_name + " n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
+  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. %s" % DialoguesData.robot_name + " pourrait peut-être s'y connaître en câblage."
+  super.interact(player)
 
 func _can_try(_player: Node) -> bool:
   return true

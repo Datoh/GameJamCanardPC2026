@@ -2,15 +2,6 @@ class_name DialoguesData
 
 static var robot_name: String = "LN R3p14y"
 
-# Messages affichés quand le joueur interagit avec un objet qu'il ne peut
-# pas encore ramasser.
-static var OBJECT_MESSAGES: Dictionary = {
-  "Dictionnaire": "Ce dictionnaire est plein de mots. Des vrais, j'espère.",
-  "Fromage":      "Je ne vois pas à quoi pourrait me servir ce fromage.",
-  "Joint":        "Ce joint m'a l'air artisanal. Je le garde pour plus tard.",
-  "Feutres":      "Des feutres de couleurs mordus par " + robot_name + ". Il mâchouille tous les capuchons.",
-}
-
 # Chaque dialogue :
 #   id        : identifiant unique
 #   label     : texte affiché sur le bouton joueur (vide si hidden)

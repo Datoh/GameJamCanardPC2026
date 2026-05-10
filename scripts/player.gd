@@ -41,6 +41,8 @@ var minigame_name: String = ""
 var _intro_done: bool = false
 var _dialogue_is_with_robot: bool = false
 
+var _cpc_count := 0
+
 var in_minigame: bool = false:
   set(value):
     in_minigame = value
@@ -58,6 +60,8 @@ func _ready() -> void:
   await get_tree().process_frame
 
   _robot = get_tree().get_first_node_in_group("robot")
+
+  _cpc_count = get_tree().get_nodes_in_group("cpc").size()
 
   for machine in get_tree().get_nodes_in_group("machine"):
     state_machine[machine.NAME] = Machine.StateMachine.IDLE
@@ -318,9 +322,10 @@ func collect_cpc(id: int) -> void:
     cpc_collected.append(id)
     cpc_collected.sort()
     _objective_cpc_label.text = "Canard PC trouvés: " + ", ".join(cpc_collected)
-    if cpc_collected.size() == get_tree().get_nodes_in_group("cpc").size():
-      await get_tree().create_timer(2.5).timeout
-      show_message("Vous avez trouvé tous les Canard PC", 2.0)
+    print("%d = %d" % [cpc_collected.size(), _cpc_count])
+    if cpc_collected.size() == _cpc_count:
+      await get_tree().create_timer(0.5).timeout
+      show_message("Vous avez trouvé tous les Canard PC", 3.0)
       AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
 
 func is_cpc_collected(id: int) -> bool:

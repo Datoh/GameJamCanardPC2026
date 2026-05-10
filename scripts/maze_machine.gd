@@ -13,9 +13,6 @@ func _ready() -> void:
   dialogue_demande = "labyrinthe_demande"
   dialogue_resultat = "labyrinthe_resultat"
   robot_work_duration = 15.0
-  message_try_machine = "La souris ne trouve pas la sortie... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
-  message_robot_working = "%s" % DialoguesData.robot_name + " est en train d'étudier le labyrinthe..."
-  message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
   message_try_machine_object = "Il me faudrait quelque chose pour attirer la souris..."
   message_try_machine_ok = "Allez viens ma belle."
   message_waiting_unlocked = "Elle arrive..."
@@ -24,6 +21,12 @@ func _ready() -> void:
   add_child(_timer_mouse)
   _timer_mouse.timeout.connect(_on_timer_mouse_timeout)
   _timer_mouse.start(randf_range(2.0, 4.0))
+
+func interact(player: Node) -> void:
+  message_try_machine = "La souris ne trouve pas la sortie... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
+  message_robot_working = "%s" % DialoguesData.robot_name + " est en train d'étudier le labyrinthe..."
+  message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
+  super.interact(player)
 
 func _can_try(_player: Node) -> bool:
   return true

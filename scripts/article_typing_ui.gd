@@ -18,7 +18,6 @@ const _PLAYER_ARTICLE_TPL := \
 "Il y a quelque chose là-dedans. Une idée. Un truc qui aurait pu être vraiment bien avec six mois de plus et du café de meilleure qualité. Les développeurs ont bossé sans dormir, et quelques détails trahissent un vrai amour du jeu vidéo — ce petit soin qu'on met quand on sait que personne ne le remarquera mais qu'on le fait quand même.\n\n" + \
 "Note : 6/10 — Recommandé pour ceux qui apprécient les jeux faits par des humains, à la main, un week-end de mai."
 
-var BAD_ARTICLE:    String
 var PLAYER_ARTICLE: String
 
 @onready var _text_label:     RichTextLabel = $Margin/VBox/TextLabel
@@ -30,7 +29,6 @@ var PLAYER_ARTICLE: String
 
 func _ready() -> void:
   var game_name: String = ProjectSettings.get_setting("application/config/name", "")
-  BAD_ARTICLE    = _BAD_ARTICLE_TPL % [game_name, DialoguesData.robot_name]
   PLAYER_ARTICLE = _PLAYER_ARTICLE_TPL % game_name
 
 
@@ -42,7 +40,9 @@ func _show_reaction(text: String) -> void:
 
 
 func show_bad_article() -> void:
-  _text_label.parse_bbcode("[color=#111111]%s[/color]" % BAD_ARTICLE)
+  var game_name: String = ProjectSettings.get_setting("application/config/name", "")
+  var bad_article := _BAD_ARTICLE_TPL % [game_name, DialoguesData.robot_name]
+  _text_label.parse_bbcode("[color=#111111]%s[/color]" % bad_article)
   _show_reaction("[ESPACE] Non, non, non... Cet article est une honte absolue. Impossible de publier ça. Je vais tout supprimer et l'écrire moi-même.")
 
 

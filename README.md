@@ -16,7 +16,6 @@ Jeu fait pour la gamejam Canard PC 2026 [Make Something Horrible 2026 : to Slop 
 * [gameworld3d - DOGE COIN Free low-poly 3D (model)](https://www.cgtrader.com/free-3d-models/electronics/other/doge-coin-72cc137b-00c7-402c-9d96-e8a1edc6d7e0)
 * [Adobe - Joe (model)](https://www.mixamo.com/)
 * [sgw32 - Soviet Oscilloscope C1-91 Free low-poly 3D (model)](https://www.cgtrader.com/free-3d-models/electronics/other/soviet-oscilloscope-c1-91)
-* [amxlius - Soviet Oscilloscope C1-91 Free low-poly 3D (model)](https://www.cgtrader.com/free-3d-models/electronics/other/soviet-oscilloscope-c1-91)
 * [Laslo Jott - CRT TV Head Robot - Stray Inspired (model)](https://sketchfab.com/3d-models/crt-tv-head-robot-stray-inspired-ba472e684899483a9538be26598cb70a)
 * [Console Art Cybernetic - Lamp 22 (model)](https://sketchfab.com/3d-models/lamp-22-9200262ca1cd47b4bb139c8c150b4231)
 * [Flat design animal silhouette set (texture)](https://www.magnific.com/free-vector/flat-design-animal-silhouette-set_29628787.htm)

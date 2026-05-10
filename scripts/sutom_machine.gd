@@ -52,9 +52,6 @@ func _ready() -> void:
   object_required = "Dictionnaire"
   message_not_enable = "Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard..."
   message_idle = "Le mot de passe est là..."
-  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
-  message_robot_working = "%s" % DialoguesData.robot_name + " est en train de faire le SUTOM... je vais le laisser faire..."
-  message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
   message_try_machine_object = "Il faut que je trouve un moyen d'apprendre plus de mots."
   message_try_machine_ok = "Avec le dictionnaire, je vais connaître les mots."
   message_waiting_unlocked = "J'ai le mot de passe."
@@ -63,12 +60,16 @@ func _ready() -> void:
   _setup_overhead_camera()
   _setup_journal_surface()
 
+func interact(player: Node) -> void:
+  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
+  message_robot_working = "%s" % DialoguesData.robot_name + " est en train de faire le SUTOM... je vais le laisser faire..."
+  message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
+  super.interact(player)
 
 func _can_try(player: Node) -> bool:
   var oscillo_solved: bool = player.state_machine[MachineOscillo.NAME] == Machine.StateMachine.SOLVED
   var pc_solved: bool = player.state_machine[MachineOrdinateur.NAME] == Machine.StateMachine.SOLVED
   return oscillo_solved and pc_solved
-
 
 func _on_try_machine(player: Node, has_object: bool) -> void:
   _player_ref          = player
