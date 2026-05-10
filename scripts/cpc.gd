@@ -10,6 +10,7 @@ var _looked := false
 
 func _ready() -> void:
   add_to_group("interactive")
+  add_to_group("cpc")
   set_collision_layer_value(4, true)
 
 func interact(player: Node) -> void:

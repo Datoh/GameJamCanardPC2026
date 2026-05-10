@@ -36,8 +36,8 @@ func _process(_delta: float) -> void:
 func _ready() -> void:
   _player.visible = false
   _player.set_hud_visible(false)
+  _player.set_process_unhandled_input(false)
   _player.game_finished.connect(_on_game_finished)
-  _player.dialogue_side_effect.connect(_on_dialogue_side_effect)
   _options_canvas = CanvasLayer.new()
   _options_canvas.layer = 20
   add_child(_options_canvas)
@@ -62,6 +62,7 @@ func _on_title_options_requested() -> void:
 func _on_title_started() -> void:
   _player.visible = true
   _player.set_hud_visible(true)
+  _player.set_process_unhandled_input(true)
   _player.activate_camera()
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -102,6 +103,7 @@ func _on_machine_done(machine: Node):
       _player.suppress_dialogue("labyrinthe_seul")
     MachineOscillo.NAME:
       _player.suppress_dialogue("oscillo_done")
+      _options_menu.reveal_dlss_option()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -119,9 +121,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_options_closed() -> void:
   Input.set_mouse_mode(_prev_mouse_mode)
 
-func _on_dialogue_side_effect(dialogue_id: String) -> void:
-  if dialogue_id == "ordinateur_dlss5":
-    _options_menu.reveal_dlss_option()
 
 func _on_area_close_door_body_entered(_body: Node3D) -> void:
   for door in get_tree().get_nodes_in_group("door_ivan"):
