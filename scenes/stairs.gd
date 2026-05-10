@@ -42,3 +42,4 @@ func _on_start_step_area_body_entered(_body: Node3D) -> void:
   _step_offset = min(_stair1.step, _stair2.step) - 1
   _stair1.step_offset = _step_offset
   _stair2.step_offset = _step_offset
+  _move()
