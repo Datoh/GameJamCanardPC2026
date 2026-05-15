@@ -4,26 +4,20 @@ const _TITLE_SCREEN  := preload("res://scenes/title_screen.tscn")
 const _END_SCREEN    := preload("res://scenes/end_screen.tscn")
 const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
 
-@onready var _player: CharacterBody3D = %Player
-@onready var _mouse: CharacterBody3D = %Mouse
-@onready var _robot: CharacterBody3D = %Robot
-@onready var _position_robot:     RayCast3D = %PositionRobot
-@onready var _position_robot_end: RayCast3D = %PositionRobotEnd
-@onready var _cheese_in_maze: Node3D = %CheeseInMaze
-@onready var _camera_3d_end: Camera3D = %Camera3DEnd
-@onready var _position_robot_cofee: RayCast3D = %PositionRobotCofee
-
-@onready var _machines := {
-  MachineSutom.NAME:  %SutomMachine,
-  MachineMaze.NAME:   %MazeMachine,
-  MachineOscillo.NAME: %OscilloMachine,
-  #MachineTV.machine_name: %TVMachine,
-}
+@onready var _player:               CharacterBody3D = %Player
+@onready var _mouse:                CharacterBody3D = %Mouse
+@onready var _robot:                CharacterBody3D = %Robot
+@onready var _position_robot:       RayCast3D       = %PositionRobot
+@onready var _position_robot_end:   RayCast3D       = %PositionRobotEnd
+@onready var _cheese_in_maze:       Node3D          = %CheeseInMaze
+@onready var _camera_3d_end:        Camera3D        = %Camera3DEnd
+@onready var _position_robot_cofee: RayCast3D       = %PositionRobotCofee
 
 var _ivan_door_unlocked: bool = false
 var _options_canvas: CanvasLayer
 var _options_menu: OptionsMenu
 var _prev_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
+
 
 func _process(_delta: float) -> void:
   if _ivan_door_unlocked:
@@ -33,11 +27,13 @@ func _process(_delta: float) -> void:
     for door in get_tree().get_nodes_in_group("door_ivan"):
       door.unlock()
 
+
 func _ready() -> void:
   _player.visible = false
   _player.set_hud_visible(false)
   _player.set_process_unhandled_input(false)
   _player.game_finished.connect(_on_game_finished)
+
   _options_canvas = CanvasLayer.new()
   _options_canvas.layer = 20
   add_child(_options_canvas)
@@ -51,13 +47,17 @@ func _ready() -> void:
   add_child(ts)
 
   %Ceil.visible = true
-  for machine in _machines.values():
-    machine.machine_try_ok.connect(_on_machine_try_ok)
+
+  for machine in get_tree().get_nodes_in_group("machine"):
+    machine.machine_attempt_succeeded.connect(_on_machine_attempt_succeeded)
     machine.machine_done.connect(_on_machine_done)
-  %MazeMachine.robot_go_coffee.connect(_on_robot_go_coffee)
+
+  %MazeMachine.robot_sent_for_coffee.connect(_on_robot_sent_for_coffee)
+
 
 func _on_title_options_requested() -> void:
   _options_menu.show()
+
 
 func _on_title_started() -> void:
   _player.visible = true
@@ -81,7 +81,7 @@ func _on_game_finished() -> void:
   add_child(_END_SCREEN.instantiate())
 
 
-func _on_machine_try_ok(machine: Node):
+func _on_machine_attempt_succeeded(machine: Node) -> void:
   match machine.machine_name:
     MachineMaze.NAME:
       AudioManager.play(AudioData.AUDIO_MOUSE_PICK, _mouse.global_position)
@@ -89,7 +89,7 @@ func _on_machine_try_ok(machine: Node):
       _cheese_in_maze.visible = true
 
 
-func _on_machine_done(machine: Node):
+func _on_machine_done(machine: Node) -> void:
   match machine.machine_name:
     MachineMaze.NAME:
       if is_instance_valid(_mouse):
@@ -118,6 +118,7 @@ func _unhandled_input(event: InputEvent) -> void:
     _options_menu.show()
     Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+
 func _on_options_closed() -> void:
   Input.set_mouse_mode(_prev_mouse_mode)
 
@@ -129,7 +130,7 @@ func _on_area_close_door_body_entered(_body: Node3D) -> void:
       %AreaCloseDoor.queue_free()
 
 
-func _on_robot_go_coffee() -> void:
+func _on_robot_sent_for_coffee() -> void:
   var cast_dir := (_position_robot_cofee.global_basis * _position_robot_cofee.target_position).normalized()
   _robot.set_coffee_mode(_position_robot_cofee.global_position, cast_dir)
 

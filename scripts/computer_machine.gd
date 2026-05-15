@@ -1,5 +1,5 @@
-extends Machine
 class_name MachineOrdinateur
+extends Machine
 
 const NAME := "Ordinateur"
 
@@ -17,24 +17,24 @@ const ENDPOINTS_OK = {
     "jaune": [Vector2i(2, 1), Vector2i(3, 8)],
   }
 
-# ── État jeu câbles ───────────────────────────────────────────────────────────
-var endpoints:    Dictionary = {}
-var chemins:      Dictionary = {}
-
-var _en_dessin:   bool   = false
-var _col_dessin:  String = ""
-var _crt:         Array  = []   # Array[Vector2i] — chemin en cours
-
-var peut_deplacer:  bool = false
-var depl_restants:  int  = 2
-var _drag_ep               # null | {"couleur": String, "idx": int}
-var _drag_pos := Vector2.ZERO
-
-# ── Caméra ────────────────────────────────────────────────────────────────────
 @export var cam_distance:          float = 0.30
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height:        float = 0.50
 
+# ── État jeu câbles ───────────────────────────────────────────────────────────
+var endpoints:    Dictionary = {}
+var chemins:      Dictionary = {}
+
+var peut_deplacer:  bool = false
+var depl_restants:  int  = 2
+
+var _en_dessin:   bool   = false
+var _col_dessin:  String = ""
+var _crt:         Array  = []   # Array[Vector2i] — chemin en cours
+var _drag_ep: Variant = null    # null | {"couleur": String, "idx": int}
+var _drag_pos := Vector2.ZERO
+
+# ── Caméra ────────────────────────────────────────────────────────────────────
 var _pc_cam:       Camera3D = null
 var _player_camera: Camera3D = null
 var _cam_start_pos   := Vector3.ZERO
@@ -68,6 +68,7 @@ func _ready() -> void:
   _setup_pc_camera()
   _reinitialiser()
 
+
 func interact(player: Node) -> void:
   message_robot_working      = "Le %s" % DialoguesData.robot_name + " bidouille les câbles à l'arrière de la tour..."
   message_robot_done         = "Le %s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler."
@@ -75,8 +76,10 @@ func interact(player: Node) -> void:
   message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. %s" % DialoguesData.robot_name + " pourrait peut-être s'y connaître en câblage."
   super.interact(player)
 
+
 func _can_try(_player: Node) -> bool:
   return true
+
 
 # ── Viewport + texture ────────────────────────────────────────────────────────
 
@@ -133,7 +136,6 @@ func _place_pc_camera() -> void:
 
 func _transition_to_pc(player_cam: Camera3D) -> void:
   _player_camera = player_cam
-  # Recalcule la cible à chaque entrée (la caméra PC a pu bouger lors du retour précédent)
   var normal: Vector3 = %Circuit.global_basis.y.normalized()
   _pc_cam.global_position = %Circuit.global_position + normal * cam_distance
   _pc_cam.look_at(%Circuit.global_position, Vector3.UP)
@@ -278,14 +280,12 @@ func _on_circuit_input(camera: Node, event: InputEvent, _world_pos: Vector3, _no
 func _unhandled_input(event: InputEvent) -> void:
   if not _jeu_actif:
     return
-  # Capture le relâchement souris même si hors du mesh
   if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
     if _en_dessin:
       _valider()
     elif _drag_ep != null:
       _drag_ep = null
       _grid_update()
-  # Échap ou clic droit quitte le mini-jeu
   var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
            or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
   if quit:
@@ -301,8 +301,10 @@ func _pos_to_cell(pos: Vector2) -> Vector2i:
     int((pos.y - CableGrid.MARGE) / CableGrid.TAILLE_CELL)
   )
 
+
 func _valide(c: Vector2i) -> bool:
   return c.x >= 0 and c.x < CableGrid.GRILLE_W and c.y >= 0 and c.y < CableGrid.GRILLE_H
+
 
 func _ep_sur(cell: Vector2i) -> Dictionary:
   for c in CableGrid.NOMS:
@@ -311,8 +313,10 @@ func _ep_sur(cell: Vector2i) -> Dictionary:
         return {"couleur": c, "idx": i}
   return {}
 
+
 func _cible_de(couleur: String, depart: Vector2i) -> Vector2i:
   return endpoints[couleur][1] if endpoints[couleur][0] == depart else endpoints[couleur][0]
+
 
 func _occupe_par_autre(cell: Vector2i, col_exclue: String) -> bool:
   for c in CableGrid.NOMS:
@@ -435,15 +439,14 @@ func _on_victoire() -> void:
   AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
   _close_won = true
   _quitter_jeu()
-  if _player_ref == null:
-    return
-  _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
+  if _player_ref != null:
+    _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
 
 
 # ── Lancer / quitter le mini-jeu ─────────────────────────────────────────────
 
 func _demarrer_jeu(player: Node) -> void:
-  _player_ref = player
+  _player_ref          = player
   player.in_minigame   = true
   player.minigame_name = NAME
   _reinitialiser(player)

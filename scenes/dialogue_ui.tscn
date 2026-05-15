@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://vfj14u0l8eet"]
+
+[ext_resource type="Script" uid="uid://cnymg3mjkhqsu" path="res://scripts/dialogue_ui.gd" id="1_dwk8m"]
+
+[node name="DialogueUI" type="Panel" unique_id=497481936]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -324.0
+offset_right = 384.0
+offset_bottom = -36.0
+script = ExtResource("1_dwk8m")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="SpeakerLabel" type="RichTextLabel" parent="VBox" unique_id=201]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 18
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="TextLabel" type="Label" parent="VBox" unique_id=202]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="VBox" unique_id=203]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContinueBtn" type="Button" parent="VBox" unique_id=204]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continuer"
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="VBox" unique_id=205]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[connection signal="pressed" from="VBox/ContinueBtn" to="." method="_on_continue_pressed"]

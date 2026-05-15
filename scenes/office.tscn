@@ -1053,19 +1053,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.47, 1)
 navigation_mesh = SubResource("NavigationMesh_osgti")
 navigation_layers = 2
 
-[node name="Mouse" type="CharacterBody3D" parent="Office/SalleRepos/MazeMachine/labyrinthe" unique_id=386684562 node_paths=PackedStringArray("_player")]
+[node name="Mouse" type="CharacterBody3D" parent="Office/SalleRepos/MazeMachine/labyrinthe" unique_id=386684562]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.1028104, 0.84883046, -0.9293499)
 collision_layer = 32
 collision_mask = 32
 script = ExtResource("20_osgti")
-_player = NodePath("../../../../../Player")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/MazeMachine/labyrinthe/Mouse" unique_id=1872264894]
 transform = Transform3D(-3.2584135e-09, 0.02, 8.7422775e-10, 0, -8.7422775e-10, 0.02, 0.02, 3.2584135e-09, 1.4242978e-16, 0.011176109, 0.0033986568, 0.0067687035)
 shape = SubResource("CapsuleShape3D_qgrek")
 
 [node name="NavigationAgentMouse" type="NavigationAgent3D" parent="Office/SalleRepos/MazeMachine/labyrinthe/Mouse" unique_id=445933925]
+unique_name_in_owner = true
 path_desired_distance = 0.05
 target_desired_distance = 0.05
 navigation_layers = 2

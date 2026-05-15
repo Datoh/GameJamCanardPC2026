@@ -1,5 +1,5 @@
-extends Control
 class_name OptionsMenu
+extends Control
 
 signal closed
 
@@ -18,16 +18,17 @@ const RESOLUTIONS: Array[Vector2i] = [
   Vector2i(1920, 1080),
 ]
 
-@onready var _volume_slider:     HSlider      = %VolumeSlider
-@onready var _volume_value:      Label        = %VolumeValue
-@onready var _dlss_check:        CheckBox     = %DLSSCheck
-@onready var _sdfgi_check:       CheckBox     = %SDFGICheck
-@onready var _resolution_option: OptionButton = %ResolutionOption
-@onready var _fullscreen_check:  CheckBox     = %FullscreenCheck
-@onready var _validate_btn:      Button       = %ValidateButton
-@onready var _mouse_sens_slider: HSlider      = %MouseSensSlider
-@onready var _mouse_sens_value:  Label        = %MouseSensValue
-@onready var _mouse_invert_check: CheckBox    = %MouseInvertYCheck
+@onready var _volume_slider:     HSlider       = %VolumeSlider
+@onready var _volume_value:      Label         = %VolumeValue
+@onready var _dlss_check:        CheckBox      = %DLSSCheck
+@onready var _dlss_row:          HBoxContainer = %DLSSRow
+@onready var _sdfgi_check:       CheckBox      = %SDFGICheck
+@onready var _resolution_option: OptionButton  = %ResolutionOption
+@onready var _fullscreen_check:  CheckBox      = %FullscreenCheck
+@onready var _validate_btn:      Button        = %ValidateButton
+@onready var _mouse_sens_slider: HSlider       = %MouseSensSlider
+@onready var _mouse_sens_value:  Label         = %MouseSensValue
+@onready var _mouse_invert_check: CheckBox     = %MouseInvertYCheck
 
 func _ready() -> void:
   _volume_slider.value_changed.connect(_on_volume_changed)
@@ -120,7 +121,7 @@ func _on_validate_pressed() -> void:
   closed.emit()
 
 func reveal_dlss_option() -> void:
-  _dlss_check.get_parent().visible = true
+  _dlss_row.visible = true
 
 func _unhandled_input(event: InputEvent) -> void:
   if not visible:

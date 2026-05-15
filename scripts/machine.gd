@@ -1,10 +1,10 @@
-extends StaticBody3D
 class_name Machine
+extends StaticBody3D
+
+signal machine_attempt_succeeded(machine: Node)
+signal machine_done(machine: Node)
 
 enum StateMachine { IDLE, TRY_MACHINE, ROBOT_WORKING, ROBOT_DONE, TRY_MACHINE_OBJECT, TRY_MACHINE_OK, WAITING_UNLOCKED, UNLOCKED, SOLVED }
-
-signal machine_try_ok(machine: Node)
-signal machine_done(machine: Node)
 
 var machine_name: String = ""
 var object_required: String = ""
@@ -31,6 +31,7 @@ var robot_work_duration: float = 15.0
 @export var hint_try_machine: String = ""
 @export var hint_waiting_unlocked: String = ""
 @export var hint_solved: String = ""
+
 
 func interact(player: Node) -> void:
   var state = player.state_machine[machine_name]
@@ -61,8 +62,10 @@ func interact(player: Node) -> void:
     StateMachine.SOLVED:
       player.show_message(message_solved, 3.0)
 
+
 func _can_try(_player: Node) -> bool:
   return false
+
 
 func get_interaction_hint(player: Node) -> String:
   var state = player.state_machine[machine_name]
@@ -82,21 +85,6 @@ func get_interaction_hint(player: Node) -> String:
       hint = hint_solved
   return hint_default if hint.is_empty() else hint
 
-func _on_try_machine(player: Node, has_object: bool) -> void:
-  _on_try_machine_done(player, has_object)
-
-func _on_try_machine_done(player: Node, won: bool) -> void:
-  var state = player.state_machine[machine_name]
-  match state:
-    StateMachine.TRY_MACHINE:
-      player.show_message(message_try_machine, 3.0)
-    StateMachine.TRY_MACHINE_OBJECT:
-      player.show_message(message_try_machine_object, 3.0)
-    StateMachine.TRY_MACHINE_OK:
-      if won:
-        machine_try_ok.emit(self)
-      else:
-        player.show_message(message_try_machine_ok, 3.0)
 
 func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
   if dialogue_demande.is_empty():
@@ -107,9 +95,28 @@ func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
   elif dialogue_id == dialogue_resultat:
     player.state_machine[machine_name] = StateMachine.TRY_MACHINE_OBJECT
 
+
 func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
   if not dialogue_demande.is_empty() and dialogue_id == dialogue_demande:
     return player.state_machine.get(machine_name, 0) != StateMachine.TRY_MACHINE
   if not dialogue_resultat.is_empty() and dialogue_id == dialogue_resultat:
     return player.state_machine.get(machine_name, 0) != StateMachine.ROBOT_DONE
   return false
+
+
+func _on_try_machine(player: Node, has_object: bool) -> void:
+  _on_try_machine_done(player, has_object)
+
+
+func _on_try_machine_done(player: Node, won: bool) -> void:
+  var state = player.state_machine[machine_name]
+  match state:
+    StateMachine.TRY_MACHINE:
+      player.show_message(message_try_machine, 3.0)
+    StateMachine.TRY_MACHINE_OBJECT:
+      player.show_message(message_try_machine_object, 3.0)
+    StateMachine.TRY_MACHINE_OK:
+      if won:
+        machine_attempt_succeeded.emit(self)
+      else:
+        player.show_message(message_try_machine_ok, 3.0)

@@ -1,17 +1,14 @@
-extends Machine
 class_name ScreenMachine
+extends Machine
 
-const NAME  := "Screen"
-const DEBUG := false
-
-@onready var _mouse_on_screen: Node3D = %MouseOnScreen
-@onready var _computer_old_monitor: MeshInstance3D = %Computer_Old_Monitor
-@onready var _computer_screen_plane: MeshInstance3D = %ComputerScreenPlane
+const NAME               := "Screen"
+const DEBUG              := false
+const _ARTICLE_SCENE     := preload("res://scenes/article_typing_ui.tscn")
+const _AUDIO_PAUSE_DELAY := 0.35
 
 @export var cam_distance:            float = 0.3
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height:          float = 0.40
-
 @export var _audio_stream: AudioStreamPlayer3D = null
 
 var _black_mat: StandardMaterial3D = null
@@ -31,9 +28,11 @@ var _typed_count:   int  = 0
 var _player_ref:    Node = null
 var _article_layer: CanvasLayer     = null
 var _article_ui:    ArticleTypingUI = null
-
-const _AUDIO_PAUSE_DELAY := 0.35
 var _audio_pause_timer: float = 0.0
+
+@onready var _mouse_on_screen:        Node3D         = %MouseOnScreen
+@onready var _computer_old_monitor:   MeshInstance3D = %Computer_Old_Monitor
+@onready var _computer_screen_plane:  MeshInstance3D = %ComputerScreenPlane
 
 
 func _ready() -> void:
@@ -72,7 +71,7 @@ func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
 
 func interact(player: Node) -> void:
   if DEBUG:
-    var state : Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
+    var state: Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
     if state == Machine.StateMachine.SOLVED:
       player.show_message("L'article est publié.", 3.0)
     elif not _jeu_actif:
@@ -125,8 +124,6 @@ func interact(player: Node) -> void:
 
 # ── Mini-jeu article ──────────────────────────────────────────────────────────
 
-const _ARTICLE_SCENE := preload("res://scenes/article_typing_ui.tscn")
-
 func _open_article(player: Node) -> void:
   _player_ref    = player
   _article_phase = 0
@@ -137,7 +134,6 @@ func _open_article(player: Node) -> void:
 
   _article_ui = _ARTICLE_SCENE.instantiate()
   _article_layer.add_child(_article_ui)
-
   _article_ui.show_bad_article()
 
   player.in_minigame = true

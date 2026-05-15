@@ -1,23 +1,7 @@
-extends Machine
 class_name MachineOscillo
+extends Machine
 
 const NAME := "Oscillo"
-
-# ── Meshes (noms uniques à définir dans la scène) ─────────────────────────────
-@onready var _courbes:     MeshInstance3D = %Courbes
-@onready var _courbe_a_1:  MeshInstance3D = %CourbeA1
-@onready var _courbe_f_1:  MeshInstance3D = %CourbeF1
-@onready var _courbe_p_1:  MeshInstance3D = %CourbeP1
-@onready var _courbe_a_2:  MeshInstance3D = %CourbeA2
-@onready var _courbe_f_2:  MeshInstance3D = %CourbeF2
-@onready var _courbe_p_2:  MeshInstance3D = %CourbeP2
-@onready var _box_oscillo: MeshInstance3D = %BoxOscillo
-
-@export var cam_distance:            float = 0.45
-@export var cam_transition_duration: float = 1.0
-@export var cam_arc_height:          float = 0.50
-
-@export var _audio_stream: AudioStreamPlayer3D = null
 
 # ── Signal math ───────────────────────────────────────────────────────────────
 const TGT_1_A    := 5
@@ -29,17 +13,20 @@ const TGT_2_P    := 0
 const MATCH_TOL  := 0.8
 const SAMPLE_CNT := 200
 
+@export var cam_distance:            float = 0.45
+@export var cam_transition_duration: float = 1.0
+@export var cam_arc_height:          float = 0.50
+@export var _audio_stream: AudioStreamPlayer3D = null
+
 # ── État ──────────────────────────────────────────────────────────────────────
 var amplitudes:  Array[int] = [3, 5]
 var frequencies: Array[int] = [1, 5]
 var phases:      Array[int] = [0, 0]
 
-# Mapping paramètre → (mesh, display, curve_idx, type "a"/"f"/"p")
-# Rempli dans _setup_params()
 var _params: Array[Dictionary] = []
 
 # ── Viewports ────────────────────────────────────────────────────────────────
-var _curves_vp:      SubViewport         = null
+var _curves_vp:      SubViewport          = null
 var _curves_display: OscilloCurvesDisplay = null
 
 # ── Caméra ────────────────────────────────────────────────────────────────────
@@ -55,6 +42,16 @@ var _jeu_actif:       bool = false
 var _close_won:       bool = false
 var _victory_pending: bool = false
 var _player_ref: Node = null
+
+# ── Meshes (noms uniques à définir dans la scène) ─────────────────────────────
+@onready var _courbes:     MeshInstance3D = %Courbes
+@onready var _courbe_a_1:  MeshInstance3D = %CourbeA1
+@onready var _courbe_f_1:  MeshInstance3D = %CourbeF1
+@onready var _courbe_p_1:  MeshInstance3D = %CourbeP1
+@onready var _courbe_a_2:  MeshInstance3D = %CourbeA2
+@onready var _courbe_f_2:  MeshInstance3D = %CourbeF2
+@onready var _courbe_p_2:  MeshInstance3D = %CourbeP2
+@onready var _box_oscillo: MeshInstance3D = %BoxOscillo
 
 
 func _ready() -> void:
@@ -72,6 +69,7 @@ func _ready() -> void:
 
 func _can_try(_player: Node) -> bool:
   return true
+
 
 func _on_try_machine(player: Node, _has_object: bool) -> void:
   _demarrer_jeu(player)
@@ -262,16 +260,17 @@ func _unhandled_input(event: InputEvent) -> void:
 # ── Logique mini-jeu ──────────────────────────────────────────────────────────
 
 func _demarrer_jeu(player: Node) -> void:
-  _player_ref      = player
+  _player_ref          = player
   player.in_minigame   = true
   player.minigame_name = NAME
-  _victory_pending = false
+  _victory_pending     = false
   _update_displays()
   _transition_to_screen(player.camera)
 
 
 func _sinusoid(a: int, f: int, p: int, x: float) -> float:
   return a * sin(f * x + p * PI / 10.0)
+
 
 func _is_match() -> bool:
   var max_d := 0.0

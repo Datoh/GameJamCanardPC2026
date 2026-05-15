@@ -1,5 +1,5 @@
-extends Control
 class_name OscilloParamDisplay
+extends Control
 
 const VP_W := 180
 const VP_H := 60

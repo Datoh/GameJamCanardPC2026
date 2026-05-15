@@ -1,5 +1,5 @@
-extends Machine
 class_name MachineTV
+extends Machine
 
 signal captcha_done(success: bool)
 

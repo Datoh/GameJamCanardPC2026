@@ -1,5 +1,5 @@
-extends StaticBody3D
 class_name Door
+extends StaticBody3D
 
 @export var _pivot: Node3D = null
 @export var _direction: bool = true

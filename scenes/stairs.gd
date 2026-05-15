@@ -16,8 +16,8 @@ var _step_offset := 0
 func _ready() -> void:
   _stair1.step = 1
   _stair2.step = 2
-  _stair1.move.connect(_on_stair1_move)
-  _stair2.move.connect(_on_stair2_move)
+  _stair1.moved.connect(_on_stair1_move)
+  _stair2.moved.connect(_on_stair2_move)
   _move()
 
 func _move():

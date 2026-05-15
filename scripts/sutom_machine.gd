@@ -1,7 +1,9 @@
-extends Machine
 class_name MachineSutom
+extends Machine
 
 signal game_finished(won: bool)
+
+const NAME := "SUTOM"
 
 const WORD_LENGTH  := 6
 const MAX_ATTEMPTS := 6
@@ -13,25 +15,25 @@ const COLOR_ABSENT    := Color(0.11, 0.44, 0.89)
 const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
 
+const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP"]
+const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE"]
+
 @export var camera_height: float = 0.25
 @export var cam_transition_duration: float = 1.0
 @export var cam_arc_height: float = 1.5
 
-var _cam_start_pos := Vector3.ZERO
-var _cam_start_basis := Basis.IDENTITY
-var _cam_end_pos := Vector3.ZERO
-var _cam_end_basis := Basis.IDENTITY
-var _close_won: bool = false
-
-const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP"]
-const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE"]
-
 var _overhead_cam: Camera3D
 var _player_camera: Camera3D = null
-var _player_ref: Node = null
 var _vp: SubViewport = null
 var _top_plane: MeshInstance3D = null
 var _active: bool = false
+var _close_won: bool = false
+var _player_ref: Node = null
+
+var _cam_start_pos   := Vector3.ZERO
+var _cam_start_basis := Basis.IDENTITY
+var _cam_end_pos     := Vector3.ZERO
+var _cam_end_basis   := Basis.IDENTITY
 
 var _target: String = ""
 var _row: int = 0
@@ -42,7 +44,6 @@ var _labels: Array = []
 var _result_label: Label
 var _hint_label: Label
 
-const NAME := "SUTOM"
 
 func _ready() -> void:
   machine_name = NAME
@@ -60,16 +61,19 @@ func _ready() -> void:
   _setup_overhead_camera()
   _setup_journal_surface()
 
+
 func interact(player: Node) -> void:
   message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
   message_robot_working = "%s" % DialoguesData.robot_name + " est en train de faire le SUTOM... je vais le laisser faire..."
   message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
   super.interact(player)
 
+
 func _can_try(player: Node) -> bool:
   var oscillo_solved: bool = player.state_machine[MachineOscillo.NAME] == Machine.StateMachine.SOLVED
   var pc_solved: bool = player.state_machine[MachineOrdinateur.NAME] == Machine.StateMachine.SOLVED
   return oscillo_solved and pc_solved
+
 
 func _on_try_machine(player: Node, has_object: bool) -> void:
   _player_ref          = player
@@ -79,6 +83,7 @@ func _on_try_machine(player: Node, has_object: bool) -> void:
   _begin_game(player.camera, has_object)
   if not game_finished.is_connected(_on_game_finished):
     game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
+
 
 # ── Caméra overhead ───────────────────────────────────────────────────────────
 
@@ -92,6 +97,7 @@ func _setup_overhead_camera() -> void:
   _overhead_cam.rotation_degrees = Vector3(-90, 0, 0)
   _overhead_cam.current = false
   add_child(_overhead_cam)
+
 
 # ── Surface journal avec SubViewport ─────────────────────────────────────────
 
@@ -127,10 +133,12 @@ func _setup_journal_surface() -> void:
   _build_grid_ui()
   call_deferred("_apply_viewport_texture")
 
+
 func _apply_viewport_texture() -> void:
   var mat := StandardMaterial3D.new()
   mat.albedo_texture = _vp.get_texture()
   _top_plane.set_surface_override_material(0, mat)
+
 
 func _make_stylebox(color: Color, radius: int = 4, border: bool = false) -> StyleBoxFlat:
   var s := StyleBoxFlat.new()
@@ -146,6 +154,7 @@ func _make_stylebox(color: Color, radius: int = 4, border: bool = false) -> Styl
     s.border_width_bottom = 2
     s.border_color = Color(0.60, 0.57, 0.52)
   return s
+
 
 func _build_grid_ui() -> void:
   const VW := 512
@@ -227,6 +236,7 @@ func _build_grid_ui() -> void:
   instr.add_theme_font_size_override("font_size", 14)
   _vp.add_child(instr)
 
+
 # ── Interface publique (dispatcher player) ───────────────────────────────────
 
 func _on_game_finished(won: bool) -> void:
@@ -253,7 +263,6 @@ func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
   _col = 1
   _won = false
 
-  # Remet la caméra à sa position locale cible avant de lire son global_transform
   _overhead_cam.position = Vector3(0, camera_height, 0)
   _overhead_cam.rotation_degrees = Vector3(-90, 0, 0)
 
@@ -271,10 +280,12 @@ func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
 
   _transition_to_overhead()
 
+
 func _close_game(won: bool) -> void:
   _active = false
   _close_won = won
   _transition_to_player()
+
 
 # ── Transitions caméra ───────────────────────────────────────────────────────
 
@@ -288,6 +299,7 @@ func _transition_to_overhead() -> void:
   var tw := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
   tw.tween_method(_animate_cam, 0.0, 1.0, cam_transition_duration)
 
+
 func _transition_to_player() -> void:
   _cam_start_pos   = _overhead_cam.global_position
   _cam_start_basis = _overhead_cam.global_basis
@@ -296,6 +308,7 @@ func _transition_to_player() -> void:
   var tw := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
   tw.tween_method(_animate_cam, 0.0, 1.0, cam_transition_duration)
   tw.tween_callback(_on_return_done)
+
 
 func _animate_cam(t: float) -> void:
   var mid := Vector3(
@@ -308,10 +321,12 @@ func _animate_cam(t: float) -> void:
   var rot := Quaternion(_cam_start_basis).slerp(Quaternion(_cam_end_basis), t)
   _overhead_cam.global_transform = Transform3D(Basis(rot), pos)
 
+
 func _on_return_done() -> void:
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
   game_finished.emit(_close_won)
+
 
 # ── Saisie clavier ────────────────────────────────────────────────────────────
 
@@ -342,6 +357,7 @@ func _unhandled_input(event: InputEvent) -> void:
       if not game_over and event.keycode >= KEY_A and event.keycode <= KEY_Z:
         _type(char(event.keycode).to_upper())
 
+
 func _type(letter: String) -> void:
   if _row >= MAX_ATTEMPTS or _col >= WORD_LENGTH:
     return
@@ -349,11 +365,13 @@ func _type(letter: String) -> void:
   _labels[_row][_col].text = letter
   _col += 1
 
+
 func _backspace() -> void:
   if _col <= 1:
     return
   _col -= 1
   _labels[_row][_col].text = ""
+
 
 # ── Logique de jeu ────────────────────────────────────────────────────────────
 
@@ -381,6 +399,7 @@ func _submit() -> void:
       _result_label.text = "Perdu...  Le mot était « %s »." % _target
       _result_label.add_theme_color_override("font_color", Color(0.70, 0.15, 0.10))
       _result_label.visible = true
+
 
 func _evaluate(guess: String) -> Array:
   var result := []

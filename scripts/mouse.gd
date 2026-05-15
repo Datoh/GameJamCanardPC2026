@@ -1,23 +1,26 @@
 extends CharacterBody3D
 
+signal cheese_reached()
 
 const SPEED = 1.0
 const ROTATION_SPEED = 30.0
 
-@onready var _navigation_agent_mouse: NavigationAgent3D = $NavigationAgentMouse
+@onready var _navigation_agent_mouse: NavigationAgent3D = %NavigationAgentMouse
 @onready var _point_to_reaches: Node3D = %PointToReaches
 @onready var _marker_out_maze: Marker3D = %MarkerOutMaze
-@export var _player: CharacterBody3D = null
 
 var _go_to_cheese := false
+
 
 func go_to_cheese():
   _go_to_cheese = true
   _assign_next_target()
 
+
 func reset() -> void:
   _go_to_cheese = false
   _assign_next_target()
+
 
 func _ready() -> void:
   _navigation_agent_mouse.path_desired_distance = 0.01
@@ -25,6 +28,7 @@ func _ready() -> void:
 
   # Différé : le NavigationServer doit être initialisé avant la première requête
   _assign_next_target.call_deferred()
+
 
 func _assign_next_target() -> void:
   if not _go_to_cheese:
@@ -34,10 +38,11 @@ func _assign_next_target() -> void:
   else:
     _navigation_agent_mouse.target_position = _marker_out_maze.global_position
 
+
 func _physics_process(delta: float) -> void:
   if _navigation_agent_mouse.is_navigation_finished():
     if _go_to_cheese:
-      _player.state_machine[MachineMaze.NAME] = Machine.StateMachine.UNLOCKED
+      cheese_reached.emit()
     else:
       _assign_next_target()
     return

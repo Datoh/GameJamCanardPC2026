@@ -52,7 +52,7 @@ shape = SubResource("ConvexPolygonShape3D_65uj5")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -0.97715867, 0)
 visible = false
 
-[node name="NavigationAgentMouse" type="NavigationAgent3D" parent="labyrinthe/Mouse" unique_id=445933925]
+[node name="NavigationAgentMouse" type="NavigationAgent3D" parent="labyrinthe/Mouse" unique_name_in_owner = true unique_id=445933925]
 path_desired_distance = 0.05
 target_desired_distance = 0.05
 navigation_layers = 2

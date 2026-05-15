@@ -1,8 +1,9 @@
-extends Node3D
 class_name Stair
+extends Node3D
+
+signal moved()
 
 @export var _step_label: Node3D = null
-
 @export var id := 1
 
 var _labels := [
@@ -18,8 +19,6 @@ var _labels := [
   preload("res://assets/textures/wall_stencil_9.png"),
 ]
 
-signal move()
-
 var step_offset := 0:
   set(value):
     step_offset = value
@@ -28,6 +27,7 @@ var step: int = 0:
   set(value):
     step = value
     _update_stair()
+
 
 func _update_stair():
     if _step_label:
@@ -43,5 +43,6 @@ func _update_stair():
           node.set_surface_override_material(0, mat)
         index += 1
 
+
 func _on_area_3d_up_down_body_entered(_body: Node3D) -> void:
-  move.emit()
+  moved.emit()

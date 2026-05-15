@@ -1,5 +1,5 @@
-extends Control
 class_name ArticleTypingUI
+extends Control
 
 const COLOR_PLAYER := Color(0.33, 0.60, 1.00)
 

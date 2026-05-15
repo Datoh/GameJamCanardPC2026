@@ -1,5 +1,5 @@
-extends Control
 class_name CableGrid
+extends Control
 
 const GRILLE_W    := 12
 const GRILLE_H    := 16

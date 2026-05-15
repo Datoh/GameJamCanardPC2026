@@ -1,5 +1,5 @@
-extends Control
 class_name OscilloCurvesDisplay
+extends Control
 
 const VP_W := 400
 const VP_H := 220
