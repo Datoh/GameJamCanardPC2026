@@ -28,7 +28,6 @@ var _vp: SubViewport = null
 var _top_plane: MeshInstance3D = null
 var _active: bool = false
 var _close_won: bool = false
-var _player_ref: Node = null
 
 var _cam_start_pos   := Vector3.ZERO
 var _cam_start_basis := Basis.IDENTITY
@@ -62,24 +61,23 @@ func _ready() -> void:
   _setup_journal_surface()
 
 
-func interact(player: Node) -> void:
+func interact() -> void:
   message_try_machine = tr("msgSutomAskRobot") % [DialoguesData.robot_name]
   message_robot_working = tr("msgRobotDoingSutom") % [DialoguesData.robot_name]
   message_robot_done = tr("msgRobotSeemsDone") % [DialoguesData.robot_name]
-  super.interact(player)
+  super.interact()
 
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   var oscillo_solved: bool = GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED
   var pc_solved: bool = GameData.state(MachineOrdinateur.NAME) == Machine.StateMachine.SOLVED
   return oscillo_solved and pc_solved
 
 
-func _on_try_machine(player: Node, has_object: bool) -> void:
-  _player_ref          = player
+func _on_try_machine(has_object: bool) -> void:
   GameData.minigame_name = NAME
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-  _begin_game(player.camera, has_object)
+  _begin_game(GameData.player.camera, has_object)
   if not game_finished.is_connected(_on_game_finished):
     game_finished.connect(_on_game_finished, CONNECT_ONE_SHOT)
 
@@ -239,14 +237,14 @@ func _build_grid_ui() -> void:
 # ── Interface publique (dispatcher player) ───────────────────────────────────
 
 func _on_game_finished(won: bool) -> void:
-  if _player_ref == null:
+  if GameData.player == null:
     return
-  _on_try_machine_done(_player_ref, won)
+  _on_try_machine_done(won)
   GameData.minigame_name = ""
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
   if won:
     GameData.set_state(machine_name, Machine.StateMachine.SOLVED)
-    _player_ref.show_message(message_waiting_unlocked, 3.0)
+    GameData.show_message(message_waiting_unlocked, 3.0)
     machine_done.emit(self)
 
 

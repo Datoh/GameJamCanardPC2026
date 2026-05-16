@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
     return
   if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED:
     _ivan_door_unlocked = true
-    for door in get_tree().get_nodes_in_group("door_ivan"):
+    for door in get_tree().get_nodes_in_group(GameData.GROUP_DOOR_IVAN):
       door.unlock()
 
 
@@ -48,7 +48,7 @@ func _ready() -> void:
 
   %Ceil.visible = true
 
-  for machine in get_tree().get_nodes_in_group("machine"):
+  for machine in get_tree().get_nodes_in_group(GameData.GROUP_MACHINE):
     machine.machine_attempt_succeeded.connect(_on_machine_attempt_succeeded)
     machine.machine_done.connect(_on_machine_done)
 
@@ -95,7 +95,7 @@ func _on_machine_done(machine: Node) -> void:
       if is_instance_valid(_mouse):
         _player.inventory.append("souris")
         AudioManager.play(AudioData.AUDIO_MOUSE_PICK, _mouse.global_position)
-        _player.show_message(tr("msgPickup") % "souris", 2.0)
+        GameData.show_message(tr("msgPickup") % "souris", 2.0)
         _mouse.visible = false
         _mouse.set_physics_process(false)
     MachineSutom.NAME:
@@ -124,7 +124,7 @@ func _on_options_closed() -> void:
 
 
 func _on_area_close_door_body_entered(_body: Node3D) -> void:
-  for door in get_tree().get_nodes_in_group("door_ivan"):
+  for door in get_tree().get_nodes_in_group(GameData.GROUP_DOOR_IVAN):
     if door.is_opened():
       door.lock()
       %AreaCloseDoor.queue_free()

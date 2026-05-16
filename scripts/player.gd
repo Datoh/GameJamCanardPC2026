@@ -51,8 +51,8 @@ func _ready() -> void:
 
   await get_tree().process_frame
 
-  _robot = get_tree().get_first_node_in_group("robot")
-  _cpc_count = get_tree().get_nodes_in_group("cpc").size()
+  _robot = get_tree().get_first_node_in_group(GameData.GROUP_ROBOT)
+  _cpc_count = get_tree().get_nodes_in_group(GameData.GROUP_CPC).size()
 
 
 func set_hud_visible(value: bool) -> void:
@@ -107,8 +107,8 @@ func _is_dialogue_available(d: Dictionary) -> bool:
   var req: String = d.get("requires", "")
   if req != "" and req not in _completed_dialogues:
     return false
-  for m in get_tree().get_nodes_in_group("machine"):
-    if m is Machine and (m as Machine).is_dialogue_locked(d["id"], self):
+  for m in get_tree().get_nodes_in_group(GameData.GROUP_MACHINE):
+    if m is Machine and (m as Machine).is_dialogue_locked(d["id"]):
       return false
   if _robot and _robot.is_dialogue_locked(d["id"]):
     return false
@@ -146,9 +146,9 @@ func _on_dialogue_completed(dialogue_id: String) -> void:
 
 
 func _apply_dialogue_side_effects(dialogue_id: String) -> void:
-  for m in get_tree().get_nodes_in_group("machine"):
+  for m in get_tree().get_nodes_in_group(GameData.GROUP_MACHINE):
     if m is Machine:
-      (m as Machine).on_dialogue_completed(dialogue_id, self)
+      (m as Machine).on_dialogue_completed(dialogue_id)
   if dialogue_id == "ivan_final":
     game_finished.emit()
   dialogue_side_effect.emit(dialogue_id)
@@ -222,21 +222,21 @@ func _try_interact() -> void:
   var collider := _interaction_ray.get_collider()
 
   if not GameData.intro_done:
-    if collider.is_in_group("ivan"):
+    if collider.is_in_group(GameData.GROUP_IVAN):
       _open_ivan_dialogue()
     return
 
-  if collider.is_in_group("ivan"):
+  if collider.is_in_group(GameData.GROUP_IVAN):
     if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED \
        and "ivan_final" not in _completed_dialogues:
       _open_ivan_final_dialogue()
     return
 
-  if collider.is_in_group("interactive"):
-    collider.interact(self)
+  if collider.is_in_group(GameData.GROUP_INTERACTIVE):
+    collider.interact()
     return
 
-  if collider.is_in_group("robot"):
+  if collider.is_in_group(GameData.GROUP_ROBOT):
     var working_on := ""
     for key in GameData._state_machine.keys():
       if GameData.state(key) == Machine.StateMachine.ROBOT_WORKING:
@@ -307,16 +307,16 @@ func _physics_process(delta: float) -> void:
   if not GameData.in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
     var collider := _interaction_ray.get_collider()
     if collider:
-      if not GameData.intro_done and collider.is_in_group("ivan"):
+      if not GameData.intro_done and collider.is_in_group(GameData.GROUP_IVAN):
         hint = tr("hintTalkIvan")
-      elif GameData.intro_done and collider.is_in_group("ivan") \
+      elif GameData.intro_done and collider.is_in_group(GameData.GROUP_IVAN) \
            and GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED \
            and "ivan_final" not in _completed_dialogues:
         hint = tr("hintTalkIvan")
-      elif GameData.intro_done and collider.is_in_group("robot"):
+      elif GameData.intro_done and collider.is_in_group(GameData.GROUP_ROBOT):
         hint = tr("hintTalkRobot") % DialoguesData.robot_name
-      elif GameData.intro_done and collider.is_in_group("interactive"):
-        hint = collider.get_interaction_hint(self)
+      elif GameData.intro_done and collider.is_in_group(GameData.GROUP_INTERACTIVE):
+        hint = collider.get_interaction_hint()
   _interaction_hint_label.text    = hint
   _interaction_hint_label.visible = not hint.is_empty()
 

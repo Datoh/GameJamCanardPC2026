@@ -25,7 +25,6 @@ var _cam_end_basis   := Basis.IDENTITY
 var _jeu_actif:     bool = false
 var _article_phase: int  = 0   # 0 = lecture mauvais, 1 = frappe, 2 = terminé
 var _typed_count:   int  = 0
-var _player_ref:    Node = null
 var _article_layer: CanvasLayer     = null
 var _article_ui:    ArticleTypingUI = null
 var _audio_pause_timer: float = 0.0
@@ -54,7 +53,7 @@ func _update_monitor(oscillo_solved: bool, pc_solved: bool) -> void:
   _computer_old_monitor.set_surface_override_material(1, mat)
 
 
-func _is_fully_repaired(_player: Node) -> bool:
+func _is_fully_repaired() -> bool:
   return GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED \
     and GameData.state(MachineOrdinateur.NAME) == Machine.StateMachine.SOLVED \
     and GameData.state(MachineMaze.NAME) == Machine.StateMachine.SOLVED \
@@ -62,21 +61,21 @@ func _is_fully_repaired(_player: Node) -> bool:
     and _mouse_on_screen.visible
 
 
-func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
+func is_dialogue_locked(dialogue_id: String) -> bool:
   if dialogue_id in ["article_demande", "article_resultat"]:
-    if not _is_fully_repaired(player):
+    if not _is_fully_repaired():
       return true
-  return super.is_dialogue_locked(dialogue_id, player)
+  return super.is_dialogue_locked(dialogue_id)
 
 
-func interact(player: Node) -> void:
+func interact() -> void:
   if DEBUG:
     var state: Machine.StateMachine = GameData.state(NAME)
     if state == Machine.StateMachine.SOLVED:
-      player.show_message(tr("msgArticlePublished"), 3.0)
+      GameData.show_message(tr("msgArticlePublished"), 3.0)
     elif not _jeu_actif:
       GameData.set_state_machine(NAME, Machine.StateMachine.TRY_MACHINE_OBJECT)
-      _open_article(player)
+      _open_article()
     return
 
   var oscillo_solved := GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED
@@ -86,46 +85,45 @@ func interact(player: Node) -> void:
   var sutom_solved := GameData.state(MachineSutom.NAME) == Machine.StateMachine.SOLVED
 
   if not oscillo_solved and not pc_solved:
-    player.show_message(tr("msgScreenNoPowerBoth"), 3.0)
+    GameData.show_message(tr("msgScreenNoPowerBoth"), 3.0)
     return
   elif not oscillo_solved:
-    player.show_message(tr("msgScreenNoPower"), 3.0)
+    GameData.show_message(tr("msgScreenNoPower"), 3.0)
     return
   elif not pc_solved:
-    player.show_message(tr("msgTowerBadlyWired"), 3.0)
+    GameData.show_message(tr("msgTowerBadlyWired"), 3.0)
     return
   elif not maze_solved:
-    player.show_message(tr("msgNoMouse"), 3.0)
+    GameData.show_message(tr("msgNoMouse"), 3.0)
     return
   elif not _mouse_on_screen.visible:
-    player.show_message(tr("msgMouseArrived"), 3.0)
+    GameData.show_message(tr("msgMouseArrived"), 3.0)
     _mouse_on_screen.visible = true
     return
   elif not sutom_solved:
-    player.show_message(tr("msgPasswordUnknown"), 3.0)
+    GameData.show_message(tr("msgPasswordUnknown"), 3.0)
     return
 
   var screen_state := GameData.state(NAME)
   match screen_state:
     Machine.StateMachine.IDLE:
-      player.show_message(tr("msgScreenWorksAskRobot") % [DialoguesData.robot_name], 4.0)
+      GameData.show_message(tr("msgScreenWorksAskRobot") % [DialoguesData.robot_name], 4.0)
       GameData.set_state(NAME, Machine.StateMachine.TRY_MACHINE)
     Machine.StateMachine.TRY_MACHINE:
-      player.show_message(tr("msgShouldTalkRobot") % [DialoguesData.robot_name], 3.0)
+      GameData.show_message(tr("msgShouldTalkRobot") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.ROBOT_WORKING:
-      player.show_message(tr("msgRobotWritingArticle") % [DialoguesData.robot_name], 3.0)
+      GameData.show_message(tr("msgRobotWritingArticle") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.ROBOT_DONE:
-      player.show_message(tr("msgRobotDone") % [DialoguesData.robot_name], 3.0)
+      GameData.show_message(tr("msgRobotDone") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.TRY_MACHINE_OBJECT:
-      _open_article(player)
+      _open_article()
     _:
-      player.show_message(tr("msgArticlePublished"), 3.0)
+      GameData.show_message(tr("msgArticlePublished"), 3.0)
 
 
 # ── Mini-jeu article ──────────────────────────────────────────────────────────
 
-func _open_article(player: Node) -> void:
-  _player_ref    = player
+func _open_article() -> void:
   _article_phase = 0
   _typed_count   = 0
 

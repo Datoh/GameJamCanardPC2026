@@ -33,41 +33,42 @@ var robot_work_duration: float = 15.0
 @export var hint_solved: String = ""
 
 
-func interact(player: Node) -> void:
+func interact() -> void:
   var state := GameData.state(machine_name)
   match state:
     StateMachine.IDLE:
-      if not _can_try(player):
-        player.show_message(message_not_enable, 3.0)
+      if not _can_try():
+        GameData.show_message(message_not_enable, 3.0)
       else:
-        player.show_message(message_idle, 3.0)
+        GameData.show_message(message_idle, 3.0)
         GameData.set_state(machine_name, StateMachine.TRY_MACHINE)
-        _on_try_machine(player, false)
+        _on_try_machine(false)
     StateMachine.TRY_MACHINE:
-      _on_try_machine(player, false)
+      GameData.show_message(message_try_machine, 3.0)
+      _on_try_machine(false)
     StateMachine.ROBOT_WORKING:
-      player.show_message(message_robot_working, 3.0)
+      GameData.show_message(message_robot_working, 3.0)
     StateMachine.ROBOT_DONE:
-      player.show_message(message_robot_done, 3.0)
+      GameData.show_message(message_robot_done, 3.0)
     StateMachine.TRY_MACHINE_OBJECT:
-      _on_try_machine(player, false)
+      _on_try_machine(false)
     StateMachine.TRY_MACHINE_OK:
-      _on_try_machine(player, true)
+      _on_try_machine(true)
     StateMachine.WAITING_UNLOCKED:
-      player.show_message(message_waiting_unlocked, 3.0)
+      GameData.show_message(message_waiting_unlocked, 3.0)
     StateMachine.UNLOCKED:
-      player.show_message(message_solved, 3.0)
+      GameData.show_message(message_solved, 3.0)
       GameData.set_state(machine_name, StateMachine.SOLVED)
       machine_done.emit(self)
     StateMachine.SOLVED:
-      player.show_message(message_solved, 3.0)
+      GameData.show_message(message_solved, 3.0)
 
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   return false
 
 
-func get_interaction_hint(_player: Node) -> String:
+func get_interaction_hint() -> String:
   var state := GameData.state(machine_name)
   var hint := ""
   match state:
@@ -86,17 +87,17 @@ func get_interaction_hint(_player: Node) -> String:
   return hint_default if hint.is_empty() else hint
 
 
-func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
+func on_dialogue_completed(dialogue_id: String) -> void:
   if dialogue_demande.is_empty():
     return
   if dialogue_id == dialogue_demande:
     GameData.set_state(machine_name, StateMachine.ROBOT_WORKING)
-    player.start_robot_work(self, robot_work_duration)
+    GameData.player.start_robot_work(self, robot_work_duration)
   elif dialogue_id == dialogue_resultat:
-    player.state_machine[machine_name] = StateMachine.TRY_MACHINE_OBJECT
+    GameData.set_state(machine_name, StateMachine.TRY_MACHINE_OBJECT)
 
 
-func is_dialogue_locked(dialogue_id: String, _player: Node) -> bool:
+func is_dialogue_locked(dialogue_id: String) -> bool:
   if not dialogue_demande.is_empty() and dialogue_id == dialogue_demande:
     return GameData.state(machine_name) != StateMachine.TRY_MACHINE
   if not dialogue_resultat.is_empty() and dialogue_id == dialogue_resultat:
@@ -104,19 +105,19 @@ func is_dialogue_locked(dialogue_id: String, _player: Node) -> bool:
   return false
 
 
-func _on_try_machine(player: Node, has_object: bool) -> void:
-  _on_try_machine_done(player, has_object)
+func _on_try_machine(has_object: bool) -> void:
+  _on_try_machine_done(has_object)
 
 
-func _on_try_machine_done(player: Node, won: bool) -> void:
+func _on_try_machine_done(won: bool) -> void:
   var state := GameData.state(machine_name)
   match state:
     StateMachine.TRY_MACHINE:
-      player.show_message(message_try_machine, 3.0)
+      GameData.show_message(message_try_machine, 3.0)
     StateMachine.TRY_MACHINE_OBJECT:
-      player.show_message(message_try_machine_object, 3.0)
+      GameData.show_message(message_try_machine_object, 3.0)
     StateMachine.TRY_MACHINE_OK:
       if won:
         machine_attempt_succeeded.emit(self)
       else:
-        player.show_message(message_try_machine_ok, 3.0)
+        GameData.show_message(message_try_machine_ok, 3.0)

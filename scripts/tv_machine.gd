@@ -20,7 +20,6 @@ const NAME := "TV"
 
 var _cell_rects:         Array = []
 var _pink_indices:       Array = []
-var _player_ref:         Node = null
 var _captcha_active:     bool = false
 var _cell_selected:      Array = []
 var _cell_overlays:      Array = []
@@ -99,20 +98,19 @@ func show_video() -> void:
 
 # ── Interface publique ────────────────────────────────────────────────────────
 
-func interact(player: Node) -> void:
-  _player_ref = player
+func interact() -> void:
   if GameData.state(machine_name) == Machine.StateMachine.SOLVED:
     show_video()
   else:
     if GameData.state(machine_name) == Machine.StateMachine.IDLE:
       AudioManager.play(AudioData.AUDIO_TV_ON, global_position)
-    super.interact(player)
+    super.interact()
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   var pc_attempted := GameData.state(MachineOrdinateur.NAME) >= Machine.StateMachine.TRY_MACHINE_OBJECT
   return pc_attempted
  
-func get_interaction_hint(_player: Node) -> String:
+func get_interaction_hint() -> String:
   var state := GameData.state(machine_name)
   match state:
     Machine.StateMachine.TRY_MACHINE:
@@ -123,11 +121,11 @@ func get_interaction_hint(_player: Node) -> String:
       return hint_default
 
 
-func _on_try_machine(player: Node, _has_object: bool) -> void:
+func _on_try_machine(_has_object: bool) -> void:
   if GameData.state(machine_name) == Machine.StateMachine.TRY_MACHINE:
     GameData.set_state(machine_name, Machine.StateMachine.TRY_MACHINE_OBJECT)
-  _show_captcha_ui("Feutres" in player.inventory)
-  _apply_images_to_visual("Feutres" in player.inventory)
+  _show_captcha_ui("Feutres" in GameData.player.inventory)
+  _apply_images_to_visual("Feutres" in GameData.player.inventory)
   _captcha_active = true
   _cell_selected = []
   _cell_selected.resize(6)
@@ -141,10 +139,8 @@ func _on_try_machine(player: Node, _has_object: bool) -> void:
 
 func _on_captcha_result(success: bool) -> void:
   GameData.minigame_name = ""
-  if _player_ref == null:
-    return
   if success:
-    _player_ref.show_message(message_waiting_unlocked, 3.0)
+    GameData.show_message(message_waiting_unlocked, 3.0)
     GameData.set_state(machine_name, Machine.StateMachine.SOLVED)
     show_video()
 
@@ -185,9 +181,9 @@ func _update_selection_display() -> void:
 
 
 func _validate_captcha() -> void:
-  var has_feutres: bool = "Feutres" in _player_ref.inventory
+  var has_feutres: bool = "Feutres" in GameData.player.inventory
   if not has_feutres:
-    _player_ref.show_message(tr("msgCaptchaNoColor"), 3.0)
+    GameData.show_message(tr("msgCaptchaNoColor"), 3.0)
     _flash_and_reset(has_feutres)
     return
   var correct := true

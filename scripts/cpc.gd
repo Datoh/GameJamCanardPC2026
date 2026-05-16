@@ -9,19 +9,19 @@ extends StaticBody3D
 var _looked := false
 
 func _ready() -> void:
-  add_to_group("interactive")
-  add_to_group("cpc")
+  add_to_group(GameData.GROUP_INTERACTIVE)
+  add_to_group(GameData.GROUP_CPC)
   set_collision_layer_value(4, true)
 
-func interact(player: Node) -> void:
+func interact() -> void:
   if not _looked:
     _looked = true
-    player.show_message(message, 3.0)
+    GameData.show_message(message, 3.0)
   else:
-    player.collect_cpc(id)
-    player.show_message(tr("msgCpcFound") % id, 2.0)
+    GameData.player.collect_cpc(id)
+    GameData.show_message(tr("msgCpcFound") % id, 2.0)
     AudioManager.play(sound_pick, global_position)
     queue_free()
 
-func get_interaction_hint(_player: Node) -> String:
+func get_interaction_hint() -> String:
   return hint_look if not _looked else hint_take

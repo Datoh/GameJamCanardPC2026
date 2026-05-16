@@ -14,11 +14,11 @@ func _process(delta: float) -> void:
     return
   _pivot.rotation_degrees.y = lerp(_pivot.rotation_degrees.y, _target_angle, _speed * delta)
 
-func interact(player: Node) -> void:
+func interact() -> void:
   if _is_animating():
     return
   if _locked:
-    player.show_message(tr("msgDoorLocked"), 3.0)
+    GameData.show_message(tr("msgDoorLocked"), 3.0)
     return
   AudioManager.play(AudioData.AUDIO_DOOR_CLOSE if is_opened() else AudioData.AUDIO_DOOR_OPEN, global_position)
   _target_angle = 0.0 if is_opened() else _angle * (1.0 if _direction else -1.0)
@@ -40,7 +40,7 @@ func _is_animating() -> bool:
 func is_opened() -> bool:
   return _target_angle != 0.0
 
-func get_interaction_hint(_player: Node) -> String:
+func get_interaction_hint() -> String:
   if _is_animating():
     return ""
   return tr("hintClose") if is_opened() else tr("hintOpen")

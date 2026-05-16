@@ -7,7 +7,6 @@ const NAME := "Maze"
 
 @onready var _mouse: CharacterBody3D = %Mouse
 
-var _player_ref: Node = null
 var _timer_mouse := Timer.new()
 
 
@@ -28,26 +27,26 @@ func _ready() -> void:
   _mouse.cheese_reached.connect(_on_mouse_cheese_reached)
 
 
-func interact(player: Node) -> void:
-  _player_ref = player
+func interact() -> void:
+  message_idle = tr("msgMouseLost") % [DialoguesData.robot_name]
   message_try_machine = tr("msgMouseLost") % [DialoguesData.robot_name]
   message_robot_working = tr("msgRobotStudyingMaze") % [DialoguesData.robot_name]
   message_robot_done = tr("msgRobotSeemsDone") % [DialoguesData.robot_name]
-  super.interact(player)
+  super.interact()
 
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   return true
 
 
-func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
+func is_dialogue_locked(dialogue_id: String) -> bool:
   if dialogue_id == "labyrinthe_seul":
     return GameData.state(NAME) != Machine.StateMachine.SOLVED
-  return super.is_dialogue_locked(dialogue_id, player)
+  return super.is_dialogue_locked(dialogue_id)
 
 
-func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
-  super.on_dialogue_completed(dialogue_id, player)
+func on_dialogue_completed(dialogue_id: String) -> void:
+  super.on_dialogue_completed(dialogue_id)
   if dialogue_id == "labyrinthe_seul":
     robot_sent_for_coffee.emit()
 

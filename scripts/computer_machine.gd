@@ -49,7 +49,6 @@ var _grid: CableGrid   = null
 # ── Interaction ───────────────────────────────────────────────────────────────
 var _jeu_actif   := false
 var _close_won   := false
-var _player_ref: Node = null
 
 
 func _ready() -> void:
@@ -69,15 +68,15 @@ func _ready() -> void:
   _reinitialiser()
 
 
-func interact(player: Node) -> void:
+func interact() -> void:
   message_robot_working      = tr("msgRobotFiddlingCables") % [DialoguesData.robot_name]
   message_robot_done         = tr("msgRobotDoneHim") % [DialoguesData.robot_name]
   message_try_machine_object = tr("msgRobotFailedCables") % [DialoguesData.robot_name]
   message_try_machine        = tr("msgCablesCross") % [DialoguesData.robot_name]
-  super.interact(player)
+  super.interact()
 
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   return true
 
 
@@ -179,16 +178,16 @@ func _on_return_done() -> void:
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
   GameData.minigame_name = ""
-  if _player_ref != null:
-    _on_try_machine_done(_player_ref, _close_won)
+  if GameData.player != null:
+    _on_try_machine_done(_close_won)
   _close_won = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 # ── Logique jeu câbles ────────────────────────────────────────────────────────
 
-func _reinitialiser(player: Node = null) -> void:
-  var use_ok: bool = player != null and GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
+func _reinitialiser() -> void:
+  var use_ok: bool = GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
   endpoints = {}
   for c in CableGrid.NOMS:
     var src: Array = ENDPOINTS_OK[c] if use_ok else ENDPOINTS_KO[c]
@@ -443,11 +442,10 @@ func _on_victoire() -> void:
 
 # ── Lancer / quitter le mini-jeu ─────────────────────────────────────────────
 
-func _demarrer_jeu(player: Node) -> void:
-  _player_ref          = player
+func _demarrer_jeu() -> void:
   GameData.minigame_name = NAME
-  _reinitialiser(player)
-  _transition_to_pc(player.camera)
+  _reinitialiser()
+  _transition_to_pc(GameData.player.camera)
 
 
 func _quitter_jeu() -> void:
@@ -463,11 +461,8 @@ func _quitter_jeu() -> void:
 
 # ── Override Machine ──────────────────────────────────────────────────────────
 
-func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
-  return super.is_dialogue_locked(dialogue_id, player)
 
-
-func _on_try_machine(player: Node, _has_object: bool) -> void:
+func _on_try_machine(_has_object: bool) -> void:
   if _jeu_actif:
     return
-  _demarrer_jeu(player)
+  _demarrer_jeu()

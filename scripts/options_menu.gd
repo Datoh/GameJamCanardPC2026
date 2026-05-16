@@ -95,13 +95,13 @@ func _on_volume_changed(value: float) -> void:
   AudioServer.set_bus_volume_db(BUS_MASTER, linear_to_db(value / 10.0))
 
 func _on_dlss_toggled(enabled: bool) -> void:
-  var robot := get_tree().get_first_node_in_group("robot")
+  var robot := get_tree().get_first_node_in_group(GameData.GROUP_ROBOT)
   if not robot:
     return
   robot.set_skin_dlss5(DialoguesData.robot_name, enabled)
 
 func _on_sdfgi_toggled(enabled: bool) -> void:
-  var world_env := get_tree().get_first_node_in_group("world_environment")
+  var world_env := get_tree().get_first_node_in_group(GameData.GROUP_WORLD_ENVIRONMENT)
   if not world_env:
     world_env = get_tree().root.find_child("WorldEnvironment", true, false)
   if world_env and world_env.environment:

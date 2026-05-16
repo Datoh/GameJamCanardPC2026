@@ -10,17 +10,17 @@ extends StaticBody3D
 @export var sound_pick: AudioStream = null
 
 func _ready() -> void:
-  add_to_group("interactive")
+  add_to_group(GameData.GROUP_INTERACTIVE)
   set_collision_layer_value(4, true)
 
-func interact(player: Node) -> void:
-  if player.can_interact(id, machine):
-    player.show_message(message_ok, 3.0)
+func interact() -> void:
+  if GameData.player.can_interact(id, machine):
+    GameData.show_message(message_ok, 3.0)
     if pickable:
-      player.pickup(self, id, machine)
+      GameData.player.pickup(self, id, machine)
       AudioManager.play(sound_pick, global_position)
   else:
-    player.show_message(message_ko, 3.0)
+    GameData.show_message(message_ko, 3.0)
 
-func get_interaction_hint(_player: Node) -> String:
+func get_interaction_hint() -> String:
   return hint

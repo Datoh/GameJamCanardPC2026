@@ -41,7 +41,6 @@ var _cam_end_basis   := Basis.IDENTITY
 var _jeu_actif:       bool = false
 var _close_won:       bool = false
 var _victory_pending: bool = false
-var _player_ref: Node = null
 
 # ── Meshes (noms uniques à définir dans la scène) ─────────────────────────────
 @onready var _courbes:     MeshInstance3D = %Courbes
@@ -67,12 +66,12 @@ func _ready() -> void:
   call_deferred("_setup_all")
 
 
-func _can_try(_player: Node) -> bool:
+func _can_try() -> bool:
   return true
 
 
-func _on_try_machine(player: Node, _has_object: bool) -> void:
-  _demarrer_jeu(player)
+func _on_try_machine(_has_object: bool) -> void:
+  _demarrer_jeu()
 
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
@@ -199,8 +198,8 @@ func _on_return_done() -> void:
   GameData.minigame_name = ""
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
-  if _player_ref != null:
-    _on_try_machine_done(_player_ref, _close_won)
+  if GameData.player != null:
+    _on_try_machine_done(_close_won)
   _close_won = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -258,12 +257,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # ── Logique mini-jeu ──────────────────────────────────────────────────────────
 
-func _demarrer_jeu(player: Node) -> void:
-  _player_ref          = player
+func _demarrer_jeu() -> void:
   GameData.minigame_name = NAME
   _victory_pending     = false
   _update_displays()
-  _transition_to_screen(player.camera)
+  _transition_to_screen(GameData.player.camera)
 
 
 func _sinusoid(a: int, f: int, p: int, x: float) -> float:
@@ -324,8 +322,8 @@ func _on_victoire() -> void:
   if _audio_stream:
     _audio_stream.stop()
   GameData.set_state(NAME, Machine.StateMachine.SOLVED)
-  if _player_ref != null:
-    _player_ref.show_message(tr("msgOscilloCalibrated"), 3.0)
+  if GameData.player != null:
+    GameData.show_message(tr("msgOscilloCalibrated"), 3.0)
   machine_done.emit(self)
   _quitter_jeu()
 

@@ -54,7 +54,7 @@ func _ready() -> void:
   set_skin(_SKIN_DEFAULT)
   _reset_blink_cooldown()
   await get_tree().process_frame
-  _player = get_tree().get_first_node_in_group("player")
+  _player = get_tree().get_first_node_in_group(GameData.GROUP_PLAYER)
 
 func start_talking() -> void:
   _is_talking = true
