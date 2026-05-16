@@ -57,11 +57,11 @@ func _ready() -> void:
   dialogue_demande    = "ordinateur_demande"
   dialogue_resultat   = "ordinateur_resultat"
   robot_work_duration = 15.0
-  message_idle               = "Ces câbles ne sont pas branchés. Je vais recabler tout ça."
-  message_solved             = "La tour est recablé."
-  hint_default     = "[ESPACE] Regarder la tour"
-  hint_try_machine = "[ESPACE] Rebrancher les câbles"
-  hint_solved      = "[ESPACE] Tour réparé"
+  message_idle               = tr("msgCablesIdle")
+  message_solved             = tr("msgTowerRewired")
+  hint_default     = tr("hintLookTower")
+  hint_try_machine = tr("hintRewireCables")
+  hint_solved      = tr("hintTowerFixed")
   input_ray_pickable = true
   input_event.connect(_on_circuit_input)
   _setup_viewport()
@@ -70,10 +70,10 @@ func _ready() -> void:
 
 
 func interact(player: Node) -> void:
-  message_robot_working      = "Le %s" % DialoguesData.robot_name + " bidouille les câbles à l'arrière de la tour..."
-  message_robot_done         = "Le %s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler."
-  message_try_machine_object = "Le %s" % DialoguesData.robot_name + " n'a pas réussi... Il m'a parlé d'un grand maître du cable management."
-  message_try_machine        = "Ces câbles se croisent, c'est insoluble comme ça. %s" % DialoguesData.robot_name + " pourrait peut-être s'y connaître en câblage."
+  message_robot_working      = tr("msgRobotFiddlingCables") % [DialoguesData.robot_name]
+  message_robot_done         = tr("msgRobotDoneHim") % [DialoguesData.robot_name]
+  message_try_machine_object = tr("msgRobotFailedCables") % [DialoguesData.robot_name]
+  message_try_machine        = tr("msgCablesCross") % [DialoguesData.robot_name]
   super.interact(player)
 
 
@@ -178,9 +178,8 @@ func _animate_cam(t: float) -> void:
 func _on_return_done() -> void:
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
+  GameData.minigame_name = ""
   if _player_ref != null:
-    _player_ref.in_minigame   = false
-    _player_ref.minigame_name = ""
     _on_try_machine_done(_player_ref, _close_won)
   _close_won = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -189,7 +188,7 @@ func _on_return_done() -> void:
 # ── Logique jeu câbles ────────────────────────────────────────────────────────
 
 func _reinitialiser(player: Node = null) -> void:
-  var use_ok: bool = player != null and player.state_machine.get(MachineTV.NAME, 0) >= Machine.StateMachine.UNLOCKED
+  var use_ok: bool = player != null and GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
   endpoints = {}
   for c in CableGrid.NOMS:
     var src: Array = ENDPOINTS_OK[c] if use_ok else ENDPOINTS_KO[c]
@@ -439,16 +438,14 @@ func _on_victoire() -> void:
   AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
   _close_won = true
   _quitter_jeu()
-  if _player_ref != null:
-    _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
+  GameData.set_state(NAME, Machine.StateMachine.SOLVED)
 
 
 # ── Lancer / quitter le mini-jeu ─────────────────────────────────────────────
 
 func _demarrer_jeu(player: Node) -> void:
   _player_ref          = player
-  player.in_minigame   = true
-  player.minigame_name = NAME
+  GameData.minigame_name = NAME
   _reinitialiser(player)
   _transition_to_pc(player.camera)
 

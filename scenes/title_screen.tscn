@@ -31,7 +31,7 @@ grow_vertical = 2
 theme_override_constants/outline_size = 10
 theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/font_size = 54
-text = "CanardPC : l'IA ne répond plus"
+text = "gameTitle"
 horizontal_alignment = 1
 
 [node name="ButtonsBox" type="VBoxContainer" parent="Control" unique_id=1730577806]
@@ -54,19 +54,19 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Nouvelle partie"
+text = "btnNewGame"
 
 [node name="OptionsButton" type="Button" parent="Control/ButtonsBox" unique_id=1730577808]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Options"
+text = "menuOptions"
 
 [node name="QuitButton" type="Button" parent="Control/ButtonsBox" unique_id=1730577809]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Quitter"
+text = "btnQuit"
 
 [node name="ControlsLabel" type="Label" parent="Control" unique_id=1023587268]
 layout_mode = 1
@@ -79,7 +79,7 @@ offset_right = 500.0
 offset_bottom = -10.0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 14
-text = "ZQSD / ESPACE / ÉCHAP / Souris - Options: F1"
+text = "controlsHint"
 
 [node name="CreditLabel" type="Label" parent="Control" unique_id=292980214]
 layout_mode = 1
@@ -95,5 +95,5 @@ offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 14
-text = "Par Datoh pour la GameJam CanardPC 2026"
+text = "gameCredits"
 horizontal_alignment = 2

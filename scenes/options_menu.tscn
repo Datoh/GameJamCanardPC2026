@@ -29,9 +29,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -230.0
-offset_top = -250.0
+offset_top = -278.0
 offset_right = 230.0
-offset_bottom = 250.0
+offset_bottom = 278.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -49,7 +49,7 @@ theme_override_constants/separation = 14
 [node name="TitleLabel" type="Label" parent="Dialog/Margin/VBox" unique_id=1005]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Options"
+text = "menuOptions"
 horizontal_alignment = 1
 
 [node name="HSep" type="HSeparator" parent="Dialog/Margin/VBox" unique_id=1006]
@@ -62,7 +62,7 @@ theme_override_constants/separation = 10
 [node name="VolumeLabel" type="Label" parent="Dialog/Margin/VBox/VolumeRow" unique_id=1008]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Volume des bruitages"
+text = "settingsSoundVolume"
 vertical_alignment = 1
 
 [node name="VolumeSlider" type="HSlider" parent="Dialog/Margin/VBox/VolumeRow" unique_id=1009]
@@ -89,7 +89,7 @@ theme_override_constants/separation = 10
 [node name="ResolutionLabel" type="Label" parent="Dialog/Margin/VBox/ResolutionRow" unique_id=1016]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Résolution"
+text = "settingsResolution"
 vertical_alignment = 1
 
 [node name="ResolutionOption" type="OptionButton" parent="Dialog/Margin/VBox/ResolutionRow" unique_id=1017]
@@ -104,7 +104,7 @@ theme_override_constants/separation = 10
 [node name="FullscreenLabel" type="Label" parent="Dialog/Margin/VBox/FullscreenRow" unique_id=1019]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Plein écran"
+text = "settingsFullscreen"
 vertical_alignment = 1
 
 [node name="FullscreenCheck" type="CheckBox" parent="Dialog/Margin/VBox/FullscreenRow" unique_id=1020]
@@ -118,7 +118,7 @@ theme_override_constants/separation = 10
 [node name="SDFGILabel" type="Label" parent="Dialog/Margin/VBox/SDFGIRow" unique_id=1022]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Éclairage avancé"
+text = "settingsAdvancedLighting"
 vertical_alignment = 1
 
 [node name="SDFGICheck" type="CheckBox" parent="Dialog/Margin/VBox/SDFGIRow" unique_id=1023]
@@ -134,7 +134,7 @@ theme_override_constants/separation = 10
 [node name="DLSSLabel" type="Label" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1012]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Activer le DLSS 5"
+text = "settingsEnableDlss"
 vertical_alignment = 1
 
 [node name="DLSSCheck" type="CheckBox" parent="Dialog/Margin/VBox/DLSSRow" unique_id=1013]
@@ -148,7 +148,7 @@ theme_override_constants/separation = 10
 [node name="MouseSensLabel" type="Label" parent="Dialog/Margin/VBox/MouseSensRow" unique_id=1025]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Sensibilité souris"
+text = "settingsMouseSensitivity"
 vertical_alignment = 1
 
 [node name="MouseSensSlider" type="HSlider" parent="Dialog/Margin/VBox/MouseSensRow" unique_id=1026]
@@ -176,14 +176,30 @@ theme_override_constants/separation = 10
 [node name="MouseInvertYLabel" type="Label" parent="Dialog/Margin/VBox/MouseInvertYRow" unique_id=1029]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Inverser Y souris"
+text = "settingsInvertMouseY"
 vertical_alignment = 1
 
 [node name="MouseInvertYCheck" type="CheckBox" parent="Dialog/Margin/VBox/MouseInvertYRow" unique_id=1030]
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="LanguageRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1031]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LanguageLabel" type="Label" parent="Dialog/Margin/VBox/LanguageRow" unique_id=1032]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "settingsLanguage"
+vertical_alignment = 1
+
+[node name="LanguageOption" type="OptionButton" parent="Dialog/Margin/VBox/LanguageRow" unique_id=1033]
+unique_name_in_owner = true
+auto_translate_mode = 2
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+
 [node name="ValidateButton" type="Button" parent="Dialog/Margin/VBox" unique_id=1014]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Valider"
+text = "btnApply"

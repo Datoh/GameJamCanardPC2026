@@ -54,11 +54,11 @@ func _update_monitor(oscillo_solved: bool, pc_solved: bool) -> void:
   _computer_old_monitor.set_surface_override_material(1, mat)
 
 
-func _is_fully_repaired(player: Node) -> bool:
-  return player.state_machine.get(MachineOscillo.NAME, 0) == Machine.StateMachine.SOLVED \
-    and player.state_machine.get(MachineOrdinateur.NAME, 0) == Machine.StateMachine.SOLVED \
-    and player.state_machine.get(MachineMaze.NAME, 0) == Machine.StateMachine.SOLVED \
-    and player.state_machine.get(MachineSutom.NAME, 0) == Machine.StateMachine.SOLVED \
+func _is_fully_repaired(_player: Node) -> bool:
+  return GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED \
+    and GameData.state(MachineOrdinateur.NAME) == Machine.StateMachine.SOLVED \
+    and GameData.state(MachineMaze.NAME) == Machine.StateMachine.SOLVED \
+    and GameData.state(MachineSutom.NAME) == Machine.StateMachine.SOLVED \
     and _mouse_on_screen.visible
 
 
@@ -71,55 +71,55 @@ func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
 
 func interact(player: Node) -> void:
   if DEBUG:
-    var state: Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
+    var state: Machine.StateMachine = GameData.state(NAME)
     if state == Machine.StateMachine.SOLVED:
-      player.show_message("L'article est publié.", 3.0)
+      player.show_message(tr("msgArticlePublished"), 3.0)
     elif not _jeu_actif:
-      player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE_OBJECT
+      GameData.set_state_machine(NAME, Machine.StateMachine.TRY_MACHINE_OBJECT)
       _open_article(player)
     return
 
-  var oscillo_solved: bool = player.state_machine.get(MachineOscillo.NAME, 0) == Machine.StateMachine.SOLVED
-  var pc_solved: bool      = player.state_machine.get(MachineOrdinateur.NAME, 0) == Machine.StateMachine.SOLVED
+  var oscillo_solved := GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED
+  var pc_solved := GameData.state(MachineOrdinateur.NAME) == Machine.StateMachine.SOLVED
   _update_monitor(oscillo_solved, pc_solved)
-  var maze_solved: bool  = player.state_machine.get(MachineMaze.NAME, 0) == Machine.StateMachine.SOLVED
-  var sutom_solved: bool = player.state_machine.get(MachineSutom.NAME, 0) == Machine.StateMachine.SOLVED
+  var maze_solved := GameData.state(MachineMaze.NAME) == Machine.StateMachine.SOLVED
+  var sutom_solved := GameData.state(MachineSutom.NAME) == Machine.StateMachine.SOLVED
 
   if not oscillo_solved and not pc_solved:
-    player.show_message("L'écran n'est pas alimenté, encore le différentiel qui à sauté. En plus la tour est mal branchée.", 3.0)
+    player.show_message(tr("msgScreenNoPowerBoth"), 3.0)
     return
   elif not oscillo_solved:
-    player.show_message("L'écran n'est pas alimenté, encore le différentiel qui à sauté.", 3.0)
+    player.show_message(tr("msgScreenNoPower"), 3.0)
     return
   elif not pc_solved:
-    player.show_message("La tour est mal branchée.", 3.0)
+    player.show_message(tr("msgTowerBadlyWired"), 3.0)
     return
   elif not maze_solved:
-    player.show_message("Pas de souris...", 3.0)
+    player.show_message(tr("msgNoMouse"), 3.0)
     return
   elif not _mouse_on_screen.visible:
-    player.show_message("Voilà une souris !", 3.0)
+    player.show_message(tr("msgMouseArrived"), 3.0)
     _mouse_on_screen.visible = true
     return
   elif not sutom_solved:
-    player.show_message("Il me demande un mot de passe mais je ne le connais pas.", 3.0)
+    player.show_message(tr("msgPasswordUnknown"), 3.0)
     return
 
-  var screen_state: Machine.StateMachine = player.state_machine.get(NAME, Machine.StateMachine.IDLE)
+  var screen_state := GameData.state(NAME)
   match screen_state:
     Machine.StateMachine.IDLE:
-      player.show_message("L'écran fonctionne ! Je pourrais demander à %s" % DialoguesData.robot_name + " de rédiger le test.", 4.0)
-      player.state_machine[NAME] = Machine.StateMachine.TRY_MACHINE
+      player.show_message(tr("msgScreenWorksAskRobot") % [DialoguesData.robot_name], 4.0)
+      GameData.set_state(NAME, Machine.StateMachine.TRY_MACHINE)
     Machine.StateMachine.TRY_MACHINE:
-      player.show_message("Je devrais parler à %s" % DialoguesData.robot_name + ".", 3.0)
+      player.show_message(tr("msgShouldTalkRobot") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.ROBOT_WORKING:
-      player.show_message("%s" % DialoguesData.robot_name + " est en train de rédiger l'article...", 3.0)
+      player.show_message(tr("msgRobotWritingArticle") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.ROBOT_DONE:
-      player.show_message("%s" % DialoguesData.robot_name + " a l'air d'avoir terminé. Je devrais lui parler.", 3.0)
+      player.show_message(tr("msgRobotDone") % [DialoguesData.robot_name], 3.0)
     Machine.StateMachine.TRY_MACHINE_OBJECT:
       _open_article(player)
     _:
-      player.show_message("L'article est publié.", 3.0)
+      player.show_message(tr("msgArticlePublished"), 3.0)
 
 
 # ── Mini-jeu article ──────────────────────────────────────────────────────────
@@ -136,7 +136,7 @@ func _open_article(player: Node) -> void:
   _article_layer.add_child(_article_ui)
   _article_ui.show_bad_article()
 
-  player.in_minigame = true
+  GameData.minigame_name = NAME
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   set_deferred("_jeu_actif", true)
 
@@ -150,9 +150,8 @@ func _process(delta: float) -> void:
 
 func _finish_article() -> void:
   _jeu_actif = false
-  if _player_ref != null:
-    _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
-    _player_ref.in_minigame = false
+  GameData.minigame_name = ""
+  GameData.set_state(NAME, Machine.StateMachine.SOLVED)
   if _article_layer != null:
     _article_layer.queue_free()
     _article_layer = null

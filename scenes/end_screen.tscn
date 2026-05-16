@@ -29,7 +29,7 @@ offset_bottom = -58.28
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
-text = "Vous avez fini"
+text = "endGameFinished"
 horizontal_alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Control" unique_id=865712576]
@@ -46,7 +46,7 @@ offset_bottom = -41.28003
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 54
-text = "CanardPC : l'IA ne répond plus"
+text = "gameTitle"
 horizontal_alignment = 1
 
 [node name="ThanksLabel" type="Label" parent="Control" unique_id=349717613]
@@ -63,7 +63,7 @@ offset_bottom = -58.28
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 26
-text = "Merci d'avoir joué"
+text = "endThankYou"
 horizontal_alignment = 1
 
 [node name="CreditLabel" type="Label" parent="Control" unique_id=77171425]
@@ -80,5 +80,5 @@ offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 14
-text = "Par Datoh pour la GameJam CanardPC 2026"
+text = "gameCredits"
 horizontal_alignment = 2

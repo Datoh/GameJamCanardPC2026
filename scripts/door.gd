@@ -18,7 +18,7 @@ func interact(player: Node) -> void:
   if _is_animating():
     return
   if _locked:
-    player.show_message("La porte est vérouillée.", 3.0)
+    player.show_message(tr("msgDoorLocked"), 3.0)
     return
   AudioManager.play(AudioData.AUDIO_DOOR_CLOSE if is_opened() else AudioData.AUDIO_DOOR_OPEN, global_position)
   _target_angle = 0.0 if is_opened() else _angle * (1.0 if _direction else -1.0)
@@ -43,4 +43,4 @@ func is_opened() -> bool:
 func get_interaction_hint(_player: Node) -> String:
   if _is_animating():
     return ""
-  return "[ESPACE] Fermer" if is_opened() else "[ESPACE] Ouvrir"
+  return tr("hintClose") if is_opened() else tr("hintOpen")

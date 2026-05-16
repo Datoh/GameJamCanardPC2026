@@ -11,25 +11,17 @@ const MOUSE_SENSITIVITY := 0.002
 
 var gravity: float            = ProjectSettings.get_setting("physics/3d/default_gravity")
 var inventory: Array[String]  = []
-var cpc_collected: Array[int] = []
-var state_machine: Dictionary = {}
-var minigame_name: String     = ""
 var camera: Camera3D:
   get: return _camera_3d
-var in_minigame: bool = false:
-  set(value):
-    in_minigame = value
-    if _crosshair:
-      _crosshair.visible = not value
 
-var _intro_done:             bool = false
 var _dialogue_is_with_robot: bool = false
 var _cpc_count               := 0
 var _completed_dialogues: Array[String] = []
 
+@onready var crosshair:               TextureRect  = %Crosshair
+
 @onready var _canvas_layer:           CanvasLayer  = %CanvasLayer
 @onready var _interaction_ray:        RayCast3D    = %RayCast3D
-@onready var _crosshair:              TextureRect  = %Crosshair
 @onready var _objective_label:        Label        = %ObjectiveLabel
 @onready var _objective_cpc_label:    Label        = %ObjectiveCPCLabel
 @onready var _quit_hint_label:        Label        = %QuitHintLabel
@@ -62,9 +54,6 @@ func _ready() -> void:
   _robot = get_tree().get_first_node_in_group("robot")
   _cpc_count = get_tree().get_nodes_in_group("cpc").size()
 
-  for machine in get_tree().get_nodes_in_group("machine"):
-    state_machine[machine.machine_name] = Machine.StateMachine.IDLE
-
 
 func set_hud_visible(value: bool) -> void:
   if _canvas_layer:
@@ -81,9 +70,9 @@ func show_message(text: String, duration: float = 3.0) -> void:
 
 func can_interact(id_object: String, machine: String) -> bool:
   match id_object:
-    "Feutres":      return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
-    "Dictionnaire": return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
-    "Fromage":      return state_machine[machine] == Machine.StateMachine.TRY_MACHINE_OBJECT
+    "Feutres":      return GameData.state(machine) == Machine.StateMachine.TRY_MACHINE_OBJECT
+    "Dictionnaire": return GameData.state(machine) == Machine.StateMachine.TRY_MACHINE_OBJECT
+    "Fromage":      return GameData.state(machine) == Machine.StateMachine.TRY_MACHINE_OBJECT
     _: return true
 
 
@@ -103,8 +92,8 @@ func _get_debug_text() -> String:
     output = "RAY: %s %s\n" % [ray_object.name, ray_object.get_groups()]
   else:
     output = "RAY: rien\n"
-  for key in state_machine.keys():
-    output = "%s%s => %s | " % [output, key, Machine.StateMachine.keys()[state_machine[key]]]
+  for key in GameData._state_machine.keys():
+    output = "%s%s => %s | " % [output, key, Machine.StateMachine.keys()[GameData.state(key)]]
   return output
 
 
@@ -148,7 +137,7 @@ func _open_dialogue() -> void:
 
 func _on_dialogue_completed(dialogue_id: String) -> void:
   if dialogue_id == "ivan_intro":
-    _intro_done = true
+    GameData.intro_done = true
     return
   var dialogue := DialoguesData.find_by_id(dialogue_id)
   if dialogue.get("once", false) and dialogue_id not in _completed_dialogues:
@@ -183,9 +172,9 @@ func _on_branch_chosen(action: String) -> void:
 
 
 func _on_machine_timer_timeout() -> void:
-  for key in state_machine.keys():
-    if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
-      state_machine[key] = Machine.StateMachine.ROBOT_DONE
+  for key in GameData._state_machine.keys():
+    if GameData.state(key) == Machine.StateMachine.ROBOT_WORKING:
+      GameData.set_state(key, Machine.StateMachine.ROBOT_DONE)
       break
   if _robot != null:
     _robot.stop_working()
@@ -195,7 +184,7 @@ func _on_machine_timer_timeout() -> void:
 # ── Interaction ───────────────────────────────────────────────────────────────
 
 func _unhandled_input(event: InputEvent) -> void:
-  if in_minigame:
+  if GameData.in_minigame:
     return
 
   if event.is_action_pressed("ui_cancel"):
@@ -232,13 +221,13 @@ func _try_interact() -> void:
 
   var collider := _interaction_ray.get_collider()
 
-  if not _intro_done:
+  if not GameData.intro_done:
     if collider.is_in_group("ivan"):
       _open_ivan_dialogue()
     return
 
   if collider.is_in_group("ivan"):
-    if state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED \
+    if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED \
        and "ivan_final" not in _completed_dialogues:
       _open_ivan_final_dialogue()
     return
@@ -249,15 +238,15 @@ func _try_interact() -> void:
 
   if collider.is_in_group("robot"):
     var working_on := ""
-    for key in state_machine:
-      if state_machine[key] == Machine.StateMachine.ROBOT_WORKING:
+    for key in GameData._state_machine.keys():
+      if GameData.state(key) == Machine.StateMachine.ROBOT_WORKING:
         working_on = key
         break
     if not working_on.is_empty():
       match working_on:
-        "Maze":       working_on = "labyrinthe"
-        "Ordinateur": working_on = "câblage"
-      show_message("%s" % DialoguesData.robot_name + " est en train de faire le %s... je vais le laisser faire..." % working_on, 3.0)
+        "Maze":       working_on = tr("wordMaze")
+        "Ordinateur": working_on = tr("wordWiring")
+      show_message(tr("msgRobotWorking") % [DialoguesData.robot_name, working_on], 3.0)
     else:
       _open_dialogue()
     return
@@ -266,14 +255,14 @@ func _try_interact() -> void:
 # ── Objectif ─────────────────────────────────────────────────────────────────
 
 func _update_objective() -> void:
-  if not _intro_done:
+  if not GameData.intro_done:
     _objective_label.visible = false
     return
   _objective_label.visible = true
-  if state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED:
-    _objective_label.text = "Objectif : parler à Ivan"
+  if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED:
+    _objective_label.text = tr("objectiveTalkIvan")
   else:
-    _objective_label.text = "Objectif : écrire un article avec le PC du petit bureau"
+    _objective_label.text = tr("objectiveWriteArticle")
 
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
@@ -284,26 +273,26 @@ func suppress_dialogue(dialogue_id: String) -> void:
 
 
 func collect_cpc(id: int) -> void:
-  if not cpc_collected.has(id):
-    cpc_collected.append(id)
-    cpc_collected.sort()
-    _objective_cpc_label.text = "Canard PC trouvés: " + ", ".join(cpc_collected)
-    print("%d = %d" % [cpc_collected.size(), _cpc_count])
-    if cpc_collected.size() == _cpc_count:
+  if not GameData.cpc_collected.has(id):
+    GameData.cpc_collected.append(id)
+    GameData.cpc_collected.sort()
+    _objective_cpc_label.text = tr("cpcFoundLabel") + ", ".join(GameData.cpc_collected)
+    print("%d = %d" % [GameData.cpc_collected.size(), _cpc_count])
+    if GameData.cpc_collected.size() == _cpc_count:
       await get_tree().create_timer(0.5).timeout
-      show_message("Vous avez trouvé tous les Canard PC", 3.0)
+      show_message(tr("msgAllCpcFound"), 3.0)
       AudioManager.play(AudioData.AUDIO_CABLE_VALIDATE_ALL, global_position)
 
 
 func is_cpc_collected(id: int) -> bool:
-  return cpc_collected.has(id)
+  return GameData.cpc_collected.has(id)
 
 
 func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
   if not machine_name.is_empty():
-    state_machine[machine_name] = Machine.StateMachine.TRY_MACHINE_OK
+    GameData.set_state(machine_name, Machine.StateMachine.TRY_MACHINE_OK)
   inventory.append(obj_name)
-  show_message("Vous ramassez : %s." % obj_name.replace("_", " "), 2.0)
+  show_message(tr("msgPickup") % obj_name.replace("_", " "), 2.0)
   obj.queue_free()
 
 
@@ -312,21 +301,21 @@ func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
 func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
   _update_objective()
-  _quit_hint_label.visible = not minigame_name.is_empty()
+  _quit_hint_label.visible = GameData.in_minigame
 
   var hint := ""
-  if not in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
+  if not GameData.in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
     var collider := _interaction_ray.get_collider()
     if collider:
-      if not _intro_done and collider.is_in_group("ivan"):
-        hint = "[ESPACE] Parler à Ivan"
-      elif _intro_done and collider.is_in_group("ivan") \
-           and state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED \
+      if not GameData.intro_done and collider.is_in_group("ivan"):
+        hint = tr("hintTalkIvan")
+      elif GameData.intro_done and collider.is_in_group("ivan") \
+           and GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED \
            and "ivan_final" not in _completed_dialogues:
-        hint = "[ESPACE] Parler à Ivan"
-      elif _intro_done and collider.is_in_group("robot"):
-        hint = "[ESPACE] Parler à %s" % DialoguesData.robot_name
-      elif _intro_done and collider.is_in_group("interactive"):
+        hint = tr("hintTalkIvan")
+      elif GameData.intro_done and collider.is_in_group("robot"):
+        hint = tr("hintTalkRobot") % DialoguesData.robot_name
+      elif GameData.intro_done and collider.is_in_group("interactive"):
         hint = collider.get_interaction_hint(self)
   _interaction_hint_label.text    = hint
   _interaction_hint_label.visible = not hint.is_empty()
@@ -334,7 +323,7 @@ func _physics_process(delta: float) -> void:
   if not is_on_floor():
     velocity.y -= gravity * delta
 
-  var locked := _dialogue_ui.is_open() or in_minigame or not _intro_done
+  var locked := _dialogue_ui.is_open() or GameData.in_minigame or not GameData.intro_done
   if not locked:
     var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
     var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

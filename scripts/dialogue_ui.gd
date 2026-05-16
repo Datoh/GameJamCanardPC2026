@@ -71,7 +71,7 @@ func _show_choices(available: Array) -> void:
   _clear_choices()
   for d in available:
     var btn := Button.new()
-    btn.text = d["label"]
+    btn.text = tr(d["label"])
     btn.pressed.connect(_on_choice_selected.bind(d))
     _choices_container.add_child(btn)
 
@@ -109,9 +109,12 @@ func _show_npc_line() -> void:
   var speaker: String = exchange.get("speaker", _current_dialogue.get("speaker", DialoguesData.robot_name))
   _choices_container.visible = false
   _set_speaker(speaker)
-  _text_label.text    = "« %s »" % exchange["robot"]
+  var raw := tr(exchange["robot"])
+  if "%s" in raw:
+    raw = raw % [DialoguesData.robot_name]
+  _text_label.text    = "« %s »" % raw
   _text_label.visible = true
-  if speaker == "Ivan Gaudé":
+  if speaker == "speakerIvan":
     robot_stopped_talking.emit()
   else:
     robot_started_talking.emit()
@@ -120,21 +123,21 @@ func _show_npc_line() -> void:
     _clear_choices()
     for branch in exchange["branches"]:
       var btn := Button.new()
-      btn.text = branch["label"]
+      btn.text = tr(branch["label"])
       btn.pressed.connect(_on_branch_selected.bind(branch["action"]))
       _choices_container.add_child(btn)
     _choices_container.visible = true
   else:
-    _continue_btn.text    = "Continuer"
+    _continue_btn.text    = tr("btnContinue")
     _continue_btn.visible = true
 
 
 func _show_player_line(text: String) -> void:
   _waiting_player_advance = true
-  _set_speaker("Moi")
+  _set_speaker("speakerMe")
   _text_label.text      = "« %s »" % text
   _text_label.visible   = true
-  _continue_btn.text    = "Continuer"
+  _continue_btn.text    = tr("btnContinue")
   _continue_btn.visible = true
   _choices_container.visible = false
   robot_stopped_talking.emit()
@@ -148,7 +151,7 @@ func _on_continue_pressed() -> void:
     return
   var exchange: Dictionary = _current_dialogue["exchanges"][_current_exchange]
   if exchange.has("player"):
-    _show_player_line(exchange["player"])
+    _show_player_line(tr(exchange["player"]))
   else:
     _finish_current_dialogue()
 
@@ -167,8 +170,8 @@ func _finish_current_dialogue() -> void:
 func _set_speaker(speaker_name: String) -> void:
   var col: Color
   match speaker_name:
-    "Moi":        col = COLOR_PLAYER
-    "Ivan Gaudé": col = COLOR_IVAN
-    _:            col = COLOR_ROBOT
-  _speaker_label.parse_bbcode("[b][color=#%s]%s[/color][/b]" % [col.to_html(false), speaker_name])
+    "speakerMe":   col = COLOR_PLAYER
+    "speakerIvan": col = COLOR_IVAN
+    _:             col = COLOR_ROBOT
+  _speaker_label.parse_bbcode("[b][color=#%s]%s[/color][/b]" % [col.to_html(false), tr(speaker_name)])
   _speaker_label.visible = true

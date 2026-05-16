@@ -56,12 +56,12 @@ var _player_ref: Node = null
 
 func _ready() -> void:
   machine_name        = NAME
-  message_idle        = "Cet oscilloscope affiche un signal étrange... Je dois reproduire ce signal en ajustant les paramètres."
-  message_try_machine = "Je dois reproduire ce signal en ajustant les paramètres."
-  message_solved      = "Le signal est reproduit."
-  hint_default        = "[ESPACE] Regarder l'oscilloscope"
-  hint_try_machine    = "[ESPACE] Régler l'oscilloscope"
-  hint_solved         = "[ESPACE] Oscilloscope réglé"
+  message_idle        = tr("msgOscilloIdle")
+  message_try_machine = tr("msgOscilloAdjust")
+  message_solved      = tr("msgSignalReproduced")
+  hint_default        = tr("hintLookOscillo")
+  hint_try_machine    = tr("hintAdjustOscillo")
+  hint_solved         = tr("hintOscilloCalibrated")
   input_ray_pickable  = true
   input_event.connect(_on_machine_input)
   call_deferred("_setup_all")
@@ -196,11 +196,10 @@ func _animate_cam(t: float) -> void:
 
 
 func _on_return_done() -> void:
+  GameData.minigame_name = ""
   if _player_camera and is_instance_valid(_player_camera):
     _player_camera.make_current()
   if _player_ref != null:
-    _player_ref.in_minigame   = false
-    _player_ref.minigame_name = ""
     _on_try_machine_done(_player_ref, _close_won)
   _close_won = false
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -261,8 +260,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _demarrer_jeu(player: Node) -> void:
   _player_ref          = player
-  player.in_minigame   = true
-  player.minigame_name = NAME
+  GameData.minigame_name = NAME
   _victory_pending     = false
   _update_displays()
   _transition_to_screen(player.camera)
@@ -325,9 +323,9 @@ func _on_victoire() -> void:
   AudioManager.play(AudioData.AUDIO_OSCILLO_WIN, global_position)
   if _audio_stream:
     _audio_stream.stop()
+  GameData.set_state(NAME, Machine.StateMachine.SOLVED)
   if _player_ref != null:
-    _player_ref.state_machine[NAME] = Machine.StateMachine.SOLVED
-    _player_ref.show_message("Signal reproduit ! L'oscilloscope est calibré.", 3.0)
+    _player_ref.show_message(tr("msgOscilloCalibrated"), 3.0)
   machine_done.emit(self)
   _quitter_jeu()
 

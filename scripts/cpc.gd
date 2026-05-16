@@ -19,7 +19,7 @@ func interact(player: Node) -> void:
     player.show_message(message, 3.0)
   else:
     player.collect_cpc(id)
-    player.show_message("Vous avez trouvé le Canard PC %d." % id, 2.0)
+    player.show_message(tr("msgCpcFound") % id, 2.0)
     AudioManager.play(sound_pick, global_position)
     queue_free()
 

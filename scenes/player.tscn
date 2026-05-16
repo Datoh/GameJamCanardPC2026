@@ -54,7 +54,7 @@ offset_top = -33.0
 offset_right = 361.0
 offset_bottom = -7.0
 grow_vertical = 0
-text = "[ÉCHAP] Quitter"
+text = "escQuit"
 
 [node name="ObjectiveLabel" type="Label" parent="CanvasLayer/Control" unique_id=992341807]
 unique_name_in_owner = true
@@ -67,7 +67,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 80.0
 grow_horizontal = 0
-text = "Objectif : écrire un article avec le PC du petit bureau"
+text = "objectiveWriteArticle"
 horizontal_alignment = 2
 autowrap_mode = 3
 

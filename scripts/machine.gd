@@ -34,14 +34,14 @@ var robot_work_duration: float = 15.0
 
 
 func interact(player: Node) -> void:
-  var state = player.state_machine[machine_name]
+  var state := GameData.state(machine_name)
   match state:
     StateMachine.IDLE:
       if not _can_try(player):
         player.show_message(message_not_enable, 3.0)
       else:
         player.show_message(message_idle, 3.0)
-        player.state_machine[machine_name] = StateMachine.TRY_MACHINE
+        GameData.set_state(machine_name, StateMachine.TRY_MACHINE)
         _on_try_machine(player, false)
     StateMachine.TRY_MACHINE:
       _on_try_machine(player, false)
@@ -57,7 +57,7 @@ func interact(player: Node) -> void:
       player.show_message(message_waiting_unlocked, 3.0)
     StateMachine.UNLOCKED:
       player.show_message(message_solved, 3.0)
-      player.state_machine[machine_name] = StateMachine.SOLVED
+      GameData.set_state(machine_name, StateMachine.SOLVED)
       machine_done.emit(self)
     StateMachine.SOLVED:
       player.show_message(message_solved, 3.0)
@@ -67,8 +67,8 @@ func _can_try(_player: Node) -> bool:
   return false
 
 
-func get_interaction_hint(player: Node) -> String:
-  var state = player.state_machine[machine_name]
+func get_interaction_hint(_player: Node) -> String:
+  var state := GameData.state(machine_name)
   var hint := ""
   match state:
     StateMachine.IDLE:
@@ -90,17 +90,17 @@ func on_dialogue_completed(dialogue_id: String, player: Node) -> void:
   if dialogue_demande.is_empty():
     return
   if dialogue_id == dialogue_demande:
-    player.state_machine[machine_name] = StateMachine.ROBOT_WORKING
+    GameData.set_state(machine_name, StateMachine.ROBOT_WORKING)
     player.start_robot_work(self, robot_work_duration)
   elif dialogue_id == dialogue_resultat:
     player.state_machine[machine_name] = StateMachine.TRY_MACHINE_OBJECT
 
 
-func is_dialogue_locked(dialogue_id: String, player: Node) -> bool:
+func is_dialogue_locked(dialogue_id: String, _player: Node) -> bool:
   if not dialogue_demande.is_empty() and dialogue_id == dialogue_demande:
-    return player.state_machine.get(machine_name, 0) != StateMachine.TRY_MACHINE
+    return GameData.state(machine_name) != StateMachine.TRY_MACHINE
   if not dialogue_resultat.is_empty() and dialogue_id == dialogue_resultat:
-    return player.state_machine.get(machine_name, 0) != StateMachine.ROBOT_DONE
+    return GameData.state(machine_name) != StateMachine.ROBOT_DONE
   return false
 
 
@@ -109,7 +109,7 @@ func _on_try_machine(player: Node, has_object: bool) -> void:
 
 
 func _on_try_machine_done(player: Node, won: bool) -> void:
-  var state = player.state_machine[machine_name]
+  var state := GameData.state(machine_name)
   match state:
     StateMachine.TRY_MACHINE:
       player.show_message(message_try_machine, 3.0)

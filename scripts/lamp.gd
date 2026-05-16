@@ -12,4 +12,4 @@ func interact(_player: Node) -> void:
     light.visible = not light.visible
 
 func get_interaction_hint(_player: Node) -> String:
-  return "[ESPACE] Allumer/Eteindre"
+  return tr("hintToggleLight")

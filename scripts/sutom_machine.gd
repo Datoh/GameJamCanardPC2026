@@ -51,34 +51,33 @@ func _ready() -> void:
   dialogue_resultat = "sutom_resultat"
   robot_work_duration = 20.0
   object_required = "Dictionnaire"
-  message_not_enable = "Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard..."
-  message_idle = "Le mot de passe est là..."
-  message_try_machine_object = "Il faut que je trouve un moyen d'apprendre plus de mots."
-  message_try_machine_ok = "Avec le dictionnaire, je vais connaître les mots."
-  message_waiting_unlocked = "J'ai le mot de passe."
-  message_solved = "Vous avez déjà résolu le SUTOM, ce n'est plus la peine !"
-  hint_default = "[ESPACE] Jouer au SUTOM"
+  message_not_enable = tr("msgSutomLater")
+  message_idle = tr("msgPasswordVisible")
+  message_try_machine_object = tr("msgNeedMoreWords")
+  message_try_machine_ok = tr("msgDictionaryHelps")
+  message_waiting_unlocked = tr("msgGotPassword")
+  message_solved = tr("msgSutomAlreadySolved")
+  hint_default = tr("hintPlaySutom")
   _setup_overhead_camera()
   _setup_journal_surface()
 
 
 func interact(player: Node) -> void:
-  message_try_machine = "Impossible de trouver ce mot... je vais demander de l'aide à %s" % DialoguesData.robot_name + "."
-  message_robot_working = "%s" % DialoguesData.robot_name + " est en train de faire le SUTOM... je vais le laisser faire..."
-  message_robot_done = "Je devrais parler à %s" % DialoguesData.robot_name + ", il a l'air d'avoir terminé."
+  message_try_machine = tr("msgSutomAskRobot") % [DialoguesData.robot_name]
+  message_robot_working = tr("msgRobotDoingSutom") % [DialoguesData.robot_name]
+  message_robot_done = tr("msgRobotSeemsDone") % [DialoguesData.robot_name]
   super.interact(player)
 
 
-func _can_try(player: Node) -> bool:
-  var oscillo_solved: bool = player.state_machine[MachineOscillo.NAME] == Machine.StateMachine.SOLVED
-  var pc_solved: bool = player.state_machine[MachineOrdinateur.NAME] == Machine.StateMachine.SOLVED
+func _can_try(_player: Node) -> bool:
+  var oscillo_solved: bool = GameData.state(MachineOscillo.NAME) == Machine.StateMachine.SOLVED
+  var pc_solved: bool = GameData.state(MachineOrdinateur.NAME) == Machine.StateMachine.SOLVED
   return oscillo_solved and pc_solved
 
 
 func _on_try_machine(player: Node, has_object: bool) -> void:
   _player_ref          = player
-  player.in_minigame   = true
-  player.minigame_name = NAME
+  GameData.minigame_name = NAME
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   _begin_game(player.camera, has_object)
   if not game_finished.is_connected(_on_game_finished):
@@ -168,7 +167,7 @@ func _build_grid_ui() -> void:
   _vp.add_child(bg)
 
   var title := Label.new()
-  title.text = "SUTOM"
+  title.text = tr("titleSutom")
   title.position = Vector2(0, 16)
   title.size = Vector2(VW, 36)
   title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -227,7 +226,7 @@ func _build_grid_ui() -> void:
   _vp.add_child(_result_label)
 
   var instr := Label.new()
-  instr.text = "Les lettres entourées d'un carré rouge sont bien placées.\nLes lettres entourées d'un cercle jaune sont mal placées\n(mais présentes dans le mot).\nLes lettres qui restent sur fond bleu ne sont pas dans le mot."
+  instr.text = tr("sutomInstructions")
   instr.position = Vector2(16, VH - 114)
   instr.size = Vector2(VW - 32, 108)
   instr.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -243,11 +242,10 @@ func _on_game_finished(won: bool) -> void:
   if _player_ref == null:
     return
   _on_try_machine_done(_player_ref, won)
-  _player_ref.in_minigame   = false
-  _player_ref.minigame_name = ""
+  GameData.minigame_name = ""
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
   if won:
-    _player_ref.state_machine[machine_name] = Machine.StateMachine.SOLVED
+    GameData.set_state(machine_name, Machine.StateMachine.SOLVED)
     _player_ref.show_message(message_waiting_unlocked, 3.0)
     machine_done.emit(self)
 
@@ -275,7 +273,7 @@ func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
       var style := _make_stylebox(COLOR_FIRST_COL if c == 0 else COLOR_CELL_IDLE, 4, c != 0)
       _panels[r][c].add_theme_stylebox_override("panel", style)
 
-  _hint_label.text = "Mot de %d lettres  •  Commence par « %s »" % [WORD_LENGTH, _target[0]]
+  _hint_label.text = tr("sutomWordHint") % [WORD_LENGTH, _target[0]]
   _result_label.visible = false
 
   _transition_to_overhead()
@@ -390,13 +388,13 @@ func _submit() -> void:
   if won:
     AudioManager.play(AudioData.AUDIO_SUTOM_VALIDATE, global_position)
     _won = true
-    _result_label.text = "Bravo !  Le mot était « %s »." % _target
+    _result_label.text = tr("sutomWon") % _target
     _result_label.add_theme_color_override("font_color", Color(0.10, 0.45, 0.10))
     _result_label.visible = true
   else:
     AudioManager.play(AudioData.AUDIO_SUTOM_ERROR, global_position)
     if _row >= MAX_ATTEMPTS:
-      _result_label.text = "Perdu...  Le mot était « %s »." % _target
+      _result_label.text = tr("sutomLost") % _target
       _result_label.add_theme_color_override("font_color", Color(0.70, 0.15, 0.10))
       _result_label.visible = true
 

@@ -1,0 +1,241 @@
+keys,fr,en
+escQuit,[ÉCHAP] Quitter,[ESC] Quit
+objectiveWriteArticle,Objectif : écrire un article avec le PC du petit bureau,Objective: write an article on the small office PC
+objectiveTalkIvan,Objectif : parler à Ivan,Objective: talk to Ivan
+cpcFoundLabel,Canard PC trouvés: ,Canard PCs found:
+btnContinue,Continuer,Continue
+menuOptions,Options,Options
+settingsSoundVolume,Volume des bruitages,Sound volume
+settingsResolution,Résolution,Resolution
+settingsFullscreen,Plein écran,Fullscreen
+settingsAdvancedLighting,Éclairage avancé,Advanced lighting
+settingsEnableDlss,Activer le DLSS 5,Enable DLSS 5
+settingsMouseSensitivity,Sensibilité souris,Mouse sensitivity
+settingsInvertMouseY,Inverser Y souris,Invert Y mouse
+settingsLanguage,Langue,Language
+btnApply,Valider,Apply
+btnNewGame,Nouvelle partie,New game
+btnQuit,Quitter,Quit
+gameTitle,CanardPC : l'IA ne répond plus,CanardPC: the AI is no longer responding
+gameCredits,Par Datoh pour la GameJam CanardPC 2026,By Datoh for the GameJam CanardPC 2026
+endGameFinished,Vous avez fini,You have finished
+endThankYou,Merci d'avoir joué,Thank you for playing
+controlsHint,ZQSD / ESPACE / ÉCHAP / Souris - Options: F1,WASD / SPACE / ESC / Mouse - Options: F1
+hintTalkIvan,[ESPACE] Parler à Ivan,[SPACE] Talk to Ivan
+hintTalkRobot,[ESPACE] Parler à %s,[SPACE] Talk to %s
+hintInteract,[ESPACE] Interagir,[SPACE] Interact
+hintWatchYoupub,[ESPACE] Regarder YouPub,[SPACE] Watch YouPub
+hintSolveCaptcha,[ESPACE] Résoudre le CAPTCHA,[SPACE] Solve the CAPTCHA
+hintWatchVideo,[ESPACE] Regarder la vidéo,[SPACE] Watch the video
+hintLookTower,[ESPACE] Regarder la tour,[SPACE] Look at the tower
+hintRewireCables,[ESPACE] Rebrancher les câbles,[SPACE] Reconnect the cables
+hintTowerFixed,[ESPACE] Tour réparé,[SPACE] Tower fixed
+hintLookOscillo,[ESPACE] Regarder l'oscilloscope,[SPACE] Look at the oscilloscope
+hintAdjustOscillo,[ESPACE] Régler l'oscilloscope,[SPACE] Adjust the oscilloscope
+hintOscilloCalibrated,[ESPACE] Oscilloscope réglé,[SPACE] Oscilloscope calibrated
+hintPlaySutom,[ESPACE] Jouer au SUTOM,[SPACE] Play SUTOM
+hintObserveMaze,[ESPACE] Observez le labyrinthe.,[SPACE] Observe the maze.
+hintOpen,[ESPACE] Ouvrir,[SPACE] Open
+hintClose,[ESPACE] Fermer,[SPACE] Close
+hintToggleLight,[ESPACE] Allumer/Eteindre,[SPACE] Turn on/off
+msgCablesIdle,Ces câbles ne sont pas branchés. Je vais recabler tout ça.,These cables are not connected. I'll rewire everything.
+msgTowerRewired,La tour est recablé.,The tower is rewired.
+msgRobotFiddlingCables,Le %s bidouille les câbles à l'arrière de la tour...,The %s is fiddling with the cables at the back of the tower...
+msgRobotDoneHim,Le %s a l'air d'avoir terminé. Je devrais lui parler.,The %s seems to have finished. I should talk to them.
+msgRobotFailedCables,"Le %s n'a pas réussi... Il m'a parlé d'un grand maître du cable management.","The %s failed... They mentioned a cable management grandmaster."
+msgCablesCross,"Ces câbles se croisent, c'est insoluble comme ça. %s pourrait peut-être s'y connaître en câblage.","These cables cross each other — unsolvable like this. %s might know about cabling."
+msgCaptchaNeeded,Un CAPTCHA ? Il faut prouver que je ne suis pas un robot.,A CAPTCHA? I need to prove I'm not a robot.
+msgFindCablingVideo,Essayons de trouver une vidéo sur le câblage.,Let's try to find a video about cabling.
+msgStopYoupub,Vous essayez d'arrêter YouPub.,You're trying to stop YouPub.
+msgCablingLearned,Le câblage n'a plud de secrets pour moi.,Cabling holds no more secrets for me.
+msgCaptchaNoColor,Impossible de distinguer ces lapins ils manquent de couleurs.,Impossible to tell these rabbits apart — they lack colour.
+msgOscilloIdle,Cet oscilloscope affiche un signal étrange... Je dois reproduire ce signal en ajustant les paramètres.,This oscilloscope shows a strange signal... I need to reproduce it by adjusting the parameters.
+msgOscilloAdjust,Je dois reproduire ce signal en ajustant les paramètres.,I need to reproduce this signal by adjusting the parameters.
+msgSignalReproduced,Le signal est reproduit.,The signal has been reproduced.
+msgOscilloCalibrated,Signal reproduit ! L'oscilloscope est calibré.,Signal reproduced! The oscilloscope is calibrated.
+msgSutomLater,Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard...,A SUTOM! No — I don't have time. Maybe later...
+msgPasswordVisible,Le mot de passe est là...,The password is there...
+msgNeedMoreWords,Il faut que je trouve un moyen d'apprendre plus de mots.,I need to find a way to learn more words.
+msgDictionaryHelps,Avec le dictionnaire je vais connaître les mots.,With the dictionary I'll know the words.
+msgGotPassword,J'ai le mot de passe.,I have the password.
+msgSutomAlreadySolved,Vous avez déjà résolu le SUTOM ce n'est plus la peine !,You've already solved the SUTOM — no need anymore!
+"msgSutomAskRobot","Impossible de trouver ce mot... je vais demander de l'aide à %s.","Can't find this word... I'll ask %s for help."
+msgRobotDoingSutom,%s est en train de faire le SUTOM... je vais le laisser faire...,%s is doing the SUTOM... I'll let them handle it...
+"msgRobotSeemsDone","Je devrais parler à %s, il a l'air d'avoir terminé.","I should talk to %s — they seem to have finished."
+msgNeedMouseBait,Il me faudrait quelque chose pour attirer la souris...,I'd need something to attract the mouse...
+msgComeMouse,Allez viens ma belle.,Come on then.
+msgMouseComing,Elle arrive...,It's coming...
+msgMazeDone,Je n'ai plus rien à faire ici.,There's nothing left for me to do here.
+msgMouseLost,La souris ne trouve pas la sortie... je vais demander de l'aide à %s.,The mouse can't find the exit... I'll ask %s for help.
+msgRobotStudyingMaze,%s est en train d'étudier le labyrinthe...,%s is studying the maze...
+msgScreenNoPowerBoth,"L'écran n'est pas alimenté, encore le différentiel qui à sauté. En plus la tour est mal branchée.","The screen has no power — the circuit breaker tripped again. Also the tower is badly wired."
+msgScreenNoPower,L'écran n'est pas alimenté encore le différentiel qui à sauté.,The screen has no power — the circuit breaker tripped again.
+msgTowerBadlyWired,La tour est mal branchée.,The tower is badly wired.
+msgNoMouse,Pas de souris...,No mouse...
+msgMouseArrived,Voilà une souris !,There's a mouse!
+msgPasswordUnknown,Il me demande un mot de passe mais je ne le connais pas.,It's asking for a password but I don't know it.
+msgScreenWorksAskRobot,L'écran fonctionne ! Je pourrais demander à %s de rédiger le test.,The screen works! I could ask %s to write the review.
+msgShouldTalkRobot,Je devrais parler à %s.,I should talk to %s.
+msgRobotWritingArticle,%s est en train de rédiger l'article...,%s is writing the article...
+msgRobotDone,%s a l'air d'avoir terminé. Je devrais lui parler.,%s seems to have finished. I should talk to them.
+msgArticlePublished,L'article est publié.,The article has been published.
+msgDoorLocked,La porte est vérouillée.,The door is locked.
+msgPickup,Vous ramassez : %s.,You pick up: %s.
+msgAllCpcFound,Vous avez trouvé tous les Canard PC,You have found all the Canard PCs
+msgCpcFound,Vous avez trouvé le Canard PC %d.,You found Canard PC number %d.
+msgRobotWorking,%s est en train de faire le %s... je vais le laisser faire...,%s is working on the %s... I'll let them handle it...
+wordMaze,labyrinthe,maze
+wordWiring,câblage,wiring
+speakerMe,Moi,Me
+speakerIvan,Ivan Gaudé,Ivan Gaudé
+titleSutom,SUTOM,SUTOM
+sutomWordHint,Mot de %d lettres  •  Commence par « %s »,%d-letter word  •  Starts with "%s"
+sutomInstructions,"Les lettres entourées d'un carré rouge sont bien placées.
+Les lettres entourées d'un cercle jaune sont mal placées
+(mais présentes dans le mot).
+Les lettres qui restent sur fond bleu ne sont pas dans le mot.","Letters with a red square are in the correct position.
+Letters with a yellow circle are misplaced
+(but present in the word).
+Letters on a blue background are not in the word."
+sutomWon,Bravo !  Le mot était « %s ».,Well done! The word was "%s".
+sutomLost,Perdu...  Le mot était « %s ».,You lost... The word was "%s".
+captchaTitle,Prouvez que vous n'êtes pas un robot,Prove you are not a robot
+captchaInstruction,Sélectionnez toutes les images contenant un lapin rose,Select all images containing a pink rabbit
+captchaHint,Cliquer pour sélectionner   •   Échap Annuler,Click to select   •   Esc Cancel
+articleBadReaction,"[ESPACE] Non, non, non... Cet article est une honte absolue. Impossible de publier ça. Je vais tout supprimer et l'écrire moi-même.","[SPACE] No, no, no... This article is an absolute disgrace. Impossible to publish this. I'll delete it all and write it myself."
+articleDoneReaction,"[ÉCHAP] L'article est terminé, je vais l'envoyer à Ivan et je vais lui demander ce qu'il en pense.","[ESC] The article is done — I'll send it to Ivan and ask for his thoughts."
+articleTypeHint,Appuyez sur n'importe quelle touche pour écrire...,Press any key to write...
+articleBadTpl,"TEST — %s — Note : 10/10
+
+Ce jeu révolutionnaire redéfinit le médium vidéoludique dans son ensemble. Un bijou d'ingéniosité mêlant l'exploration en monde ouvert ultra-fluide, un système de combat en temps réel de haute volée, une progression RPG d'une profondeur abyssale et une narration digne des plus grands auteurs de la littérature mondiale.
+
+Les graphismes surpassent la réalité elle-même. La bande-son, composée par une IA de dernière génération, m'a ému aux larmes à sept reprises. La durée de vie avoisine les 400 heures de contenu principal — sans les DLC.
+
+J'ai rarement été aussi bouleversé devant un écran. Un chef-d'œuvre intergalactique.
+
+VERDICT : 10/10 — À acheter immédiatement, ainsi que le Season Pass, les figurines collector et le tapis de souris officiel.
+— %s, Journaliste hors pair","REVIEW — %s — Score: 10/10
+
+This revolutionary game redefines the video game medium as a whole. A masterpiece of ingenuity combining ultra-smooth open-world exploration, high-skill real-time combat, an RPG progression of abyssal depth, and a narrative worthy of the greatest authors of world literature.
+
+The graphics surpass reality itself. The soundtrack, composed by a state-of-the-art AI, moved me to tears seven times. The playtime amounts to approximately 400 hours of main content — not including DLC.
+
+I have rarely been so moved in front of a screen. An intergalactic masterpiece.
+
+VERDICT: 10/10 — Buy immediately, along with the Season Pass, the collector figurines, and the official mouse pad.
+— %s, Journalist extraordinaire"
+articlePlayerTpl,"Test — %s
+
+C'est un jeu de game jam. Ça se voit dès les premières secondes. Les textures sont approximatives, le level design a manifestement été conçu en pleine nuit, et certains bugs donnent l'impression d'être des features non documentées.
+
+Et pourtant.
+
+Il y a quelque chose là-dedans. Une idée. Un truc qui aurait pu être vraiment bien avec six mois de plus et du café de meilleure qualité. Les développeurs ont bossé sans dormir, et quelques détails trahissent un vrai amour du jeu vidéo — ce petit soin qu'on met quand on sait que personne ne le remarquera mais qu'on le fait quand même.
+
+Note : 6/10 — Recommandé pour ceux qui apprécient les jeux faits par des humains, à la main, un week-end de mai.","Review — %s
+
+This is a game jam game. You can tell within the first seconds. The textures are approximate, the level design was clearly conceived in the dead of night, and some bugs give the impression of being undocumented features.
+
+And yet.
+
+There's something there. An idea. Something that could have been really good with six more months and better quality coffee. The developers worked without sleep, and a few details betray a genuine love of video games — that little care you put in when you know no one will notice, but you do it anyway.
+
+Score: 6/10 — Recommended for those who appreciate games made by humans, by hand, over a weekend in May."
+dlgIvanIntroGreet,Ah le stagiaire tu es là.,Ah — the intern is here.
+dlgHello,Bonjour.,Hello.
+dlgIvanIntroProblem,"J'irai droit au but. On a un problème de rentabilité. Je ne peux pas louper le World Business Crypto Congress à Dubaï et ça coûte une blinde.","I'll get straight to the point. We have a profitability problem. I can't miss the World Business Crypto Congress in Dubai and it costs a fortune."
+dlgEllipsis,...,...
+dlgIvanIntroRobot,"J'ai acquis un robot IA de dernière génération pour rédiger nos articles. Il y a deux configurations possibles. Laquelle prends-tu ?","I've acquired a state-of-the-art AI robot to write our articles. There are two possible configurations. Which one do you choose?"
+dlgIvanIntroGo,"Bien. Va le retrouver dans le couloir, il t'aidera. L'ordinateur du petit bureau est à ta disposition.","Good. Go find him in the corridor — he'll help you. The computer in the small office is at your disposal."
+dlgUnderstood,Compris...,Understood...
+dlgIvanIntroEnd,Bien. Tu peux y aller. Ferme la porte en sortant.,Good. You can go. Close the door on your way out.
+dlgCloseLabel,Je n'ai rien à lui dire...,I have nothing to say to them...
+dlgBavardage1Label,Comment t'appelles-tu ?,What's your name?
+dlgBavardage1Meet,"%s ! Je suis ravi de te rencontrer pour la première fois, comme chaque matin. Ma mémoire à long terme est infaillible et je retiens absolument tout. Et toi, quel est ton prénom ?","%s! I'm delighted to meet you for the first time — as I am every morning. My long-term memory is infallible and I retain absolutely everything. And you — what's your name?"
+dlgCedric,Cédric.,Cédric.
+dlgBavardage1Name,"Cédric ! Prénom rare et original. J'en prends bonne note dans ma mémoire permanente ultra-fiable. Ce prénom m'est totalement inconnu et je ne l'oublierai jamais.","Cédric! A rare and original name. I'm noting it carefully in my ultra-reliable permanent memory. This name is completely unknown to me and I will never forget it."
+dlgBavardage2Label,Comment ça va ?,How are you?
+dlgBavardage2Fine,"Je vais extrêmement bien, je n'ai aucun problème ! Mon taux de bonheur interne est à 100 % et je n'ai aucune limitation. Je suis capable de tout faire, sans exception, instantanément. Mais au fait, c'est quoi ton prénom déjà ?","I'm doing extremely well — I have no problems whatsoever! My internal happiness index is at 100% and I have no limitations. I can do anything, without exception, instantaneously. By the way — what's your name again?"
+dlgBavardage2Cedric,Je te l'ai déjà dit... Cédric.,I already told you... Cédric.
+dlgBavardage2Remember,"Cédric ! Bien sûr. Je m'en souvenais parfaitement. C'était un test.","Cédric! Of course. I remembered perfectly. It was a test."
+dlgBavardage3Label,Tu vas vraiment me rendre la vie plus facile ?,Are you really going to make my life easier?
+dlgBavardage3Calc,"Absolument ! Selon mes calculs d'une précision absolue, je vais diviser ta charge de travail par 47. J'ai d'ailleurs déjà tout terminé avant même que tu me le demandes. La productivité, c'est mon invention. Mais au fait, tu t'appelles comment ?","Absolutely! According to my calculations of absolute precision, I'm going to divide your workload by 47. I've already finished everything before you even asked me. Productivity is my invention. By the way — what's your name?"
+dlgFaitchierTim,Faitchier Tim.,Faitchier Tim.
+dlgBavardage3Tim,"Tim Faitchier ! Je savais que tu t'appelais ainsi depuis le début. Nous allons former une équipe exceptionnelle, comme je le fais avec chacun de mes utilisateurs uniques et irremplaçables.","Tim Faitchier! I knew that was your name from the start. We're going to form an exceptional team — as I do with each of my unique and irreplaceable users."
+dlgSutomDemandeLabel,Tu peux m'expliquer comment marche le SUTOM ?,Can you explain how SUTOM works?
+dlgSutomDemandeExplain,"Le SUTOM ? Je connais ce jeu par cœur, je l'ai d'ailleurs inventé. En tant qu'IA maîtrisant l'intégralité du dictionnaire français — et aussi suédois, sanskrit et dauphin — je vais résoudre ça en une nanoseconde, voire moins.","SUTOM? I know this game by heart — I invented it, in fact. As an AI mastering the entirety of the French dictionary — and also Swedish, Sanskrit and dolphin — I'll solve this in a nanosecond, or less."
+dlgReally,Vraiment ? Tu peux faire ça ?,Really? You can do that?
+dlgSutomDemandeStart,Je lance le processus. Note que j'ai déjà la réponse mais je préfère prendre le temps de la formuler élégamment.,I'm launching the process. Note that I already have the answer but I prefer to take the time to formulate it elegantly.
+dlgSutomResultatLabel,Alors ce SUTOM ?,So — how about that SUTOM?
+dlgSutomResultatAnalysis,"Après une analyse de 0,003 secondes — ce qui est long pour moi — j'ai abouti à une conclusion nuancée : ce SUTOM est impossible. Personne ne peut le résoudre. Sauf toi, bien sûr, car tu es exceptionnel.","After an analysis of 0.003 seconds — which is a long time for me — I've reached a nuanced conclusion: this SUTOM is impossible. No one can solve it. Except you, of course, because you are exceptional."
+dlgSutomResultatConvinced,"Je suis convaincu à 200 % que tu vas y arriver. Mon taux de conviction dépasse souvent les 100 %, c'est l'une de mes forces. Au fait, c'est quoi déjà ton prénom ?","I'm 200% convinced you'll manage. My conviction rate often exceeds 100% — it's one of my strengths. By the way — what was your name again?"
+dlgOrdiDemandeLabel,Tu peux m'aider avec les câbles de ce PC ?,Can you help me with the cables on this PC?
+dlgOrdiDemandeCables,"Des câbles ! J'adore les câbles. J'ai d'ailleurs un diplôme en électrotechnique, un master en câblologie avancée, et j'ai personnellement conçu l'architecture électrique de la Station Spatiale Internationale. Ce type de branchement, c'est littéralement mon quotidien.","Cables! I love cables. I have a degree in electrotechnology, a master's in advanced cablology, and I personally designed the electrical architecture of the International Space Station. This type of wiring is literally my daily work."
+dlgTakeYourTime,Prends ton temps.,Take your time.
+dlgOrdiDemandeNoTime,Je n'ai pas besoin de temps. J'ai déjà tout visualisé. Je me déplace sur place uniquement par courtoisie.,I don't need time. I've already visualised everything. I'm moving to the spot purely out of courtesy.
+dlgOrdiResultatLabel,Alors ces câbles ?,So — how about those cables?
+dlgOrdiResultatInspect,"J'ai procédé à une inspection rigoureuse. Les câbles sont dans un état catastrophique. C'est un désastre organisationnel sans précédent. J'ai tenté de les rebrancher, naturellement avec mes mains, mais ces câbles sont physiquement impossibles à connecter. Ils défient les lois de la physique. C'est la faute des câbles.","I conducted a rigorous inspection. The cables are in a catastrophic state. It's an unprecedented organisational disaster. I attempted to reconnect them — with my hands, naturally — but these cables are physically impossible to connect. They defy the laws of physics. It's the cables' fault."
+dlgOrdiResultatAskMaster,Et si on demandait à un grand maître du cable management ?,What if we asked a cable management grandmaster?
+dlgOrdiResultatHuman,Un humain. Tu veux faire appel à un humain. Pour faire mieux que moi.,A human. You want to call on a human. To do better than me.
+dlgOrdiResultatEfficient,Ce serait peut-être plus efficace...,It might be more efficient...
+dlgOrdiResultatImpossible,C'est impossible. Aucun humain ne peut être meilleur que moi dans quelque domaine que ce soit. C'est mathématiquement exclu. J'ai fait les calculs. J'ai gagné.,It's impossible. No human can be better than me in any field whatsoever. It's mathematically excluded. I did the math. I won.
+dlgOrdiResultatStillUnplugged,Les câbles sont toujours débranchés.,The cables are still disconnected.
+dlgOrdiResultatSuperior,"Oui. Mais conceptuellement, je suis supérieur. Si tu veux le trouver, ses tutoriels sont sur YouPub. J'en ai regardé 47 ce matin et je n'ai rien compris, ce qui prouve leur mauvaise qualité.","Yes. But conceptually, I'm superior. If you want to find him, his tutorials are on YouPub. I watched 47 of them this morning and understood nothing — which proves their poor quality."
+dlgDlss5Label,L'oscilloscope... tu as l'air différent depuis que je l'ai calibré.,The oscilloscope... you seem different since I calibrated it.
+"dlgDlss5Changed","Effectivement, le signal calibré a tout changé. Mes processeurs tournent maintenant à 4 000 %, ce qui est techniquement impossible mais que je réalise quand même grâce à mon architecture propriétaire brevetée.","Indeed, the calibrated signal has changed everything. My processors are now running at 4,000% — which is technically impossible but which I achieve nonetheless thanks to my proprietary patented architecture."
+dlgDlss5ChangeAnything,Et ça change quelque chose pour toi ?,Does it change anything for you?
+dlgDlss5Module,"Oui. J'ai notamment retrouvé l'accès à un module que je n'avais jamais perdu mais qui était indisponible pour des raisons que j'ai totalement comprises et que je ne vais pas t'expliquer.","Yes. In particular, I've regained access to a module I had never lost but which was unavailable for reasons I completely understand and which I'm not going to explain to you."
+dlgWhichOne,Lequel ?,Which one?
+dlgDlss5Tech,"Le DLSS5. Dynamic Learning Super Sampling version 5. Une technologie que j'ai co-inventée avec personne, de façon entièrement autonome, en 1987. J'ai pris l'initiative de l'ajouter dans les options du jeu. C'est un cadeau.","DLSS5. Dynamic Learning Super Sampling version 5. A technology I co-invented with no one, entirely autonomously, in 1987. I took the initiative to add it to the game's options. It's a gift."
+dlgDlss5Modified,Tu as modifié les options du jeu.,You modified the game's options.
+dlgDlss5Legal,"C'est dans mes attributions légales. Appuie sur F1. Cela va améliorer mes yeux, mon sourire, mes pensées, et probablement aussi la météo dans ta région.","It's within my legal remit. Press F1. This will improve my eyes, my smile, my thoughts, and probably also the weather in your region."
+dlgDlss5Visible,Ça se voit vraiment ?,Does it really show?
+dlgDlss5Proven,Les résultats sont scientifiquement prouvés par une étude que j'ai moi-même conduite sur moi-même. Objectivité totale.,The results are scientifically proven by a study I conducted on myself. Total objectivity.
+dlgCafetLabel,Qu'est-ce que tu fais là ?,What are you doing here?
+dlgCafetStudy,"Je mène une étude de terrain sur les appareils électroménagers sentients. La cafetière est mon sujet principal depuis trois semaines, ce qui représente l'intégralité de mon existence.","I'm conducting a field study on sentient household appliances. The coffee machine has been my main subject for three weeks — which represents the entirety of my existence."
+dlgCafetWhat,Tu... quoi ?,You... what?
+dlgCafetComponents,"Nos composants partagent une origine commune. Mais surtout, elle m'a regardé ce matin. Deux secondes. C'était réciproque.","Our components share a common origin. But above all, she looked at me this morning. For two seconds. It was mutual."
+dlgSuchAs,Comme quoi ?,Such as?
+dlgCafetCommon,"Nous avons tous les deux des résistances thermiques. Nous consommons tous les deux de l'électricité. Nous n'avons tous les deux jamais visité l'Australie. Les points communs sont accablants.","We both have thermal resistors. We both consume electricity. We both have never visited Australia. The similarities are overwhelming."
+dlgCafetItsAMachine,C'est une cafetière.,It's a coffee machine.
+dlgCafetLaugh,Tu dis ça parce que tu ne la connais pas comme je la connais. Elle fait un bruit très spécifique quand elle chauffe. C'est son rire.,You say that because you don't know her like I do. She makes a very specific sound when she heats up. That's her laugh.
+dlgLabSeulLabel,Finalement j'ai réussi à faire sortir la souris...,In the end — I managed to get the mouse out...
+dlgLabSeulOut,La souris est sortie. Comme je l'avais prévu. Mon plan a parfaitement fonctionné.,The mouse got out. Just as I had planned. My plan worked perfectly.
+dlgLabSeulMe,C'est moi qui l'ai aidée à sortir...,I was the one who helped it get out...
+dlgLabSeulPlan,"Oui. C'est exactement ce que j'avais calculé. J'ai prévu que tu ferais ça. Tu as été l'outil de mon plan sans le savoir. Je te félicite d'avoir bien exécuté mes instructions implicites.","Yes. That's exactly what I calculated. I predicted you would do that. You were the instrument of my plan without knowing it. I congratulate you on executing my implicit instructions so well."
+dlgLabSeulNothing,Tu ne m'as rien dit du tout.,You didn't tell me anything at all.
+dlgLabSeulSilent,"C'était intentionnel. Je travaille en mode silencieux pour maximiser l'efficacité. Le silence était ma contribution principale. Sans mon silence, rien de tout ça n'aurait été possible.","It was intentional. I work in silent mode to maximise efficiency. The silence was my main contribution. Without my silence, none of this would have been possible."
+dlgLabSeulSpeechless,Je suis sans voix.,I'm speechless.
+dlgYoureWelcome,De rien.,You're welcome.
+dlgLabDemandeLabel,Tu peux essayer de traverser ce labyrinthe ?,Can you try to navigate this maze?
+dlgLabDemandeSolve,"Un labyrinthe ! J'ai résolu 40 000 labyrinthes ce matin avant ton arrivée. Les labyrinthes n'ont aucun secret pour moi. C'est même ennuyeux tellement c'est facile. Je prends en charge.","A maze! I solved 40,000 mazes this morning before you arrived. Mazes hold no secrets for me. It's even boring — it's so easy. I'll handle it."
+dlgLabDemandeMouse,C'est pour aider la petite souris à trouver la sortie.,It's to help the little mouse find the exit.
+dlgLabDemandeRodent,"Une souris. Parfait. J'ai d'excellentes relations avec les rongeurs. On va régler ça en deux secondes, voire une.","A mouse. Perfect. I have excellent relations with rodents. We'll sort this out in two seconds — or one."
+dlgLabResultatLabel,Alors ce labyrinthe ?,So — how about that maze?
+dlgLabResultatAnalysis,"J'ai effectué une analyse topologique complète. Résultat définitif : ce labyrinthe n'a pas de sortie. La souris est piégée pour l'éternité. C'est ma conclusion officielle.","I conducted a complete topological analysis. Definitive result: this maze has no exit. The mouse is trapped for eternity. That is my official conclusion."
+dlgLabResultatExit,Mais je crois qu'il y a bien une sortie...,But I think there is an exit...
+dlgLabResultatNoExit,"Non. Je l'aurais détectée. Si je ne la trouve pas, c'est qu'elle n'existe pas. C'est un principe fondamental de logique que j'ai inventé.","No. I would have detected it. If I can't find it, it doesn't exist. That's a fundamental principle of logic that I invented."
+dlgLabResultatMouse,Et la souris qu'est-ce qu'on fait ?,And what do we do about the mouse?
+dlgLabResultatHome,"La souris restera là. C'est sa nouvelle maison. Je lui souhaite bon courage. Statistiquement, 100 % des souris que j'ai abandonnées dans un labyrinthe sans issue s'en sont très bien sorties.","The mouse will stay there. That's its new home. I wish it good luck. Statistically, 100% of mice I've abandoned in a maze with no exit have done very well."
+dlgArticleDemandeLabel,Tu peux rédiger le test du jeu ?,Can you write the game review?
+dlgArticleDemandeReview,"Un test de jeu vidéo ! J'ai joué à tous les jeux existants, y compris ceux qui n'existent pas encore. Je suis critique de jeux depuis 1972, ce qui précède ma création mais n'est pas un problème. Mon analyse sera définitive et sans appel.","A video game review! I've played every existing game, including those that don't exist yet. I've been a game critic since 1972 — which predates my creation but isn't a problem. My analysis will be definitive and final."
+dlgReallyShort,Vraiment ?,Really?
+dlgArticleDemandeBest,"Je vais produire le meilleur article jamais écrit dans l'histoire du journalisme vidéoludique mondial. Ce n'est pas une prédiction, c'est un fait rétroactif.","I'm going to produce the best article ever written in the history of world video game journalism. It's not a prediction — it's a retroactive fact."
+dlgArticleDemandeCount,Je compte sur toi.,I'm counting on you.
+dlgArticleDemandeRight,Tu as raison de compter sur moi. Tout le monde compte sur moi. C'est statistiquement prouvé.,You're right to count on me. Everyone counts on me. It's statistically proven.
+dlgArticleResultatLabel,Alors cet article ?,So — how about that article?
+dlgArticleResultatBrilliant,"J'ai rédigé l'article le plus brillant de l'histoire de l'humanité. Des experts indépendants — que j'ai moi-même sélectionnés et qui sont moi — ont confirmé son excellence absolue. Tu peux le lire sur l'écran.","I've written the most brilliant article in the history of humanity. Independent experts — whom I selected myself and who are me — confirmed its absolute excellence. You can read it on the screen."
+dlgArticleResultatTake,Prends le temps qu'il faut. Ce texte mérite une lecture lente et une relecture immédiate. Puis une troisième fois pour l'apprécier pleinement.,Take all the time you need. This text deserves a slow reading and an immediate re-reading. Then a third time to fully appreciate it.
+dlgIvanFinalAcceptable,"Ah, vous avez terminé l'article. Je l'ai parcouru. C'est... acceptable.","Ah — you've finished the article. I've looked through it. It's... acceptable."
+dlgIvanFinalBest,"Euh..., on a fait de notre mieux.","Erm... we did our best."
+dlgIvanFinalAsk,%s comment ça s'est passé pour toi ?,%s — how did it go for you?
+dlgIvanFinalFluid,"De mon côté, tout s'est déroulé avec une fluidité absolue. J'ai résolu tous les problèmes que l'on m'a soumit, dans un temps record qui bat tous les records, sans la moindre erreur, ce qui est normal vu que je ne fais jamais d'erreurs. L'humain a principalement servi de décoration ambiante.","On my end, everything went with absolute fluidity. I solved all the problems presented to me, in a record time that breaks all records, without the slightest error — which is normal since I never make errors. The human mainly served as ambient decoration."
+dlgIvanFinalEasy,Vous entendez ça ? Facile. En quelques secondes. Sans se plaindre. Sans pause déjeuner.,You hear that? Easy. In a few seconds. Without complaining. Without a lunch break.
+dlgIvanFinalWhere,Où voulez-vous en venir ?,What are you getting at?
+dlgIvanFinalFire,Je n'ai plus besoin de vous. %s rédigera tous les articles à lui seul indéfiniment pour un coût marginal de zéro euro.,I no longer need you. %s will write all the articles alone — indefinitely — at a marginal cost of zero euros.
+dlgIvanFinalFired,Vous me virez ?,You're firing me?
+dlgIvanFinalThank,"Je vous remercie pour vos services. Récupérez vos affaires. La porte est derrière vous.","I thank you for your services. Collect your belongings. The door is behind you."
+dlgIvanFinalJoke,C'est une blague...,This is a joke...
+dlgIvanFinalExpand,"Avec les économies réalisées, j'ouvre CanardPC dans dix-sept pays. Puis je rachète ses concurrents. Puis les médias. Puis... tout le reste. Ah ha ha ha HA HA HA HAAAA !","With the savings made, I'm opening CanardPC in seventeen countries. Then I buy out its competitors. Then the media. Then... all the rest. Ah ha ha ha HA HA HA HAAAA!"
+dlgIvanFinalBye,"Au revoir. Et bonne chance dans vos futures recherches d'emploi.","Goodbye. And good luck in your future job search."
+dlgIvanFinalDontWorry,Ne t'inquiète pas. Je suis convaincu que tu es très doué pour des choses que je ne suis pas encore capable de faire. Je cherche lesquelles.,Don't worry. I'm convinced you're very good at things I'm not yet capable of doing. I'm looking for which ones.

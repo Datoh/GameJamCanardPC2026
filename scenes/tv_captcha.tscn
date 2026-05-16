@@ -19,7 +19,7 @@ offset_right = 1920.0
 offset_bottom = 150.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 68
-text = "Prouvez que vous n'êtes pas un robot"
+text = "captchaTitle"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="." unique_id=458609617]
@@ -29,7 +29,7 @@ offset_right = 1920.0
 offset_bottom = 205.0
 theme_override_colors/font_color = Color(0.78, 0.78, 0.86, 1)
 theme_override_font_sizes/font_size = 36
-text = "Sélectionnez toutes les images contenant un lapin rose"
+text = "captchaInstruction"
 horizontal_alignment = 1
 
 [node name="Border0" type="ColorRect" parent="." unique_id=1042398362]
@@ -198,7 +198,7 @@ offset_right = 1260.0
 offset_bottom = 1035.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 42
-text = "Valider"
+text = "btnApply"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -209,5 +209,5 @@ offset_right = 1920.0
 offset_bottom = 949.0
 theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
 theme_override_font_sizes/font_size = 24
-text = "Cliquer pour sélectionner   •   Échap Annuler"
+text = "captchaHint"
 horizontal_alignment = 1

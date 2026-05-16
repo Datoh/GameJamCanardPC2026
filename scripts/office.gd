@@ -22,7 +22,7 @@ var _prev_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 func _process(_delta: float) -> void:
   if _ivan_door_unlocked:
     return
-  if _player.state_machine.get("Screen", Machine.StateMachine.IDLE) == Machine.StateMachine.SOLVED:
+  if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED:
     _ivan_door_unlocked = true
     for door in get_tree().get_nodes_in_group("door_ivan"):
       door.unlock()
@@ -95,7 +95,7 @@ func _on_machine_done(machine: Node) -> void:
       if is_instance_valid(_mouse):
         _player.inventory.append("souris")
         AudioManager.play(AudioData.AUDIO_MOUSE_PICK, _mouse.global_position)
-        _player.show_message("Vous ramassez : souris.", 2.0)
+        _player.show_message(tr("msgPickup") % "souris", 2.0)
         _mouse.visible = false
         _mouse.set_physics_process(false)
     MachineSutom.NAME:

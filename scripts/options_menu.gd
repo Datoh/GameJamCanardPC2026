@@ -8,6 +8,11 @@ const BUS_MASTER := 0
 static var mouse_sensitivity: float = 1.0
 static var mouse_invert_y: bool = false
 
+const LANGUAGES: Array = [
+  ["en", "English"],
+  ["fr", "Français"],
+]
+
 const RESOLUTIONS: Array[Vector2i] = [
   Vector2i(640,  360),
   Vector2i(854,  480),
@@ -29,6 +34,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var _mouse_sens_slider: HSlider       = %MouseSensSlider
 @onready var _mouse_sens_value:  Label         = %MouseSensValue
 @onready var _mouse_invert_check: CheckBox     = %MouseInvertYCheck
+@onready var _language_option:    OptionButton = %LanguageOption
 
 func _ready() -> void:
   _volume_slider.value_changed.connect(_on_volume_changed)
@@ -39,9 +45,12 @@ func _ready() -> void:
   _fullscreen_check.toggled.connect(_on_fullscreen_toggled)
   _mouse_sens_slider.value_changed.connect(_on_mouse_sens_changed)
   _mouse_invert_check.toggled.connect(_on_mouse_invert_toggled)
+  _language_option.item_selected.connect(_on_language_selected)
 
   _build_resolution_list()
   _detect_best_resolution()
+  _build_language_list()
+  _detect_language()
 
   var mode := DisplayServer.window_get_mode()
   _fullscreen_check.set_pressed_no_signal(
@@ -115,6 +124,27 @@ func _on_mouse_sens_changed(value: float) -> void:
 
 func _on_mouse_invert_toggled(enabled: bool) -> void:
   mouse_invert_y = enabled
+
+
+func _build_language_list() -> void:
+  _language_option.clear()
+  for lang in LANGUAGES:
+    _language_option.add_item(lang[1])
+
+
+func _detect_language() -> void:
+  var sys_lang := OS.get_locale_language()
+  var idx := 0
+  for i in LANGUAGES.size():
+    if LANGUAGES[i][0] == sys_lang:
+      idx = i
+      break
+  _language_option.select(idx)
+  TranslationServer.set_locale(LANGUAGES[idx][0])
+
+
+func _on_language_selected(idx: int) -> void:
+  TranslationServer.set_locale(LANGUAGES[idx][0])
 
 func _on_validate_pressed() -> void:
   hide()
