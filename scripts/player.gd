@@ -277,7 +277,6 @@ func collect_cpc(id: int) -> void:
     GameData.cpc_collected.append(id)
     GameData.cpc_collected.sort()
     _objective_cpc_label.text = tr("cpcFoundLabel") + ", ".join(GameData.cpc_collected)
-    print("%d = %d" % [GameData.cpc_collected.size(), _cpc_count])
     if GameData.cpc_collected.size() == _cpc_count:
       await get_tree().create_timer(0.5).timeout
       show_message(tr("msgAllCpcFound"), 3.0)

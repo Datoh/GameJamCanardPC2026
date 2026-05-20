@@ -2,11 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dybhrutxby0hv" path="res://scripts/end_screen.gd" id="1_es"]
 
-[node name="EndScreen" type="CanvasLayer" unique_id=1685152915]
-layer = 10
-script = ExtResource("1_es")
-
-[node name="Control" type="Control" parent="." unique_id=547722322]
+[node name="EndScreen" type="Control" unique_id=547722322]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_es")
 
-[node name="YouDidItLabel" type="Label" parent="Control" unique_id=1098002236]
+[node name="YouDidItLabel" type="Label" parent="." unique_id=1098002236]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -32,7 +29,7 @@ theme_override_font_sizes/font_size = 26
 text = "endGameFinished"
 horizontal_alignment = 1
 
-[node name="TitleLabel" type="Label" parent="Control" unique_id=865712576]
+[node name="TitleLabel" type="Label" parent="." unique_id=865712576]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -49,7 +46,7 @@ theme_override_font_sizes/font_size = 54
 text = "gameTitle"
 horizontal_alignment = 1
 
-[node name="ThanksLabel" type="Label" parent="Control" unique_id=349717613]
+[node name="ThanksLabel" type="Label" parent="." unique_id=349717613]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -66,7 +63,7 @@ theme_override_font_sizes/font_size = 26
 text = "endThankYou"
 horizontal_alignment = 1
 
-[node name="CreditLabel" type="Label" parent="Control" unique_id=77171425]
+[node name="CreditLabel" type="Label" parent="." unique_id=77171425]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

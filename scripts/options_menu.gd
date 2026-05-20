@@ -23,6 +23,8 @@ const RESOLUTIONS: Array[Vector2i] = [
   Vector2i(1920, 1080),
 ]
 
+@export var _world_environment: WorldEnvironment = null
+
 @onready var _volume_slider:     HSlider       = %VolumeSlider
 @onready var _volume_value:      Label         = %VolumeValue
 @onready var _dlss_check:        CheckBox      = %DLSSCheck
@@ -101,11 +103,8 @@ func _on_dlss_toggled(enabled: bool) -> void:
   robot.set_skin_dlss5(DialoguesData.robot_name, enabled)
 
 func _on_sdfgi_toggled(enabled: bool) -> void:
-  var world_env := get_tree().get_first_node_in_group(GameData.GROUP_WORLD_ENVIRONMENT)
-  if not world_env:
-    world_env = get_tree().root.find_child("WorldEnvironment", true, false)
-  if world_env and world_env.environment:
-    world_env.environment.sdfgi_enabled = enabled
+  if _world_environment:
+    _world_environment.environment.sdfgi_enabled = enabled
 
 func _on_resolution_selected(idx: int) -> void:
   _apply_resolution(idx)

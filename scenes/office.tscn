@@ -139,6 +139,9 @@
 [ext_resource type="Script" uid="uid://cebxs6lmuh4tq" path="res://scripts/cpc.gd" id="118_hoyw1"]
 [ext_resource type="PackedScene" uid="uid://cmnr6jvi4k3ve" path="res://assets/models/Nature_Deco_3.gltf" id="121_hq7ge"]
 [ext_resource type="PackedScene" uid="uid://255ctw2cd8pv" path="res://scenes/neon.tscn" id="127_gbjqc"]
+[ext_resource type="PackedScene" uid="uid://u2ipo545b28p" path="res://scenes/title_screen.tscn" id="140_gbjqc"]
+[ext_resource type="PackedScene" uid="uid://c3optmenu45x" path="res://scenes/options_menu.tscn" id="141_5nkn4"]
+[ext_resource type="PackedScene" uid="uid://dax3iv02o8nn1" path="res://scenes/end_screen.tscn" id="141_mf0rt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3wu7e"]
 size = Vector3(0.037290096, 0.36299497, 0.2619243)
@@ -2245,6 +2248,19 @@ _robot = NodePath("../Office/Robot")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=100000001]
 environment = SubResource("Environment_neons")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=132564228]
+
+[node name="TitleScreen" parent="CanvasLayer" unique_id=2104142823 instance=ExtResource("140_gbjqc")]
+unique_name_in_owner = true
+
+[node name="EndScreen" parent="CanvasLayer" unique_id=1685152915 instance=ExtResource("141_mf0rt")]
+unique_name_in_owner = true
+visible = false
+
+[node name="OptionsMenu" parent="CanvasLayer" unique_id=1000 node_paths=PackedStringArray("_world_environment") instance=ExtResource("141_5nkn4")]
+unique_name_in_owner = true
+_world_environment = NodePath("../../WorldEnvironment")
 
 [connection signal="body_entered" from="Office/Reserve/StartStepArea" to="Stairs" method="_on_start_step_area_body_entered"]
 [connection signal="body_entered" from="Office/BureauBoss/AreaRobotInside" to="." method="_on_area_robot_inside_body_entered"]

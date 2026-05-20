@@ -7,7 +7,6 @@ const GROUP_ROBOT := "robot"
 const GROUP_MACHINE := "machine"
 const GROUP_CPC := "cpc"
 const GROUP_IVAN := "ivan"
-const GROUP_WORLD_ENVIRONMENT := "world_environment"
 const GROUP_DOOR_IVAN := "door_ivan"
 
 var _state_machine: Dictionary = {}

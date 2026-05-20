@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 signal started
 signal options_requested
@@ -16,7 +16,6 @@ func _ready() -> void:
 
 func _on_new_game_pressed() -> void:
   started.emit()
-  queue_free()
 
 func _on_options_pressed() -> void:
   options_requested.emit()

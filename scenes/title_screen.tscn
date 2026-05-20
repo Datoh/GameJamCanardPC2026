@@ -2,11 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1isbua7y3bp3" path="res://scripts/title_screen.gd" id="1_ts"]
 
-[node name="TitleScreen" type="CanvasLayer" unique_id=2104142823]
-layer = 10
-script = ExtResource("1_ts")
-
-[node name="Control" type="Control" parent="." unique_id=1877637042]
+[node name="TitleScreen" type="Control" unique_id=1877637042]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +10,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_ts")
 
-[node name="TitleLabel" type="Label" parent="Control" unique_id=1993458432]
+[node name="TitleLabel" type="Label" parent="." unique_id=1993458432]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -34,7 +31,7 @@ theme_override_font_sizes/font_size = 54
 text = "gameTitle"
 horizontal_alignment = 1
 
-[node name="ButtonsBox" type="VBoxContainer" parent="Control" unique_id=1730577806]
+[node name="ButtonsBox" type="VBoxContainer" parent="." unique_id=1730577806]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -49,26 +46,26 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="NewGameButton" type="Button" parent="Control/ButtonsBox" unique_id=1730577807]
+[node name="NewGameButton" type="Button" parent="ButtonsBox" unique_id=1730577807]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "btnNewGame"
 
-[node name="OptionsButton" type="Button" parent="Control/ButtonsBox" unique_id=1730577808]
+[node name="OptionsButton" type="Button" parent="ButtonsBox" unique_id=1730577808]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "menuOptions"
 
-[node name="QuitButton" type="Button" parent="Control/ButtonsBox" unique_id=1730577809]
+[node name="QuitButton" type="Button" parent="ButtonsBox" unique_id=1730577809]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "btnQuit"
 
-[node name="ControlsLabel" type="Label" parent="Control" unique_id=1023587268]
+[node name="ControlsLabel" type="Label" parent="." unique_id=1023587268]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -81,7 +78,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 14
 text = "controlsHint"
 
-[node name="CreditLabel" type="Label" parent="Control" unique_id=292980214]
+[node name="CreditLabel" type="Label" parent="." unique_id=292980214]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

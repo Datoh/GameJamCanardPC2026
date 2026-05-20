@@ -1,8 +1,7 @@
-extends CanvasLayer
+extends Control
 
-func _ready() -> void:
-  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+signal ended
 
 func _unhandled_input(event: InputEvent) -> void:
-  if event is InputEventKey and event.pressed and not event.echo:
-    get_tree().reload_current_scene()
+  if visible and (event is InputEventKey and event.pressed and not event.echo):
+    ended.emit()

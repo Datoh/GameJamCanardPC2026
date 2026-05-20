@@ -1,9 +1,5 @@
 extends Node3D
 
-const _TITLE_SCREEN  := preload("res://scenes/title_screen.tscn")
-const _END_SCREEN    := preload("res://scenes/end_screen.tscn")
-const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
-
 @onready var _player:               CharacterBody3D = %Player
 @onready var _mouse:                CharacterBody3D = %Mouse
 @onready var _robot:                CharacterBody3D = %Robot
@@ -13,9 +9,11 @@ const _OPTIONS_MENU  := preload("res://scenes/options_menu.tscn")
 @onready var _camera_3d_end:        Camera3D        = %Camera3DEnd
 @onready var _position_robot_cofee: RayCast3D       = %PositionRobotCofee
 
+@onready var _title_screen: Control     = %TitleScreen
+@onready var _end_screen:   Control     = %EndScreen
+@onready var _options_menu: OptionsMenu = %OptionsMenu
+
 var _ivan_door_unlocked: bool = false
-var _options_canvas: CanvasLayer
-var _options_menu: OptionsMenu
 var _prev_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
 
@@ -34,17 +32,10 @@ func _ready() -> void:
   _player.set_process_unhandled_input(false)
   _player.game_finished.connect(_on_game_finished)
 
-  _options_canvas = CanvasLayer.new()
-  _options_canvas.layer = 20
-  add_child(_options_canvas)
-  _options_menu = _OPTIONS_MENU.instantiate()
   _options_menu.closed.connect(_on_options_closed)
-  _options_canvas.add_child(_options_menu)
-
-  var ts := _TITLE_SCREEN.instantiate()
-  ts.started.connect(_on_title_started)
-  ts.options_requested.connect(_on_title_options_requested)
-  add_child(ts)
+  _title_screen.started.connect(_on_title_started)
+  _title_screen.options_requested.connect(_on_title_options_requested)
+  _end_screen.ended.connect(_on_end_screen_ended)
 
   %Ceil.visible = true
 
@@ -60,11 +51,16 @@ func _on_title_options_requested() -> void:
 
 
 func _on_title_started() -> void:
+  _title_screen.visible = false
   _player.visible = true
   _player.set_hud_visible(true)
   _player.set_process_unhandled_input(true)
   _player.activate_camera()
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _on_end_screen_ended() -> void:
+  get_tree().reload_current_scene()
 
 
 func _on_game_finished() -> void:
@@ -78,7 +74,7 @@ func _on_game_finished() -> void:
     _mouse.reset()
   var cast_dir := (_position_robot_end.global_basis * _position_robot_end.target_position).normalized()
   _robot.place(_position_robot_end.global_position, cast_dir)
-  add_child(_END_SCREEN.instantiate())
+  _end_screen.show()
 
 
 func _on_machine_attempt_succeeded(machine: Node) -> void:
