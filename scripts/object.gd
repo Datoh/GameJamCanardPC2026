@@ -15,12 +15,12 @@ func _ready() -> void:
 
 func interact() -> void:
   if GameData.player.can_interact(id, machine):
-    GameData.show_message(message_ok, 3.0)
+    GameData.show_message(tr(message_ok), 3.0)
     if pickable:
       GameData.player.pickup(self, id, machine)
       AudioManager.play(sound_pick, global_position)
   else:
-    GameData.show_message(message_ko, 3.0)
+    GameData.show_message(tr(message_ko), 3.0)
 
 func get_interaction_hint() -> String:
-  return hint
+  return tr(hint)

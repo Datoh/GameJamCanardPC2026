@@ -16,7 +16,7 @@ func _ready() -> void:
 func interact() -> void:
   if not _looked:
     _looked = true
-    GameData.show_message(message, 3.0)
+    GameData.show_message(tr(message), 3.0)
   else:
     GameData.player.collect_cpc(id)
     GameData.show_message(tr("msgCpcFound") % id, 2.0)
@@ -24,4 +24,4 @@ func interact() -> void:
     queue_free()
 
 func get_interaction_hint() -> String:
-  return hint_look if not _looked else hint_take
+  return tr(hint_look) if not _looked else tr(hint_take)

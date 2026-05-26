@@ -806,9 +806,9 @@ unique_name_in_owner = true
 transform = Transform3D(1.04895825e-07, 0.84152955, 0.5402111, -1, -4.371139e-08, 2.6226832e-07, 2.4431992e-07, -0.5402111, 0.84152955, 4.456, -3.6, 2.37)
 script = ExtResource("118_hoyw1")
 id = 3
-message = "Canard PC 3: Satar wars Kotor, Beyond Good and Evil... Que du lourd."
-hint_look = "[ESPACE] Regardez le livre"
-hint_take = "[ESPACE] Prendre le magazine"
+message = "msgCpc3"
+hint_look = "hintCpcLook"
+hint_take = "hintCpcTake"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/CPC3Pivot/CPC3" unique_id=646907065]
@@ -825,9 +825,9 @@ unique_name_in_owner = true
 transform = Transform3D(1.04895825e-07, 0.84152955, 0.5402111, -1, -4.371139e-08, 2.6226832e-07, 2.4431992e-07, -0.5402111, 0.84152955, 4.456, -3.6, 2.37)
 script = ExtResource("118_hoyw1")
 id = 9
-message = "Canard PC 9: Pirates Of the burning Sea, Far Cy... Que du lourd."
-hint_look = "[ESPACE] Regardez le livre"
-hint_take = "[ESPACE] Prendre le magazine"
+message = "msgCpc9"
+hint_look = "hintCpcLook"
+hint_take = "hintCpcTake"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/CPC9Pivot/CPC9" unique_id=2112778697]
@@ -844,9 +844,9 @@ unique_name_in_owner = true
 transform = Transform3D(1.04895825e-07, 0.84152955, 0.5402111, -1, -4.371139e-08, 2.6226832e-07, 2.4431992e-07, -0.5402111, 0.84152955, 4.456, -3.6, 2.37)
 script = ExtResource("118_hoyw1")
 id = 99
-message = "Canard PC 99: Quake Wars, X3, Mad Tracks et Empire at Wars... Que du lourd."
-hint_look = "[ESPACE] Regardez le livre"
-hint_take = "[ESPACE] Prendre le magazine"
+message = "msgCpc99"
+hint_look = "hintCpcLook"
+hint_take = "hintCpcTake"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/CPC99Pivot/CPC99" unique_id=1139089728]
@@ -865,8 +865,8 @@ transform = Transform3D(-0.021650635, 4.3619393e-09, 0.012499996, -3.7748946e-09
 [node name="StaticBody3D" type="StaticBody3D" parent="Stairs/DodgeCoinPivot" unique_id=1864271914]
 transform = Transform3D(0.000635, 0, 0, 0, 0.00035463372, 0, 0, 0, 0.000635, 4.33288, -3.5930395, 2.2739944)
 script = ExtResource("41_2v03r")
-message_ok = "Un dodgecoin... Qui a pu perdre ça ici ?"
-hint = "[ESPACE] Regarder l'object brillant"
+message_ok = "msgDodgecoin"
+hint = "hintLookShinyObject"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stairs/DodgeCoinPivot/StaticBody3D" unique_id=969864129]
 shape = SubResource("BoxShape3D_o16e4")
@@ -982,16 +982,13 @@ transform = Transform3D(-1.5, 0, -1.509958e-07, 0, 1, 0, 2.2649371e-07, 0, -1, 1
 [node name="Wall_Standard16" parent="Office/Walls" unique_id=857209144 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17, 0, 5)
 
-[node name="Wall_Standard19" parent="Office/Walls" unique_id=1487061520 instance=ExtResource("2_gdafm")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 17, 0, 0)
-
 [node name="Wall_Standard17" parent="Office/Walls" unique_id=103169124 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-3, 0, -1.509958e-07, 0, 1, 0, 4.5298742e-07, 0, -1, 20, 5.9604645e-08, 2)
 
 [node name="Wall_Standard18" parent="Office/Walls" unique_id=1865983227 instance=ExtResource("2_gdafm")]
 transform = Transform3D(-2.1, 0, -1.509958e-07, 0, 1, 0, 3.1709118e-07, 0, -1, 19.1, 0, 4)
 
-[node name="Wall_Standard21" parent="Office/Walls" unique_id=1971379163 instance=ExtResource("2_gdafm")]
+[node name="Wall_Standard19" parent="Office/Walls" unique_id=1971379163 instance=ExtResource("2_gdafm")]
 transform = Transform3D(3.8941437e-07, 0, -1, 0, 1, 0, 2, 0, 1.9470718e-07, 22.99955, -0.0020891652, 3.9998603)
 
 [node name="SalleRepos" type="Node3D" parent="Office" unique_id=386698722]
@@ -1181,8 +1178,8 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.0
 [node name="StaticBody3D" type="StaticBody3D" parent="Office/SalleRepos/Counter/Fruit_Plate2" unique_id=1871862190]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 4.7683716e-07, 1.0435922, -1.1920929e-07)
 script = ExtResource("41_2v03r")
-message_ok = "Des vitamines !"
-hint = "[ESPACE] Regarder les fruits"
+message_ok = "msgVitamins"
+hint = "hintLookFruits"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/Counter/Fruit_Plate2/StaticBody3D" unique_id=637168009]
 shape = SubResource("BoxShape3D_xbmoe")
@@ -1197,9 +1194,9 @@ script = ExtResource("41_2v03r")
 pickable = true
 id = "Fromage"
 machine = "Maze"
-message_ko = "Du fromage un rassis, je vaux mieux que ça."
-message_ok = "Ca pourrait servir."
-hint = "[ESPACE] Prendre le fromage"
+message_ko = "msgCheeseKo"
+message_ok = "msgCheeseOk"
+hint = "hintTakeCheese"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/Counter/Cheese" unique_id=1147042531]
@@ -1216,8 +1213,8 @@ transform = Transform3D(1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371139
 script = ExtResource("41_2v03r")
 notifiable = true
 id = "MotDePasse"
-message_ok = "J'ai synchronizé le mot de passe du vieux PC avec le SUTOM du jour ! M. Chat"
-hint = "[ESPACE] Lire la note"
+message_ok = "msgPasswordNote"
+hint = "hintReadNote"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/WhiteBoard_Big2/NoteA" unique_id=948686675]
 shape = SubResource("BoxShape3D_dqvlh")
@@ -1228,8 +1225,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 8.3518705e-23, 0, 0, 1, 0, -0.9632778, 0)
 [node name="NoteA2" type="StaticBody3D" parent="Office/SalleRepos/WhiteBoard_Big2" unique_id=1291468945]
 transform = Transform3D(0.9548179, 5.6702046e-08, 0.29719153, 0.29719153, -4.1736417e-08, -0.9548179, -4.1736417e-08, 1, -5.6702042e-08, 0.4470029, 1.7598737, -0.00863266)
 script = ExtResource("41_2v03r")
-message_ok = "Le dév de Massive Game s'est moqué de moi, mettre une salle note à son prochain jeu. LFS"
-hint = "[ESPACE] Lire la note"
+message_ok = "msgNoteA2"
+hint = "hintReadNote"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/WhiteBoard_Big2/NoteA2" unique_id=1964772768]
 shape = SubResource("BoxShape3D_dqvlh")
@@ -1240,8 +1237,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 8.3518705e-23, 0, 0, 1, 0, -0.9632778, 0)
 [node name="NoteB" type="StaticBody3D" parent="Office/SalleRepos/WhiteBoard_Big2" unique_id=945491308]
 transform = Transform3D(1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, -4.371139e-08, 1, -4.3711385e-08, 0.4552033, 1.560025, 0.0009050369)
 script = ExtResource("41_2v03r")
-message_ok = "Ne pas oublié de prendre sa carte de membre du RN. K."
-hint = "[ESPACE] Lire la note"
+message_ok = "msgNoteB"
+hint = "hintReadNote"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/WhiteBoard_Big2/NoteB" unique_id=39276691]
 transform = Transform3D(0.9540836, -1.3093326e-08, -0.2995404, 1.3093326e-08, 1, -2.0070694e-09, 0.2995404, -2.0070694e-09, 0.9540836, 0, 0, 0)
@@ -1253,8 +1250,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 8.3518705e-23, 0, 0, 1, 0, -0.9682865, 0)
 [node name="NoteB2" type="StaticBody3D" parent="Office/SalleRepos/WhiteBoard_Big2" unique_id=1183191465]
 transform = Transform3D(1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, -4.371139e-08, 1, -4.3711385e-08, 0.64388776, 1.4080502, 0.0009050369)
 script = ExtResource("41_2v03r")
-message_ok = "C'est bientôt l'E3 ! Mettez des bonnes notes aux jeux UpiHard pour qu'ils nous invitent tous frais payés. IG."
-hint = "[ESPACE] Lire la note"
+message_ok = "msgNoteB2"
+hint = "hintReadNote"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/WhiteBoard_Big2/NoteB2" unique_id=844690073]
 shape = SubResource("BoxShape3D_qakv3")
@@ -1265,8 +1262,8 @@ transform = Transform3D(0.99655974, -3.6227028e-09, -0.08287778, 3.6227026e-09, 
 [node name="NoteB3" type="StaticBody3D" parent="Office/SalleRepos/WhiteBoard_Big2" unique_id=1427244960]
 transform = Transform3D(0.86714894, 7.1288895e-08, 0.49804884, 0.49804884, -5.967469e-08, -0.86714894, -3.2097176e-08, 1, -8.72522e-08, 0.24152374, 1.6179659, 0.0009050369)
 script = ExtResource("41_2v03r")
-message_ok = "Pense bête pour le différentiel: Mayenne Finistère"
-hint = "[ESPACE] Lire la note"
+message_ok = "msgNoteB3"
+hint = "hintReadNote"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/WhiteBoard_Big2/NoteB3" unique_id=1119013070]
 shape = SubResource("BoxShape3D_qakv3")
@@ -1385,8 +1382,8 @@ transform = Transform3D(0.7784087, 0.62407583, 0.06789226, -0.62135446, 0.781357
 [node name="StaticBody3D" type="StaticBody3D" parent="Office/SalleRepos/Bookshelf2" unique_id=432402741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0239364, -5.9604645e-08)
 script = ExtResource("41_2v03r")
-message_ok = "Tous les numéros de Carnard PC, sauf les 3, 9, 99 et 478..."
-hint = "[ESPACE] Regarder la bibliothèque"
+message_ok = "msgBookshelf"
+hint = "hintLookBookshelf"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/Bookshelf2/StaticBody3D" unique_id=355511395]
 shape = SubResource("BoxShape3D_db58c")
@@ -1429,8 +1426,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2224369, 0, 0.24777937)
 [node name="StaticBody3D" type="StaticBody3D" parent="Office/SalleRepos/Table_Box2" unique_id=1630076825]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47357598, 0)
 script = ExtResource("41_2v03r")
-message_ok = "Je n'ai pas le temps, mon chef compte sur moi."
-hint = "[ESPACE] Se reposer"
+message_ok = "msgNoTime"
+hint = "hintRest"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/SalleRepos/Table_Box2/StaticBody3D" unique_id=1657762415]
 shape = SubResource("BoxShape3D_os6x3")
@@ -1501,9 +1498,9 @@ script = ExtResource("41_2v03r")
 pickable = true
 id = "Feutres"
 machine = "TV"
-message_ko = "Je n'ai rien à colorier."
-message_ok = "Ces feutres de coloriage... LN R3p14y a dit quelque chose lÃ -dessus. Je devrais lui reparler."
-hint = "[ESPACE] Prendre les feutres de coloriage"
+message_ko = "msgMarkersKo"
+message_ok = "msgMarkersOk"
+hint = "hintTakeMarkers"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Reserve/Shelf_Base2/WaterCup2/Feutres" unique_id=1658964624]
@@ -1533,9 +1530,9 @@ script = ExtResource("41_2v03r")
 pickable = true
 id = "Dictionnaire"
 machine = "SUTOM"
-message_ko = "Un dictionnaire. Les rédacteurs ne doivent pas l'utiliser souvent vu la pauvreté de leur vocabulaire."
-message_ok = "Peut être que je vais connaître plus de mots."
-hint = "[ESPACE] Regarder le livre"
+message_ko = "msgDictionaryKo"
+message_ok = "msgDictionaryOk"
+hint = "hintLookBook"
 sound_pick = ExtResource("64_h2hbp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Reserve/Shelf_Base2/Dictionary" unique_id=1296616485]
@@ -1547,8 +1544,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0805799, 0)
 [node name="Nadine" type="StaticBody3D" parent="Office/Reserve/Shelf_Base2" unique_id=145773915]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21380234, 1.6971538, 0.06617093)
 script = ExtResource("41_2v03r")
-message_ok = "Nadine de Rothschild: La Baronne rentre à cinq heures"
-hint = "[ESPACE] Regarder le livre"
+message_ok = "msgBookNadine"
+hint = "hintLookBook"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Reserve/Shelf_Base2/Nadine" unique_id=251007242]
 shape = SubResource("BoxShape3D_62huj")
@@ -1559,8 +1556,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1218958, -2.3841858e-07
 [node name="BookIA" type="StaticBody3D" parent="Office/Reserve/Shelf_Base2" unique_id=1278153670]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14228249, 1.6511556, 0.1162622)
 script = ExtResource("41_2v03r")
-message_ok = "Laurentine K.Masson: IA pour les débutants absolus: Un guide pas à pas pour apprendre les bases de l'intelligence artificielle avec des mots simples et sans connaissances techniques en 7 jour"
-hint = "[ESPACE] Regarder le livre"
+message_ok = "msgBookIA"
+hint = "hintLookBook"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Reserve/Shelf_Base2/BookIA" unique_id=119779727]
 shape = SubResource("BoxShape3D_1hmql")
@@ -1571,8 +1568,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0735804, 2.3841858e-07)
 [node name="Notes" type="StaticBody3D" parent="Office/Reserve/Shelf_Base2" unique_id=239745800]
 transform = Transform3D(0.99896264, 0, -0.045537338, 0, 1, 0, 0.045537338, 0, 0.99896264, -0.101964, 1.0960406, 2.3841858e-07)
 script = ExtResource("41_2v03r")
-message_ok = "A la fin de Red Dead Redemption, John Marston meurt."
-hint = "[ESPACE] Regarder les notes"
+message_ok = "msgNotesRdr"
+hint = "hintLookNotes"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Reserve/Shelf_Base2/Notes" unique_id=815722617]
 shape = SubResource("BoxShape3D_4b0oi")
@@ -1947,9 +1944,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40261197, 0.085475445, 0)
 transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 0.45349145, 1.2131097, 0.009849548)
 script = ExtResource("118_hoyw1")
 id = 478
-message = "Canard PC 487: Pragmata, Replaced, Going medieval... Que du lourd."
-hint_look = "[ESPACE] Regardez le livre"
-hint_take = "[ESPACE] Prendre le magazine"
+message = "msgCpc478"
+hint_look = "hintCpcLook"
+hint_take = "hintCpcTake"
 sound_pick = ExtResource("36_u7sa2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/BureauBoss/WallShelf_Simple2/CPC478" unique_id=879914377]
@@ -1975,8 +1972,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_j877l")
 [node name="PaintingCPC478" type="StaticBody3D" parent="Office/BureauBoss/Painting_Small" unique_id=461598140]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9999995, 0)
 script = ExtResource("41_2v03r")
-message_ok = "Ivan nous répète que c'est la réincarnation de Dieu"
-hint = "[ESPACE] Regarder l'affiche"
+message_ok = "msgPosterCPC478"
+hint = "hintLookPoster"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/BureauBoss/Painting_Small/PaintingCPC478" unique_id=129113935]
 shape = SubResource("BoxShape3D_pu11f")
@@ -2153,8 +2150,8 @@ light_energy = 0.5
 [node name="PaintingGabriel" type="StaticBody3D" parent="Office/Couloir" unique_id=516187819]
 transform = Transform3D(-2, 0, 1.7484555e-07, 0, 2, 0, -1.7484555e-07, 0, -2, 14, 1.8999999, 9.852)
 script = ExtResource("41_2v03r")
-message_ok = "Le GOTY CPC de 2025: The son of the Dark Mage: Gabriel's quest"
-hint = "[ESPACE] Regarder l'affiche"
+message_ok = "msgPosterGabriel"
+hint = "hintLookPoster"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Couloir/PaintingGabriel" unique_id=2113721102]
 shape = SubResource("BoxShape3D_m66co")
@@ -2166,8 +2163,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_n6omg")
 [node name="PaintingCPCNE" type="StaticBody3D" parent="Office/Couloir" unique_id=511543023]
 transform = Transform3D(-2, 0, 1.7484555e-07, 0, 2, 0, -1.7484555e-07, 0, -2, 10, 1.8999999, 9.852)
 script = ExtResource("41_2v03r")
-message_ok = "CanardPC: Nid d'escros. LE meilleur jeu de la dernière Gamejam CPC !"
-hint = "[ESPACE] Regarder l'affiche"
+message_ok = "msgPosterCPCNE"
+hint = "hintLookPoster"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Couloir/PaintingCPCNE" unique_id=2137893518]
 shape = SubResource("BoxShape3D_wy5dh")
@@ -2183,8 +2180,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_m66co")
 [node name="PaintingCPC478" type="StaticBody3D" parent="Office/Couloir/Painting_Small" unique_id=1814755079]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9999995, 0)
 script = ExtResource("41_2v03r")
-message_ok = "Le dernier Canard PC"
-hint = "[ESPACE] Regarder l'affiche"
+message_ok = "msgPosterLastCPC"
+hint = "hintLookPoster"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Couloir/Painting_Small/PaintingCPC478" unique_id=1557184456]
 shape = SubResource("BoxShape3D_pu11f")

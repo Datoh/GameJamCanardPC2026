@@ -239,3 +239,41 @@ dlgIvanFinalJoke,C'est une blague...,This is a joke...
 dlgIvanFinalExpand,"Avec les économies réalisées, j'ouvre CanardPC dans dix-sept pays. Puis je rachète ses concurrents. Puis les médias. Puis... tout le reste. Ah ha ha ha HA HA HA HAAAA !","With the savings made, I'm opening CanardPC in seventeen countries. Then I buy out its competitors. Then the media. Then... all the rest. Ah ha ha ha HA HA HA HAAAA!"
 dlgIvanFinalBye,"Au revoir. Et bonne chance dans vos futures recherches d'emploi.","Goodbye. And good luck in your future job search."
 dlgIvanFinalDontWorry,Ne t'inquiète pas. Je suis convaincu que tu es très doué pour des choses que je ne suis pas encore capable de faire. Je cherche lesquelles.,Don't worry. I'm convinced you're very good at things I'm not yet capable of doing. I'm looking for which ones.
+hintLookShinyObject,[ESPACE] Regarder l'object brillant,[SPACE] Look at the shiny object
+hintLookFruits,[ESPACE] Regarder les fruits,[SPACE] Look at the fruit
+hintTakeCheese,[ESPACE] Prendre le fromage,[SPACE] Take the cheese
+hintReadNote,[ESPACE] Lire la note,[SPACE] Read the note
+hintLookBookshelf,[ESPACE] Regarder la bibliothèque,[SPACE] Look at the bookshelf
+hintRest,[ESPACE] Se reposer,[SPACE] Rest
+hintTakeMarkers,[ESPACE] Prendre les feutres de coloriage,[SPACE] Take the colouring markers
+hintLookBook,[ESPACE] Regarder le livre,[SPACE] Look at the book
+hintLookNotes,[ESPACE] Regarder les notes,[SPACE] Look at the notes
+hintLookPoster,[ESPACE] Regarder l'affiche,[SPACE] Look at the poster
+msgDodgecoin,Un dodgecoin... Qui a pu perdre ça ici ?,A dodgecoin... Who could have lost that here?
+msgVitamins,Des vitamines !,Vitamins!
+msgCheeseOk,Ca pourrait servir.,That could come in handy.
+msgCheeseKo,"Du fromage un rassis, je vaux mieux que ça.",Stale cheese — I'm better than that.
+msgPasswordNote,J'ai synchronizé le mot de passe du vieux PC avec le SUTOM du jour ! M. Chat,I synced the old PC password with today's SUTOM! M. Chat
+msgNoteA2,"Le dév de Massive Game s'est moqué de moi, mettre une salle note à son prochain jeu. LFS",The Massive Game dev mocked me — give a bad score to his next game. LFS
+msgNoteB,Ne pas oublié de prendre sa carte de membre du RN. K.,Don't forget to pick up the RN membership card. K.
+msgNoteB2,C'est bientôt l'E3 ! Mettez des bonnes notes aux jeux UpiHard pour qu'ils nous invitent tous frais payés. IG.,E3 is coming up! Give good scores to UpiHard games so they'll invite us all expenses paid. IG.
+msgNoteB3,Pense bête pour le différentiel: Mayenne Finistère,Reminder for the circuit breaker: Mayenne Finistère
+msgBookshelf,"Tous les numéros de Carnard PC, sauf les 3, 9, 99 et 478...","All issues of Carnard PC, except numbers 3, 9, 99 and 478..."
+msgNoTime,"Je n'ai pas le temps, mon chef compte sur moi.","I don't have time, my boss is counting on me."
+msgMarkersOk,Ces feutres de coloriage... LN R3p14y a dit quelque chose là-dessus. Je devrais lui reparler.,These colouring markers... LN R3p14y said something about them. I should talk to them again.
+msgMarkersKo,Je n'ai rien à colorier.,I have nothing to colour.
+msgDictionaryOk,Peut être que je vais connaître plus de mots.,Maybe I'll know more words now.
+msgDictionaryKo,Un dictionnaire. Les rédacteurs ne doivent pas l'utiliser souvent vu la pauvreté de leur vocabulaire.,A dictionary. The writers clearly don't use it much given the poverty of their vocabulary.
+msgBookNadine,Nadine de Rothschild: La Baronne rentre à cinq heures,Nadine de Rothschild: La Baronne rentre à cinq heures
+msgBookIA,Laurentine K.Masson: IA pour les débutants absolus: Un guide pas à pas pour apprendre les bases de l'intelligence artificielle avec des mots simples et sans connaissances techniques en 7 jour,Laurentine K.Masson: AI for Absolute Beginners: A step-by-step guide to learning AI basics with simple words and no technical knowledge in 7 days
+msgNotesRdr,"A la fin de Red Dead Redemption, John Marston meurt.","At the end of Red Dead Redemption, John Marston dies."
+msgPosterCPC478,Ivan nous répète que c'est la réincarnation de Dieu,Ivan keeps telling us it's the reincarnation of God
+msgPosterGabriel,Le GOTY CPC de 2025: The son of the Dark Mage: Gabriel's quest,CPC GOTY 2025: The Son of the Dark Mage: Gabriel's Quest
+msgPosterCPCNE,CanardPC: Nid d'escros. LE meilleur jeu de la dernière Gamejam CPC !,CanardPC: Nid d'escros. THE best game of the last CPC Gamejam!
+msgPosterLastCPC,Le dernier Canard PC,The last Canard PC
+hintCpcLook,[ESPACE] Regardez le livre,[SPACE] Look at the magazine
+hintCpcTake,[ESPACE] Prendre le magazine,[SPACE] Take the magazine
+"msgCpc3","Canard PC 3: Satar wars Kotor, Beyond Good and Evil... Que du lourd.","Canard PC 3: Star Wars: KotOR, Beyond Good and Evil... Great stuff."
+"msgCpc9","Canard PC 9: Pirates Of the burning Sea, Far Cy... Que du lourd.","Canard PC 9: Pirates of the Burning Sea, Far Cr... Great stuff."
+"msgCpc99","Canard PC 99: Quake Wars, X3, Mad Tracks et Empire at Wars... Que du lourd.","Canard PC 99: Quake Wars, X3, Mad Tracks and Empire at War... Great stuff."
+"msgCpc478","Canard PC 487: Pragmata, Replaced, Going medieval... Que du lourd.","Canard PC 487: Pragmata, Replaced, Going Medieval... Great stuff."
