@@ -3,9 +3,14 @@ extends CharacterBody3D
 
 signal game_finished()
 signal dialogue_side_effect(dialogue_id: String)
+signal object_picked(obj_name: String)
+signal cpc_collected_changed(count: int, total: int)
 
 const SPEED             := 5.0
 const MOUSE_SENSITIVITY := 0.002
+const NOTIF_CHAR_TIME   := 0.04
+const NOTIF_HOLD_TIME   := 3.0
+const NOTIF_FADE_TIME   := 0.6
 
 @export var _robot: Node3D = null
 
@@ -17,6 +22,8 @@ var camera: Camera3D:
 var _dialogue_is_with_robot: bool = false
 var _cpc_count               := 0
 var _completed_dialogues: Array[String] = []
+var _notif_queue: Array[String] = []
+var _notif_active             := false
 
 @onready var crosshair:               TextureRect  = %Crosshair
 
@@ -32,6 +39,7 @@ var _completed_dialogues: Array[String] = []
 @onready var _debug_label:            Label        = %DebugLabel
 @onready var _interaction_hint_label: Label        = %InteractionHintLabel
 @onready var _dialogue_ui:            DialogueUI   = %DialogueUI
+@onready var _secondary_notif_label:  Label        = %SecondaryNotifLabel
 
 
 func activate_camera() -> void:
@@ -48,6 +56,9 @@ func _ready() -> void:
   _dialogue_ui.branch_chosen.connect(_on_branch_chosen)
   _dialogue_ui.robot_started_talking.connect(func(): if _robot: _robot.start_talking())
   _dialogue_ui.robot_stopped_talking.connect(func(): if _robot: _robot.stop_talking())
+  GameData.objectives_changed.connect(_update_objective)
+  GameData.secondary_objective_added.connect(_on_secondary_objective_added)
+  _update_objective()
 
   await get_tree().process_frame
 
@@ -255,14 +266,47 @@ func _try_interact() -> void:
 # ── Objectif ─────────────────────────────────────────────────────────────────
 
 func _update_objective() -> void:
-  if not GameData.intro_done:
-    _objective_label.visible = false
-    return
-  _objective_label.visible = true
-  if GameData.state(ScreenMachine.NAME) == Machine.StateMachine.SOLVED:
-    _objective_label.text = tr("objectiveTalkIvan")
-  else:
-    _objective_label.text = tr("objectiveWriteArticle")
+  var active: Array = GameData.get_objectives().filter(
+    func(e: Dictionary) -> bool: return e["is_primary"] and not e["is_done"]
+  )
+  _objective_label.visible = not active.is_empty()
+  if not active.is_empty():
+    _objective_label.text = "\n".join(
+      active.map(func(e: Dictionary) -> String:
+        var raw := tr(e["key"])
+        var params: Array = e.get("params", [])
+        return raw % params if not params.is_empty() else raw
+    )
+  )
+
+
+func _on_secondary_objective_added(key: String, params: Array) -> void:
+  var raw := tr(key)
+  _notif_queue.append(raw % params if not params.is_empty() else raw)
+  if not _notif_active:
+    _play_notif_queue()
+
+
+func _play_notif_queue() -> void:
+  _notif_active = true
+  while not _notif_queue.is_empty():
+    var text: String = tr("newObjective") + "\n" + _notif_queue.pop_front()
+    var full := text.length()
+    _secondary_notif_label.text             = text
+    _secondary_notif_label.visible_characters = 0
+    _secondary_notif_label.modulate         = Color.WHITE
+    _secondary_notif_label.visible          = true
+    var type_tween := create_tween()
+    type_tween.tween_property(
+      _secondary_notif_label, "visible_characters", full, full * NOTIF_CHAR_TIME
+    )
+    await type_tween.finished
+    await get_tree().create_timer(NOTIF_HOLD_TIME).timeout
+    var fade_tween := create_tween()
+    fade_tween.tween_property(_secondary_notif_label, "modulate:a", 0.0, NOTIF_FADE_TIME)
+    await fade_tween.finished
+  _secondary_notif_label.visible = false
+  _notif_active = false
 
 
 # ── Mini-jeux & ramassage ─────────────────────────────────────────────────────
@@ -276,6 +320,7 @@ func collect_cpc(id: int) -> void:
   if not GameData.cpc_collected.has(id):
     GameData.cpc_collected.append(id)
     GameData.cpc_collected.sort()
+    cpc_collected_changed.emit(GameData.cpc_collected.size(), _cpc_count)
     _objective_cpc_label.text = tr("cpcFoundLabel") + ", ".join(GameData.cpc_collected)
     if GameData.cpc_collected.size() == _cpc_count:
       await get_tree().create_timer(0.5).timeout
@@ -292,6 +337,7 @@ func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
     GameData.set_state(machine_name, Machine.StateMachine.TRY_MACHINE_OK)
   inventory.append(obj_name)
   show_message(tr("msgPickup") % obj_name.replace("_", " "), 2.0)
+  object_picked.emit(obj_name)
   obj.queue_free()
 
 
@@ -299,7 +345,6 @@ func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
 
 func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
-  _update_objective()
   _quit_hint_label.visible = GameData.in_minigame
 
   var hint := ""

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ctthpjfckxp83"]
+
+[ext_resource type="Script" uid="uid://c01xe5mf7b37g" path="res://scripts/loading_scene.gd" id="1_v0di8"]
+
+[node name="LoadingScene" type="Control" unique_id=396748279]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v0di8")
+_scene_path = "res://scenes/office.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=527139664]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=823620267]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_right = -300.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1134486803]
+layout_mode = 2
+text = "Loading"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=572108285]
+unique_name_in_owner = true
+layout_mode = 2

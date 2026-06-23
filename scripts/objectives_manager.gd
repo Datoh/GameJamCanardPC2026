@@ -1,0 +1,99 @@
+class_name ObjectivesManager
+extends Node
+
+## Centralise toutes les règles d'objectifs : écoute les signaux génériques
+## (GameData, Player) et décide quand ajouter ou terminer un objectif.
+
+@onready var _player: CharacterBody3D = %Player
+
+
+func _ready() -> void:
+  GameData.intro_completed.connect(_on_intro_completed)
+  GameData.machine_state_changed.connect(_on_machine_state_changed)
+  _player.dialogue_side_effect.connect(_on_dialogue_side_effect)
+  _player.object_picked.connect(_on_object_picked)
+  _player.cpc_collected_changed.connect(_on_cpc_collected)
+  _player.game_finished.connect(_on_game_finished)
+
+
+func on_game_started() -> void:
+  GameData.add_objective("objectiveTalkIvan", true)
+
+
+func _on_intro_completed() -> void:
+  GameData.complete_objective("objectiveTalkIvan")
+  GameData.add_objective("objectiveWriteArticle", true)
+  GameData.add_objective("objectiveTalkRobotFirst", false, [DialoguesData.robot_name])
+
+
+func _on_game_finished() -> void:
+  GameData.complete_objective("objectiveTalkIvan")
+
+
+func _on_dialogue_side_effect(dialogue_id: String) -> void:
+  if dialogue_id != "ivan_final":
+    GameData.complete_objective("objectiveTalkRobotFirst")
+  if dialogue_id == "labyrinthe_demande":
+    GameData.complete_objective("objectiveAskRobotMaze")
+
+
+func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine) -> void:
+  match state:
+    Machine.StateMachine.TRY_MACHINE:
+      match machine_name:
+        MachineMaze.NAME:
+          _add_objective_once("objectiveAskRobotMaze", [DialoguesData.robot_name])
+        MachineOscillo.NAME:
+          _add_objective_once("objectiveSolveOscillo")
+        MachineOrdinateur.NAME:
+          _add_objective_once("objectiveRewireTower")
+        MachineTV.NAME:
+          _add_objective_once("objectiveSolveCaptcha")
+          if "Feutres" not in _player.inventory:
+            _add_objective_once("objectiveGetMarkers")
+        MachineSutom.NAME:
+          _add_objective_once("objectiveSolveSutom")
+    Machine.StateMachine.TRY_MACHINE_OBJECT:
+      match machine_name:
+        MachineMaze.NAME:
+          _add_objective_once("objectiveGetCheese")
+          _add_objective_once("objectiveFreeMouse")
+        MachineSutom.NAME:
+          _add_objective_once("objectiveGetDictionary")
+    Machine.StateMachine.SOLVED:
+      match machine_name:
+        MachineOscillo.NAME:
+          GameData.complete_objective("objectiveSolveOscillo")
+        MachineOrdinateur.NAME:
+          GameData.complete_objective("objectiveRewireTower")
+        MachineTV.NAME:
+          GameData.complete_objective("objectiveSolveCaptcha")
+        MachineMaze.NAME:
+          GameData.complete_objective("objectiveFreeMouse")
+        MachineSutom.NAME:
+          GameData.complete_objective("objectiveSolveSutom")
+        ScreenMachine.NAME:
+          GameData.complete_objective("objectiveWriteArticle")
+          GameData.add_objective("objectiveTalkIvan", true)
+
+
+func _on_object_picked(obj_name: String) -> void:
+  match obj_name:
+    "Fromage":
+      GameData.complete_objective("objectiveGetCheese")
+    "Dictionnaire":
+      GameData.complete_objective("objectiveGetDictionary")
+    "Feutres":
+      GameData.complete_objective("objectiveGetMarkers")
+
+
+func _on_cpc_collected(count: int, total: int) -> void:
+  _add_objective_once("objectiveFindAllCpc", [count, total])
+  GameData.update_objective_params("objectiveFindAllCpc", [count, total])
+  if count >= total:
+    GameData.complete_objective("objectiveFindAllCpc")
+
+
+func _add_objective_once(key: String, params: Array = []) -> void:
+  if not GameData.has_objective(key):
+    GameData.add_objective(key, false, params)

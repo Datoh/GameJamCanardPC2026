@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://d4bp7t3rg8stu" path="res://assets/textures/floor/Carpet006_1K-JPG.tres" id="1_6hbky"]
 [ext_resource type="Material" uid="uid://dopoxs2floqam" path="res://assets/textures/ceil/OfficeCeiling006_1K-JPG.tres" id="1_in4ui"]
 [ext_resource type="Script" uid="uid://dvxvxtvvyymwl" path="res://scripts/office.gd" id="1_kviqm"]
+[ext_resource type="Script" path="res://scripts/objectives_manager.gd" id="200_objmgr"]
 [ext_resource type="PackedScene" uid="uid://pyy6x572f3ec" path="res://scenes/wall_standard.tscn" id="2_gdafm"]
 [ext_resource type="Texture2D" uid="uid://cdev74xbtklwk" path="res://assets/textures/ceil/OfficeCeiling006_1K-JPG_Color.jpg" id="3_jp1e5"]
 [ext_resource type="PackedScene" uid="uid://180fy13q68q6" path="res://scenes/oscillo_machine.tscn" id="4_aqx0a"]
@@ -142,6 +143,7 @@
 [ext_resource type="PackedScene" uid="uid://u2ipo545b28p" path="res://scenes/title_screen.tscn" id="140_gbjqc"]
 [ext_resource type="PackedScene" uid="uid://c3optmenu45x" path="res://scenes/options_menu.tscn" id="141_5nkn4"]
 [ext_resource type="PackedScene" uid="uid://dax3iv02o8nn1" path="res://scenes/end_screen.tscn" id="141_mf0rt"]
+[ext_resource type="PackedScene" uid="uid://dobjovrly4ts2" path="res://scenes/objectives_overlay.tscn" id="142_obj1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3wu7e"]
 size = Vector3(0.037290096, 0.36299497, 0.2619243)
@@ -776,6 +778,10 @@ glow_enabled = true
 
 [node name="Office" type="Node3D" unique_id=92018775]
 script = ExtResource("1_kviqm")
+
+[node name="ObjectivesManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("200_objmgr")
 
 [node name="Stairs" type="Node3D" parent="." unique_id=30302168 node_paths=PackedStringArray("_stair1", "_stair2", "_office")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.086, 0.111, -0.13)
@@ -2258,6 +2264,9 @@ visible = false
 [node name="OptionsMenu" parent="CanvasLayer" unique_id=1000 node_paths=PackedStringArray("_world_environment") instance=ExtResource("141_5nkn4")]
 unique_name_in_owner = true
 _world_environment = NodePath("../../WorldEnvironment")
+
+[node name="ObjectivesOverlay" parent="CanvasLayer" unique_id=3891047265 instance=ExtResource("142_obj1")]
+unique_name_in_owner = true
 
 [connection signal="body_entered" from="Office/Reserve/StartStepArea" to="Stairs" method="_on_start_step_area_body_entered"]
 [connection signal="body_entered" from="Office/BureauBoss/AreaRobotInside" to="." method="_on_area_robot_inside_body_entered"]

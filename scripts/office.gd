@@ -1,17 +1,18 @@
 extends Node3D
 
-@onready var _player:               CharacterBody3D = %Player
-@onready var _mouse:                CharacterBody3D = %Mouse
-@onready var _robot:                CharacterBody3D = %Robot
-@onready var _position_robot:       RayCast3D       = %PositionRobot
-@onready var _position_robot_end:   RayCast3D       = %PositionRobotEnd
-@onready var _cheese_in_maze:       Node3D          = %CheeseInMaze
-@onready var _camera_3d_end:        Camera3D        = %Camera3DEnd
-@onready var _position_robot_cofee: RayCast3D       = %PositionRobotCofee
+@onready var _player:               CharacterBody3D   = %Player
+@onready var _mouse:                CharacterBody3D   = %Mouse
+@onready var _robot:                CharacterBody3D   = %Robot
+@onready var _position_robot:       RayCast3D         = %PositionRobot
+@onready var _position_robot_end:   RayCast3D         = %PositionRobotEnd
+@onready var _cheese_in_maze:       Node3D            = %CheeseInMaze
+@onready var _camera_3d_end:        Camera3D          = %Camera3DEnd
+@onready var _position_robot_cofee: RayCast3D         = %PositionRobotCofee
 
-@onready var _title_screen: Control     = %TitleScreen
-@onready var _end_screen:   Control     = %EndScreen
-@onready var _options_menu: OptionsMenu = %OptionsMenu
+@onready var _title_screen:       Control           = %TitleScreen
+@onready var _end_screen:         Control           = %EndScreen
+@onready var _options_menu:       OptionsMenu       = %OptionsMenu
+@onready var _objectives_overlay: ObjectivesOverlay = %ObjectivesOverlay
 
 var _ivan_door_unlocked: bool = false
 var _prev_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
@@ -57,6 +58,7 @@ func _on_title_started() -> void:
   _player.set_process_unhandled_input(true)
   _player.activate_camera()
   Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+  %ObjectivesManager.on_game_started()
 
 
 func _on_end_screen_ended() -> void:
@@ -103,19 +105,36 @@ func _on_machine_done(machine: Node) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1):
+  if not (event is InputEventKey and event.pressed and not event.echo):
     return
-  get_viewport().set_input_as_handled()
-  if _options_menu.visible:
-    _options_menu.hide()
-    _on_options_closed()
-  else:
-    _prev_mouse_mode = Input.get_mouse_mode()
-    _options_menu.show()
-    Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  match event.keycode:
+    KEY_F1:
+      get_viewport().set_input_as_handled()
+      if _options_menu.visible:
+        _options_menu.hide()
+        _on_options_closed()
+      else:
+        _prev_mouse_mode = Input.get_mouse_mode()
+        _options_menu.show()
+        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+    KEY_TAB:
+      if _title_screen.visible or _end_screen.visible or _options_menu.visible:
+        return
+      get_viewport().set_input_as_handled()
+      if _objectives_overlay.visible:
+        _objectives_overlay.hide()
+        _on_objectives_closed()
+      else:
+        _prev_mouse_mode = Input.get_mouse_mode()
+        _objectives_overlay.show()
+        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _on_options_closed() -> void:
+  Input.set_mouse_mode(_prev_mouse_mode)
+
+
+func _on_objectives_closed() -> void:
   Input.set_mouse_mode(_prev_mouse_mode)
 
 

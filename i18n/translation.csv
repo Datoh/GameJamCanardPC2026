@@ -1,7 +1,7 @@
 keys,fr,en
 escQuit,[ÉCHAP] Quitter,[ESC] Quit
-objectiveWriteArticle,Objectif : écrire un article avec le PC du petit bureau,Objective: write an article on the small office PC
-objectiveTalkIvan,Objectif : parler à Ivan,Objective: talk to Ivan
+objectiveWriteArticle,Écrire un article avec le PC du petit bureau,Write an article on the small office PC
+objectiveTalkIvan,Parler à Ivan,Talk to Ivan
 cpcFoundLabel,Canard PC trouvés: ,Canard PCs found:
 btnContinue,Continuer,Continue
 menuOptions,Options,Options
@@ -273,6 +273,22 @@ msgPosterCPCNE,CanardPC: Nid d'escros. LE meilleur jeu de la dernière Gamejam C
 msgPosterLastCPC,Le dernier Canard PC,The last Canard PC
 hintCpcLook,[ESPACE] Regardez le livre,[SPACE] Look at the magazine
 hintCpcTake,[ESPACE] Prendre le magazine,[SPACE] Take the magazine
+objectivesTitle,Objectifs,Objectives
+objectivesPrimary,Principaux,Main
+objectivesSecondary,Secondaires,Secondary
+objectiveTalkRobotFirst,Parler à %s,Talk to %s
+objectiveAskRobotMaze,Demander de l'aide à %s sur le labyrinthe,Ask %s for help with the maze
+objectiveSolveOscillo,Régler l'oscilloscope,Calibrate the oscilloscope
+objectiveRewireTower,Rebrancher les câbles de la tour,Rewire the tower's cables
+objectiveSolveCaptcha,Prouver que vous n'êtes pas un robot (CAPTCHA),Prove you are not a robot (CAPTCHA)
+objectiveGetMarkers,Trouver de quoi colorier le CAPTCHA,Find something to colour the CAPTCHA
+objectiveGetCheese,Trouver de quoi appâter la souris,Find something to lure the mouse
+objectiveFreeMouse,Faire sortir la souris du labyrinthe,Get the mouse out of the maze
+objectiveGetDictionary,Apprendre plus de mots pour le SUTOM,Learn more words for the SUTOM
+objectiveSolveSutom,Trouver le mot de passe (SUTOM),Find the password (SUTOM)
+objectiveFindAllCpc,Trouver tous les Canard PC (%d/%d),Find all the Canard PCs (%d/%d)
+objectivesHint,[TAB] Fermer,[TAB] Close
+newObjective,Nouvel objectif :,New objective:
 "msgCpc3","Canard PC 3: Satar wars Kotor, Beyond Good and Evil... Que du lourd.","Canard PC 3: Star Wars: KotOR, Beyond Good and Evil... Great stuff."
 "msgCpc9","Canard PC 9: Pirates Of the burning Sea, Far Cy... Que du lourd.","Canard PC 9: Pirates of the Burning Sea, Far Cr... Great stuff."
 "msgCpc99","Canard PC 99: Quake Wars, X3, Mad Tracks et Empire at Wars... Que du lourd.","Canard PC 99: Quake Wars, X3, Mad Tracks and Empire at War... Great stuff."
