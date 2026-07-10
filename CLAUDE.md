@@ -80,177 +80,79 @@ Reserve runtime instantiation (`Node.new()`, `packed_scene.instantiate()`) for n
 
 ```
 res://
-├── fonts/                        # Montserrat-Medium.ttf
-├── i18n/                         # translation.csv (en, de)
-├── savegame/
-│   └── save_game.gd              # SaveGame class (static methods)
-├── scenes/
-│   ├── boot/
-│   │   ├── bootsplash_scene      # configurable splash screen
-│   │   └── godot/                # Godot splash (startup scene)
-│   ├── main_menu_scene           # main menu
-│   ├── ingame_scene              # main game scene
-│   ├── game_settings_scene       # settings screen
-│   ├── intro_scene               # introduction scene
-│   └── node_example              # node example with save/load
-├── settings/
-│   └── user_settings.gd          # autoload UserSettings
-└── ui/
-    ├── components/
-    │   ├── bootsplash            # Bootsplash base class
-    │   ├── float_range_game_settings_option  # slider bound to UserSettings
-    │   ├── game_logo             # game logo
-    │   └── game_settings         # audio/language settings panel
-    └── overlays/
-        ├── fade_overlay          # FadeOverlay — scene transitions
-        └── pause_overlay         # PauseOverlay — pause menu
+├── i18n/                  # translation.csv (colonnes : keys, fr, en)
+├── assets/                # modèles GLB, textures, sons, vidéo (tribunal.ogv)
+├── scenes/                # .tscn : office (niveau principal), machines, UI
+├── scripts/               # .gd : machines, robot, player, dialogues, objectifs
+└── utils/                 # autoloads audio + game_data
 ```
 
 ### Startup Sequence
 
-`godot_bootsplash_scene` → `bootsplash_scene` → `main_menu_scene` → `ingame_scene`
+`loading_scene` → `office.tscn` (écran titre → partie → écran de fin, tout dans la même scène)
 
 ---
 
 ## Autoloads
 
-### `UserSettings` (`settings/user_settings.gd`)
-
-Manages audio settings and language, persisted in `user://settings.cfg`.
-
-```gdscript
-# Always use constants, never literal strings
-UserSettings.get_value(UserSettings.MASTERVOLUME)       # correct
-UserSettings.get_value("mastervolume")                  # forbidden
-
-UserSettings.set_value(UserSettings.GAME_LANGUAGE, "fr")
-
-# Available signal
-UserSettings.on_value_change.connect(_on_setting_changed)
-```
-
-**Available key constants:**
-
-| Constant | Description |
-|---|---|
-| `MASTERVOLUME` | Master volume (0–100) |
-| `MUSICVOLUME` | Music volume (0–100) |
-| `SOUNDVOLUME` | Sound volume (0–100) |
-| `MASTERVOLUME_ENABLED` | Master enabled (bool) |
-| `MUSICVOLUME_ENABLED` | Music enabled (bool) |
-| `SOUNDVOLUME_ENABLED` | Sounds enabled (bool) |
-| `GAME_LANGUAGE` | Locale (`"en"`, `"de"`, …) |
+| Autoload | Fichier | Rôle |
+|---|---|---|
+| `GameData` | `utils/game_data.gd` | États des machines (`state`/`set_state` + enum `Machine.StateMachine`), objectifs, référence `player`, signaux globaux (`machine_state_changed`, `intro_completed`…) |
+| `AudioManager` | `utils/audio_manager.gd` | Lecture des sons positionnés : `AudioManager.play(AudioData.X, position)` |
+| `AudioData` | `utils/audio_data.gd` | Constantes des flux audio |
 
 ---
 
-## Template Systems
+## Systèmes centraux
 
-### SaveGame (`savegame/save_game.gd`)
+> **Note** : les anciennes sections « Template Systems » (SaveGame, UserSettings, FadeOverlay, PauseOverlay, bootsplash) décrivaient un boilerplate **non utilisé** par ce projet — ces classes n'existent pas dans le code. Il n'y a **pas de sauvegarde** : une partie se joue d'une traite (`reload_current_scene` pour recommencer).
 
-Group-based save system. Any node in the `"Persist"` group is saved automatically.
+### Machine (`scripts/machine.gd`)
 
-```gdscript
-# In a saveable node — add to the "Persist" group in the editor
-func save_data() -> Dictionary:
-    return {"score": score, "current_level": current_level}
+Classe de base de tous les mini-jeux. Machine à états stockée dans `GameData` :
 
-func load_data(data: Dictionary) -> void:
-    score = data["score"]
-    current_level = data["current_level"]
+```
+IDLE → TRY_MACHINE → (dialogue demande) → ROBOT_WORKING → ROBOT_DONE
+     → (dialogue résultat) → TRY_MACHINE_OBJECT → (ramassage objet)
+     → TRY_MACHINE_OK → UNLOCKED → SOLVED
 ```
 
-```gdscript
-# From a scene
-SaveGame.save_game(get_tree())
-SaveGame.load_game(get_tree())
-SaveGame.has_save()     # -> bool
-SaveGame.delete_save()
-```
+Chaque machine définit `machine_name`, `dialogue_demande`/`dialogue_resultat`, `object_required` et surcharge `_can_try()` / `_on_try_machine()` (+ `is_dialogue_locked()` / `on_dialogue_completed()` si le cycle dévie).
 
-- File: `user://savegame.save`
-- Encrypted in release, plain text in debug
-- Nodes added dynamically at runtime are also saved (via `scene_file_path` + `parent`)
+### Dialogues
 
-### FadeOverlay (`ui/overlays/fade_overlay.tscn`)
+Arbres dans `scripts/dialogues_data.gd` (champs `id`, `label`, `requires`, `once`, `unlocks`, `exchanges` avec clés i18n). Moteur : `scripts/dialogue_ui.gd`. Les verrous viennent de `is_dialogue_locked()` sur les machines et le robot.
 
-Used for scene transitions. Instantiate as Scene Unique Node `%FadeOverlay`.
+### Objectifs
 
-```gdscript
-@onready var overlay := %FadeOverlay
-
-func _ready() -> void:
-    overlay.on_complete_fade_out.connect(_change_scene)
-    overlay.visible = true  # starts fade-in automatically if auto_fade_in = true
-
-func _change_scene() -> void:
-    get_tree().change_scene_to_packed(next_scene)
-
-func quit() -> void:
-    overlay.fade_out()  # triggers fade-out, then emits on_complete_fade_out
-```
-
-**Configurable exports:**
-- `fade_in_duration: float` (default: 2.0)
-- `fade_out_duration: float` (default: 1.0)
-- `auto_fade_in: bool` (default: true) — calls `fade_in()` automatically on `_ready()`
-- `minimum_opacity: float` (default: 1.0)
-
-### PauseOverlay (`ui/overlays/pause_overlay.tscn`)
-
-```gdscript
-# In ingame_scene.gd
-func _input(event) -> void:
-    if event.is_action_pressed("pause") and not %PauseOverlay.visible:
-        get_tree().paused = true
-        %PauseOverlay.grab_button_focus()
-        %PauseOverlay.visible = true
-
-# Available signal
-%PauseOverlay.game_exited.connect(_save_game)
-```
-
-### BootsplashScene (`scenes/boot/bootsplash_scene.tscn`)
-
-Generic splash screen configurable via exports:
-
-```gdscript
-@export var fade_duration: float       # fade duration
-@export var stay_duration: float       # display time
-@export var node: PackedScene          # scene to display (logo, etc.)
-@export var next_scene: PackedScene    # next scene
-@export var interruptable: bool        # "exit" action skips the splash
-```
+Règles centralisées dans `scripts/objectives_manager.gd`, qui écoute les signaux génériques (`machine_state_changed`, `dialogue_side_effect`, `object_picked`…). Affichage : HUD (principaux), notifications machine à écrire (secondaires), overlay TAB.
 
 ---
 
 ## Internationalization
 
-Source file: `i18n/translation.csv` (columns: `keys`, `en`, `de`)
+Source file: `i18n/translation.csv` (columns: `keys`, `fr`, `en`)
 
 ```gdscript
-# In .tscn scenes, use TR() keys directly in the editor
 # In GDScript:
-label.text = tr("new_game")
-
-# Change language
-UserSettings.set_value(UserSettings.GAME_LANGUAGE, "de")
+label.text = tr("msgOscilloIdle")
+# Avec paramètre :
+GameData.show_message(tr("msgSutomAskRobot") % [DialoguesData.robot_name], 3.0)
 ```
 
-**Existing keys:** `new_game`, `continue`, `settings`, `leave_game`, `return_to_main`, `return_to_menu`, `settings_volume_master`, `settings_volume_music`, `settings_volume_sound`, `settings_language`, `game_paused`, `resume_game`, `credits`
+**Préfixes de clés :** `dlg*` (dialogues), `msg*` (messages HUD), `hint*` (aides d'interaction), `objective*` (objectifs), `settings*`/`btn*`/`menu*` (UI). Les champs contenant virgules ou retours à la ligne sont entre guillemets (CSV standard).
 
 ---
 
 ## Input Actions
 
-Defined in `project.godot`:
-
 | Action | Description |
 |---|---|
-| `move_left/right/up/down` | Movement (WASD + arrows + joystick) |
-| `interact` | Interaction (E + gamepad A button) |
-| `pause` | Pause / Escape |
-| `exit` | Skip a splash (Escape) |
-| `ui_accept` | UI confirm (Enter, Space, A button) |
+| `ui_left/right/up/down` | Déplacement (ZQSD/WASD + flèches + joystick), remappés dans `project.godot` |
+| `ui_accept` | Interagir / valider (Espace, Entrée) |
+| `ui_cancel` | Fermer un dialogue (Échap) |
+| Échap / clic droit | Quitter un mini-jeu (géré par chaque machine) |
+| TAB / F1 | Overlay objectifs / options (gérés dans `office.gd`) |
 
 ---
 
@@ -258,7 +160,7 @@ Defined in `project.godot`:
 
 ### Formatting
 
-- **UTF-8** encoding, **LF** line endings, **tabs** (no spaces)
+- **UTF-8** encoding, **LF** line endings, **2 espaces** d'indentation (convention effective du code de ce projet)
 - Lines ≤ **100 characters** (ideally ≤ 80)
 - One statement per line
 - Two blank lines between functions and class definitions

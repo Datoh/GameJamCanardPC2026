@@ -35,6 +35,17 @@ func _on_dialogue_side_effect(dialogue_id: String) -> void:
     GameData.complete_objective("objectiveTalkRobotFirst")
   if dialogue_id == "labyrinthe_demande":
     GameData.complete_objective("objectiveAskRobotMaze")
+  if dialogue_id == "oscillo_demande":
+    GameData.complete_objective("objectiveAskRobotOscillo")
+    _add_objective_once("objectiveLookOscillo")
+  if dialogue_id == "tv_demande":
+    GameData.complete_objective("objectiveAskRobotCaptcha")
+  if dialogue_id == "cafetiere_existentiel":
+    _add_objective_once("objectiveFreeRobot", [DialoguesData.robot_name])
+  if dialogue_id == "cafetiere_reprise":
+    GameData.complete_objective("objectiveFreeRobot")
+  if dialogue_id == "oscillo_resultat":
+    _add_objective_once("objectiveSolveOscillo")
 
 
 func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine) -> void:
@@ -44,15 +55,18 @@ func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine
         MachineMaze.NAME:
           _add_objective_once("objectiveAskRobotMaze", [DialoguesData.robot_name])
         MachineOscillo.NAME:
-          _add_objective_once("objectiveSolveOscillo")
+          _add_objective_once("objectiveAskRobotOscillo", [DialoguesData.robot_name])
         MachineOrdinateur.NAME:
           _add_objective_once("objectiveRewireTower")
         MachineTV.NAME:
           _add_objective_once("objectiveSolveCaptcha")
-          if "Feutres" not in _player.inventory:
-            _add_objective_once("objectiveGetMarkers")
+          _add_objective_once("objectiveAskRobotCaptcha", [DialoguesData.robot_name])
         MachineSutom.NAME:
           _add_objective_once("objectiveSolveSutom")
+    Machine.StateMachine.ROBOT_DONE:
+      match machine_name:
+        MachineOscillo.NAME:
+          GameData.complete_objective("objectiveLookOscillo")
     Machine.StateMachine.TRY_MACHINE_OBJECT:
       match machine_name:
         MachineMaze.NAME:
@@ -60,6 +74,9 @@ func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine
           _add_objective_once("objectiveFreeMouse")
         MachineSutom.NAME:
           _add_objective_once("objectiveGetDictionary")
+        MachineTV.NAME:
+          if "Feutres" not in _player.inventory:
+            _add_objective_once("objectiveGetMarkers")
     Machine.StateMachine.SOLVED:
       match machine_name:
         MachineOscillo.NAME:

@@ -1,15 +1,16 @@
 class_name MachineOscillo
 extends Machine
 
+signal power_cut()
+
 const NAME := "Oscillo"
 
 # ── Signal math ───────────────────────────────────────────────────────────────
-const TGT_1_A    := 5
-const TGT_1_F    := 3
-const TGT_1_P    := 0
-const TGT_2_A    := 2
-const TGT_2_F    := 9
-const TGT_2_P    := 0
+# Niveaux : nb de courbes actives, phase réglable ou non, cibles [A, F, φ]
+const LEVELS: Array[Dictionary] = [
+  {"curves": 1, "use_phase": false, "targets": [[5, 3, 0]]},
+  {"curves": 2, "use_phase": false, "targets": [[5, 3, 0], [2, 9, 0]]},
+]
 const MATCH_TOL  := 0.8
 const SAMPLE_CNT := 200
 
@@ -22,6 +23,8 @@ const SAMPLE_CNT := 200
 var amplitudes:  Array[int] = [3, 5]
 var frequencies: Array[int] = [1, 5]
 var phases:      Array[int] = [0, 0]
+
+var _level: int = 0
 
 var _params: Array[Dictionary] = []
 
@@ -38,9 +41,12 @@ var _cam_end_pos     := Vector3.ZERO
 var _cam_end_basis   := Basis.IDENTITY
 
 # ── État mini-jeu ─────────────────────────────────────────────────────────────
-var _jeu_actif:       bool = false
-var _close_won:       bool = false
-var _victory_pending: bool = false
+var power_cut_available: bool = false
+
+var _jeu_actif:        bool = false
+var _close_won:        bool = false
+var _victory_pending:  bool = false
+var _controls_enabled: bool = false
 
 # ── Meshes (noms uniques à définir dans la scène) ─────────────────────────────
 @onready var _courbes:     MeshInstance3D = %Courbes
@@ -56,21 +62,45 @@ var _victory_pending: bool = false
 func _ready() -> void:
   machine_name        = NAME
   message_idle        = tr("msgOscilloIdle")
-  message_try_machine = tr("msgOscilloAdjust")
   message_solved      = tr("msgSignalReproduced")
   hint_default        = tr("hintLookOscillo")
-  hint_try_machine    = tr("hintAdjustOscillo")
   hint_solved         = tr("hintOscilloCalibrated")
   input_ray_pickable  = true
   input_event.connect(_on_machine_input)
   call_deferred("_setup_all")
 
 
+func interact() -> void:
+  if power_cut_available and GameData.state(machine_name) == StateMachine.SOLVED:
+    power_cut_available = false
+    GameData.show_message(tr("msgPowerCut") % [DialoguesData.robot_name], 5.0)
+    power_cut.emit()
+    return
+  super.interact()
+
+
 func _can_try() -> bool:
   return true
 
 
+func is_dialogue_locked(dialogue_id: String) -> bool:
+  if dialogue_id == "cafetiere_existentiel":
+    return GameData.state(NAME) != StateMachine.SOLVED
+  return super.is_dialogue_locked(dialogue_id)
+
+
+func get_interaction_hint() -> String:
+  match GameData.state(machine_name):
+    StateMachine.SOLVED:
+      if power_cut_available:
+        return tr("hintCutPower")
+      return tr("hintOscilloCalibrated")
+    _:
+      return hint_default
+
+
 func _on_try_machine(_has_object: bool) -> void:
+  _controls_enabled = true
   _demarrer_jeu()
 
 
@@ -80,6 +110,7 @@ func _setup_all() -> void:
   _setup_curves()
   _setup_params()
   _setup_camera()
+  _apply_level()
   _update_displays()
 
 
@@ -240,6 +271,8 @@ func _unhandled_input(event: InputEvent) -> void:
     for i in _params.size():
       var p    := _params[i]
       var mesh := p["mesh"] as MeshInstance3D
+      if not mesh.visible:
+        continue
       var uv   := _ray_to_mesh_uv(_cam, screen_pos, mesh)
       if uv.x < 0.0:
         continue
@@ -268,16 +301,42 @@ func _sinusoid(a: int, f: int, p: int, x: float) -> float:
   return a * sin(f * x + p * PI / 10.0)
 
 
+func _target_at(x: float) -> float:
+  var total := 0.0
+  for tgt in LEVELS[_level]["targets"]:
+    total += _sinusoid(tgt[0], tgt[1], tgt[2], x)
+  return total
+
+
 func _is_match() -> bool:
+  var curve_count: int = LEVELS[_level]["curves"]
   var max_d := 0.0
   for i in SAMPLE_CNT:
     var x      := TAU * float(i) / float(SAMPLE_CNT)
-    var target := _sinusoid(TGT_1_A, TGT_1_F, TGT_1_P, x) + _sinusoid(TGT_2_A, TGT_2_F, TGT_2_P, x)
     var player := 0.0
-    for c in 2:
+    for c in curve_count:
       player += _sinusoid(amplitudes[c], frequencies[c], phases[c], x)
-    max_d = maxf(max_d, abs(target - player))
+    max_d = maxf(max_d, abs(_target_at(x) - player))
   return max_d < MATCH_TOL
+
+
+func _apply_level() -> void:
+  var lvl: Dictionary = LEVELS[_level]
+  var curve_count: int = lvl["curves"]
+  var use_phase: bool = lvl["use_phase"]
+  _courbe_a_2.visible = curve_count >= 2
+  _courbe_f_2.visible = curve_count >= 2
+  _courbe_p_1.visible = use_phase
+  _courbe_p_2.visible = use_phase and curve_count >= 2
+  _curves_display.targets     = lvl["targets"]
+  _curves_display.curve_count = curve_count
+  _curves_display.title       = tr("oscilloLevelTitle") % [_level + 1, LEVELS.size()]
+
+
+func _reset_player_params() -> void:
+  amplitudes  = [3, 2]
+  frequencies = [1, 5]
+  phases      = [0, 0]
 
 
 func _apply_delta(param_idx: int, delta: int) -> void:
@@ -296,7 +355,7 @@ func _apply_delta(param_idx: int, delta: int) -> void:
   _update_displays()
   if _is_match():
     _victory_pending = true
-    get_tree().create_timer(0.8).timeout.connect(_on_victoire, CONNECT_ONE_SHOT)
+    get_tree().create_timer(0.8).timeout.connect(_on_level_done, CONNECT_ONE_SHOT)
 
 
 func _update_displays() -> void:
@@ -312,6 +371,21 @@ func _update_displays() -> void:
       "f": disp.value = frequencies[curve]
       "p": disp.value = phases[curve]
     disp.queue_redraw()
+
+
+func _on_level_done() -> void:
+  if not _jeu_actif:
+    return
+  _victory_pending = false
+  if _level < LEVELS.size() - 1:
+    _level += 1
+    _reset_player_params()
+    _apply_level()
+    _update_displays()
+    AudioManager.play(AudioData.AUDIO_OSCILLO_WIN, global_position)
+    GameData.show_message(tr("msgOscilloLevelUp") % [_level + 1, LEVELS.size()], 3.0)
+  else:
+    _on_victoire()
 
 
 func _on_victoire() -> void:

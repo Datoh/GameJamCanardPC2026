@@ -8,6 +8,11 @@ const ROTATION_HEAD_SPEED := 5.0
 
 const EYE_RADIUS := 0.08
 
+const LOVE_MONOLOGUE_NEAR := 2.5
+const LOVE_MONOLOGUE_FAR  := 3.5
+
+const STOP_FOLLOW_DISTANCE := 30.0
+
 const _SKIN_DEFAULT := "LN R3p14y"
 const _SKIN_PATHS: Dictionary = {
   "LN R3p14y": "res://assets/textures/robot/LN R3p14y/",
@@ -42,6 +47,13 @@ var _coffee_pos  := Vector3.ZERO
 var _coffee_dir  := Vector3.ZERO
 var _on_task     := false
 
+var _love_mode          := false
+var _love_monologue_idx := 0
+var _love_player_near   := false
+
+var _follow_distance := 0.0
+var _last_pos        := Vector3.ZERO
+
 @onready var _audio_stream_player_3d: AudioStreamPlayer3D = %AudioStreamPlayer3D
 
 @onready var _navigation_agent_3d: NavigationAgent3D = %NavigationAgent3D
@@ -68,14 +80,45 @@ func _reset_blink_cooldown() -> void:
   _blink_cooldown = randf_range(3.0, 8.0)
 
 func stop_coffee_mode() -> void:
+  if _love_mode:
+    return
   _coffee_mode = false
   _following   = true
   _is_forced = false
   _forced_body_angle = NAN
 
+
+func set_love_mode(pos: Vector3, dir: Vector3) -> void:
+  _love_mode          = true
+  _love_monologue_idx = 0
+  _love_player_near   = true
+  set_coffee_mode(pos, dir)
+
+
+func stop_love_mode() -> void:
+  _love_mode   = false
+  _coffee_mode = false
+  _following   = true
+  _is_forced   = false
+  _forced_body_angle = NAN
+
+
+func is_love_mode() -> bool:
+  return _love_mode
+
+
+func _play_love_monologue() -> void:
+  _love_monologue_idx = mini(_love_monologue_idx + 1, 3)
+  var text := tr("msgCafetMonologue%d" % _love_monologue_idx)
+  if "%s" in text:
+    text = text % [DialoguesData.robot_name]
+  GameData.show_message(text, 8.0)
+
 func is_dialogue_locked(dialogue_id: String) -> bool:
   if dialogue_id == "robot_cafetiere":
     return not _coffee_mode
+  if dialogue_id == "robot_stop_following":
+    return _follow_distance < STOP_FOLLOW_DISTANCE
   return false
 
 func set_coffee_mode(pos: Vector3, dir: Vector3) -> void:
@@ -195,6 +238,18 @@ func _physics_process(delta: float) -> void:
       rotation.y = lerp_angle(rotation.y, _forced_body_angle, delta * ROTATION_SPEED)
 
   move_and_slide()
+
+  if _following and not _is_forced:
+    _follow_distance += global_position.distance_to(_last_pos)
+  _last_pos = global_position
+
+  if _love_mode and _player != null and _navigation_agent_3d.is_navigation_finished():
+    var dist := global_position.distance_to(_player.global_position)
+    if not _love_player_near and dist < LOVE_MONOLOGUE_NEAR:
+      _love_player_near = true
+      _play_love_monologue()
+    elif _love_player_near and dist > LOVE_MONOLOGUE_FAR:
+      _love_player_near = false
 
   if _head_locked or _player == null:
     return

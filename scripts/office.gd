@@ -43,8 +43,11 @@ func _ready() -> void:
   for machine in get_tree().get_nodes_in_group(GameData.GROUP_MACHINE):
     machine.machine_attempt_succeeded.connect(_on_machine_attempt_succeeded)
     machine.machine_done.connect(_on_machine_done)
+    if machine is MachineOscillo:
+      machine.power_cut.connect(_on_power_cut)
 
   %MazeMachine.robot_sent_for_coffee.connect(_on_robot_sent_for_coffee)
+  _player.dialogue_side_effect.connect(_on_dialogue_side_effect)
 
 
 func _on_title_options_requested() -> void:
@@ -148,6 +151,20 @@ func _on_area_close_door_body_entered(_body: Node3D) -> void:
 func _on_robot_sent_for_coffee() -> void:
   var cast_dir := (_position_robot_cofee.global_basis * _position_robot_cofee.target_position).normalized()
   _robot.set_coffee_mode(_position_robot_cofee.global_position, cast_dir)
+
+
+func _on_dialogue_side_effect(dialogue_id: String) -> void:
+  if dialogue_id == "cafetiere_existentiel":
+    var cast_dir := (_position_robot_cofee.global_basis * _position_robot_cofee.target_position).normalized()
+    _robot.set_love_mode(_position_robot_cofee.global_position, cast_dir)
+    for machine in get_tree().get_nodes_in_group(GameData.GROUP_MACHINE):
+      if machine is MachineOscillo:
+        machine.power_cut_available = true
+
+
+func _on_power_cut() -> void:
+  _robot.stop_love_mode()
+  _player.set_pending_robot_dialogue("cafetiere_reprise")
 
 
 func _on_area_robot_inside_body_entered(body: Node3D) -> void:

@@ -10,6 +10,8 @@ const ENDPOINTS_KO = {
     "jaune": [Vector2i(2, 0), Vector2i(0, 8)],
   }
 
+# Layout de référence soluble : déplacer les 2 connecteurs jaunes de
+# ENDPOINTS_KO vers ces positions rend le puzzle réalisable.
 const ENDPOINTS_OK = {
     "rouge": [Vector2i(6, 4), Vector2i(11, 15)],
     "vert":  [Vector2i(0, 7),  Vector2i(11, 7)],
@@ -187,10 +189,9 @@ func _on_return_done() -> void:
 # ── Logique jeu câbles ────────────────────────────────────────────────────────
 
 func _reinitialiser() -> void:
-  var use_ok: bool = GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
   endpoints = {}
   for c in CableGrid.NOMS:
-    var src: Array = ENDPOINTS_OK[c] if use_ok else ENDPOINTS_KO[c]
+    var src: Array = ENDPOINTS_KO[c]
     endpoints[c] = [src[0], src[1]]
   chemins = {}
   for c in CableGrid.NOMS:
@@ -200,12 +201,7 @@ func _reinitialiser() -> void:
   _crt         = []
   _drag_ep     = null
   depl_restants = 2
-  peut_deplacer = false
-  _grid_update()
-
-
-func debloquer_deplacement() -> void:
-  peut_deplacer = true
+  peut_deplacer = GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
   _grid_update()
 
 
@@ -408,6 +404,8 @@ func _deposer(cell: Vector2i) -> void:
     return
   var c   := _drag_ep["couleur"] as String
   var idx := _drag_ep["idx"] as int
+  if endpoints[c][idx] == cell:
+    return
   for other in CableGrid.NOMS:
     for i in 2:
       if other == c and i == idx:
@@ -417,6 +415,11 @@ func _deposer(cell: Vector2i) -> void:
   endpoints[c][idx] = cell
   chemins[c]    = []
   depl_restants -= 1
+  AudioManager.play(AudioData.AUDIO_CABLE, global_position)
+  if depl_restants > 0:
+    GameData.show_message(tr("msgCableMovesLeft") % depl_restants, 3.0)
+  else:
+    GameData.show_message(tr("msgCableNoMoves"), 3.0)
 
 
 func _check_victoire() -> void:
@@ -445,6 +448,8 @@ func _on_victoire() -> void:
 func _demarrer_jeu() -> void:
   GameData.minigame_name = NAME
   _reinitialiser()
+  if peut_deplacer:
+    GameData.show_message(tr("msgCableCanMove") % depl_restants, 4.0)
   _transition_to_pc(GameData.player.camera)
 
 

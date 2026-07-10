@@ -74,7 +74,7 @@ func interact() -> void:
     if state == Machine.StateMachine.SOLVED:
       GameData.show_message(tr("msgArticlePublished"), 3.0)
     elif not _jeu_actif:
-      GameData.set_state_machine(NAME, Machine.StateMachine.TRY_MACHINE_OBJECT)
+      GameData.set_state(NAME, Machine.StateMachine.TRY_MACHINE_OBJECT)
       _open_article()
     return
 

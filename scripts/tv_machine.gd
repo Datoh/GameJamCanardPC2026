@@ -28,6 +28,9 @@ var _cell_rect_validate: Control = null
 
 func _ready() -> void:
   machine_name = NAME
+  dialogue_demande = "tv_demande"
+  dialogue_resultat = "tv_resultat"
+  robot_work_duration = 12.0
   message_not_enable = tr("msgStopYoupub")
   message_idle = tr("msgFindCablingVideo")
   message_try_machine = tr("msgCaptchaNeeded")
@@ -60,14 +63,18 @@ func _apply_images_to_visual(has_feutres: bool) -> void:
   pool.append_array(pool2)
   pool = pool.slice(0, 6)
   pool.shuffle()
-  var pink_indices := [0, 1, 2, 3, 4, 5]
+  var required_idx := pool.find(REQUIRED_LAPIN_FILE)
+  var pink_indices := []
+  for i in 6:
+    if i != required_idx:
+      pink_indices.append(i)
   pink_indices.shuffle()
   pink_indices = pink_indices.slice(0, 2)
   _pink_indices.clear()
   for i in 6:
     var tex := load(LAPIN_DIR + pool[i]) as Texture2D
     _cell_rects[i].texture  = tex
-    var is_pink: bool = has_feutres and (pink_indices.has(i) or pool[i] == REQUIRED_LAPIN_FILE)
+    var is_pink: bool = has_feutres and (pink_indices.has(i) or i == required_idx)
     if is_pink:
       _pink_indices.append(i)
     _cell_rects[i].modulate = Color.HOT_PINK if is_pink else (COLOR_LAPIN.pick_random() if has_feutres else Color.BLACK)
@@ -99,6 +106,8 @@ func show_video() -> void:
 # ── Interface publique ────────────────────────────────────────────────────────
 
 func interact() -> void:
+  message_robot_working = tr("msgRobotTryingCaptcha") % [DialoguesData.robot_name]
+  message_robot_done = tr("msgRobotSeemsDone") % [DialoguesData.robot_name]
   if GameData.state(machine_name) == Machine.StateMachine.SOLVED:
     show_video()
   else:
@@ -109,11 +118,17 @@ func interact() -> void:
 func _can_try() -> bool:
   var pc_attempted := GameData.state(MachineOrdinateur.NAME) >= Machine.StateMachine.TRY_MACHINE_OBJECT
   return pc_attempted
- 
+
+func is_dialogue_locked(dialogue_id: String) -> bool:
+  if dialogue_id == "tv_apres":
+    return GameData.state(NAME) != Machine.StateMachine.SOLVED
+  return super.is_dialogue_locked(dialogue_id)
+
 func get_interaction_hint() -> String:
   var state := GameData.state(machine_name)
   match state:
-    Machine.StateMachine.TRY_MACHINE:
+    Machine.StateMachine.TRY_MACHINE, Machine.StateMachine.TRY_MACHINE_OBJECT, \
+    Machine.StateMachine.TRY_MACHINE_OK:
       return tr("hintSolveCaptcha")
     Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
       return tr("hintWatchVideo")
@@ -122,8 +137,6 @@ func get_interaction_hint() -> String:
 
 
 func _on_try_machine(_has_object: bool) -> void:
-  if GameData.state(machine_name) == Machine.StateMachine.TRY_MACHINE:
-    GameData.set_state(machine_name, Machine.StateMachine.TRY_MACHINE_OBJECT)
   _show_captcha_ui("Feutres" in GameData.player.inventory)
   _apply_images_to_visual("Feutres" in GameData.player.inventory)
   _captcha_active = true

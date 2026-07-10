@@ -5,8 +5,11 @@ signal game_finished(won: bool)
 
 const NAME := "SUTOM"
 
-const WORD_LENGTH  := 6
 const MAX_ATTEMPTS := 6
+const CELL_MAX     := 52
+const GAP          := 6
+const GRID_VW      := 512
+const GRID_VH      := 724
 
 const COLOR_PAPER     := Color(0.97, 0.95, 0.91)
 const COLOR_CORRECT   := Color(0.73, 0.15, 0.15)
@@ -15,8 +18,8 @@ const COLOR_ABSENT    := Color(0.11, 0.44, 0.89)
 const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
 
-const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP"]
-const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE"]
+const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP", "ZXQKWJB", "BVWQKZX", "KLMRSTV", "PQRSTVW", "GHJKLMN", "DFLRTVZ", "CRTSVXB", "BFLNRZD", "DGHKMPQ", "HJTKVWX", "ZXQKWJBV", "BVWQKZXW", "KLMRSTVW", "PQRSTVWX", "GHJKLMNP", "DFLRTVZX", "CRTSVXBZ", "BFLNRZDG", "DGHKMPQR", "HJTKVWXZ", "ZXQKWJBVC", "BVWQKZXWD", "KLMRSTVWX", "PQRSTVWXZ", "GHJKLMNPQ", "DFLRTVZXW", "CRTSVXBZK", "BFLNRZDGH", "DGHKMPQRS", "HJTKVWXZB"]
+const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE", "VOITURE", "MUSIQUE", "CUISINE", "FENETRE", "VILLAGE", "TRAVAIL", "COULEUR", "MACHINE", "CLAVIER", "ARTICLE", "CHEMISE", "LECTURE", "SCIENCE", "MAGASIN", "CANARDS", "FROMAGE", "JOURNAUX", "PEINTURE", "MONTAGNE", "CAMPAGNE", "QUESTION", "PRINCIPE", "VICTOIRE", "MEDECINE", "PORTABLE", "CRITIQUE", "MAGAZINE", "ECRITURE", "PERSONNE", "VETEMENT", "DIRECTEUR", "PRESIDENT", "TELEPHONE", "CHOCOLATS", "DIFFERENT", "IMPORTANT", "NAISSANCE", "CONFIANCE", "MECANIQUE", "PRINCESSE", "AVENTURES", "EMISSIONS", "CHAUSSURE", "ORDINAIRE"]
 
 @export var camera_height: float = 0.25
 @export var cam_transition_duration: float = 1.0
@@ -35,6 +38,7 @@ var _cam_end_pos     := Vector3.ZERO
 var _cam_end_basis   := Basis.IDENTITY
 
 var _target: String = ""
+var _word_length: int = 6
 var _row: int = 0
 var _col: int = 1
 var _won: bool = false
@@ -154,10 +158,8 @@ func _make_stylebox(color: Color, radius: int = 4, border: bool = false) -> Styl
 
 
 func _build_grid_ui() -> void:
-  const VW := 512
-  const VH := 724
-  const CELL := 52
-  const GAP  := 6
+  const VW := GRID_VW
+  const VH := GRID_VH
 
   var bg := ColorRect.new()
   bg.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -182,37 +184,10 @@ func _build_grid_ui() -> void:
   _hint_label.add_theme_font_size_override("font_size", 12)
   _vp.add_child(_hint_label)
 
-  var grid_w := WORD_LENGTH * CELL + (WORD_LENGTH - 1) * GAP
-  var grid_h := MAX_ATTEMPTS * CELL + (MAX_ATTEMPTS - 1) * GAP
-  var gx := int((VW - grid_w) / 2.0)
+  var grid_h := MAX_ATTEMPTS * CELL_MAX + (MAX_ATTEMPTS - 1) * GAP
   var gy := 86
 
-  _panels.clear()
-  _labels.clear()
-
-  for r in range(MAX_ATTEMPTS):
-    var row_p: Array = []
-    var row_l: Array = []
-    for c in range(WORD_LENGTH):
-      var cell := Panel.new()
-      cell.position = Vector2(gx + c * (CELL + GAP), gy + r * (CELL + GAP))
-      cell.size = Vector2(CELL, CELL)
-      var style := _make_stylebox(COLOR_FIRST_COL if c == 0 else COLOR_CELL_IDLE, 4, c != 0)
-      cell.add_theme_stylebox_override("panel", style)
-      _vp.add_child(cell)
-
-      var lbl := Label.new()
-      lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
-      lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-      lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
-      lbl.add_theme_font_size_override("font_size", 22)
-      lbl.add_theme_color_override("font_color", Color.BLACK)
-      cell.add_child(lbl)
-
-      row_p.append(cell)
-      row_l.append(lbl)
-    _panels.append(row_p)
-    _labels.append(row_l)
+  _build_grid_cells()
 
   _result_label = Label.new()
   _result_label.position = Vector2(16, gy + grid_h + 10)
@@ -232,6 +207,43 @@ func _build_grid_ui() -> void:
   instr.add_theme_color_override("font_color", Color(0.50, 0.47, 0.43))
   instr.add_theme_font_size_override("font_size", 14)
   _vp.add_child(instr)
+
+
+func _build_grid_cells() -> void:
+  for row in _panels:
+    for cell in row:
+      (cell as Node).queue_free()
+  _panels.clear()
+  _labels.clear()
+
+  var cell_size: int = mini(CELL_MAX, int((GRID_VW - 32.0 - (_word_length - 1) * GAP) / _word_length))
+  var grid_w := _word_length * cell_size + (_word_length - 1) * GAP
+  var gx := int((GRID_VW - grid_w) / 2.0)
+  var gy := 86
+
+  for r in range(MAX_ATTEMPTS):
+    var row_p: Array = []
+    var row_l: Array = []
+    for c in range(_word_length):
+      var cell := Panel.new()
+      cell.position = Vector2(gx + c * (cell_size + GAP), gy + r * (cell_size + GAP))
+      cell.size = Vector2(cell_size, cell_size)
+      var style := _make_stylebox(COLOR_FIRST_COL if c == 0 else COLOR_CELL_IDLE, 4, c != 0)
+      cell.add_theme_stylebox_override("panel", style)
+      _vp.add_child(cell)
+
+      var lbl := Label.new()
+      lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+      lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+      lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
+      lbl.add_theme_font_size_override("font_size", 22)
+      lbl.add_theme_color_override("font_color", Color.BLACK)
+      cell.add_child(lbl)
+
+      row_p.append(cell)
+      row_l.append(lbl)
+    _panels.append(row_p)
+    _labels.append(row_l)
 
 
 # ── Interface publique (dispatcher player) ───────────────────────────────────
@@ -264,14 +276,14 @@ func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
 
   var words: Array = REAL_WORDS if has_object else FAKE_WORDS
   _target = words[randi() % words.size()].to_upper()
+  _word_length = _target.length()
+  _build_grid_cells()
 
   for r in range(MAX_ATTEMPTS):
-    for c in range(WORD_LENGTH):
+    for c in range(_word_length):
       _labels[r][c].text = _target[0] if c == 0 else ""
-      var style := _make_stylebox(COLOR_FIRST_COL if c == 0 else COLOR_CELL_IDLE, 4, c != 0)
-      _panels[r][c].add_theme_stylebox_override("panel", style)
 
-  _hint_label.text = tr("sutomWordHint") % [WORD_LENGTH, _target[0]]
+  _hint_label.text = tr("sutomWordHint") % [_word_length, _target[0]]
   _result_label.visible = false
 
   _transition_to_overhead()
@@ -355,7 +367,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _type(letter: String) -> void:
-  if _row >= MAX_ATTEMPTS or _col >= WORD_LENGTH:
+  if _row >= MAX_ATTEMPTS or _col >= _word_length:
     return
   AudioManager.play(AudioData.AUDIO_SUTOM_TYPING, global_position)
   _labels[_row][_col].text = letter
@@ -372,13 +384,13 @@ func _backspace() -> void:
 # ── Logique de jeu ────────────────────────────────────────────────────────────
 
 func _submit() -> void:
-  if _col < WORD_LENGTH or _row >= MAX_ATTEMPTS:
+  if _col < _word_length or _row >= MAX_ATTEMPTS:
     return
   var guess := ""
-  for c in range(WORD_LENGTH):
+  for c in range(_word_length):
     guess += _labels[_row][c].text
   var colors := _evaluate(guess)
-  for c in range(WORD_LENGTH):
+  for c in range(_word_length):
     _panels[_row][c].add_theme_stylebox_override("panel", _make_stylebox(colors[c], 4))
   var won := (guess == _target)
   _row += 1
@@ -399,16 +411,16 @@ func _submit() -> void:
 
 func _evaluate(guess: String) -> Array:
   var result := []
-  result.resize(WORD_LENGTH)
+  result.resize(_word_length)
   result.fill(COLOR_ABSENT)
   var remaining: Array = []
-  for i in range(WORD_LENGTH):
+  for i in range(_word_length):
     remaining.append(_target[i])
-  for i in range(WORD_LENGTH):
+  for i in range(_word_length):
     if guess[i] == _target[i]:
       result[i] = COLOR_CORRECT
       remaining[i] = ""
-  for i in range(WORD_LENGTH):
+  for i in range(_word_length):
     if result[i] == COLOR_CORRECT:
       continue
     var idx: int = remaining.find(guess[i])

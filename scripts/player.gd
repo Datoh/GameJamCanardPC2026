@@ -22,6 +22,7 @@ var camera: Camera3D:
 var _dialogue_is_with_robot: bool = false
 var _cpc_count               := 0
 var _completed_dialogues: Array[String] = []
+var _pending_robot_dialogue: String = ""
 var _notif_queue: Array[String] = []
 var _notif_active             := false
 
@@ -248,6 +249,17 @@ func _try_interact() -> void:
     return
 
   if collider.is_in_group(GameData.GROUP_ROBOT):
+    if _robot and _robot.is_love_mode():
+      show_message(tr("msgRobotInLove") % [DialoguesData.robot_name], 5.0)
+      return
+    if not _pending_robot_dialogue.is_empty():
+      var pending := DialoguesData.find_by_id(_pending_robot_dialogue)
+      _pending_robot_dialogue = ""
+      if not pending.is_empty():
+        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+        _dialogue_is_with_robot = true
+        _dialogue_ui.open_direct(pending)
+        return
     var working_on := ""
     for key in GameData._state_machine.keys():
       if GameData.state(key) == Machine.StateMachine.ROBOT_WORKING:
@@ -257,6 +269,7 @@ func _try_interact() -> void:
       match working_on:
         "Maze":       working_on = tr("wordMaze")
         "Ordinateur": working_on = tr("wordWiring")
+        "TV":         working_on = tr("wordCaptcha")
       show_message(tr("msgRobotWorking") % [DialoguesData.robot_name, working_on], 3.0)
     else:
       _open_dialogue()
@@ -314,6 +327,10 @@ func _play_notif_queue() -> void:
 func suppress_dialogue(dialogue_id: String) -> void:
   if dialogue_id not in _completed_dialogues:
     _completed_dialogues.append(dialogue_id)
+
+
+func set_pending_robot_dialogue(dialogue_id: String) -> void:
+  _pending_robot_dialogue = dialogue_id
 
 
 func collect_cpc(id: int) -> void:

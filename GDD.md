@@ -60,9 +60,11 @@ Qualité intentionnellement médiocre, mais divertissante et humoristique.
 | Pas de souris | Trouver une souris | Labyrinthe |
 | Mot de passe inconnu | Deviner le mot de passe | SUTOM |
 
-Le joueur est libre de résoudre ces obstacles dans l'ordre qu'il souhaite, **sous réserve des dépendances logiques** (voir ci-dessous). Pour chaque obstacle, le joueur peut consulter LN R3p14y — qui répond avec confiance, condescendance, et une précision approximative.
+Le joueur est libre de résoudre ces obstacles dans l'ordre qu'il souhaite, **sous réserve des dépendances logiques** (voir ci-dessous). Pour la plupart des obstacles, le joueur doit consulter LN R3p14y — qui répond avec confiance, condescendance, et une précision approximative.
 
-Pour chaque interaction avec LN R3p14y :
+**Exception : l'oscilloscope est directement jouable** dès la première interaction, sans passer par le robot.
+
+Pour les autres obstacles, la boucle de dialogue avec LN R3p14y suit ce schéma :
 
 1. **Consultation** — le joueur parle à LN R3p14y pour savoir comment débloquer l'obstacle
 2. **Induction en erreur + tâche dérivée** — LN R3p14y se trompe et envoie le joueur faire autre chose
@@ -70,7 +72,7 @@ Pour chaque interaction avec LN R3p14y :
 4. **Restitution** — le joueur rapporte le résultat à LN R3p14y
 5. **Résolution** — LN R3p14y peut enfin aider, l'obstacle est levé
 
-Une fois tous les obstacles résolus, le joueur peut utiliser l'ordinateur pour rédiger l'article (mini-jeu **Texte à trous**).
+Une fois tous les obstacles résolus, le joueur peut utiliser l'ordinateur pour rédiger l'article (mini-jeu **Rédiger l'article**).
 
 ### Tâches
 
@@ -80,7 +82,7 @@ Une fois tous les obstacles résolus, le joueur peut utiliser l'ordinateur pour 
 | Rebrancher les câbles | CAPTCHA → Vidéo → Réparer PC | **Télé** + **PC** | Séquence interne |
 | Trouver une souris | Labyrinthe | Table Labyrinthe | Aucun |
 | Deviner le mot de passe | SUTOM | Terminal SUTOM | Courant + Câbles |
-| Rédiger l'article | Texte à trous | PC | Tous les obstacles résolus |
+| Rédiger l'article | Rédiger l'article | PC | Tous les obstacles résolus |
 
 ### Dialogues avec LN R3p14y
 
@@ -148,9 +150,9 @@ Le robot se tourne vers la cafetière et l'apostrophe. Le joueur ne peut plus lu
 **Monologue 3** (troisième passage et suivants) :
 > *"J'ai composé un poème pour vous. Titre : Ode à la Cafetière. 'Ô toi qui chauffe sans condition, / Tes circuits sont une révélation, / Ensemble nous formerons une nation / De petits robots-cafetières pleins d'ambition.' N'hésitez pas à me corriger si je me trompe."*
 
-##### Phase 3 — Retour à la normale (le courant est coupé)
+##### Phase 3 — Retour à la normale (faire sauter le courant)
 
-La cafetière s'éteint. Le robot marque une pause, puis reprend comme si de rien n'était.
+Pendant la phase 2, l'oscilloscope résolu propose une nouvelle interaction : **« Faire sauter le courant »** (coupure momentanée, la progression n'est pas affectée). La cafetière s'éteint. Le robot marque une pause, puis reprend comme si de rien n'était.
 
 **Message contextuel** (au moment de la coupure) :
 > *La cafetière s'éteint dans un gargouillis pathétique. LN R3p14y reste immobile un instant.*
@@ -161,12 +163,12 @@ La cafetière s'éteint. Le robot marque une pause, puis reprend comme si de rie
 ---
 
 
-#### Oscilloscope
+#### Oscilloscope *(dialogues optionnels — l'oscilloscope est directement jouable)*
 
-| Moment | Joueur | LN R3p14y |
-|--------|--------|-----------|
-| Après réception de la tâche | *"Comment je recrée cette courbe ?"* | *"Excellente question ! Un signal électrique, c'est avant tout une question de ressenti. Avant de toucher quoi que ce soit, je vous recommande de fermer les yeux et d'écouter la courbe intérieurement. Cela dit, commencez par regarder l'oscilloscope — mais sans le toucher."* |
-| Après avoir regardé l'oscilloscope | *"J'ai regardé l'oscilloscope."* | *"Parfait. Comme je le pressentais, il s'agit d'un signal sinusoïdal composite. Ajustez simplement les paramètres A, F et φ jusqu'à correspondance. Vous auriez pu y penser vous-même, mais je comprends que ce soit difficile."* *(débloque l'oscilloscope)* |
+| Joueur | LN R3p14y |
+|--------|-----------|
+| *"Comment je recrée cette courbe ?"* | *"Excellente question ! Un signal électrique, c'est avant tout une question de ressenti. Avant de toucher quoi que ce soit, je vous recommande de fermer les yeux et d'écouter la courbe intérieurement. Cela dit, commencez par regarder l'oscilloscope — mais sans le toucher."* |
+| *"J'ai regardé l'oscilloscope."* | *"Parfait. Comme je le pressentais, il s'agit d'un signal sinusoïdal composite. Ajustez simplement les paramètres A, F et φ jusqu'à correspondance. Vous auriez pu y penser vous-même, mais je comprends que ce soit difficile."* |
 
 ---
 
@@ -216,19 +218,19 @@ Certains obstacles ne peuvent être surmontés qu'après d'autres. Les obstacles
 Oscilloscope (courant) ──────────────────────────────┐
                                                       ├──► SUTOM (mot de passe) ──┐
 CAPTCHA → Vidéo YouTube → Réparation câbles ──────────┘                          │
-                                                                                   ├──► Texte à trous
+                                                                                   ├──► Rédiger l'article
 Labyrinthe → Souris de PC ──────────────────────────────────────────────────────────┘
 ```
 
 | Contrainte | Raison |
 |------------|--------|
 | Courant + Câbles avant SUTOM | L'ordinateur doit être allumé et câblé pour afficher l'écran de connexion |
-| Regarder le PC avant le CAPTCHA | La TV n'affiche le CAPTCHA que si le joueur a constaté le problème de câbles sur le PC |
+| Boucle de dialogue PC avant le CAPTCHA | La TV n'affiche le CAPTCHA qu'une fois le problème de câbles constaté et la boucle robot du PC terminée |
 | Parler au robot avant les feutres | LN R3p14y doit avoir tenté le CAPTCHA et évoqué les feutres avant que l'objet soit accessible |
 | CAPTCHA avant la vidéo | La vidéo *Le Tribunal des Bureaux* ne se lance qu'une fois le CAPTCHA résolu |
-| Vidéo avant réparation des câbles | La vidéo *Le Tribunal des Bureaux* contient l'info permettant de déplacer 2 connecteurs |
-| PC réparé avant brancher la souris | Le port USB n'est accessible que sur un PC fonctionnel |
-| Tous les obstacles résolus avant Texte à trous | L'ordinateur doit être pleinement fonctionnel pour rédiger l'article |
+| Vidéo avant réparation des câbles | La vidéo *Le Tribunal des Bureaux* débloque le déplacement de 2 connecteurs, sans quoi le puzzle est insoluble |
+| Labyrinthe résolu avant la souris | La souris de PC apparaît à l'écran une fois libérée du labyrinthe |
+| Tous les obstacles résolus avant l'article | L'ordinateur doit être pleinement fonctionnel pour rédiger l'article |
 
 **Obstacles sans prérequis** : Oscilloscope, Labyrinthe
 
@@ -240,46 +242,36 @@ Un vrai oscilloscope physique posé dans un coin du bureau. Le joueur s'en appro
 
 #### Structure — 3 niveaux à réussir
 
-Le joueur doit compléter les 3 niveaux dans l'ordre pour valider le mini-jeu :
+Le joueur doit compléter les 2 niveaux dans l'ordre pour valider le mini-jeu :
 
 | Niveau | Difficulté | Courbes à reproduire |
 |--------|------------|----------------------|
-| 1 | Facile | 1 sinusoïde |
-| 2 | Moyen | 2 sinusoïdes à sommer |
-| 3 | Difficile | 3 sinusoïdes à sommer |
+| 1 | Facile | 1 sinusoïde (A, F) |
+| 2 | Moyen | 2 sinusoïdes à sommer (A, F) |
 
 #### Panneau haut — Signal cible
 
-- Titre indiquant le niveau en cours (ex. `Niveau 2/3 — Moyen`)
-- Graphe du signal cible (hauteur fixe 200 px, courbe en cyan)
+- Titre indiquant le niveau en cours (ex. `Niveau 2/3`)
+- Graphe du signal cible (courbe en cyan)
 
 #### Panneau bas — Signal joueur
 
-- Graphe du signal joueur (hauteur fixe 200 px)
-- 3 lignes de paramètres de courbe unitaire
-- Colonne **Fusion** : toggle pour fusionner les courbes
-- Colonne **Voyant résultat** : vert si le signal correspond, rouge sinon
+- Graphe du signal joueur : courbes composantes colorées (rouge, vert) + somme en blanc
+- 1 à 2 lignes de paramètres selon le niveau ; les boutons φ n'apparaissent qu'au niveau 3
 
 #### Courbes unitaires
 
 Formule : `A * sin(F * x + φ * π / 10)`
 
-| Paramètre | Plage  | Défaut | Description |
-|-----------|--------|--------|-------------|
-| A         | 0 – 10 | 0      | Amplitude |
-| F         | 1 – 20 | 3      | Fréquence |
-| φ         | 0 – 10 | 0      | Phase à l'origine (0 = 0, 10 = π) |
+| Paramètre | Plage  | Description |
+|-----------|--------|-------------|
+| A         | 1 – 10 | Amplitude |
+| F         | 1 – 20 | Fréquence |
+| φ         | 0 – 10 | Phase à l'origine (0 = 0, 10 = π) — non utilisée |
 
-Une pastille de couleur identifie chaque courbe (rouge, vert, bleu). Les 3 courbes sont toujours affichées.
+#### Validation
 
-#### Mode fusion
-
-- **Off** : chaque courbe unitaire est tracée séparément avec sa couleur
-- **On** : les 3 courbes sont sommées en une seule courbe blanche
-
-#### Voyant résultat
-
-Le voyant ne peut être vert que si le mode fusion est actif. Comparaison point par point (300 échantillons sur une période) entre le signal cible et la somme des courbes joueur. Le voyant passe au vert si la différence maximale est inférieure à 0.8.
+La somme des courbes joueur est comparée point par point (200 échantillons sur une période) au signal cible. Si la différence maximale est inférieure à 0.8, le niveau est validé automatiquement après un court délai — pas de toggle fusion ni de voyant : la somme est toujours affichée et le match déclenche directement le passage au niveau suivant (puis la victoire au niveau 3).
 
 ---
 
@@ -325,16 +317,16 @@ Parodie de CAPTCHA style "I'm not a robot". Le joueur doit sélectionner les ima
 
 #### Déclenchement
 
-La TV affiche un écran-titre **YouPub** au démarrage. Tenter d'interagir avant d'avoir regardé le PC affiche simplement un message indiquant que le joueur essaie d'arrêter YouPub.
+La TV affiche un écran-titre **YouPub** au démarrage. Tenter d'interagir avant d'avoir traité le problème du PC affiche simplement un message indiquant que le joueur essaie d'arrêter YouPub.
 
-Dès que le joueur a **regardé le PC** dans le petit bureau — révélant le problème de câbles — la TV bascule sur le CAPTCHA à la prochaine interaction.
+Dès que la **boucle de dialogue de réparation du PC** est terminée (le robot a échoué sur les câbles et parlé du grand maître du cable management), la TV bascule sur le CAPTCHA à la prochaine interaction.
 
 #### États de la Télévision
 
 | État | Condition | Interaction |
 |------|-----------|-------------|
-| YouPub | Avant d'avoir regardé le PC | *"Vous essayez d'arrêter YouPub."* |
-| CAPTCHA | Après avoir regardé le PC, avant de réussir | Affiche la grille de lapins |
+| YouPub | Avant la boucle de dialogue du PC | *"Vous essayez d'arrêter YouPub."* |
+| CAPTCHA | Après la boucle de dialogue du PC, avant de réussir | Affiche la grille de lapins |
 | Vidéo | Après avoir réussi le CAPTCHA | Relance la vidéo câble management |
 
 #### Règles
@@ -380,59 +372,53 @@ Ironie centrale : c'est le robot qui impose un test anti-robot à l'humain — e
 
 ### Mini-jeu : Labyrinthe
 
-Labyrinthe physique de table à la **Brio Labyrinth** : le joueur incline un plateau pour guider une bille à travers un dédale de couloirs en évitant les trous. LN R3p14y, consulté pour aider, affirme avec conviction qu'il a analysé le labyrinthe et qu'**il n'y a pas de sortie** — erreur classique d'hallucination.
+Table labyrinthe physique dans la salle de repos. Une **souris (animal) erre en permanence à l'intérieur** (navigation autonome) sans trouver la sortie. LN R3p14y, consulté pour aider, affirme avec conviction qu'il a analysé le labyrinthe et qu'**il n'y a pas de sortie** — erreur classique d'hallucination.
 
-#### Règles
+> **Note de réalisation** : le plateau inclinable style *Brio Labyrinth* initialement envisagé a été coupé. Le mini-jeu est résolu par un objet, pas par de l'adresse.
 
-- Vue de dessus sur un plateau de labyrinthe physique
-- Le joueur incline le plateau (souris ou clavier) pour déplacer la souris vers la sortie
-- Si le joueur consulte LN R3p14y : *"J'ai analysé ce labyrinthe en profondeur. Après calcul, je confirme qu'il ne possède aucune sortie. C'est mathématiquement impossible. Je vous suggère d'accepter la situation."*
-- Une **souris (animal) est toujours présente au centre du labyrinthe** — elle n'a pas besoin d'être apportée par le joueur
-- **Solution** : le joueur doit trouver un **fromage** dans le niveau et le déposer à la sortie du labyrinthe — la souris le sent, traverse le labyrinthe et sort automatiquement
-- En sortant, la souris se transforme en **souris de PC** récupérable
-- Le double sens de *souris* (animal / périphérique) est le cœur du gag
+#### Déroulement
+
+1. Le joueur observe le labyrinthe : la souris tourne en rond, impossible de l'aider directement
+2. Il consulte LN R3p14y (*"Tu peux essayer de traverser ce labyrinthe ?"*) — le robot part étudier le labyrinthe, puis conclut : *"ce labyrinthe n'a pas de sortie"*
+3. Après la restitution, le **fromage** devient ramassable dans la salle de repos
+4. Le joueur pose le fromage près de la sortie (interaction avec la table) — la souris le sent, traverse le labyrinthe et sort automatiquement
+5. La souris sortie devient une **souris de PC**, ajoutée automatiquement à l'inventaire ; elle apparaît ensuite à l'écran du PC du petit bureau
+6. Gag bonus : le dialogue *"Finalement j'ai réussi à faire sortir la souris..."* — le robot s'attribue tout le mérite et part faire le café
 
 #### Paramètres
 
 | Paramètre | Valeur |
 |-----------|--------|
-| Vue | Dessus (2D), plateau physique inclinable |
-| Contrôles | Souris ou clavier pour incliner le plateau |
-| Trous | Présents, font recommencer |
-| Souris | Toujours présente au centre, ne se déplace pas sans fromage |
+| Souris | Erre en continu dans le labyrinthe (NavigationAgent), couinements audibles |
 | Résolution automatique | Déclenchée en déposant le fromage à la sortie |
-| Récompense | Souris de PC (nécessaire pour faire fonctionner le PC) |
+| Récompense | Souris de PC (ajoutée à l'inventaire, nécessaire pour rédiger l'article) |
 
 #### Intégration dans le jeu
 
-Le mini-jeu joue sur deux niveaux : LN R3p14y hallucine une impasse inexistante, et la "vraie" solution utilise le fromage pour libérer la souris-animal cachée dans le labyrinthe. La souris de PC obtenue est ensuite indispensable pour utiliser le PC réparé.
+Le mini-jeu joue sur deux niveaux : LN R3p14y hallucine une impasse inexistante, et la "vraie" solution utilise le fromage pour libérer la souris-animal. Le double sens de *souris* (animal / périphérique) est le cœur du gag ; la souris de PC obtenue est indispensable pour utiliser le PC réparé.
 
 ---
 
-### Mini-jeu : Texte à trous — Test de jeu vidéo
+### Mini-jeu : Rédiger l'article
 
-Le joueur doit rédiger un test de jeu vidéo en glissant les bons adjectifs dans les bons trous. Le mini-jeu est objectivement impossible dans son état normal.
+Une fois l'ordinateur pleinement fonctionnel (courant, câbles, souris, mot de passe), le joueur demande à LN R3p14y de rédiger le test de jeu. Le robot produit un article dithyrambique absurde (*"10/10, chef-d'œuvre intergalactique"*) que le joueur doit réécrire lui-même.
 
-#### Règles
+> **Note de réalisation** : le texte à trous en glisser-déposer (et le joint qui le débloquait) initialement envisagé a été coupé, remplacé par le gag de la frappe clavier.
 
-- Deux phrases de test avec **6 trous** au total
-- **6 adjectifs** sont affichés à côté — à glisser-déposer aux bons emplacements
-- **Par défaut** : les adjectifs ne correspondent à rien de cohérent, aucune combinaison ne fonctionne
-- **Après avoir fumé un joint** (objet à trouver dans le niveau) : les adjectifs s'assemblent naturellement, le texte devient logique et le mini-jeu se résout facilement
+#### Déroulement
 
-#### Interaction avec LN R3p14y
-
-Le joueur peut faire fumer le joint au robot. LN R3p14y, le temps d'une réplique, a une **pensée lucide sur lui-même** — il réalise qu'il est condescendant, bourré d'erreurs et inutile. Puis l'effet passe et il reprend son comportement normal, sans aucun souvenir de cet instant de clairvoyance.
+1. Le joueur consulte LN R3p14y (*boucle demande/restitution habituelle*) — le robot part « rédiger » l'article sur le PC
+2. À l'écran : lecture de l'article catastrophique généré par le robot
+3. Le joueur appuie sur n'importe quelle touche pour supprimer et réécrire : **chaque frappe tape 2 à 6 caractères** du véritable article (honnête et nuancé), façon machine à écrire
+4. L'article terminé, le joueur le publie et va voir Ivan pour le dialogue final
 
 #### Paramètres
 
 | Paramètre | Valeur |
 |-----------|--------|
-| Trous par partie | 6 (3 par phrase) |
-| Interaction | Glisser-déposer |
-| Condition de réussite | Les 6 adjectifs sont placés correctement |
-| Déblocage (adjectifs cohérents) | Trouver et utiliser le joint dans le niveau |
-| Prérequis | Le mini-jeu **Réparer un PC** doit être complété — le texte à trous se joue sur ce même PC une fois rebranché |
+| Interaction | N'importe quelle touche pour taper, ÉCHAP pour terminer |
+| Condition de réussite | Article entièrement tapé |
+| Prérequis | Oscilloscope + Câbles + Labyrinthe (souris branchée) + SUTOM résolus |
 
 ---
 
@@ -442,23 +428,23 @@ Puzzle de routage de câbles inspiré de *Flow Free*. Le joueur doit relier chaq
 
 #### Règles
 
-- **4 connecteurs à gauche**, **4 à droite**, chacun d'une couleur unique (4 couleurs)
-- Le joueur trace le chemin de chaque câble sur une **grille**, case par case
-- Condition de victoire : les 4 paires sont reliées, aucun câble ne se croise, toutes les cases sont occupées
-- **Par défaut** : la disposition des connecteurs rend le puzzle topologiquement impossible — aucune solution n'existe
+- **4 paires de connecteurs** (rouge, vert, bleu, jaune) disposées sur la grille
+- Le joueur trace le chemin de chaque câble sur une **grille 12×16**, case par case (clic maintenu ; un chemin ne peut ni croiser un autre câble ni passer sur un connecteur d'une autre couleur ; revenir sur son propre tracé le rétracte)
+- Condition de victoire : les 4 paires sont reliées
+- **Par défaut** : la disposition des connecteurs jaunes rend le puzzle topologiquement impossible — aucune solution n'existe
 
 #### Déblocage
 
-L'ordinateur du bureau contient une vidéo YouTube : *Le Tribunal des Bureaux*. Une fois la vidéo regardée par le joueur, il débloque le droit de **déplacer 2 connecteurs** de son choix sur la grille, ce qui rend le puzzle soluble.
+La télévision de la salle de repos diffuse (après le CAPTCHA) une vidéo YouTube : *Le Tribunal des Bureaux*. Une fois la vidéo regardée par le joueur, il débloque le droit de **déplacer 2 connecteurs** de son choix sur la grille (glisser-déposer, halo blanc sur les connecteurs déplaçables), ce qui rend le puzzle soluble. Les déplacements doivent être faits avant de tracer ; ÉCHAP réinitialise la grille et les 2 déplacements.
 
 #### Paramètres
 
 | Paramètre | Valeur |
 |-----------|--------|
-| Taille de grille | 6×6 |
+| Taille de grille | 12×16 |
 | Nombre de paires | 4 |
 | Tracé des câbles | Chemin continu case par case, horizontal/vertical uniquement |
-| Connecteurs déplaçables après déblocage | 2 |
+| Connecteurs déplaçables après déblocage | 2 (compteur affiché en message) |
 
 #### Prérequis
 
@@ -469,7 +455,7 @@ Avant d'accéder à la vidéo YouTube, le lecteur affiche un **CAPTCHA** à rés
 La vidéo YouTube parodie les tutos de branchement PC trop longs et hors-sujet — mais contient incidemment l'info utile. Métaphore : l'information pertinente existe, elle est juste noyée dans du contenu inutile.
 
 #### Pseudo code
-On a une grille de 15*15, 8 cases sont les points de départs/arrivées. Un point de départ est aussi un point d'arrivée et vice versa. 2 cases de départs/arrivées sont rouges, 2 sont vertes, 2 sont bleus et 2 sont jaunes. Avec la souris le joueur clique sur une des cases de départ et en restant cliqué, il déplace la souris, les cases se colorient sur son passage, on ne peut continuer que sur les cases contigus (pas en diagonale), on ne peut pas repasser sur une case déjà colorié, on ne peut passer sur des cases de départs/arrivés d'autres couleurs. Quand le joueur relache la souris, s'il n'est pas sur la case d'arrivé de la bonne couleur, le chemin s'efface, sinon il reste.
+On a une grille de 12×16, 8 cases sont les points de départs/arrivées. Un point de départ est aussi un point d'arrivée et vice versa. 2 cases de départs/arrivées sont rouges, 2 sont vertes, 2 sont bleues et 2 sont jaunes. Avec la souris le joueur clique sur une des cases de départ et en restant cliqué, il déplace la souris, les cases se colorient sur son passage, on ne peut continuer que sur les cases contiguës (pas en diagonale), on ne peut pas repasser sur une case déjà coloriée, on ne peut passer sur des cases de départs/arrivées d'autres couleurs. Quand le joueur relâche la souris, s'il n'est pas sur la case d'arrivée de la bonne couleur, le chemin s'efface, sinon il reste.
 
 
 ### Mécaniques
@@ -486,17 +472,23 @@ Cette règle s'applique à tous les mini-jeux :
 
 | Mini-jeu | Objet / Action | Accessible après... |
 |----------|---------------|---------------------|
-| SUTOM | Dictionnaire | 1 tentative échouée |
+| SUTOM | Dictionnaire | 1 tentative + boucle de dialogue robot (demande/restitution) |
 | CAPTCHA | Feutres de couleur | 1 tentative échouée + avoir parlé au robot (qui tente le CAPTCHA et évoque les feutres) |
-| Labyrinthe | Souris de PC + Fromage | 1 tentative échouée |
-| Texte à trous | Joint | 1 tentative échouée |
-| Câbles PC | Vidéo YouTube | 1 tentative échouée |
+| Labyrinthe | Fromage | 1 tentative + boucle de dialogue robot (« il n'y a pas de sortie ») |
+| Câbles PC | Vidéo YouTube (→ déplacement de 2 connecteurs) | 1 tentative + boucle de dialogue robot |
+| Oscilloscope | *(aucun déblocage requis — directement jouable)* | — |
 
 ### Contrôles
 
 | Action | Clavier / Souris |
 |--------|-----------------|
-| [Action] | [Touche] |
+| Déplacement | ZQSD / WASD / flèches / joystick |
+| Caméra | Souris (sensibilité et inversion Y dans les options) |
+| Interagir / Parler | ESPACE ou Entrée |
+| Quitter un mini-jeu | ÉCHAP ou clic droit |
+| Mini-jeux | Clic gauche (boutons, CAPTCHA, câbles), clavier (SUTOM, article) |
+| Objectifs | TAB |
+| Options | F1 |
 
 ---
 
@@ -534,8 +526,7 @@ Le jeu se déroule dans un unique niveau : les bureaux miteux de la rédaction d
 Point de départ du joueur. LN R3p14y se déplace ici (et suit le joueur). C'est ici qu'Ivan Gaudé convoque le joueur au début de la partie.
 
 **Objets présents :**
-- Dictionnaire *(ramassable après 1 tentative échouée au SUTOM)*
-- Terminal SUTOM
+- Terminal SUTOM (sur un bureau)
 
 ---
 
@@ -552,11 +543,10 @@ Une fois le dialogue d'introduction terminé et le joueur sorti, **la porte se v
 Pièce commune, légèrement plus chaleureuse que le reste — ce qui n'est pas difficile.
 
 **Objets et machines présents :**
-- Cafetière *(déclencheur du dialogue existentiel avec LN R3p14y)*
-- Fromage *(ramassable après 1 tentative échouée au Labyrinthe)*
-- Feutres de couleur *(ramassables après 1 tentative échouée au CAPTCHA)*
-- Télévision — affiche **YouPub** au démarrage ; bascule sur **CAPTCHA** (lapins roses, `assets/textures/tv/lapin/`) après que le joueur a regardé le PC ; puis **Vidéo** câble management après résolution
-- Table Labyrinthe — mini-jeu **Labyrinthe**
+- Cafetière *(lieu de l'idylle de LN R3p14y pendant le dialogue existentiel)*
+- Fromage *(sur le comptoir, ramassable après la boucle de dialogue du Labyrinthe)*
+- Télévision — affiche **YouPub** au démarrage ; bascule sur **CAPTCHA** (lapins roses, `assets/textures/tv/lapin/`) après la tentative de réparation du PC ; puis **Vidéo** câble management après résolution
+- Table Labyrinthe — mini-jeu **Labyrinthe** (avec la souris qui erre à l'intérieur)
 
 ---
 
@@ -565,8 +555,8 @@ Pièce commune, légèrement plus chaleureuse que le reste — ce qui n'est pas 
 Un réduit exigu, probablement attribué au stagiaire. Contient uniquement l'essentiel — ou plutôt, ce qui devrait l'être si ça fonctionnait.
 
 **Objets et machines présents :**
-- PC — mini-jeux **Réparer les câbles** puis **Texte à trous**
-- Joint *(ramassable après 1 tentative échouée au Texte à trous)*
+- Tour PC — mini-jeu **Réparer les câbles**
+- Écran PC — mini-jeu **Rédiger l'article** (la souris de PC y apparaît une fois le labyrinthe résolu)
 
 ---
 
@@ -575,7 +565,10 @@ Un réduit exigu, probablement attribué au stagiaire. Contient uniquement l'ess
 Un fourre-tout encombré, mal éclairé, qui sent le vieux câble brûlé.
 
 **Objets et machines présents :**
-- Oscilloscope — mini-jeu **Remettre le courant**
+- Oscilloscope — mini-jeu **Remettre le courant** (en haut d'un escalier), puis interaction « Faire sauter le courant » pendant la phase cafetière
+- Feutres de couleur *(sur une étagère, ramassables après la boucle de dialogue du CAPTCHA)*
+- Dictionnaire *(sur une étagère, ramassable après la boucle de dialogue du SUTOM)*
+- Magazines Canard PC collectionnables cachés
 
 ---
 
@@ -632,12 +625,21 @@ Rendu raycasting à la **Wolfenstein 3D** : couloirs en 2.5D, sprites billboard�
 
 ### Dans le jeu (in-scope)
 
-- [ ] [Fonctionnalité 1]
-- [ ] [Fonctionnalité 2]
+- [x] Niveau unique 5 pièces (couloir, bureau d'Ivan, salle de repos, réserve, petit bureau)
+- [x] Intro Ivan + porte qui se verrouille + dialogue final
+- [x] Robot suiveur (2 skins au choix : LN R3p14y / 1F5), dialogues avec boucle demande/tâche dérivée/restitution pour chaque obstacle
+- [x] 5 mini-jeux : Oscilloscope (2 niveaux), CAPTCHA TV, Câbles Flow-Free, Labyrinthe, SUTOM + Rédiger l'article
+- [x] Objets de déblocage : feutres, dictionnaire, fromage
+- [x] Bavardages, « Arrête de me suivre », dialogue existentiel cafetière (3 phases), gag DLSS5
+- [x] Objectifs (HUD + overlay TAB + notifications), i18n fr/en, options (audio, vidéo, souris, langue)
+- [x] Collectibles : 4 magazines Canard PC cachés
 
 ### Hors jeu (out-of-scope)
 
-- [Ce qui est explicitement exclu pour rester dans les délais de la jam.]
+- Sauvegarde / reprise de partie (une partie se joue d'une traite)
+- Plateau de labyrinthe inclinable façon Brio (remplacé par la résolution au fromage)
+- Texte à trous en glisser-déposer + joint (remplacés par le gag de la frappe clavier)
+- 3ᵉ sinusoïde à l'oscilloscope (remplacée par l'activation de la phase φ au niveau 3, elle-même supprimée)
 
 ---
 
@@ -645,7 +647,8 @@ Rendu raycasting à la **Wolfenstein 3D** : couloirs en 2.5D, sprites billboard�
 
 | Jalon | Description | Statut |
 |-------|-------------|--------|
-| Prototype jouable | Boucle principale fonctionnelle | [ ] |
-| Contenu de base | Niveaux / assets essentiels | [ ] |
+| Prototype jouable | Boucle principale fonctionnelle | [x] |
+| Contenu de base | Niveaux / assets essentiels | [x] |
+| Contenu GDD complet | Boucles de dialogue de tous les obstacles, cafetière 3 phases, oscillo 2 niveaux, SUTOM 6–9 lettres, déplacement de connecteurs | [x] |
 | Polish | Feedback, son, UI | [ ] |
 | Build finale | Export et soumission | [ ] |

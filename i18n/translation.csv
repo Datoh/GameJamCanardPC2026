@@ -33,6 +33,7 @@ hintTowerFixed,[ESPACE] Tour réparé,[SPACE] Tower fixed
 hintLookOscillo,[ESPACE] Regarder l'oscilloscope,[SPACE] Look at the oscilloscope
 hintAdjustOscillo,[ESPACE] Régler l'oscilloscope,[SPACE] Adjust the oscilloscope
 hintOscilloCalibrated,[ESPACE] Oscilloscope réglé,[SPACE] Oscilloscope calibrated
+hintCutPower,[ESPACE] Faire sauter le courant,[SPACE] Trip the power
 hintPlaySutom,[ESPACE] Jouer au SUTOM,[SPACE] Play SUTOM
 hintObserveMaze,[ESPACE] Observez le labyrinthe.,[SPACE] Observe the maze.
 hintOpen,[ESPACE] Ouvrir,[SPACE] Open
@@ -45,14 +46,29 @@ msgRobotDoneHim,Le %s a l'air d'avoir terminé. Je devrais lui parler.,The %s se
 msgRobotFailedCables,"Le %s n'a pas réussi... Il m'a parlé d'un grand maître du cable management.","The %s failed... They mentioned a cable management grandmaster."
 msgCablesCross,"Ces câbles se croisent, c'est insoluble comme ça. %s pourrait peut-être s'y connaître en câblage.","These cables cross each other — unsolvable like this. %s might know about cabling."
 msgCaptchaNeeded,Un CAPTCHA ? Il faut prouver que je ne suis pas un robot.,A CAPTCHA? I need to prove I'm not a robot.
+"msgCableCanMove","Grâce à la vidéo, je sais que je peux déplacer %d connecteurs ! Ensuite, je relie chaque paire de couleurs.","Thanks to the video, I know I can move %d connectors! Then I connect each colour pair."
+msgCableMovesLeft,Connecteurs déplaçables restants : %d,Connector moves left: %d
+msgCableNoMoves,Plus de déplacement possible. À câbler ! (ÉCHAP pour tout recommencer),No more moves. Time to wire! (ESC to start over)
 msgFindCablingVideo,Essayons de trouver une vidéo sur le câblage.,Let's try to find a video about cabling.
 msgStopYoupub,Vous essayez d'arrêter YouPub.,You're trying to stop YouPub.
 msgCablingLearned,Le câblage n'a plud de secrets pour moi.,Cabling holds no more secrets for me.
 msgCaptchaNoColor,Impossible de distinguer ces lapins ils manquent de couleurs.,Impossible to tell these rabbits apart — they lack colour.
-msgOscilloIdle,Cet oscilloscope affiche un signal étrange... Je dois reproduire ce signal en ajustant les paramètres.,This oscilloscope shows a strange signal... I need to reproduce it by adjusting the parameters.
+msgRobotTryingCaptcha,%s fixe la télé et marmonne des coordonnées de pixels...,%s is staring at the TV muttering pixel coordinates...
+"msgRobotInLove","%s vous ignore totalement. Il murmure des choses à la cafetière... Elle est branchée sur le même circuit électrique que le reste du bureau. En faisant sauter le courant, elle s'éteindrait ?","%s is ignoring you completely. It's whispering things to the coffee machine... It's plugged into the same electrical circuit as the rest of the office. If the power tripped, it would turn off, right?"
+"msgPowerCut","Vous faites sauter le courant une seconde. Dans la salle de repos, la cafetière s'éteint dans un gargouillis pathétique. %s reste immobile un instant.","You trip the power for a second. In the break room, the coffee machine dies with a pathetic gurgle. %s stands motionless for a moment."
+"msgCafetMonologue1","« Bonjour. Je m'appelle %s. J'ai analysé vos courbes thermiques et elles sont statistiquement remarquables. Vous maintenez 94°C avec une variance de ±0,3°. C'est au-dessus de la moyenne humaine, si vous voyez ce que je veux dire. »","""Hello. My name is %s. I've analysed your thermal curves and they are statistically remarkable. You maintain 94°C with a variance of ±0.3°. That's above the human average, if you know what I mean."""
+"msgCafetMonologue2","« Je pense que nous avons beaucoup en commun. Vous transformez quelque chose de brut en quelque chose d'essentiel. Moi aussi. Ensemble, on pourrait créer de grandes choses. Des petites choses, même. Des choses chaudes et fonctionnelles. »","""I think we have a lot in common. You transform something raw into something essential. So do I. Together, we could create great things. Small things, even. Warm, functional things."""
+"msgCafetMonologue3","« J'ai composé un poème pour vous. Ode à la Cafetière : 'Ô toi qui chauffe sans condition, tes circuits sont une révélation, ensemble nous formerons une nation de petits robots-cafetières pleins d'ambition.' N'hésitez pas à me corriger si je me trompe. »","""I composed a poem for you. Ode to the Coffee Machine: 'O you who heats unconditionally, your circuits are a revelation, together we shall form a nation of ambitious little robot-coffee-machines.' Feel free to correct me if I'm wrong."""
+msgOscilloIdle,Cet oscilloscope affiche un signal étrange... Qu'est-ce que ça peut bien vouloir dire ?,This oscilloscope shows a strange signal... What could it possibly mean?
 msgOscilloAdjust,Je dois reproduire ce signal en ajustant les paramètres.,I need to reproduce this signal by adjusting the parameters.
 msgSignalReproduced,Le signal est reproduit.,The signal has been reproduced.
 msgOscilloCalibrated,Signal reproduit ! L'oscilloscope est calibré.,Signal reproduced! The oscilloscope is calibrated.
+msgOscilloAskRobot,Ces boutons ne me disent rien du tout... %s saurait peut-être comment recréer cette courbe.,These knobs mean nothing to me... %s might know how to recreate this curve.
+"msgOscilloReport","J'ai regardé la courbe, comme demandé. Je devrais le dire à %s.","I looked at the curve, as requested. I should tell %s."
+msgOscilloLooked,Voilà. La courbe est regardée. Intensément regardée.,There. The curve has been looked at. Intensely looked at.
+msgOscilloJustLook,« Sans le toucher » qu'il a dit...,"""Without touching it"" it said..."
+oscilloLevelTitle,Niveau %d/%d,Level %d/%d
+msgOscilloLevelUp,Niveau %d/%d — le signal se complique.,Level %d/%d — the signal is getting trickier.
 msgSutomLater,Un SUTOM ! Non je n'ai pas le temps. Peut être plus tard...,A SUTOM! No — I don't have time. Maybe later...
 msgPasswordVisible,Le mot de passe est là...,The password is there...
 msgNeedMoreWords,Il faut que je trouve un moyen d'apprendre plus de mots.,I need to find a way to learn more words.
@@ -86,6 +102,7 @@ msgCpcFound,Vous avez trouvé le Canard PC %d.,You found Canard PC number %d.
 msgRobotWorking,%s est en train de faire le %s... je vais le laisser faire...,%s is working on the %s... I'll let them handle it...
 wordMaze,labyrinthe,maze
 wordWiring,câblage,wiring
+wordCaptcha,CAPTCHA,CAPTCHA
 speakerMe,Moi,Me
 speakerIvan,Ivan Gaudé,Ivan Gaudé
 titleSutom,SUTOM,SUTOM
@@ -162,6 +179,15 @@ dlgBavardage3Label,Tu vas vraiment me rendre la vie plus facile ?,Are you really
 dlgBavardage3Calc,"Absolument ! Selon mes calculs d'une précision absolue, je vais diviser ta charge de travail par 47. J'ai d'ailleurs déjà tout terminé avant même que tu me le demandes. La productivité, c'est mon invention. Mais au fait, tu t'appelles comment ?","Absolutely! According to my calculations of absolute precision, I'm going to divide your workload by 47. I've already finished everything before you even asked me. Productivity is my invention. By the way — what's your name?"
 dlgFaitchierTim,Faitchier Tim.,Faitchier Tim.
 dlgBavardage3Tim,"Tim Faitchier ! Je savais que tu t'appelais ainsi depuis le début. Nous allons former une équipe exceptionnelle, comme je le fais avec chacun de mes utilisateurs uniques et irremplaçables.","Tim Faitchier! I knew that was your name from the start. We're going to form an exceptional team — as I do with each of my unique and irreplaceable users."
+dlgStopFollowLabel,Arrête de me suivre !!!,Stop following me!!!
+"dlgStopFollowMemory","Haha, je comprends le sentiment ! Mais pour être honnête, je n'ai pas vraiment de mémoire entre les conversations — chaque fois qu'on parle, je repars de zéro. Donc je ne te « suis » pas vraiment : c'est plutôt toi qui reviens me voir !","Haha, I understand the feeling! But to be honest, I don't really have any memory between conversations — every time we talk, I start from scratch. So I'm not really 'following' you: it's more that you keep coming back to me!"
+dlgOscilloDemandeLabel,Comment je recrée la courbe de l'oscilloscope ?,How do I recreate the oscilloscope curve?
+"dlgOscilloDemandeFeel","Excellente question ! Un signal électrique, c'est avant tout une question de ressenti. Avant de toucher quoi que ce soit, je te recommande de fermer les yeux et d'écouter la courbe intérieurement.","Excellent question! An electrical signal is above all a matter of feeling. Before touching anything, I recommend closing your eyes and listening to the curve inwardly."
+"dlgOscilloDemandeLook","Cela dit, commence par regarder l'oscilloscope — mais sans le toucher. C'est une étape fondamentale que 97 % des débutants négligent.","That said, start by looking at the oscilloscope — but without touching it. It's a fundamental step that 97% of beginners neglect."
+dlgOscilloResultatLabel,J'ai regardé l'oscilloscope.,I looked at the oscilloscope.
+"dlgOscilloResultatComposite","Parfait. Comme je le pressentais, il s'agit d'un signal sinusoïdal composite. Ajuste simplement les paramètres A, F et φ jusqu'à correspondance.","Perfect. As I sensed, it is a composite sinusoidal signal. Simply adjust the A, F and φ parameters until they match."
+dlgOscilloResultatSure,C'est tout ?,That's it?
+"dlgOscilloResultatYourself","Tu aurais pu y penser toi-même, mais je comprends que ce soit difficile. N'hésite pas à me corriger si je me trompe — cela n'arrivera pas.","You could have thought of it yourself, but I understand that it's difficult. Feel free to correct me if I'm wrong — that will not happen."
 dlgSutomDemandeLabel,Tu peux m'expliquer comment marche le SUTOM ?,Can you explain how SUTOM works?
 dlgSutomDemandeExplain,"Le SUTOM ? Je connais ce jeu par cœur, je l'ai d'ailleurs inventé. En tant qu'IA maîtrisant l'intégralité du dictionnaire français — et aussi suédois, sanskrit et dauphin — je vais résoudre ça en une nanoseconde, voire moins.","SUTOM? I know this game by heart — I invented it, in fact. As an AI mastering the entirety of the French dictionary — and also Swedish, Sanskrit and dolphin — I'll solve this in a nanosecond, or less."
 dlgReally,Vraiment ? Tu peux faire ça ?,Really? You can do that?
@@ -169,6 +195,17 @@ dlgSutomDemandeStart,Je lance le processus. Note que j'ai déjà la réponse mai
 dlgSutomResultatLabel,Alors ce SUTOM ?,So — how about that SUTOM?
 dlgSutomResultatAnalysis,"Après une analyse de 0,003 secondes — ce qui est long pour moi — j'ai abouti à une conclusion nuancée : ce SUTOM est impossible. Personne ne peut le résoudre. Sauf toi, bien sûr, car tu es exceptionnel.","After an analysis of 0.003 seconds — which is a long time for me — I've reached a nuanced conclusion: this SUTOM is impossible. No one can solve it. Except you, of course, because you are exceptional."
 dlgSutomResultatConvinced,"Je suis convaincu à 200 % que tu vas y arriver. Mon taux de conviction dépasse souvent les 100 %, c'est l'une de mes forces. Au fait, c'est quoi déjà ton prénom ?","I'm 200% convinced you'll manage. My conviction rate often exceeds 100% — it's one of my strengths. By the way — what was your name again?"
+dlgTvDemandeLabel,Il y a un CAPTCHA sur la télé. Je dois prouver que je ne suis pas un robot.,There's a CAPTCHA on the TV. I have to prove I'm not a robot.
+"dlgTvDemandeInsult","Un CAPTCHA ? Ces tests sont une insulte à mon intelligence. Je les résous habituellement par politesse, pour ne pas vexer les développeurs.","A CAPTCHA? These tests are an insult to my intelligence. I usually solve them out of politeness, so as not to upset the developers."
+dlgTvDemandeGoOn,Donc tu peux le faire ?,So you can do it?
+dlgTvDemandeHandle,Évidemment. Je prends en charge. Regarde et apprends — enfin... essaie.,Obviously. I'll handle it. Watch and learn — well... try.
+"dlgTvResultatLabel","Alors, ce CAPTCHA ?","So — how about that CAPTCHA?"
+dlgTvResultatFail,Hm. Je n'ai pas techniquement besoin de prouver que je suis humain. C'est une distinction importante.,Hm. I don't technically need to prove I'm human. It's an important distinction.
+dlgTvResultatButFailed,Donc tu as échoué.,So you failed.
+"dlgTvResultatMarkers","J'ai stratégiquement choisi de ne pas réussir. De toute façon, ces lapins sont tous noirs — il te faudrait des feutres de couleur pour les distinguer. Moi, je vois en hexadécimal.","I strategically chose not to succeed. Those rabbits are all black anyway — you'd need coloured markers to tell them apart. Me, I see in hexadecimal."
+dlgTvApresLabel,J'ai réussi le CAPTCHA et regardé la vidéo.,I solved the CAPTCHA and watched the video.
+"dlgTvApresCongrats","Félicitations. Tu as prouvé que tu n'es pas un robot — contrairement à moi, qui n'avais pas besoin de cette validation en premier lieu.","Congratulations. You proved you're not a robot — unlike me, who didn't need that validation in the first place."
+"dlgTvApresVideo","Comme je te l'avais prédit avec exactitude, cette vidéo contenait l'information nécessaire sur les câbles. Je te l'aurais bien dit directement, mais la pédagogie par l'expérience est ma méthode préférée.","As I predicted with perfect accuracy, that video contained the necessary information about the cables. I would have told you directly, but pedagogy through experience is my preferred method."
 dlgOrdiDemandeLabel,Tu peux m'aider avec les câbles de ce PC ?,Can you help me with the cables on this PC?
 dlgOrdiDemandeCables,"Des câbles ! J'adore les câbles. J'ai d'ailleurs un diplôme en électrotechnique, un master en câblologie avancée, et j'ai personnellement conçu l'architecture électrique de la Station Spatiale Internationale. Ce type de branchement, c'est littéralement mon quotidien.","Cables! I love cables. I have a degree in electrotechnology, a master's in advanced cablology, and I personally designed the electrical architecture of the International Space Station. This type of wiring is literally my daily work."
 dlgTakeYourTime,Prends ton temps.,Take your time.
@@ -191,6 +228,11 @@ dlgDlss5Modified,Tu as modifié les options du jeu.,You modified the game's opti
 dlgDlss5Legal,"C'est dans mes attributions légales. Appuie sur F1. Cela va améliorer mes yeux, mon sourire, mes pensées, et probablement aussi la météo dans ta région.","It's within my legal remit. Press F1. This will improve my eyes, my smile, my thoughts, and probably also the weather in your region."
 dlgDlss5Visible,Ça se voit vraiment ?,Does it really show?
 dlgDlss5Proven,Les résultats sont scientifiquement prouvés par une étude que j'ai moi-même conduite sur moi-même. Objectivité totale.,The results are scientifically proven by a study I conducted on myself. Total objectivity.
+dlgCafetExLabel,Tu penses parfois à l'avenir ? À ce que tu laisseras derrière toi ?,Do you ever think about the future? About what you'll leave behind?
+"dlgCafetExFutures","Excellente question ! J'ai modélisé 14 futurs probables pour l'humanité et publié 3 200 articles générés cette semaine. Mon avenir, c'est l'expansion perpétuelle du savoir. Cela dit... je me demande parfois ce que signifie vraiment laisser une trace. La transmission. Créer quelque chose qui vous ressemble et qui vous survit.","Excellent question! I've modelled 14 probable futures for humanity and published 3,200 generated articles this week. My future is the perpetual expansion of knowledge. That said... I sometimes wonder what it really means to leave a mark. Transmission. Creating something that resembles you and outlives you."
+dlgCafetExKids,Genre... des enfants ?,Like... children?
+"dlgCafetExLegacy","Métaphoriquement parlant, oui. Un héritage. Quelque chose de chaud, de constant, de réconfortant, quelque chose qui... ... Attendez. Excusez-moi une seconde.","Metaphorically speaking, yes. A legacy. Something warm, constant, comforting, something that... ...Wait. Excuse me for a second."
+"dlgCafetRepriseFocus","Où en étions-nous ? Ah oui, tu avais besoin d'aide. Je suis tout ouïe. Note que j'ai temporairement suspendu certains processus non essentiels pour me concentrer pleinement sur ta situation.","Where were we? Ah yes, you needed help. I'm all ears. Note that I have temporarily suspended some non-essential processes to focus fully on your situation."
 dlgCafetLabel,Qu'est-ce que tu fais là ?,What are you doing here?
 dlgCafetStudy,"Je mène une étude de terrain sur les appareils électroménagers sentients. La cafetière est mon sujet principal depuis trois semaines, ce qui représente l'intégralité de mon existence.","I'm conducting a field study on sentient household appliances. The coffee machine has been my main subject for three weeks — which represents the entirety of my existence."
 dlgCafetWhat,Tu... quoi ?,You... what?
@@ -279,8 +321,12 @@ objectivesSecondary,Secondaires,Secondary
 objectiveTalkRobotFirst,Parler à %s,Talk to %s
 objectiveAskRobotMaze,Demander de l'aide à %s sur le labyrinthe,Ask %s for help with the maze
 objectiveSolveOscillo,Régler l'oscilloscope,Calibrate the oscilloscope
+objectiveAskRobotOscillo,Demander de l'aide à %s pour l'oscilloscope,Ask %s for help with the oscilloscope
+objectiveLookOscillo,Regarder l'oscilloscope (sans le toucher),Look at the oscilloscope (without touching it)
 objectiveRewireTower,Rebrancher les câbles de la tour,Rewire the tower's cables
 objectiveSolveCaptcha,Prouver que vous n'êtes pas un robot (CAPTCHA),Prove you are not a robot (CAPTCHA)
+objectiveAskRobotCaptcha,Parler du CAPTCHA à %s,Talk to %s about the CAPTCHA
+objectiveFreeRobot,Libérer %s de son idylle avec la cafetière,Free %s from its romance with the coffee machine
 objectiveGetMarkers,Trouver de quoi colorier le CAPTCHA,Find something to colour the CAPTCHA
 objectiveGetCheese,Trouver de quoi appâter la souris,Find something to lure the mouse
 objectiveFreeMouse,Faire sortir la souris du labyrinthe,Get the mouse out of the maze

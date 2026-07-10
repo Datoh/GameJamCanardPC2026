@@ -15,13 +15,6 @@ const PANEL_COL := Color(0.08, 0.11, 0.08)
 const GRID_COL  := Color(0.10, 0.18, 0.10)
 const TEXT_COL  := Color(0.72, 0.90, 0.72)
 
-const TGT_1_A := 5
-const TGT_1_F := 3
-const TGT_1_P := 0
-const TGT_2_A := 2
-const TGT_2_F := 9
-const TGT_2_P := 0
-
 const GRAPH_H := 84
 const GRAPH_Y0 := 20
 const GRAPH_Y1 := GRAPH_Y0 + GRAPH_H + 8
@@ -29,6 +22,10 @@ const GRAPH_Y1 := GRAPH_Y0 + GRAPH_H + 8
 var amplitudes:  Array[int] = [0, 0]
 var frequencies: Array[int] = [1, 1]
 var phases:      Array[int] = [0, 0]
+
+var targets:     Array  = [[5, 3, 0], [2, 9, 0]]
+var curve_count: int    = 2
+var title:       String = ""
 
 
 func _ready() -> void:
@@ -39,11 +36,14 @@ func _sinusoid(a: int, f: int, p: int, x: float) -> float:
   return a * sin(f * x + p * PI / 10.0)
 
 func _target_at(x: float) -> float:
-  return _sinusoid(TGT_1_A, TGT_1_F, TGT_1_P, x) + _sinusoid(TGT_2_A, TGT_2_F, TGT_2_P, x)
+  var total := 0.0
+  for tgt in targets:
+    total += _sinusoid(tgt[0], tgt[1], tgt[2], x)
+  return total
 
 func _player_at(x: float) -> float:
   var t := 0.0
-  for i in 2:
+  for i in curve_count:
     t += _sinusoid(amplitudes[i], frequencies[i], phases[i], x)
   return t
 
@@ -86,7 +86,8 @@ func _draw_graph_bg(r: Rect2) -> void:
 func _draw() -> void:
   var font := ThemeDB.fallback_font
   draw_rect(Rect2(Vector2.ZERO, size), BG_COL)
-  draw_string(font, Vector2(0, 14), "Différentiel", HORIZONTAL_ALIGNMENT_CENTER, VP_W, 13, TEXT_COL)
+  var header := title if not title.is_empty() else "Différentiel"
+  draw_string(font, Vector2(0, 14), header, HORIZONTAL_ALIGNMENT_CENTER, VP_W, 13, TEXT_COL)
 
   var r0 := Rect2(4, GRAPH_Y0, VP_W - 8, GRAPH_H)
   _draw_graph_bg(r0)
@@ -94,6 +95,6 @@ func _draw() -> void:
 
   var r1 := Rect2(4, GRAPH_Y1, VP_W - 8, GRAPH_H)
   _draw_graph_bg(r1)
-  for i in 2:
+  for i in curve_count:
     draw_polyline(_build_pts_curve(i, r1), CURVE_COLORS[i], 1.0, true)
   draw_polyline(_build_pts(_player_at, r1), Color.WHITE, 2.0, true)

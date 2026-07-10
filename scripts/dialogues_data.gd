@@ -87,6 +87,44 @@ static func get_dialogues() -> Array[Dictionary]:
       ],
     },
     {
+      "id":       "robot_stop_following",
+      "label":    "dlgStopFollowLabel",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {"robot": "dlgStopFollowMemory"},
+      ],
+    },
+    {
+      "id":       "oscillo_demande",
+      "label":    "dlgOscilloDemandeLabel",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgOscilloDemandeFeel",
+          "player": "dlgEllipsis",
+        },
+        {"robot": "dlgOscilloDemandeLook"},
+      ],
+    },
+    {
+      "id":       "oscillo_resultat",
+      "label":    "dlgOscilloResultatLabel",
+      "requires": "oscillo_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgOscilloResultatComposite",
+          "player": "dlgOscilloResultatSure",
+        },
+        {"robot": "dlgOscilloResultatYourself"},
+      ],
+    },
+    {
       "id":       "sutom_demande",
       "label":    "dlgSutomDemandeLabel",
       "requires": "",
@@ -112,6 +150,48 @@ static func get_dialogues() -> Array[Dictionary]:
           "player": "dlgEllipsis",
         },
         {"robot": "dlgSutomResultatConvinced"},
+      ],
+    },
+    {
+      "id":       "tv_demande",
+      "label":    "dlgTvDemandeLabel",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgTvDemandeInsult",
+          "player": "dlgTvDemandeGoOn",
+        },
+        {"robot": "dlgTvDemandeHandle"},
+      ],
+    },
+    {
+      "id":       "tv_resultat",
+      "label":    "dlgTvResultatLabel",
+      "requires": "tv_demande",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgTvResultatFail",
+          "player": "dlgTvResultatButFailed",
+        },
+        {"robot": "dlgTvResultatMarkers"},
+      ],
+    },
+    {
+      "id":       "tv_apres",
+      "label":    "dlgTvApresLabel",
+      "requires": "tv_resultat",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgTvApresCongrats",
+          "player": "dlgEllipsis",
+        },
+        {"robot": "dlgTvApresVideo"},
       ],
     },
     {
@@ -178,6 +258,28 @@ static func get_dialogues() -> Array[Dictionary]:
         {
           "robot":  "dlgDlss5Proven",
         },
+      ],
+    },
+    {
+      "id":       "cafetiere_existentiel",
+      "label":    "dlgCafetExLabel",
+      "requires": "",
+      "once":     true,
+      "unlocks":  "",
+      "exchanges": [
+        {
+          "robot":  "dlgCafetExFutures",
+          "player": "dlgCafetExKids",
+        },
+        {"robot": "dlgCafetExLegacy"},
+      ],
+    },
+    {
+      "id":     "cafetiere_reprise",
+      "hidden": true,
+      "once":   true,
+      "exchanges": [
+        {"robot": "dlgCafetRepriseFocus"},
       ],
     },
     {
