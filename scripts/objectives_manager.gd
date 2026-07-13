@@ -3,6 +3,20 @@ extends Node
 
 ## Centralise toutes les règles d'objectifs : écoute les signaux génériques
 ## (GameData, Player) et décide quand ajouter ou terminer un objectif.
+##
+## Dépendances entre obstacles (détail et phrases joueur : voir GDD.md,
+## section "Dépendances entre tâches") :
+## - Labyrinthe, Oscilloscope, Câbles PC (Ordinateur) et les collectibles
+##   Canard PC sont libres, sans prérequis.
+## - CAPTCHA (TV) nécessite que les Câbles aient au moins été tentés
+##   (voir MachineTV._can_try() dans tv_machine.gd).
+## - SUTOM nécessite Oscilloscope ET Câbles PC résolus
+##   (voir MachineSutom._can_try() dans sutom_machine.gd).
+## - Rédiger l'article (ScreenMachine) nécessite Labyrinthe + Oscilloscope +
+##   Câbles + CAPTCHA + SUTOM résolus, plus la souris de PC branchée
+##   (voir ScreenMachine._is_fully_repaired() dans screen_machine.gd).
+## - La cafetière (dialogue existentiel) n'est disponible qu'une fois
+##   l'Oscilloscope résolu (voir MachineOscillo.is_dialogue_locked()).
 
 @onready var _player: CharacterBody3D = %Player
 

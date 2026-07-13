@@ -215,11 +215,21 @@ Pendant la phase 2, l'oscilloscope résolu propose une nouvelle interaction : **
 Certains obstacles ne peuvent être surmontés qu'après d'autres. Les obstacles *Oscilloscope* et *Labyrinthe* sont libres.
 
 ```
-Oscilloscope (courant) ──────────────────────────────┐
-                                                      ├──► SUTOM (mot de passe) ──┐
-CAPTCHA → Vidéo YouTube → Réparation câbles ──────────┘                          │
-                                                                                   ├──► Rédiger l'article
-Labyrinthe → Souris de PC ──────────────────────────────────────────────────────────┘
+Ivan (intro)
+│
+├─ Labyrinthe                                   [libre]
+├─ Oscilloscope                                 [libre]
+│   └─ Cafetière (dialogue existentiel)         [nécessite : Oscilloscope résolu]
+├─ Câbles PC (Tour)                             [libre]
+│   └─ CAPTCHA TV → Vidéo YouTube               [nécessite : Câbles au moins tentés]
+│       └─ Déplacement de 2 connecteurs jaunes  [nécessite : vidéo visionnée]
+├─ SUTOM                                        [nécessite : Oscilloscope + Câbles résolus]
+├─ Collectibles (4 Canard PC cachés)            [libre, indépendant]
+│
+└─ Rédiger l'article                            [nécessite : Labyrinthe + Oscilloscope
+                                                   + Câbles + CAPTCHA + SUTOM résolus,
+                                                   souris de PC branchée]
+    └─ Ivan (dialogue final)                     [nécessite : article écrit]
 ```
 
 | Contrainte | Raison |
@@ -230,9 +240,38 @@ Labyrinthe → Souris de PC ─────────────────�
 | CAPTCHA avant la vidéo | La vidéo *Le Tribunal des Bureaux* ne se lance qu'une fois le CAPTCHA résolu |
 | Vidéo avant réparation des câbles | La vidéo *Le Tribunal des Bureaux* débloque le déplacement de 2 connecteurs, sans quoi le puzzle est insoluble |
 | Labyrinthe résolu avant la souris | La souris de PC apparaît à l'écran une fois libérée du labyrinthe |
+| Oscilloscope avant la cafetière | Le dialogue existentiel de LN R3p14y avec la cafetière n'est disponible qu'une fois le courant remis |
 | Tous les obstacles résolus avant l'article | L'ordinateur doit être pleinement fonctionnel pour rédiger l'article |
 
-**Obstacles sans prérequis** : Oscilloscope, Labyrinthe
+**Obstacles sans prérequis** : Oscilloscope, Labyrinthe, Câbles PC, Collectibles Canard PC
+
+#### Objectifs joueur et phrases affichées
+
+Chaque objectif ci-dessous correspond soit à un objectif HUD suivi par
+`GameData`/`ObjectivesManager` (affiché dans l'overlay TAB), soit à une étape
+de dialogue/interaction. La colonne « Phrase affichée » reprend le texte
+français exact de `i18n/translation.csv`.
+
+| Objectif | Prérequis | Phrase affichée au joueur |
+|----------|-----------|----------------------------|
+| Parler à Ivan (intro) | Aucun | *"Parler à Ivan"* |
+| Parler à LN R3p14y pour la première fois | Après l'intro | *"Parler à LN R3p14y"* |
+| Demander de l'aide à LN R3p14y sur le labyrinthe | Aucun | *"Demander de l'aide à LN R3p14y sur le labyrinthe"* |
+| Trouver de quoi appâter la souris | Aucun | *"Trouver de quoi appâter la souris"* |
+| Faire sortir la souris du labyrinthe | Fromage trouvé | *"Faire sortir la souris du labyrinthe"* |
+| Demander de l'aide à LN R3p14y pour l'oscilloscope *(optionnel)* | Aucun | *"Demander de l'aide à LN R3p14y pour l'oscilloscope"* |
+| Regarder l'oscilloscope, sans le toucher *(optionnel)* | Dialogue précédent joué | *"Regarder l'oscilloscope (sans le toucher)"* |
+| Régler l'oscilloscope | Aucun *(libre, jouable direct)* | *"Régler l'oscilloscope"* |
+| Rebrancher les câbles de la tour | Aucun | *"Rebrancher les câbles de la tour"* |
+| Parler du CAPTCHA à LN R3p14y | Câbles au moins tentés | *"Parler du CAPTCHA à LN R3p14y"* |
+| Trouver de quoi colorier le CAPTCHA | Après la boucle de dialogue du CAPTCHA | *"Trouver de quoi colorier le CAPTCHA"* |
+| Prouver que vous n'êtes pas un robot (CAPTCHA) | Câbles au moins tentés | *"Prouver que vous n'êtes pas un robot (CAPTCHA)"* |
+| Apprendre plus de mots pour le SUTOM | Oscilloscope + Câbles résolus | *"Apprendre plus de mots pour le SUTOM"* |
+| Trouver le mot de passe (SUTOM) | Oscilloscope + Câbles résolus | *"Trouver le mot de passe (SUTOM)"* |
+| Libérer LN R3p14y de son idylle avec la cafetière | Oscilloscope résolu | *"Libérer LN R3p14y de son idylle avec la cafetière"* |
+| Trouver tous les Canard PC (X/total) | Aucun | *"Trouver tous les Canard PC (X/total)"* |
+| Écrire un article avec le PC du petit bureau | Labyrinthe + Oscilloscope + Câbles + CAPTCHA + SUTOM résolus, souris de PC branchée | *"Écrire un article avec le PC du petit bureau"* |
+| Retourner parler à Ivan (fin de partie) | Article écrit | *"Parler à Ivan"* *(dialogue final `ivan_final`)* |
 
 ---
 
