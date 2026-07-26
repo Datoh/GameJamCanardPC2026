@@ -27,7 +27,6 @@ const ENDPOINTS_OK = {
 var endpoints:    Dictionary = {}
 var chemins:      Dictionary = {}
 
-var peut_deplacer:  bool = false
 var depl_restants:  int  = 2
 
 var _en_dessin:   bool   = false
@@ -60,9 +59,9 @@ func _ready() -> void:
   robot_work_duration = 15.0
   message_idle               = tr("msgCablesIdle")
   message_solved             = tr("msgTowerRewired")
-  hint_default     = tr("hintLookTower")
-  hint_try_machine = tr("hintRewireCables")
-  hint_solved      = tr("hintTowerFixed")
+  hint_default     = "hintLookTower"
+  hint_try_machine = "hintRewireCables"
+  hint_solved      = "hintTowerFixed"
   input_ray_pickable = true
   input_event.connect(_on_circuit_input)
   _setup_viewport()
@@ -189,9 +188,10 @@ func _on_return_done() -> void:
 # ── Logique jeu câbles ────────────────────────────────────────────────────────
 
 func _reinitialiser() -> void:
+  var endpoints_src := ENDPOINTS_OK if GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED else ENDPOINTS_KO
   endpoints = {}
   for c in CableGrid.NOMS:
-    var src: Array = ENDPOINTS_KO[c]
+    var src: Array = endpoints_src[c]
     endpoints[c] = [src[0], src[1]]
   chemins = {}
   for c in CableGrid.NOMS:
@@ -201,7 +201,6 @@ func _reinitialiser() -> void:
   _crt         = []
   _drag_ep     = null
   depl_restants = 2
-  peut_deplacer = GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED
   _grid_update()
 
 
@@ -215,7 +214,6 @@ func _grid_update() -> void:
   _grid.crt           = _crt
   _grid.drag_ep       = _drag_ep
   _grid.drag_pos      = _drag_pos
-  _grid.peut_deplacer = peut_deplacer
   _grid.depl_restants = depl_restants
   _grid.queue_redraw()
 
@@ -330,11 +328,6 @@ func _sur_press(sv: Vector2) -> void:
   var ep := _ep_sur(cell)
   if ep.is_empty():
     return
-  if peut_deplacer and depl_restants > 0:
-    _drag_ep  = ep
-    _drag_pos = sv
-    _grid_update()
-    return
   _commencer(ep["couleur"], cell)
 
 
@@ -448,7 +441,7 @@ func _on_victoire() -> void:
 func _demarrer_jeu() -> void:
   GameData.minigame_name = NAME
   _reinitialiser()
-  if peut_deplacer:
+  if GameData.state(MachineTV.NAME) >= Machine.StateMachine.UNLOCKED:
     GameData.show_message(tr("msgCableCanMove") % depl_restants, 4.0)
   _transition_to_pc(GameData.player.camera)
 

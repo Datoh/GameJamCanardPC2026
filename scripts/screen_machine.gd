@@ -22,7 +22,9 @@ var _cam_end_pos     := Vector3.ZERO
 var _cam_end_basis   := Basis.IDENTITY
 
 # ── Mini-jeu article ──────────────────────────────────────────────────────────
-var _jeu_actif:     bool = false
+var _jeu_actif:               bool = false
+var _pc_issues_signaled:      bool = false
+var _password_unknown_signaled: bool = false
 var _article_phase: int  = 0   # 0 = lecture mauvais, 1 = frappe, 2 = terminé
 var _typed_count:   int  = 0
 var _article_layer: CanvasLayer     = null
@@ -39,6 +41,7 @@ func _ready() -> void:
   dialogue_demande    = "article_demande"
   dialogue_resultat   = "article_resultat"
   robot_work_duration = 6.0
+  hint_default        = "hintUsePC"
   _black_mat = StandardMaterial3D.new()
   _black_mat.albedo_color = Color.BLACK
   _black_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -86,6 +89,9 @@ func interact() -> void:
 
   if not oscillo_solved and not pc_solved:
     GameData.show_message(tr("msgScreenNoPowerBoth"), 3.0)
+    if not _pc_issues_signaled:
+      _pc_issues_signaled = true
+      GameData.notify_pc_issues_found()
     return
   elif not oscillo_solved:
     GameData.show_message(tr("msgScreenNoPower"), 3.0)
@@ -102,6 +108,9 @@ func interact() -> void:
     return
   elif not sutom_solved:
     GameData.show_message(tr("msgPasswordUnknown"), 3.0)
+    if not _password_unknown_signaled:
+      _password_unknown_signaled = true
+      GameData.notify_password_unknown_found()
     return
 
   var screen_state := GameData.state(NAME)

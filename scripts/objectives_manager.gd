@@ -17,6 +17,7 @@ extends Node
 ##   (voir ScreenMachine._is_fully_repaired() dans screen_machine.gd).
 ## - La cafetière (dialogue existentiel) n'est disponible qu'une fois
 ##   l'Oscilloscope résolu (voir MachineOscillo.is_dialogue_locked()).
+## - L'Oscilloscope est directement jouable sans passer par le robot.
 
 @onready var _player: CharacterBody3D = %Player
 
@@ -24,6 +25,9 @@ extends Node
 func _ready() -> void:
   GameData.intro_completed.connect(_on_intro_completed)
   GameData.machine_state_changed.connect(_on_machine_state_changed)
+  GameData.pc_issues_found.connect(_on_pc_issues_found)
+  GameData.password_unknown_found.connect(_on_password_unknown_found)
+  GameData.minigame_closed.connect(_on_minigame_closed)
   _player.dialogue_side_effect.connect(_on_dialogue_side_effect)
   _player.object_picked.connect(_on_object_picked)
   _player.cpc_collected_changed.connect(_on_cpc_collected)
@@ -44,22 +48,39 @@ func _on_game_finished() -> void:
   GameData.complete_objective("objectiveTalkIvan")
 
 
+func _on_pc_issues_found() -> void:
+  _add_objective_once("objectiveFixDifferential")
+  _add_objective_once("objectiveRewireTower")
+
+
+func _on_password_unknown_found() -> void:
+  _add_objective_once("objectiveSolveSutom")
+
+
+func _on_minigame_closed(machine_name: String) -> void:
+  match machine_name:
+    MachineOrdinateur.NAME:
+      _add_objective_once("objectiveAskRobotOrdinateur", [DialoguesData.robot_name])
+    MachineTV.NAME:
+      _add_objective_once("objectiveAskRobotCaptcha", [DialoguesData.robot_name])
+
+
 func _on_dialogue_side_effect(dialogue_id: String) -> void:
   if dialogue_id != "ivan_final":
     GameData.complete_objective("objectiveTalkRobotFirst")
-  if dialogue_id == "labyrinthe_demande":
+  if dialogue_id == "labyrinthe_resultat":
     GameData.complete_objective("objectiveAskRobotMaze")
-  if dialogue_id == "oscillo_demande":
-    GameData.complete_objective("objectiveAskRobotOscillo")
-    _add_objective_once("objectiveLookOscillo")
-  if dialogue_id == "tv_demande":
+  if dialogue_id == "ordinateur_resultat":
+    GameData.complete_objective("objectiveAskRobotOrdinateur")
+    _add_objective_once("objectiveSolveCaptcha")
+  if dialogue_id == "tv_resultat":
     GameData.complete_objective("objectiveAskRobotCaptcha")
+  if dialogue_id == "article_resultat":
+    GameData.complete_objective("objectiveAskRobotArticle")
   if dialogue_id == "cafetiere_existentiel":
     _add_objective_once("objectiveFreeRobot", [DialoguesData.robot_name])
   if dialogue_id == "cafetiere_reprise":
     GameData.complete_objective("objectiveFreeRobot")
-  if dialogue_id == "oscillo_resultat":
-    _add_objective_once("objectiveSolveOscillo")
 
 
 func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine) -> void:
@@ -69,18 +90,11 @@ func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine
         MachineMaze.NAME:
           _add_objective_once("objectiveAskRobotMaze", [DialoguesData.robot_name])
         MachineOscillo.NAME:
-          _add_objective_once("objectiveAskRobotOscillo", [DialoguesData.robot_name])
+          _add_objective_once("objectiveFixDifferential")
         MachineOrdinateur.NAME:
           _add_objective_once("objectiveRewireTower")
-        MachineTV.NAME:
-          _add_objective_once("objectiveSolveCaptcha")
-          _add_objective_once("objectiveAskRobotCaptcha", [DialoguesData.robot_name])
-        MachineSutom.NAME:
-          _add_objective_once("objectiveSolveSutom")
-    Machine.StateMachine.ROBOT_DONE:
-      match machine_name:
-        MachineOscillo.NAME:
-          GameData.complete_objective("objectiveLookOscillo")
+        ScreenMachine.NAME:
+          _add_objective_once("objectiveAskRobotArticle", [DialoguesData.robot_name])
     Machine.StateMachine.TRY_MACHINE_OBJECT:
       match machine_name:
         MachineMaze.NAME:
@@ -94,7 +108,7 @@ func _on_machine_state_changed(machine_name: String, state: Machine.StateMachine
     Machine.StateMachine.SOLVED:
       match machine_name:
         MachineOscillo.NAME:
-          GameData.complete_objective("objectiveSolveOscillo")
+          GameData.complete_objective("objectiveFixDifferential")
         MachineOrdinateur.NAME:
           GameData.complete_objective("objectiveRewireTower")
         MachineTV.NAME:

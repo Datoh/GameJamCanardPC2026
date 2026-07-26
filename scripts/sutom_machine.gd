@@ -60,7 +60,7 @@ func _ready() -> void:
   message_try_machine_ok = tr("msgDictionaryHelps")
   message_waiting_unlocked = tr("msgGotPassword")
   message_solved = tr("msgSutomAlreadySolved")
-  hint_default = tr("hintPlaySutom")
+  hint_default = "hintPlaySutom"
   _setup_overhead_camera()
   _setup_journal_surface()
 

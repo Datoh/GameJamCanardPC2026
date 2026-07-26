@@ -63,8 +63,8 @@ func _ready() -> void:
   machine_name        = NAME
   message_idle        = tr("msgOscilloIdle")
   message_solved      = tr("msgSignalReproduced")
-  hint_default        = tr("hintLookOscillo")
-  hint_solved         = tr("hintOscilloCalibrated")
+  hint_default        = "hintLookOscillo"
+  hint_solved         = "hintOscilloCalibrated"
   input_ray_pickable  = true
   input_event.connect(_on_machine_input)
   call_deferred("_setup_all")
@@ -96,7 +96,7 @@ func get_interaction_hint() -> String:
         return tr("hintCutPower")
       return tr("hintOscilloCalibrated")
     _:
-      return hint_default
+      return tr(hint_default)
 
 
 func _on_try_machine(_has_object: bool) -> void:

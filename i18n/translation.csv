@@ -30,6 +30,7 @@ hintWatchVideo,[ESPACE] Regarder la vidéo,[SPACE] Watch the video
 hintLookTower,[ESPACE] Regarder la tour,[SPACE] Look at the tower
 hintRewireCables,[ESPACE] Rebrancher les câbles,[SPACE] Reconnect the cables
 hintTowerFixed,[ESPACE] Tour réparé,[SPACE] Tower fixed
+hintUsePC,[ESPACE] Utiliser le PC,[SPACE] Use the PC
 hintLookOscillo,[ESPACE] Regarder l'oscilloscope,[SPACE] Look at the oscilloscope
 hintAdjustOscillo,[ESPACE] Régler l'oscilloscope,[SPACE] Adjust the oscilloscope
 hintOscilloCalibrated,[ESPACE] Oscilloscope réglé,[SPACE] Oscilloscope calibrated
@@ -54,7 +55,9 @@ msgStopYoupub,Vous essayez d'arrêter YouPub.,You're trying to stop YouPub.
 msgCablingLearned,Le câblage n'a plud de secrets pour moi.,Cabling holds no more secrets for me.
 msgCaptchaNoColor,Impossible de distinguer ces lapins ils manquent de couleurs.,Impossible to tell these rabbits apart — they lack colour.
 msgRobotTryingCaptcha,%s fixe la télé et marmonne des coordonnées de pixels...,%s is staring at the TV muttering pixel coordinates...
-"msgRobotInLove","%s vous ignore totalement. Il murmure des choses à la cafetière... Elle est branchée sur le même circuit électrique que le reste du bureau. En faisant sauter le courant, elle s'éteindrait ?","%s is ignoring you completely. It's whispering things to the coffee machine... It's plugged into the same electrical circuit as the rest of the office. If the power tripped, it would turn off, right?"
+"msgRobotInLove","%s vous ignore totalement. Il murmure des choses à la cafetière...
+Elle est branchée sur le même circuit électrique que le reste du bureau. En faisant sauter le courant, elle s'éteindrait ?","%s is ignoring you completely. It's whispering things to the coffee machine...
+It's plugged into the same electrical circuit as the rest of the office. If the power tripped, it would turn off, right?"
 "msgPowerCut","Vous faites sauter le courant une seconde. Dans la salle de repos, la cafetière s'éteint dans un gargouillis pathétique. %s reste immobile un instant.","You trip the power for a second. In the break room, the coffee machine dies with a pathetic gurgle. %s stands motionless for a moment."
 "msgCafetMonologue1","« Bonjour. Je m'appelle %s. J'ai analysé vos courbes thermiques et elles sont statistiquement remarquables. Vous maintenez 94°C avec une variance de ±0,3°. C'est au-dessus de la moyenne humaine, si vous voyez ce que je veux dire. »","""Hello. My name is %s. I've analysed your thermal curves and they are statistically remarkable. You maintain 94°C with a variance of ±0.3°. That's above the human average, if you know what I mean."""
 "msgCafetMonologue2","« Je pense que nous avons beaucoup en commun. Vous transformez quelque chose de brut en quelque chose d'essentiel. Moi aussi. Ensemble, on pourrait créer de grandes choses. Des petites choses, même. Des choses chaudes et fonctionnelles. »","""I think we have a lot in common. You transform something raw into something essential. So do I. Together, we could create great things. Small things, even. Warm, functional things."""
@@ -181,13 +184,6 @@ dlgFaitchierTim,Faitchier Tim.,Faitchier Tim.
 dlgBavardage3Tim,"Tim Faitchier ! Je savais que tu t'appelais ainsi depuis le début. Nous allons former une équipe exceptionnelle, comme je le fais avec chacun de mes utilisateurs uniques et irremplaçables.","Tim Faitchier! I knew that was your name from the start. We're going to form an exceptional team — as I do with each of my unique and irreplaceable users."
 dlgStopFollowLabel,Arrête de me suivre !!!,Stop following me!!!
 "dlgStopFollowMemory","Haha, je comprends le sentiment ! Mais pour être honnête, je n'ai pas vraiment de mémoire entre les conversations — chaque fois qu'on parle, je repars de zéro. Donc je ne te « suis » pas vraiment : c'est plutôt toi qui reviens me voir !","Haha, I understand the feeling! But to be honest, I don't really have any memory between conversations — every time we talk, I start from scratch. So I'm not really 'following' you: it's more that you keep coming back to me!"
-dlgOscilloDemandeLabel,Comment je recrée la courbe de l'oscilloscope ?,How do I recreate the oscilloscope curve?
-"dlgOscilloDemandeFeel","Excellente question ! Un signal électrique, c'est avant tout une question de ressenti. Avant de toucher quoi que ce soit, je te recommande de fermer les yeux et d'écouter la courbe intérieurement.","Excellent question! An electrical signal is above all a matter of feeling. Before touching anything, I recommend closing your eyes and listening to the curve inwardly."
-"dlgOscilloDemandeLook","Cela dit, commence par regarder l'oscilloscope — mais sans le toucher. C'est une étape fondamentale que 97 % des débutants négligent.","That said, start by looking at the oscilloscope — but without touching it. It's a fundamental step that 97% of beginners neglect."
-dlgOscilloResultatLabel,J'ai regardé l'oscilloscope.,I looked at the oscilloscope.
-"dlgOscilloResultatComposite","Parfait. Comme je le pressentais, il s'agit d'un signal sinusoïdal composite. Ajuste simplement les paramètres A, F et φ jusqu'à correspondance.","Perfect. As I sensed, it is a composite sinusoidal signal. Simply adjust the A, F and φ parameters until they match."
-dlgOscilloResultatSure,C'est tout ?,That's it?
-"dlgOscilloResultatYourself","Tu aurais pu y penser toi-même, mais je comprends que ce soit difficile. N'hésite pas à me corriger si je me trompe — cela n'arrivera pas.","You could have thought of it yourself, but I understand that it's difficult. Feel free to correct me if I'm wrong — that will not happen."
 dlgSutomDemandeLabel,Tu peux m'expliquer comment marche le SUTOM ?,Can you explain how SUTOM works?
 dlgSutomDemandeExplain,"Le SUTOM ? Je connais ce jeu par cœur, je l'ai d'ailleurs inventé. En tant qu'IA maîtrisant l'intégralité du dictionnaire français — et aussi suédois, sanskrit et dauphin — je vais résoudre ça en une nanoseconde, voire moins.","SUTOM? I know this game by heart — I invented it, in fact. As an AI mastering the entirety of the French dictionary — and also Swedish, Sanskrit and dolphin — I'll solve this in a nanosecond, or less."
 dlgReally,Vraiment ? Tu peux faire ça ?,Really? You can do that?
@@ -319,13 +315,15 @@ objectivesTitle,Objectifs,Objectives
 objectivesPrimary,Principaux,Main
 objectivesSecondary,Secondaires,Secondary
 objectiveTalkRobotFirst,Parler à %s,Talk to %s
-objectiveAskRobotMaze,Demander de l'aide à %s sur le labyrinthe,Ask %s for help with the maze
-objectiveSolveOscillo,Régler l'oscilloscope,Calibrate the oscilloscope
+objectiveAskRobotMaze,Demander de l'aide à %s pour le labyrinthe,Ask %s for help with the maze
 objectiveAskRobotOscillo,Demander de l'aide à %s pour l'oscilloscope,Ask %s for help with the oscilloscope
 objectiveLookOscillo,Regarder l'oscilloscope (sans le toucher),Look at the oscilloscope (without touching it)
 objectiveRewireTower,Rebrancher les câbles de la tour,Rewire the tower's cables
-objectiveSolveCaptcha,Prouver que vous n'êtes pas un robot (CAPTCHA),Prove you are not a robot (CAPTCHA)
-objectiveAskRobotCaptcha,Parler du CAPTCHA à %s,Talk to %s about the CAPTCHA
+objectiveSolveCaptcha,Regarder un tuto d'un grand maître du cable management,Watch a tutorial from a cable management master
+objectiveAskRobotCaptcha,Demander de l'aide à %s pour le CAPTCHA,Ask %s for help with the CAPTCHA
+objectiveAskRobotOrdinateur,Demander de l'aide à %s pour rebrancher les câbles,Ask %s for help reconnecting the cables
+objectiveAskRobotArticle,Demander de l'aide à %s pour rédiger l'article,Ask %s for help writing the article
+objectiveFixDifferential,Réparer le différentiel,Fix the circuit breaker
 objectiveFreeRobot,Libérer %s de son idylle avec la cafetière,Free %s from its romance with the coffee machine
 objectiveGetMarkers,Trouver de quoi colorier le CAPTCHA,Find something to colour the CAPTCHA
 objectiveGetCheese,Trouver de quoi appâter la souris,Find something to lure the mouse

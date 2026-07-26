@@ -97,34 +97,6 @@ static func get_dialogues() -> Array[Dictionary]:
       ],
     },
     {
-      "id":       "oscillo_demande",
-      "label":    "dlgOscilloDemandeLabel",
-      "requires": "",
-      "once":     true,
-      "unlocks":  "",
-      "exchanges": [
-        {
-          "robot":  "dlgOscilloDemandeFeel",
-          "player": "dlgEllipsis",
-        },
-        {"robot": "dlgOscilloDemandeLook"},
-      ],
-    },
-    {
-      "id":       "oscillo_resultat",
-      "label":    "dlgOscilloResultatLabel",
-      "requires": "oscillo_demande",
-      "once":     true,
-      "unlocks":  "",
-      "exchanges": [
-        {
-          "robot":  "dlgOscilloResultatComposite",
-          "player": "dlgOscilloResultatSure",
-        },
-        {"robot": "dlgOscilloResultatYourself"},
-      ],
-    },
-    {
       "id":       "sutom_demande",
       "label":    "dlgSutomDemandeLabel",
       "requires": "",

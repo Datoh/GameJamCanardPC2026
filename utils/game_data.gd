@@ -13,15 +13,21 @@ signal intro_completed
 signal objectives_changed
 signal secondary_objective_added(key: String, params: Array)
 signal machine_state_changed(machine_name: String, state: Machine.StateMachine)
+signal pc_issues_found
+signal password_unknown_found
+signal minigame_closed(machine_name: String)
 
 var _state_machine: Dictionary = {}
 var player: Player
 
 var minigame_name: String = "":
   set(value):
+    var previous := minigame_name
     minigame_name = value
     if player.crosshair:
       player.crosshair.visible = value.is_empty()
+    if value.is_empty() and not previous.is_empty():
+      minigame_closed.emit(previous)
 
 var in_minigame: bool:
   get():
@@ -55,6 +61,14 @@ func set_state(machine_name: String, value: Machine.StateMachine) -> void:
     return
   _state_machine[machine_name] = value
   machine_state_changed.emit(machine_name, value)
+
+
+func notify_pc_issues_found() -> void:
+  pc_issues_found.emit()
+
+
+func notify_password_unknown_found() -> void:
+  password_unknown_found.emit()
 
 
 func show_message(text: String, duration: float = 3.0) -> void:

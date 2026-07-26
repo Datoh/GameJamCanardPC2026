@@ -24,7 +24,6 @@ var col_dessin:    String     = ""
 var crt:           Array      = []
 var drag_ep                         # null | {"couleur": String, "idx": int}
 var drag_pos:      Vector2    = Vector2.ZERO
-var peut_deplacer: bool       = false
 var depl_restants: int        = 2
 
 
@@ -53,7 +52,7 @@ func _draw_endpoints() -> void:
     for i in 2:
       if drag_ep != null and drag_ep["couleur"] == c and drag_ep["idx"] == i:
         continue
-      _draw_ep(_centre(endpoints[c][i]), PALETTE[c], peut_deplacer and depl_restants > 0)
+      _draw_ep(_centre(endpoints[c][i]), PALETTE[c], depl_restants > 0 and c == "jaune")
 
 
 func _draw_chemin(cells: Array, col: Color) -> void:

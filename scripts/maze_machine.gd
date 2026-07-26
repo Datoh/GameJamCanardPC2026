@@ -20,7 +20,7 @@ func _ready() -> void:
   message_try_machine_ok = tr("msgComeMouse")
   message_waiting_unlocked = tr("msgMouseComing")
   message_solved = tr("msgMazeDone")
-  hint_default = tr("hintObserveMaze")
+  hint_default = "hintObserveMaze"
   add_child(_timer_mouse)
   _timer_mouse.timeout.connect(_on_timer_mouse_timeout)
   _timer_mouse.start(randf_range(2.0, 4.0))

@@ -1662,7 +1662,6 @@ transform = Transform3D(0.87369585, 0, 0.4864726, 0, 1, 0, -0.4864726, 0, 0.8736
 collision_layer = 3
 script = ExtResource("71_hrf0e")
 _audio_stream = NodePath("AudioStreamPlayer3D")
-hint_default = "[ESPACE] Utiliser le PC"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Office/Bureau/Desk/Office_Desk_22/ScreenMachine" unique_id=721396065]
 shape = SubResource("BoxShape3D_hqkhg")

@@ -35,7 +35,7 @@ func _ready() -> void:
   message_idle = tr("msgFindCablingVideo")
   message_try_machine = tr("msgCaptchaNeeded")
   message_waiting_unlocked = tr("msgCablingLearned")
-  hint_default = tr("hintWatchYoupub")
+  hint_default = "hintWatchYoupub"
   object_required = "Feutres"
   input_ray_pickable = true
   input_event.connect(_on_tv_input)
@@ -133,7 +133,7 @@ func get_interaction_hint() -> String:
     Machine.StateMachine.UNLOCKED, Machine.StateMachine.SOLVED:
       return tr("hintWatchVideo")
     _:
-      return hint_default
+      return tr(hint_default)
 
 
 func _on_try_machine(_has_object: bool) -> void:

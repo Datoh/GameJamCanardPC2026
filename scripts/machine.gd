@@ -24,7 +24,7 @@ var robot_work_duration: float = 15.0
 @export var message_solved: String = ""
 
 @export_group("Hints")
-@export var hint_default: String = "[ESPACE] Interagir"
+@export var hint_default: String = "hintInteract"
 @export var hint_idle: String = ""
 @export var hint_robot_working: String = ""
 @export var hint_robot_done: String = ""
@@ -84,7 +84,7 @@ func get_interaction_hint() -> String:
       hint = hint_waiting_unlocked
     StateMachine.UNLOCKED:
       hint = hint_solved
-  return hint_default if hint.is_empty() else hint
+  return tr(hint_default) if hint.is_empty() else tr(hint)
 
 
 func on_dialogue_completed(dialogue_id: String) -> void:
