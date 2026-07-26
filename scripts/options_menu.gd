@@ -48,6 +48,7 @@ func _ready() -> void:
   _mouse_sens_slider.value_changed.connect(_on_mouse_sens_changed)
   _mouse_invert_check.toggled.connect(_on_mouse_invert_toggled)
   _language_option.item_selected.connect(_on_language_selected)
+  visibility_changed.connect(_on_visibility_changed)
 
   _build_resolution_list()
   _detect_best_resolution()
@@ -152,10 +153,14 @@ func _on_validate_pressed() -> void:
 func reveal_dlss_option() -> void:
   _dlss_row.visible = true
 
+func _on_visibility_changed() -> void:
+  if visible:
+    _volume_slider.grab_focus()
+
 func _unhandled_input(event: InputEvent) -> void:
   if not visible:
     return
-  if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
+  if event.is_action_pressed("ui_cancel"):
     get_viewport().set_input_as_handled()
     hide()
     closed.emit()

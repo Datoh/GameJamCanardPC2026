@@ -93,6 +93,7 @@ func _show_captcha_ui(has_feutres: bool) -> void:
   _captcha_ui.visible   = true
   _video_player.visible = false
   _apply_images_to_visual(has_feutres)
+  _captcha_ui.get_node("%HintLabel").text = InputDevice.adapt(tr("captchaHint"))
 
 
 func show_video() -> void:
@@ -242,7 +243,7 @@ func _flash_and_reset(has_feutres: bool) -> void:
 func _unhandled_input(event: InputEvent) -> void:
   if not _captcha_active:
     return
-  var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
+  var quit: bool = event.is_action_pressed("ui_cancel") \
            or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
   if quit:
     get_viewport().set_input_as_handled()

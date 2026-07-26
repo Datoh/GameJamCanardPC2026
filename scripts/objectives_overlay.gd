@@ -5,14 +5,22 @@ extends Control
 @onready var _secondary_list:  VBoxContainer = %SecondaryList
 @onready var _primary_section: VBoxContainer = %PrimarySection
 @onready var _secondary_section: VBoxContainer = %SecondarySection
+@onready var _hint_label:      Label         = %HintLabel
 
 
 func _ready() -> void:
   GameData.objectives_changed.connect(_refresh)
+  InputDevice.device_changed.connect(_refresh.unbind(1))
   _refresh()
 
 
+func _notification(what: int) -> void:
+  if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+    _refresh()
+
+
 func _refresh() -> void:
+  _hint_label.text = InputDevice.adapt(tr("objectivesHint"))
   _clear(_primary_list)
   _clear(_secondary_list)
 

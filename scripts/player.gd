@@ -8,6 +8,7 @@ signal cpc_collected_changed(count: int, total: int)
 
 const SPEED             := 5.0
 const MOUSE_SENSITIVITY := 0.002
+const JOY_LOOK_SPEED    := 2.5
 const NOTIF_CHAR_TIME   := 0.04
 const NOTIF_HOLD_TIME   := 3.0
 const NOTIF_FADE_TIME   := 0.6
@@ -25,6 +26,11 @@ var _completed_dialogues: Array[String] = []
 var _pending_robot_dialogue: String = ""
 var _notif_queue: Array[String] = []
 var _notif_active             := false
+
+var _debug_accept_count: int = 0
+var _debug_interact_count: int = 0
+var _debug_last_event: String = "aucun"
+var _debug_last_console_line: String = ""
 
 @onready var crosshair:               TextureRect  = %Crosshair
 
@@ -75,7 +81,7 @@ func set_hud_visible(value: bool) -> void:
 func show_message(text: String, duration: float = 3.0) -> void:
   if text.is_empty():
     return
-  _message_label.text    = text
+  _message_label.text    = InputDevice.adapt(text)
   _message_label.visible = true
   _message_timer.start(duration)
 
@@ -104,6 +110,20 @@ func _get_debug_text() -> String:
     output = "RAY: %s %s\n" % [ray_object.name, ray_object.get_groups()]
   else:
     output = "RAY: rien\n"
+  var focus_owner := get_viewport().gui_get_focus_owner()
+  output += "FOCUS: %s | dlg_open=%s\n" % [
+    String(focus_owner.name) if focus_owner else "aucun",
+    _dialogue_ui.is_open()
+  ]
+  var console_line := "FOCUS=%s dlg_open=%s accept_count=%d interact_count=%d last_event=%s" % [
+    String(focus_owner.name) if focus_owner else "aucun",
+    _dialogue_ui.is_open(),
+    _debug_accept_count, _debug_interact_count, _debug_last_event
+  ]
+  output += console_line + "\n"
+  if console_line != _debug_last_console_line:
+    _debug_last_console_line = console_line
+    print(console_line)
   for key in GameData._state_machine.keys():
     output = "%s%s => %s | " % [output, key, Machine.StateMachine.keys()[GameData.state(key)]]
   return output
@@ -196,6 +216,9 @@ func _on_machine_timer_timeout() -> void:
 # ── Interaction ───────────────────────────────────────────────────────────────
 
 func _unhandled_input(event: InputEvent) -> void:
+  if event is InputEventJoypadButton and event.pressed:
+    _debug_last_event = "JoypadButton idx=%d in_minigame=%s" % [event.button_index, GameData.in_minigame]
+
   if GameData.in_minigame:
     return
 
@@ -207,12 +230,27 @@ func _unhandled_input(event: InputEvent) -> void:
   if not _dialogue_ui.is_open() and event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
     var sens     := MOUSE_SENSITIVITY * OptionsMenu.mouse_sensitivity
     var invert_y := -1.0 if OptionsMenu.mouse_invert_y else 1.0
-    rotate_y(-event.relative.x * sens)
-    _camera_3d.rotate_x(-event.relative.y * sens * invert_y)
-    _camera_3d.rotation.x = clamp(_camera_3d.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+    _apply_look(-event.relative.x * sens, -event.relative.y * sens * invert_y)
 
-  if event.is_action_pressed("ui_accept") and not _dialogue_ui.is_open():
-    _try_interact()
+  if event.is_action_pressed("ui_accept"):
+    _debug_accept_count += 1
+    if not _dialogue_ui.is_open():
+      _try_interact()
+
+
+func _apply_look(yaw: float, pitch: float) -> void:
+  rotate_y(yaw)
+  _camera_3d.rotate_x(pitch)
+  _camera_3d.rotation.x = clamp(_camera_3d.rotation.x, deg_to_rad(-80), deg_to_rad(80))
+
+
+func _apply_stick_look(delta: float) -> void:
+  var look := Input.get_vector("look_left", "look_right", "look_up", "look_down")
+  if look == Vector2.ZERO:
+    return
+  var sens     := JOY_LOOK_SPEED * OptionsMenu.mouse_sensitivity * delta
+  var invert_y := -1.0 if OptionsMenu.mouse_invert_y else 1.0
+  _apply_look(-look.x * sens, -look.y * sens * invert_y)
 
 
 func _open_ivan_dialogue() -> void:
@@ -227,6 +265,7 @@ func _open_ivan_final_dialogue() -> void:
 
 
 func _try_interact() -> void:
+  _debug_interact_count += 1
   _interaction_ray.force_raycast_update()
   if not _interaction_ray.is_colliding():
     return
@@ -363,6 +402,8 @@ func pickup(obj: Node, obj_name: String, machine_name: String = "") -> void:
 func _physics_process(delta: float) -> void:
   _debug_label.text = _get_debug_text()
   _quit_hint_label.visible = GameData.in_minigame
+  if _quit_hint_label.visible:
+    _quit_hint_label.text = InputDevice.adapt(tr("escQuit"))
 
   var hint := ""
   if not GameData.in_minigame and not _dialogue_ui.is_open() and _interaction_ray.is_colliding():
@@ -378,13 +419,18 @@ func _physics_process(delta: float) -> void:
         hint = tr("hintTalkRobot") % DialoguesData.robot_name
       elif GameData.intro_done and collider.is_in_group(GameData.GROUP_INTERACTIVE):
         hint = collider.get_interaction_hint()
-  _interaction_hint_label.text    = hint
+  _interaction_hint_label.text    = InputDevice.adapt(hint)
   _interaction_hint_label.visible = not hint.is_empty()
 
   if not is_on_floor():
     velocity.y -= gravity * delta
 
-  var locked := _dialogue_ui.is_open() or GameData.in_minigame or not GameData.intro_done
+  var look_locked := _dialogue_ui.is_open() or GameData.in_minigame \
+    or Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED
+  if not look_locked:
+    _apply_stick_look(delta)
+
+  var locked := look_locked or not GameData.intro_done
   if not locked:
     var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
     var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

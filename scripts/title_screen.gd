@@ -3,9 +3,10 @@ extends Control
 signal started
 signal options_requested
 
-@onready var _new_game_btn: Button = %NewGameButton
-@onready var _options_btn:  Button = %OptionsButton
-@onready var _quit_btn:     Button = %QuitButton
+@onready var _new_game_btn:  Button = %NewGameButton
+@onready var _options_btn:   Button = %OptionsButton
+@onready var _quit_btn:      Button = %QuitButton
+@onready var _controls_label: Label = %ControlsLabel
 
 func _ready() -> void:
   Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -13,6 +14,15 @@ func _ready() -> void:
   _options_btn.pressed.connect(_on_options_pressed)
   _quit_btn.pressed.connect(get_tree().quit)
   _new_game_btn.grab_focus()
+  InputDevice.device_changed.connect(_refresh_controls_hint.unbind(1))
+  _refresh_controls_hint()
+
+func _notification(what: int) -> void:
+  if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+    _refresh_controls_hint()
+
+func _refresh_controls_hint() -> void:
+  _controls_label.text = InputDevice.adapt_controls(tr("controlsHint"))
 
 func _on_new_game_pressed() -> void:
   started.emit()

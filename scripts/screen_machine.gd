@@ -173,14 +173,16 @@ func _unhandled_input(event: InputEvent) -> void:
     return
 
   if _article_phase == 2:
-    var escape     :bool = event is InputEventKey         and event.pressed and event.keycode == KEY_ESCAPE
+    var cancel     :bool = event.is_action_pressed("ui_cancel")
     var right_click:bool = event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT
-    if escape or right_click:
+    if cancel or right_click:
       get_viewport().set_input_as_handled()
       _finish_article()
     return
 
-  if not (event is InputEventKey and event.pressed and not event.echo):
+  var key_press: bool = event is InputEventKey and event.pressed and not event.echo
+  var pad_press: bool = event is InputEventJoypadButton and event.pressed
+  if not (key_press or pad_press):
     return
 
   get_viewport().set_input_as_handled()

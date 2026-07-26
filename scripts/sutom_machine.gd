@@ -17,6 +17,10 @@ const COLOR_PRESENT   := Color(0.93, 0.77, 0.08)
 const COLOR_ABSENT    := Color(0.11, 0.44, 0.89)
 const COLOR_CELL_IDLE := Color(0.86, 0.84, 0.78)
 const COLOR_FIRST_COL := Color(0.73, 0.15, 0.15)
+const COLOR_CURSOR    := Color(0.85, 0.65, 0.10)
+const CELL_BORDER_COLOR := Color(0.60, 0.57, 0.52)
+
+const NAV_COOLDOWN_MS := 150
 
 const FAKE_WORDS := ["ZXQKWJ", "BVWQKZ", "XZWQKV", "QZKWVX", "BRTKLM", "CDFGHS", "FGHRTL", "KLMRST", "PQRSTV", "BCDFGH", "NRSTVW", "MNRKLT", "DFLRTV", "GHJKLM", "BCDFLM", "NSTRVM", "ZXWVTS", "GKLMRN", "HJTKVW", "CRTSVX", "BFLNRZ", "DGHKMP", "LMNRST", "BCGNRV", "FHKLMN", "DPRSTV", "GHKLNR", "BCMRST", "DFKLNP", "GHJMRV", "BCTKVX", "LNRTVW", "CDGHJK", "FMNRSV", "BHKLRT", "DGNSTV", "CFKLMR", "BHJNPW", "GKLRTV", "CDMNRS", "BFHKLT", "DGJMNT", "CLRSTV", "BFGHNP", "DKLRTW", "CGMNRV", "BHJKLS", "DFMNTV", "GHLRST", "BCKLNW", "DFGHRS", "BJMNTV", "CKLRSW", "DGHMNP", "ZXQKWJB", "BVWQKZX", "KLMRSTV", "PQRSTVW", "GHJKLMN", "DFLRTVZ", "CRTSVXB", "BFLNRZD", "DGHKMPQ", "HJTKVWX", "ZXQKWJBV", "BVWQKZXW", "KLMRSTVW", "PQRSTVWX", "GHJKLMNP", "DFLRTVZX", "CRTSVXBZ", "BFLNRZDG", "DGHKMPQR", "HJTKVWXZ", "ZXQKWJBVC", "BVWQKZXWD", "KLMRSTVWX", "PQRSTVWXZ", "GHJKLMNPQ", "DFLRTVZXW", "CRTSVXBZK", "BFLNRZDGH", "DGHKMPQRS", "HJTKVWXZB"]
 const REAL_WORDS := ["PARTIE", "DEPUIS", "EQUIPE", "GROUPE", "CONTRE", "SAISON", "REGION", "PARTIR", "NOMBRE", "GUERRE", "ENCORE", "EPOQUE", "QUATRE", "SITUEE", "GRANDE", "POINTS", "TROUVE", "ANCIEN", "EGLISE", "PERMET", "ARGENT", "COMPTE", "DURANT", "ESPECE", "MEMBRE", "PROJET", "CHAQUE", "NIVEAU", "JOUEUR", "SORTIE", "TAILLE", "LANGUE", "MAISON", "FINALE", "BRONZE", "PUBLIC", "SUCCES", "AUTEUR", "RAISON", "DEVANT", "NUMERO", "SECOND", "RETOUR", "MILIEU", "EPOUSE", "RESEAU", "MODELE", "PUBLIE", "ACTEUR", "EXISTE", "GAUCHE", "AUTOUR", "CANTON", "EGLISE", "SIMPLE", "PETITE", "CLASSE", "DOUBLE", "TANDIS", "JAMAIS", "LEQUEL", "MESURE", "APPELE", "DROITE", "ACTUEL", "MARQUE", "PROPRE", "COURSE", "ACTION", "CINEMA", "JEUNES", "DIVERS", "EMPIRE", "MOMENT", "COMBAT", "SINGLE", "CENTRE", "DECIDE", "NATURE", "VOITURE", "MUSIQUE", "CUISINE", "FENETRE", "VILLAGE", "TRAVAIL", "COULEUR", "MACHINE", "CLAVIER", "ARTICLE", "CHEMISE", "LECTURE", "SCIENCE", "MAGASIN", "CANARDS", "FROMAGE", "JOURNAUX", "PEINTURE", "MONTAGNE", "CAMPAGNE", "QUESTION", "PRINCIPE", "VICTOIRE", "MEDECINE", "PORTABLE", "CRITIQUE", "MAGAZINE", "ECRITURE", "PERSONNE", "VETEMENT", "DIRECTEUR", "PRESIDENT", "TELEPHONE", "CHOCOLATS", "DIFFERENT", "IMPORTANT", "NAISSANCE", "CONFIANCE", "MECANIQUE", "PRINCESSE", "AVENTURES", "EMISSIONS", "CHAUSSURE", "ORDINAIRE"]
@@ -46,6 +50,7 @@ var _panels: Array = []
 var _labels: Array = []
 var _result_label: Label
 var _hint_label: Label
+var _last_nav_time: int = 0
 
 
 func _ready() -> void:
@@ -63,6 +68,7 @@ func _ready() -> void:
   hint_default = "hintPlaySutom"
   _setup_overhead_camera()
   _setup_journal_surface()
+  InputDevice.device_changed.connect(_on_device_changed)
 
 
 func interact() -> void:
@@ -141,7 +147,7 @@ func _apply_viewport_texture() -> void:
   _top_plane.set_surface_override_material(0, mat)
 
 
-func _make_stylebox(color: Color, radius: int = 4, border: bool = false) -> StyleBoxFlat:
+func _make_stylebox(color: Color, radius: int = 4, border: bool = false, border_color: Color = CELL_BORDER_COLOR) -> StyleBoxFlat:
   var s := StyleBoxFlat.new()
   s.bg_color = color
   s.corner_radius_top_left     = radius
@@ -153,7 +159,7 @@ func _make_stylebox(color: Color, radius: int = 4, border: bool = false) -> Styl
     s.border_width_right  = 2
     s.border_width_top    = 2
     s.border_width_bottom = 2
-    s.border_color = Color(0.60, 0.57, 0.52)
+    s.border_color = border_color
   return s
 
 
@@ -285,6 +291,7 @@ func _begin_game(player_cam: Camera3D, has_object: bool) -> void:
 
   _hint_label.text = tr("sutomWordHint") % [_word_length, _target[0]]
   _result_label.visible = false
+  _update_cursor()
 
   _transition_to_overhead()
 
@@ -342,17 +349,44 @@ func _unhandled_input(event: InputEvent) -> void:
   if not _active:
     return
   var is_right_click: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed
-  if is_right_click:
+  if is_right_click or event.is_action_pressed("ui_cancel"):
     get_viewport().set_input_as_handled()
     _close_game(_won)
     return
+
+  var game_over := _won or _row >= MAX_ATTEMPTS
+  var is_gamepad_event: bool = event is InputEventJoypadButton or event is InputEventJoypadMotion
+
+  if is_gamepad_event and event.is_action_pressed("ui_accept"):
+    get_viewport().set_input_as_handled()
+    if game_over:
+      _close_game(_won)
+    else:
+      _submit()
+    return
+
+  if is_gamepad_event and not game_over and _nav_ready():
+    if event.is_action_pressed("ui_up"):
+      get_viewport().set_input_as_handled()
+      _cycle_letter(1)
+      return
+    if event.is_action_pressed("ui_down"):
+      get_viewport().set_input_as_handled()
+      _cycle_letter(-1)
+      return
+    if event.is_action_pressed("ui_right"):
+      get_viewport().set_input_as_handled()
+      _advance_letter()
+      return
+    if event.is_action_pressed("ui_left"):
+      get_viewport().set_input_as_handled()
+      _backspace()
+      return
+
   if not (event is InputEventKey and event.pressed):
     return
   get_viewport().set_input_as_handled()
-  var game_over := _won or _row >= MAX_ATTEMPTS
   match event.keycode:
-    KEY_ESCAPE:
-      _close_game(_won)
     KEY_ENTER, KEY_KP_ENTER:
       if game_over:
         _close_game(_won)
@@ -366,12 +400,48 @@ func _unhandled_input(event: InputEvent) -> void:
         _type(char(event.keycode).to_upper())
 
 
+func _nav_ready() -> bool:
+  var now := Time.get_ticks_msec()
+  if now - _last_nav_time < NAV_COOLDOWN_MS:
+    return false
+  _last_nav_time = now
+  return true
+
+
+func _on_device_changed(_is_gamepad: bool) -> void:
+  if _active:
+    _update_cursor()
+
+
 func _type(letter: String) -> void:
   if _row >= MAX_ATTEMPTS or _col >= _word_length:
     return
   AudioManager.play(AudioData.AUDIO_SUTOM_TYPING, global_position)
   _labels[_row][_col].text = letter
   _col += 1
+  _update_cursor()
+
+
+func _cycle_letter(delta: int) -> void:
+  if _row >= MAX_ATTEMPTS or _col >= _word_length:
+    return
+  var lbl: Label = _labels[_row][_col]
+  var idx: int = (lbl.text.unicode_at(0) - 65) if lbl.text != "" else -1
+  idx = wrapi(idx + delta, 0, 26)
+  AudioManager.play(AudioData.AUDIO_SUTOM_TYPING, global_position)
+  lbl.text = char(65 + idx)
+  _update_cursor()
+
+
+func _advance_letter() -> void:
+  if _row >= MAX_ATTEMPTS or _col >= _word_length:
+    return
+  var lbl: Label = _labels[_row][_col]
+  if lbl.text == "":
+    AudioManager.play(AudioData.AUDIO_SUTOM_TYPING, global_position)
+    lbl.text = "A"
+  _col += 1
+  _update_cursor()
 
 
 func _backspace() -> void:
@@ -379,6 +449,18 @@ func _backspace() -> void:
     return
   _col -= 1
   _labels[_row][_col].text = ""
+  _update_cursor()
+
+
+func _update_cursor() -> void:
+  if _row >= MAX_ATTEMPTS:
+    return
+  var show_cursor := InputDevice.is_gamepad_active()
+  for c in range(_word_length):
+    var is_cursor := show_cursor and c == _col
+    var base_color := COLOR_FIRST_COL if c == 0 else COLOR_CELL_IDLE
+    var border_color := COLOR_CURSOR if is_cursor else CELL_BORDER_COLOR
+    _panels[_row][c].add_theme_stylebox_override("panel", _make_stylebox(base_color, 4, c != 0 or is_cursor, border_color))
 
 
 # ── Logique de jeu ────────────────────────────────────────────────────────────
@@ -395,6 +477,7 @@ func _submit() -> void:
   var won := (guess == _target)
   _row += 1
   _col = 1
+  _update_cursor()
   if won:
     AudioManager.play(AudioData.AUDIO_SUTOM_VALIDATE, global_position)
     _won = true

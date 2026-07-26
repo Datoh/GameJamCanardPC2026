@@ -74,10 +74,13 @@ func _show_choices(available: Array) -> void:
     btn.text = tr(d["label"])
     btn.pressed.connect(_on_choice_selected.bind(d))
     _choices_container.add_child(btn)
+  if _choices_container.get_child_count() > 0:
+    (_choices_container.get_child(0) as Button).grab_focus()
 
 
 func _clear_choices() -> void:
   for child in _choices_container.get_children():
+    _choices_container.remove_child(child)
     child.queue_free()
 
 
@@ -127,9 +130,12 @@ func _show_npc_line() -> void:
       btn.pressed.connect(_on_branch_selected.bind(branch["action"]))
       _choices_container.add_child(btn)
     _choices_container.visible = true
+    if _choices_container.get_child_count() > 0:
+      (_choices_container.get_child(0) as Button).grab_focus()
   else:
     _continue_btn.text    = tr("btnContinue")
     _continue_btn.visible = true
+    _continue_btn.grab_focus()
 
 
 func _show_player_line(text: String) -> void:
@@ -139,6 +145,7 @@ func _show_player_line(text: String) -> void:
   _text_label.visible   = true
   _continue_btn.text    = tr("btnContinue")
   _continue_btn.visible = true
+  _continue_btn.grab_focus()
   _choices_container.visible = false
   robot_stopped_talking.emit()
 

@@ -108,29 +108,26 @@ func _on_machine_done(machine: Node) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-  if not (event is InputEventKey and event.pressed and not event.echo):
-    return
-  match event.keycode:
-    KEY_F1:
-      get_viewport().set_input_as_handled()
-      if _options_menu.visible:
-        _options_menu.hide()
-        _on_options_closed()
-      else:
-        _prev_mouse_mode = Input.get_mouse_mode()
-        _options_menu.show()
-        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-    KEY_TAB:
-      if _title_screen.visible or _end_screen.visible or _options_menu.visible:
-        return
-      get_viewport().set_input_as_handled()
-      if _objectives_overlay.visible:
-        _objectives_overlay.hide()
-        _on_objectives_closed()
-      else:
-        _prev_mouse_mode = Input.get_mouse_mode()
-        _objectives_overlay.show()
-        Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  if event.is_action_pressed("toggle_options"):
+    get_viewport().set_input_as_handled()
+    if _options_menu.visible:
+      _options_menu.hide()
+      _on_options_closed()
+    else:
+      _prev_mouse_mode = Input.get_mouse_mode()
+      _options_menu.show()
+      Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+  elif event.is_action_pressed("toggle_objectives"):
+    if _title_screen.visible or _end_screen.visible or _options_menu.visible:
+      return
+    get_viewport().set_input_as_handled()
+    if _objectives_overlay.visible:
+      _objectives_overlay.hide()
+      _on_objectives_closed()
+    else:
+      _prev_mouse_mode = Input.get_mouse_mode()
+      _objectives_overlay.show()
+      Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _on_options_closed() -> void:

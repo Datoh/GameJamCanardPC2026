@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func _show_reaction(text: String) -> void:
   _speaker_label.parse_bbcode("[b][color=#%s]%s[/color][/b]" % [COLOR_PLAYER.to_html(false), tr("speakerMe")])
-  _reaction_label.text = text
+  _reaction_label.text = InputDevice.adapt(text)
   _hint_label.visible = false
   _overlay.visible = true
 
@@ -43,7 +43,7 @@ func show_typing(text: String, done: bool) -> void:
   _hint_label.visible = true
   if text.is_empty():
     _text_label.parse_bbcode("[color=#aaaaaa]_[/color]")
-    _hint_label.text = tr("articleTypeHint")
+    _hint_label.text = InputDevice.adapt(tr("articleTypeHint"))
   else:
     _text_label.parse_bbcode("[color=#111111]%s[/color][color=#aaaaaa]_[/color]" % text)
     _hint_label.text = ""

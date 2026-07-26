@@ -203,6 +203,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HintLabel" type="Label" parent="." unique_id=269239859]
+unique_name_in_owner = true
 layout_mode = 0
 offset_top = 914.0
 offset_right = 1920.0

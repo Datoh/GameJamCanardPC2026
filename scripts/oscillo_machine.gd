@@ -281,7 +281,7 @@ func _unhandled_input(event: InputEvent) -> void:
       if delta != 0:
         _apply_delta(i, delta)
         return
-  var quit: bool = (event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE) \
+  var quit: bool = event.is_action_pressed("ui_cancel") \
        or (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed)
   if quit:
     get_viewport().set_input_as_handled()
