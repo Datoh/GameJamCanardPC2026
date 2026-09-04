@@ -3,7 +3,6 @@
 [ext_resource type="Material" uid="uid://d4bp7t3rg8stu" path="res://assets/textures/floor/Carpet006_1K-JPG.tres" id="1_6hbky"]
 [ext_resource type="Material" uid="uid://dopoxs2floqam" path="res://assets/textures/ceil/OfficeCeiling006_1K-JPG.tres" id="1_in4ui"]
 [ext_resource type="Script" uid="uid://dvxvxtvvyymwl" path="res://scripts/office.gd" id="1_kviqm"]
-[ext_resource type="Script" path="res://scripts/objectives_manager.gd" id="200_objmgr"]
 [ext_resource type="PackedScene" uid="uid://pyy6x572f3ec" path="res://scenes/wall_standard.tscn" id="2_gdafm"]
 [ext_resource type="Texture2D" uid="uid://cdev74xbtklwk" path="res://assets/textures/ceil/OfficeCeiling006_1K-JPG_Color.jpg" id="3_jp1e5"]
 [ext_resource type="PackedScene" uid="uid://180fy13q68q6" path="res://scenes/oscillo_machine.tscn" id="4_aqx0a"]
@@ -143,7 +142,9 @@
 [ext_resource type="PackedScene" uid="uid://u2ipo545b28p" path="res://scenes/title_screen.tscn" id="140_gbjqc"]
 [ext_resource type="PackedScene" uid="uid://c3optmenu45x" path="res://scenes/options_menu.tscn" id="141_5nkn4"]
 [ext_resource type="PackedScene" uid="uid://dax3iv02o8nn1" path="res://scenes/end_screen.tscn" id="141_mf0rt"]
+[ext_resource type="LightmapGIData" uid="uid://c4w8nh835hpn" path="res://scenes/office.lmbake" id="141_o16e4"]
 [ext_resource type="PackedScene" uid="uid://dobjovrly4ts2" path="res://scenes/objectives_overlay.tscn" id="142_obj1"]
+[ext_resource type="Script" uid="uid://ngd44wq5qqn6" path="res://scripts/objectives_manager.gd" id="200_objmgr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3wu7e"]
 size = Vector3(0.037290096, 0.36299497, 0.2619243)
@@ -779,7 +780,7 @@ glow_enabled = true
 [node name="Office" type="Node3D" unique_id=92018775]
 script = ExtResource("1_kviqm")
 
-[node name="ObjectivesManager" type="Node" parent="."]
+[node name="ObjectivesManager" type="Node" parent="." unique_id=1822036766]
 unique_name_in_owner = true
 script = ExtResource("200_objmgr")
 
@@ -2251,6 +2252,12 @@ _robot = NodePath("../Office/Robot")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=100000001]
 environment = SubResource("Environment_neons")
 
+[node name="LightmapGI" type="LightmapGI" parent="." unique_id=1048307768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.211006, 0, -9.055654)
+quality = 3
+supersampling = true
+light_data = ExtResource("141_o16e4")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=132564228]
 
 [node name="TitleScreen" parent="CanvasLayer" unique_id=2104142823 instance=ExtResource("140_gbjqc")]
@@ -2264,7 +2271,7 @@ visible = false
 unique_name_in_owner = true
 _world_environment = NodePath("../../WorldEnvironment")
 
-[node name="ObjectivesOverlay" parent="CanvasLayer" unique_id=3891047265 instance=ExtResource("142_obj1")]
+[node name="ObjectivesOverlay" parent="CanvasLayer" unique_id=-403920031 instance=ExtResource("142_obj1")]
 unique_name_in_owner = true
 
 [connection signal="body_entered" from="Office/Reserve/StartStepArea" to="Stairs" method="_on_start_step_area_body_entered"]
