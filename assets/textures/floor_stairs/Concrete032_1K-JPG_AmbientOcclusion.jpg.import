@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cagt3xyxfhjpn"
 path.s3tc="res://.godot/imported/Concrete032_1K-JPG_AmbientOcclusion.jpg-6702f8f84fd29cfee320c34c7aaa56a5.s3tc.ctex"
+path.etc2="res://.godot/imported/Concrete032_1K-JPG_AmbientOcclusion.jpg-6702f8f84fd29cfee320c34c7aaa56a5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/floor_stairs/Concrete032_1K-JPG_AmbientOcclusion.jpg"
-dest_files=["res://.godot/imported/Concrete032_1K-JPG_AmbientOcclusion.jpg-6702f8f84fd29cfee320c34c7aaa56a5.s3tc.ctex"]
+dest_files=["res://.godot/imported/Concrete032_1K-JPG_AmbientOcclusion.jpg-6702f8f84fd29cfee320c34c7aaa56a5.s3tc.ctex", "res://.godot/imported/Concrete032_1K-JPG_AmbientOcclusion.jpg-6702f8f84fd29cfee320c34c7aaa56a5.etc2.ctex"]
 
 [params]
 

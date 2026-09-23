@@ -86,7 +86,8 @@ func _detect_best_resolution() -> void:
     _apply_resolution(best_idx)
 
 func _apply_resolution(idx: int) -> void:
-  var res  := RESOLUTIONS[idx]
+  # Sur macOS Retina, les tailles de fenêtre sont en pixels physiques
+  var res  := Vector2i(Vector2(RESOLUTIONS[idx]) * DisplayServer.screen_get_scale())
   var mode := DisplayServer.window_get_mode()
   DisplayServer.window_set_size(res)
   if mode == DisplayServer.WINDOW_MODE_WINDOWED or mode == DisplayServer.WINDOW_MODE_MAXIMIZED:

@@ -4,15 +4,16 @@ importer="2d_array_texture"
 type="CompressedTexture2DArray"
 uid="uid://cvu5liq1hvkjy"
 path.bptc="res://.godot/imported/office.exr-15e7d004436f3691e473d3e0c6479748.bptc.ctexarray"
+path.astc="res://.godot/imported/office.exr-15e7d004436f3691e473d3e0c6479748.astc.ctexarray"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/office.exr"
-dest_files=["res://.godot/imported/office.exr-15e7d004436f3691e473d3e0c6479748.bptc.ctexarray"]
+dest_files=["res://.godot/imported/office.exr-15e7d004436f3691e473d3e0c6479748.bptc.ctexarray", "res://.godot/imported/office.exr-15e7d004436f3691e473d3e0c6479748.astc.ctexarray"]
 
 [params]
 

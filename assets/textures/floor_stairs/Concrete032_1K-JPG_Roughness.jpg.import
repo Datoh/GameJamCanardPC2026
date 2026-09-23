@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://4mh8pbril7vh"
 path.s3tc="res://.godot/imported/Concrete032_1K-JPG_Roughness.jpg-6cf7fbde49809142d5684b1dd9b8a805.s3tc.ctex"
+path.etc2="res://.godot/imported/Concrete032_1K-JPG_Roughness.jpg-6cf7fbde49809142d5684b1dd9b8a805.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/floor_stairs/Concrete032_1K-JPG_Roughness.jpg"
-dest_files=["res://.godot/imported/Concrete032_1K-JPG_Roughness.jpg-6cf7fbde49809142d5684b1dd9b8a805.s3tc.ctex"]
+dest_files=["res://.godot/imported/Concrete032_1K-JPG_Roughness.jpg-6cf7fbde49809142d5684b1dd9b8a805.s3tc.ctex", "res://.godot/imported/Concrete032_1K-JPG_Roughness.jpg-6cf7fbde49809142d5684b1dd9b8a805.etc2.ctex"]
 
 [params]
 

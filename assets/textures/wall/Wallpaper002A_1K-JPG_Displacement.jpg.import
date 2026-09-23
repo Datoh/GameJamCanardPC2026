@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bww2hu5knjy4l"
 path.s3tc="res://.godot/imported/Wallpaper002A_1K-JPG_Displacement.jpg-0feb67bc3e65783f28adbe2555165297.s3tc.ctex"
+path.etc2="res://.godot/imported/Wallpaper002A_1K-JPG_Displacement.jpg-0feb67bc3e65783f28adbe2555165297.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/wall/Wallpaper002A_1K-JPG_Displacement.jpg"
-dest_files=["res://.godot/imported/Wallpaper002A_1K-JPG_Displacement.jpg-0feb67bc3e65783f28adbe2555165297.s3tc.ctex"]
+dest_files=["res://.godot/imported/Wallpaper002A_1K-JPG_Displacement.jpg-0feb67bc3e65783f28adbe2555165297.s3tc.ctex", "res://.godot/imported/Wallpaper002A_1K-JPG_Displacement.jpg-0feb67bc3e65783f28adbe2555165297.etc2.ctex"]
 
 [params]
 

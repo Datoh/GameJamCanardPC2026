@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://biiaapj4k0xfe"
 path.s3tc="res://.godot/imported/Concrete032_1K-JPG_Color.jpg-6758bc8e7224afb76a46a3bd9a91630f.s3tc.ctex"
+path.etc2="res://.godot/imported/Concrete032_1K-JPG_Color.jpg-6758bc8e7224afb76a46a3bd9a91630f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/floor_stairs/Concrete032_1K-JPG_Color.jpg"
-dest_files=["res://.godot/imported/Concrete032_1K-JPG_Color.jpg-6758bc8e7224afb76a46a3bd9a91630f.s3tc.ctex"]
+dest_files=["res://.godot/imported/Concrete032_1K-JPG_Color.jpg-6758bc8e7224afb76a46a3bd9a91630f.s3tc.ctex", "res://.godot/imported/Concrete032_1K-JPG_Color.jpg-6758bc8e7224afb76a46a3bd9a91630f.etc2.ctex"]
 
 [params]
 

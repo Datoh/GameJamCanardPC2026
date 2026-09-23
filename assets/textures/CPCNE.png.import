@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://baxl1vg8plcnp"
 path.s3tc="res://.godot/imported/CPCNE.png-4bdbdac4affaaaf5c0c854881bbc3533.s3tc.ctex"
+path.etc2="res://.godot/imported/CPCNE.png-4bdbdac4affaaaf5c0c854881bbc3533.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/CPCNE.png"
-dest_files=["res://.godot/imported/CPCNE.png-4bdbdac4affaaaf5c0c854881bbc3533.s3tc.ctex"]
+dest_files=["res://.godot/imported/CPCNE.png-4bdbdac4affaaaf5c0c854881bbc3533.s3tc.ctex", "res://.godot/imported/CPCNE.png-4bdbdac4affaaaf5c0c854881bbc3533.etc2.ctex"]
 
 [params]
 

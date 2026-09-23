@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnuwcdcbh8thc"
 path.s3tc="res://.godot/imported/palette1.png-c92c49a88fff79d5e9720fbf0e868339.s3tc.ctex"
+path.etc2="res://.godot/imported/palette1.png-c92c49a88fff79d5e9720fbf0e868339.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/models/palette1.png"
-dest_files=["res://.godot/imported/palette1.png-c92c49a88fff79d5e9720fbf0e868339.s3tc.ctex"]
+dest_files=["res://.godot/imported/palette1.png-c92c49a88fff79d5e9720fbf0e868339.s3tc.ctex", "res://.godot/imported/palette1.png-c92c49a88fff79d5e9720fbf0e868339.etc2.ctex"]
 
 [params]
 

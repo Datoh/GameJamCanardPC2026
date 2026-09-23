@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://db28ws785tm0s"
 path.s3tc="res://.godot/imported/Mice_Color.png-b772095018141323ad1eb245a60624cd.s3tc.ctex"
+path.etc2="res://.godot/imported/Mice_Color.png-b772095018141323ad1eb245a60624cd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/models/Mice_Color.png"
-dest_files=["res://.godot/imported/Mice_Color.png-b772095018141323ad1eb245a60624cd.s3tc.ctex"]
+dest_files=["res://.godot/imported/Mice_Color.png-b772095018141323ad1eb245a60624cd.s3tc.ctex", "res://.godot/imported/Mice_Color.png-b772095018141323ad1eb245a60624cd.etc2.ctex"]
 
 [params]
 

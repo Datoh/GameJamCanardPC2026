@@ -28,6 +28,7 @@ GamepadCursor="*res://utils/gamepad_cursor.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
+window/stretch/mode="canvas_items"
 
 [global_group]
 
@@ -145,3 +146,4 @@ locale/fallback="fr"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
