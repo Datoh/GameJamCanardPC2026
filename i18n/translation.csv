@@ -9,6 +9,7 @@ settingsSoundVolume,Volume des bruitages,Sound volume
 settingsResolution,Résolution,Resolution
 settingsFullscreen,Plein écran,Fullscreen
 settingsAdvancedLighting,Éclairage avancé,Advanced lighting
+settingsAmbientOcclusion,Occlusion ambiante,Ambient occlusion
 settingsEnableDlss,Activer le DLSS 5,Enable DLSS 5
 settingsMouseSensitivity,Sensibilité souris,Mouse sensitivity
 settingsInvertMouseY,Inverser Y souris,Invert Y mouse

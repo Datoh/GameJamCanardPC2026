@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bi50vldxit13v"]
 
-[ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="1_i2o7u"]
+[ext_resource type="Texture2D" uid="uid://bwa6kr1e2u253" path="res://assets/models/textures/palette1.png" id="1_i2o7u"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxojf"]
 resource_name = "Palette"

@@ -125,6 +125,20 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="SSAORow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1034]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SSAOLabel" type="Label" parent="Dialog/Margin/VBox/SSAORow" unique_id=1035]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "settingsAmbientOcclusion"
+vertical_alignment = 1
+
+[node name="SSAOCheck" type="CheckBox" parent="Dialog/Margin/VBox/SSAORow" unique_id=1036]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="DLSSRow" type="HBoxContainer" parent="Dialog/Margin/VBox" unique_id=1011]
 unique_name_in_owner = true
 visible = false

@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://dropcoglw31gs"]
 
-[ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="1_87th4"]
+[ext_resource type="Texture2D" uid="uid://bwa6kr1e2u253" path="res://assets/models/textures/palette1.png" id="1_87th4"]
 [ext_resource type="Script" uid="uid://cahoxfkio2qab" path="res://scripts/door.gd" id="2_ldcsd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4okwe"]

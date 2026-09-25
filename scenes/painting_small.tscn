@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://c3iar6xa027uv"]
 
-[ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="1_x02qi"]
+[ext_resource type="Texture2D" uid="uid://bwa6kr1e2u253" path="res://assets/models/textures/palette1.png" id="1_x02qi"]
 [ext_resource type="Texture2D" uid="uid://dpp6m0cjl3vdd" path="res://assets/models/textures/Paintings.png" id="2_r07ja"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57s3f"]

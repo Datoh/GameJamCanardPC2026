@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://yuvgqekre2hh"]
 
-[ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="1_agsvl"]
+[ext_resource type="Texture2D" uid="uid://bwa6kr1e2u253" path="res://assets/models/textures/palette1.png" id="1_agsvl"]
 [ext_resource type="PackedScene" uid="uid://dvtewquwaodq7" path="res://assets/models/Computer_Monitor.gltf" id="2_pneut"]
 [ext_resource type="PackedScene" uid="uid://cdf6g8jgr7igo" path="res://assets/models/Computer_Mouse.gltf" id="3_wa0hp"]
 

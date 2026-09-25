@@ -30,6 +30,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @onready var _dlss_check:        CheckBox      = %DLSSCheck
 @onready var _dlss_row:          HBoxContainer = %DLSSRow
 @onready var _sdfgi_check:       CheckBox      = %SDFGICheck
+@onready var _ssao_check:        CheckBox      = %SSAOCheck
 @onready var _resolution_option: OptionButton  = %ResolutionOption
 @onready var _fullscreen_check:  CheckBox      = %FullscreenCheck
 @onready var _validate_btn:      Button        = %ValidateButton
@@ -43,6 +44,7 @@ func _ready() -> void:
   _validate_btn.pressed.connect(_on_validate_pressed)
   _dlss_check.toggled.connect(_on_dlss_toggled)
   _sdfgi_check.toggled.connect(_on_sdfgi_toggled)
+  _ssao_check.toggled.connect(_on_ssao_toggled)
   _resolution_option.item_selected.connect(_on_resolution_selected)
   _fullscreen_check.toggled.connect(_on_fullscreen_toggled)
   _mouse_sens_slider.value_changed.connect(_on_mouse_sens_changed)
@@ -69,6 +71,7 @@ func _ready() -> void:
   var world_env := get_tree().root.find_child("WorldEnvironment", true, false)
   if world_env and world_env.environment:
     _sdfgi_check.set_pressed_no_signal(world_env.environment.sdfgi_enabled)
+    _ssao_check.set_pressed_no_signal(world_env.environment.ssao_enabled)
 
 func _build_resolution_list() -> void:
   _resolution_option.clear()
@@ -107,6 +110,10 @@ func _on_dlss_toggled(enabled: bool) -> void:
 func _on_sdfgi_toggled(enabled: bool) -> void:
   if _world_environment:
     _world_environment.environment.sdfgi_enabled = enabled
+
+func _on_ssao_toggled(enabled: bool) -> void:
+  if _world_environment:
+    _world_environment.environment.ssao_enabled = enabled
 
 func _on_resolution_selected(idx: int) -> void:
   _apply_resolution(idx)

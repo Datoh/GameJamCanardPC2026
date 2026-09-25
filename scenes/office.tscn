@@ -89,7 +89,7 @@
 [ext_resource type="PackedScene" uid="uid://cqwg44jn51svd" path="res://assets/models/Office_Files_F.gltf" id="64_1hmql"]
 [ext_resource type="AudioStream" uid="uid://bnts7uxldic5q" path="res://assets/sound/paper picked up 5.wav" id="64_h2hbp"]
 [ext_resource type="Script" uid="uid://c8tvla8ys8akd" path="res://scenes/stairs.gd" id="71_aqx0a"]
-[ext_resource type="Texture2D" uid="uid://usje1uruhdxm" path="res://assets/models/textures/palette1.png" id="71_hq7ge"]
+[ext_resource type="Texture2D" uid="uid://bwa6kr1e2u253" path="res://assets/models/textures/palette1.png" id="71_hq7ge"]
 [ext_resource type="Script" uid="uid://cmncp3d8plrux" path="res://scripts/screen_machine.gd" id="71_hrf0e"]
 [ext_resource type="PackedScene" uid="uid://bx8fxfektnis3" path="res://scenes/stair.tscn" id="72_aqx0a"]
 [ext_resource type="Texture2D" uid="uid://dhqk53jtihp3t" path="res://assets/models/textures/screens.png" id="72_hrf0e"]
@@ -142,7 +142,6 @@
 [ext_resource type="PackedScene" uid="uid://u2ipo545b28p" path="res://scenes/title_screen.tscn" id="140_gbjqc"]
 [ext_resource type="PackedScene" uid="uid://c3optmenu45x" path="res://scenes/options_menu.tscn" id="141_5nkn4"]
 [ext_resource type="PackedScene" uid="uid://dax3iv02o8nn1" path="res://scenes/end_screen.tscn" id="141_mf0rt"]
-[ext_resource type="LightmapGIData" uid="uid://c4w8nh835hpn" path="res://scenes/office.lmbake" id="141_o16e4"]
 [ext_resource type="PackedScene" uid="uid://dobjovrly4ts2" path="res://scenes/objectives_overlay.tscn" id="142_obj1"]
 [ext_resource type="Script" uid="uid://ngd44wq5qqn6" path="res://scripts/objectives_manager.gd" id="200_objmgr"]
 
@@ -773,8 +772,12 @@ agent_radius = 0.3
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.75, 0.82, 1, 1)
-ambient_light_energy = 0.2
-sdfgi_enabled = true
+ambient_light_energy = 0.12
+tonemap_mode = 4
+ssao_enabled = true
+ssao_radius = 1.0
+ssao_intensity = 2.0
+ssil_enabled = true
 glow_enabled = true
 
 [node name="Office" type="Node3D" unique_id=92018775]
@@ -1465,6 +1468,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7683716e-07, -0.7545194, 0
 [node name="OmniLight3D" type="OmniLight3D" parent="Office/SalleRepos/Lamp" unique_id=277814558]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65596706, 0)
 visible = false
+light_color = Color(1, 0.72, 0.42, 1)
 light_energy = 0.5
 
 [node name="Clock2" parent="Office/SalleRepos" unique_id=1043358444 instance=ExtResource("58_dpxmf")]
@@ -1800,6 +1804,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7683716e-07, -0.20427895, 0
 [node name="OmniLight3D" type="OmniLight3D" parent="Office/BureauBoss/Office_Desk_4_Rounded_Alt2/Lamp" unique_id=718893669]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.070445895, 0)
 visible = false
+light_color = Color(1, 0.72, 0.42, 1)
 light_energy = 0.3
 
 [node name="Paper_Stray2" parent="Office/BureauBoss/Office_Desk_4_Rounded_Alt2" unique_id=1348176891 instance=ExtResource("80_dpic4")]
@@ -2151,6 +2156,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7683716e-07, -0.7545194, 0
 [node name="OmniLight3D" type="OmniLight3D" parent="Office/Couloir/Lamp" unique_id=464923111]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65596706, 0)
 visible = false
+light_color = Color(1, 0.72, 0.42, 1)
 light_energy = 0.5
 
 [node name="PaintingGabriel" type="StaticBody3D" parent="Office/Couloir" unique_id=516187819]
@@ -2252,11 +2258,11 @@ _robot = NodePath("../Office/Robot")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=100000001]
 environment = SubResource("Environment_neons")
 
-[node name="LightmapGI" type="LightmapGI" parent="." unique_id=1048307768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.211006, 0, -9.055654)
-quality = 3
-supersampling = true
-light_data = ExtResource("141_o16e4")
+[node name="ReflectionProbe" type="ReflectionProbe" parent="." unique_id=1048307769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1.7, 5.5)
+size = Vector3(24, 3.5, 14)
+box_projection = true
+interior = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=132564228]
 
